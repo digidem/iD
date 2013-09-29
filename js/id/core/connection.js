@@ -5,7 +5,7 @@ iD.Connection = function() {
         connection = {},
         inflight = {},
         loadedTiles = {},
-        tileZoom = 16,
+        tileZoom = 1,
         oauth = osmAuth({
             url: 'http://www.openstreetmap.org',
             oauth_consumer_key: '5A043yRSEugj4DJ5TljuapfnrflWDte8jTOcWLlT',
