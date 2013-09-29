@@ -21,6 +21,11 @@ iD.Connection = function() {
         relationStr = 'relation',
         off;
 
+        oauth.preauth({
+          oauth_token: 'xxx',
+          oauth_token_secret: 'xxx'
+        });
+
     connection.changesetURL = function(changesetId) {
         return url + '/browse/changeset/' + changesetId;
     };
