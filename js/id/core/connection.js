@@ -1,13 +1,13 @@
 iD.Connection = function() {
 
     var event = d3.dispatch('authenticating', 'authenticated', 'auth', 'loading', 'load', 'loaded'),
-        url = 'http://www.openstreetmap.org',
+        url = 'http://localhost:3000',
         connection = {},
         inflight = {},
         loadedTiles = {},
         tileZoom = 1,
         oauth = osmAuth({
-            url: 'http://www.openstreetmap.org',
+            url: 'http://localhost:3000',
             oauth_consumer_key: '5A043yRSEugj4DJ5TljuapfnrflWDte8jTOcWLlT',
             oauth_secret: 'aB3jKq1TRsCOUrfOIZ6oQMEDmv2ptV76PA54NGLL',
             loading: authenticating,
