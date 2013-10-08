@@ -1,0 +1,10 @@
+{
+    "icon": "rapids",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "water": "rapids"
+    },
+    "name": "Rapids"
+}

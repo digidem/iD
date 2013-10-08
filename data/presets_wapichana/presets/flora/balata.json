@@ -1,0 +1,10 @@
+{
+    "icon": "balata",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "balata"
+    },
+    "name": "Balata"
+}

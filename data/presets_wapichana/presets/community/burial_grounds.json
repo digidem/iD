@@ -1,0 +1,11 @@
+{
+    "icon": "burial_grounds",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "community": "burial_grounds"
+    },
+    "name": "Burial Grounds"
+}

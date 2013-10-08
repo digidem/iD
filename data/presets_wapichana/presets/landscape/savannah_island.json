@@ -1,0 +1,11 @@
+{
+    "icon": "savannah_island",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "landscape": "savannah_island"
+    },
+    "name": "Savannah Island"
+}

@@ -1,0 +1,13 @@
+{
+    "icon": "territory-boundary",
+    "geometry": [
+        "point",
+		"line",
+		"area",
+		"vertex"
+    ],
+    "tags": {
+        "territory": "boundary"
+    },
+    "name": "Territory Boundary"
+}

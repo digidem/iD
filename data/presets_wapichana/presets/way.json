@@ -1,0 +1,14 @@
+{
+    "fields": [
+        "leisure"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "line"
+    ],
+    "tags": {
+        "way": "*"
+    },
+    "name": "Way"
+}

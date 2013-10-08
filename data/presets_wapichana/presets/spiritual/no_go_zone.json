@@ -1,0 +1,10 @@
+{
+    "icon": "no_go_zone",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "spiritual": "no_go_zone"
+    },
+    "name": "No Go Zone"
+}

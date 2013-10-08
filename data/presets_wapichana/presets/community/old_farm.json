@@ -1,0 +1,12 @@
+{
+    "icon": "old_farm",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "community": "farm",
+		"status": "old"
+    },
+    "name": "Old Farm"
+}

@@ -1,0 +1,15 @@
+{
+    "fields": [
+        "leisure"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+		"line",
+        "area"
+    ],
+    "tags": {
+        "territory": "*"
+    },
+    "name": "Territory"
+}

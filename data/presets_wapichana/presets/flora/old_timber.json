@@ -1,0 +1,11 @@
+{
+    "icon": "old_timber",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "timber",
+		"status": "old"
+    },
+    "name": "Old timber area"
+}

@@ -1,0 +1,28 @@
+{
+    "icon": "river",
+    "geometry": [
+        "point",
+		"line",
+		"vertex",
+		"area"
+    ],
+    "terms": [
+        "beck",
+        "branch",
+        "brook",
+        "course",
+        "creek",
+        "estuary",
+        "rill",
+        "rivulet",
+        "run",
+        "runnel",
+        "stream",
+        "tributary",
+        "watercourse"
+    ],
+    "tags": {
+        "water": "river"
+    },
+    "name": "River"
+}

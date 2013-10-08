@@ -1,0 +1,11 @@
+{
+    "icon": "precious_stones",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "spiritual": "precious_stones",
+		"display": "private"
+    },
+    "name": "Precious Stones"
+}

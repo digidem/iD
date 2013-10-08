@@ -1,0 +1,10 @@
+{
+    "icon": "palms",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "palms"
+    },
+    "name": "Palms"
+}

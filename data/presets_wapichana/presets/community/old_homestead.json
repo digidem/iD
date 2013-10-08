@@ -1,0 +1,11 @@
+{
+    "icon": "old_homestead",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "community": "homestead",
+		"status": "old"
+    },
+    "name": "Old Homestead"
+}

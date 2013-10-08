@@ -1,0 +1,10 @@
+{
+    "icon": "historical_site",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "heritage": "historical_site"
+    },
+    "name": "Historical Site"
+}

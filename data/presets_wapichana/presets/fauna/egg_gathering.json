@@ -1,0 +1,11 @@
+{
+    "icon": "egg_gathering",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "fauna": "egg_gathering"
+    },
+    "name": "Egg Gathering"
+}

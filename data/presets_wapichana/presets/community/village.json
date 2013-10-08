@@ -1,0 +1,11 @@
+{
+    "icon": "village",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "community": "village"
+    },
+    "name": "Village"
+}

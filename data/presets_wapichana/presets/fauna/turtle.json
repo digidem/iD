@@ -1,0 +1,10 @@
+{
+    "icon": "turtle",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "fauna": "turtle"
+    },
+    "name": "Turtle"
+}

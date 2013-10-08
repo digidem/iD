@@ -1,0 +1,10 @@
+{
+    "icon": "building_material",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "building_material"
+    },
+    "name": "Building Material"
+}

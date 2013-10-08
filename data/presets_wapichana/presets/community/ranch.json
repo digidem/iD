@@ -1,0 +1,10 @@
+{
+    "icon": "ranch",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "community": "ranch"
+    },
+    "name": "Ranch"
+}

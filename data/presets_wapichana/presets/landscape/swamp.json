@@ -1,0 +1,11 @@
+{
+    "icon": "swamp",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "landscape": "swamp"
+    },
+    "name": "Swamp"
+}

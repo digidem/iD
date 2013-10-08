@@ -1,0 +1,7 @@
+{
+    "name": "Area",
+    "tags": {
+        "area": "yes"
+    },
+    "geometry": ["area"]
+}

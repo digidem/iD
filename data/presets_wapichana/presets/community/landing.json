@@ -1,0 +1,10 @@
+{
+    "icon": "landing",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "community": "landing"
+    },
+    "name": "Landing"
+}

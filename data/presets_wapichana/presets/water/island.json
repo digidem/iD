@@ -1,0 +1,10 @@
+{
+    "icon": "island",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "water": "island"
+    },
+    "name": "Island"
+}

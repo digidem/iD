@@ -1,0 +1,11 @@
+{
+    "icon": "lake",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "water": "lake"
+    },
+    "name": "Lake"
+}

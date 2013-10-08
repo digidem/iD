@@ -1,0 +1,10 @@
+{
+    "icon": "airstrip",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "infrastructure": "airstrip"
+    },
+    "name": "Historical Site"
+}

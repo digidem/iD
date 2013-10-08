@@ -1,0 +1,11 @@
+{
+    "icon": "bush_island",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "landscape": "bush_island"
+    },
+    "name": "Bush Island"
+}

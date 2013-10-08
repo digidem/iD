@@ -1,0 +1,11 @@
+{
+    "icon": "bush",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "landscape": "bush"
+    },
+    "name": "Bush"
+}

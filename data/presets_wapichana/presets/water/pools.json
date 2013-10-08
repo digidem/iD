@@ -1,0 +1,10 @@
+{
+    "icon": "pools",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "water": "pools"
+    },
+    "name": "Deep Pools"
+}

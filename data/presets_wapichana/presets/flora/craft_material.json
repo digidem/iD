@@ -1,0 +1,11 @@
+{
+    "icon": "craft_material",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "flora": "craft_material"
+    },
+    "name": "Craft Material"
+}

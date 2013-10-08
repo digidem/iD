@@ -1,0 +1,10 @@
+{
+    "icon": "poison",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "poison"
+    },
+    "name": "Poison collecting area"
+}

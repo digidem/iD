@@ -1,0 +1,10 @@
+{
+    "icon": "sacred_site",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "spiritual": "sacred_site"
+    },
+    "name": "Sacred Site"
+}

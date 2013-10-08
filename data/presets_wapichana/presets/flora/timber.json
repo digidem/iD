@@ -1,0 +1,10 @@
+{
+    "icon": "timber",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "timber"
+    },
+    "name": "Timber Area"
+}

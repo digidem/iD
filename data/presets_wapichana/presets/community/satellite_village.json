@@ -1,0 +1,12 @@
+{
+    "icon": "satellite_village",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "community": "village",
+		"type": "satellite"
+    },
+    "name": "Satellite Village"
+}

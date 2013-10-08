@@ -1,0 +1,10 @@
+{
+    "icon": "track",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "way": "track"
+    },
+    "name": "Track"
+}

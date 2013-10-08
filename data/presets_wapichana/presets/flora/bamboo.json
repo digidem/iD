@@ -1,0 +1,10 @@
+{
+    "icon": "bamboo",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "bamboo"
+    },
+    "name": "Bamboo"
+}

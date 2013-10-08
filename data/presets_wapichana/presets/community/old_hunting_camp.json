@@ -1,0 +1,11 @@
+{
+    "icon": "old_hunting_camp",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "community": "hunting_camp",
+		"status": "old"
+    },
+    "name": "Old Hunting Camp"
+}

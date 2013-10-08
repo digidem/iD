@@ -1,0 +1,11 @@
+{
+    "icon": "savannah",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "landscape": "savannah"
+    },
+    "name": "Savannah"
+}

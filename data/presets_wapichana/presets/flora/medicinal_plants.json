@@ -1,0 +1,11 @@
+{
+    "icon": "medicinal_plants",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "flora": "medicinal_plants"
+    },
+    "name": "Medicinal Plants"
+}

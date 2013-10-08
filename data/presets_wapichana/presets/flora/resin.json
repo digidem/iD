@@ -1,0 +1,10 @@
+{
+    "icon": "resin",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "resin"
+    },
+    "name": "Resin"
+}

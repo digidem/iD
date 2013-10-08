@@ -1,0 +1,10 @@
+{
+    "icon": "firewood",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "firewood"
+    },
+    "name": "Firewood Gathering Area"
+}

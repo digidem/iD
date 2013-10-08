@@ -1,0 +1,13 @@
+{
+    "fields": [
+        "amenity"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "amenity": "*"
+    },
+    "name": "Amenity"
+}

@@ -1,0 +1,10 @@
+{
+    "icon": "forest_fruits",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "flora": "forest_fruits"
+    },
+    "name": "Forest Fruits"
+}

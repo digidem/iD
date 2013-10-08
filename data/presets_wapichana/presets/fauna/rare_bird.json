@@ -1,0 +1,11 @@
+{
+    "icon": "rare_bird",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "fauna": "rare_bird"
+    },
+    "name": "Rare Bird"
+}

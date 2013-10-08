@@ -1,0 +1,10 @@
+{
+    "icon": "clay",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "mineral": "clay"
+    },
+    "name": "Clay"
+}

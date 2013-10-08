@@ -1,0 +1,10 @@
+{
+    "icon": "waterfall",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "water": "waterfall"
+    },
+    "name": "Waterfall"
+}

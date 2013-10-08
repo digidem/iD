@@ -1,0 +1,10 @@
+{
+    "icon": "bridge",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "infrastructure": "bridge"
+    },
+    "name": "Bridge"
+}

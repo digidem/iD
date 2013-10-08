@@ -1,0 +1,12 @@
+{
+    "fields": [
+        "leisure"
+    ],
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "heritage": "*"
+    },
+    "name": "Heritage"
+}

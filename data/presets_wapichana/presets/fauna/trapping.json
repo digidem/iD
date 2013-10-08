@@ -1,0 +1,11 @@
+{
+    "icon": "trapping",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "fauna": "trapping"
+    },
+    "name": "Trapping"
+}

@@ -1,0 +1,10 @@
+{
+    "icon": "coral",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "infrastructure": "coral"
+    },
+    "name": "Coral"
+}

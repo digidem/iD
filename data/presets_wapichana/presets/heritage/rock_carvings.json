@@ -1,0 +1,10 @@
+{
+    "icon": "rock_carvings",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "heritage": "rock_carvings"
+    },
+    "name": "Rock Carvings"
+}

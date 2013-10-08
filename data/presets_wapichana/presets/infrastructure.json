@@ -1,0 +1,12 @@
+{
+    "fields": [
+        "leisure"
+    ],
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "infrastructure": "*"
+    },
+    "name": "Infrastructure"
+}

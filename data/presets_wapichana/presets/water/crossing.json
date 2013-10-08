@@ -1,0 +1,10 @@
+{
+    "icon": "crossing",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "water": "crossing"
+    },
+    "name": "River/Creek Crossing"
+}

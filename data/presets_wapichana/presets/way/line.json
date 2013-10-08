@@ -1,0 +1,10 @@
+{
+    "icon": "line",
+    "geometry": [
+        "point"
+    ],
+    "tags": {
+        "way": "line"
+    },
+    "name": "Hunting Line"
+}

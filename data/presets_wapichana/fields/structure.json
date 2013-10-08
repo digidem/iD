@@ -1,0 +1,19 @@
+{
+    "type": "radio",
+    "keys": [
+        "bridge",
+        "tunnel",
+        "embankment",
+        "cutting"
+    ],
+    "label": "Structure",
+    "placeholder": "Unknown",
+    "strings": {
+        "options": {
+            "bridge": "Bridge",
+            "tunnel": "Tunnel",
+            "embankment": "Embankment",
+            "cutting": "Cutting"
+        }
+    }
+}
