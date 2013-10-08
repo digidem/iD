@@ -1,0 +1,11 @@
+{
+    "geometry": "point",
+    "name": "Fauna",
+    "icon": "category-fauna",
+    "members": [
+        "fauna/egg_gathering",
+        "fauna/rare_bird",
+        "fauna/trapping",
+        "fauna/turtle"
+    ]
+}

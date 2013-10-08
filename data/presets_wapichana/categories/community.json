@@ -1,0 +1,19 @@
+{
+    "geometry": "point",
+    "name": "Community",
+    "icon": "category-community",
+    "members": [
+        "community/burial_grounds",
+        "community/farm",
+        "community/homestead",
+        "community/hunting_camp",
+        "community/landing",
+		"community/old_farm",
+		"community/old_homestead",
+		"community/old_hunting_camp",
+		"community/old_village",
+		"community/ranch",
+		"community/satellite_village",
+		"community/village"
+    ]
+}

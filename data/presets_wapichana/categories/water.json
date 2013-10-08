@@ -1,0 +1,13 @@
+{
+    "geometry": "point",
+    "name": "Water",
+    "icon": "category-water",
+    "members": [
+        "water/lake",
+        "water/pools",
+        "water/rapids",
+        "water/island",
+        "water/waterfall",
+		"water/crossing"
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "geometry": "point",
+    "name": "Amenity",
+    "icon": "category-amenity",
+    "members": [
+        "amenity/church",
+        "amenity/health_hut",
+        "amenity/school"
+    ]
+}

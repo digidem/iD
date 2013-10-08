@@ -1,0 +1,10 @@
+{
+    "geometry": "point",
+    "name": "Infrastructure",
+    "icon": "category-infrastructure",
+    "members": [
+        "infrastructure/airstrip",
+        "infrastructure/bridge",
+        "infrastructure/coral"
+    ]
+}

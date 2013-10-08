@@ -1,0 +1,13 @@
+{
+    "geometry": "point",
+    "name": "Other",
+    "icon": "category-spirtual",
+    "members": [
+        "spiritual/no_go_zone",
+        "spiritual/sacred_site",
+        "heritage/historical_site",
+        "heritage/rock_carvings",
+        "mineral/clay",
+        "mineral/precious_stones"
+    ]
+}

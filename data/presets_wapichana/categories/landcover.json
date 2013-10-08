@@ -1,0 +1,12 @@
+{
+    "geometry": "point",
+    "name": "Landscape",
+    "icon": "category-landcover",
+    "members": [
+        "landscape/bush",
+        "landscape/savannah",
+        "landscape/bush_island",
+        "landscape/savannah_island",
+        "landscape/swamp"
+    ]
+}

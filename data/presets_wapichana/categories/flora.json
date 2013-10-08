@@ -1,0 +1,20 @@
+{
+    "geometry": "point",
+    "name": "Flora",
+    "icon": "category-flora",
+    "members": [
+        "flora/balata",
+        "flora/bamboo",
+        "flora/building_material",
+        "flora/craft_material",
+        "flora/eta",
+        "flora/firewood",
+        "flora/forest_fruits",
+        "flora/medicinal_plants",
+        "flora/palms",
+        "flora/poison",
+        "flora/resin",
+        "flora/old_timber",
+        "flora/timber"
+    ]
+}
