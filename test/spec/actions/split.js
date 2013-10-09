@@ -305,6 +305,23 @@ describe("iD.actions.Split", function () {
         ]);
     });
 
+    it("splits only the line of a node shared by a line and an area", function () {
+        var graph = iD.Graph({
+            'a': iD.Node({id: 'a', loc: [0,1]}),
+            'b': iD.Node({id: 'b', loc: [1,1]}),
+            'c': iD.Node({id: 'c', loc: [1,0]}),
+            '-': iD.Way({id: '-',  nodes: ['a', 'b', 'c']}),
+            '=': iD.Way({id: '=',  nodes: ['a', 'b', 'c', 'a'], tags: {area: 'yes'}})
+        });
+
+        graph = iD.actions.Split('b', ['~'])(graph);
+
+        expect(graph.entity('-').nodes).to.eql(['a', 'b']);
+        expect(graph.entity('~').nodes).to.eql(['b', 'c']);
+        expect(graph.entity('=').nodes).to.eql(['a', 'b', 'c', 'a']);
+        expect(graph.parentRelations(graph.entity('='))).to.have.length(0);
+    });
+
     it("adds the new way to parent relations (no connections)", function () {
         // Situation:
         //    a ---- b ---- c
@@ -396,6 +413,22 @@ describe("iD.actions.Split", function () {
         graph = iD.actions.Split('b', ['='])(graph);
 
         expect(_.pluck(graph.entity('r').members, 'id')).to.eql(['~', '-', '=']);
+    });
+
+    it("converts simple multipolygon to a proper multipolygon", function () {
+        var graph = iD.Graph({
+                'a': iD.Node({id: 'a'}),
+                'b': iD.Node({id: 'b'}),
+                'c': iD.Node({id: 'c'}),
+                '-': iD.Way({'id': '-', nodes: ['a', 'b', 'c'], tags: {natural: 'water'}}),
+                'r': iD.Relation({id: 'r', members: [{id: '-', type: 'way', role: 'outer'}], tags: {type: 'multipolygon'}})
+            });
+
+        graph = iD.actions.Split('b', ['='])(graph);
+
+        expect(graph.entity('-').tags).to.eql({});
+        expect(graph.entity('r').tags).to.eql({type: 'multipolygon', natural: 'water'});
+        expect(_.pluck(graph.entity('r').members, 'id')).to.eql(['-', '=']);
     });
 
     ['restriction', 'restriction:bus'].forEach(function (type) {

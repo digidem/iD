@@ -46,14 +46,17 @@ iD.presets.Preset = function(id, preset, fields) {
         return Object.keys(preset.tags).length === 0;
     };
 
-    preset.reference = function() {
-        var reference = {key: Object.keys(preset.tags)[0]};
+    preset.reference = function(geometry) {
+        var key = Object.keys(preset.tags)[0],
+            value = preset.tags[key];
 
-        if (preset.tags[reference.key] !== '*') {
-            reference.value = preset.tags[reference.key];
+        if (geometry === 'relation' && key === 'type') {
+            return { rtype: value };
+        } else if (value === '*') {
+            return { key: key };
+        } else {
+            return { key: key, value: value };
         }
-
-        return reference;
     };
 
     var removeTags = preset.removeTags || preset.tags;
