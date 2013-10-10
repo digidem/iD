@@ -54,7 +54,7 @@ iD.ui.preset = function(context) {
             var entity = context.entity(id),
                 geometry = context.geometry(id);
 
-            fields = [UIField(context.presets().field('name'), entity)];
+            fields = [];
 
             preset.fields.forEach(function(field) {
                 if (field.matchGeometry(geometry)) {
