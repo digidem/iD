@@ -1,0 +1,1060 @@
+{
+  "name": "renders",
+  "checksum": "7535f45b239bdd0acab1abf0b5e7bd5b",
+  "shortsum": "7535f",
+  "images": [
+    {
+      "name": "airstrip-shadow",
+      "filename": "airstrip-shadow.png",
+      "checksum": "a4f1abf5b74642d4fa1adb7f8b408dc9",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 0
+    },
+    {
+      "name": "airstrip",
+      "filename": "airstrip.png",
+      "checksum": "2795063a158e4a961d3e2bd1564bf629",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 34
+    },
+    {
+      "name": "balata-shadow",
+      "filename": "balata-shadow.png",
+      "checksum": "c483b71117ceb0694588683d96422e6f",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 60
+    },
+    {
+      "name": "balata",
+      "filename": "balata.png",
+      "checksum": "96fceafc13031fcbccc273cbbd9fcac8",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 94
+    },
+    {
+      "name": "bamboo-shadow",
+      "filename": "bamboo-shadow.png",
+      "checksum": "eba5198ba244bfeabe91ca3a98e78cd5",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 120
+    },
+    {
+      "name": "bamboo",
+      "filename": "bamboo.png",
+      "checksum": "46b58ad6095716a09f602ff44cf5088c",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 154
+    },
+    {
+      "name": "boundary-shadow",
+      "filename": "boundary-shadow.png",
+      "checksum": "8fe0a3c4044c6d42854e6c9307b19092",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 180
+    },
+    {
+      "name": "boundary",
+      "filename": "boundary.png",
+      "checksum": "55c04a6934839ef20b6f4191e26f6d48",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 214
+    },
+    {
+      "name": "bridge-shadow",
+      "filename": "bridge-shadow.png",
+      "checksum": "a3ea2e34ae0568ec7c0db497d4452dd1",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 240
+    },
+    {
+      "name": "bridge",
+      "filename": "bridge.png",
+      "checksum": "4de280f2b4f4613e407798130792ba82",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 274
+    },
+    {
+      "name": "building_material-shadow",
+      "filename": "building_material-shadow.png",
+      "checksum": "e7e359c4c8d880e02c7d214f151a5504",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 300
+    },
+    {
+      "name": "building_material",
+      "filename": "building_material.png",
+      "checksum": "b0d3549e88015e3da009cd93756d1be4",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 334
+    },
+    {
+      "name": "burial_grounds-shadow",
+      "filename": "burial_grounds-shadow.png",
+      "checksum": "15a1b7d2f624bf5e58912aed631cc2c5",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 360
+    },
+    {
+      "name": "burial_grounds",
+      "filename": "burial_grounds.png",
+      "checksum": "3714458c95dadc738a85f16a42880108",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 394
+    },
+    {
+      "name": "bush-shadow",
+      "filename": "bush-shadow.png",
+      "checksum": "e5a9c60d89c94e05ab7cfc40b705fed6",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 420
+    },
+    {
+      "name": "bush",
+      "filename": "bush.png",
+      "checksum": "af87eb7896e7e469d82487e8a72132cc",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 454
+    },
+    {
+      "name": "church-shadow",
+      "filename": "church-shadow.png",
+      "checksum": "8ae977c57329e54271e643295db013a3",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 480
+    },
+    {
+      "name": "church",
+      "filename": "church.png",
+      "checksum": "9d0b29b2e65015c13059f3e183be5280",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 514
+    },
+    {
+      "name": "clay-shadow",
+      "filename": "clay-shadow.png",
+      "checksum": "e402dbe026b35b8ff3e62de1b5055d38",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 540
+    },
+    {
+      "name": "clay",
+      "filename": "clay.png",
+      "checksum": "8b52e87eb9d73ce6f9ff689f65660148",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 574
+    },
+    {
+      "name": "coral-shadow",
+      "filename": "coral-shadow.png",
+      "checksum": "2cb0d70039adb0b694db807f60f94a89",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 600
+    },
+    {
+      "name": "coral",
+      "filename": "coral.png",
+      "checksum": "b5d05476f9a8ea681db7932758236474",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 634
+    },
+    {
+      "name": "craft_material-shadow",
+      "filename": "craft_material-shadow.png",
+      "checksum": "43523acec78823c29cd390aaeb59ddb7",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 660
+    },
+    {
+      "name": "craft_material",
+      "filename": "craft_material.png",
+      "checksum": "3c2a89f72c3aea08de5912a9ab6b6558",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 694
+    },
+    {
+      "name": "crossing-shadow",
+      "filename": "crossing-shadow.png",
+      "checksum": "37e536ba6a102b0a8af87434ac0e08e9",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 720
+    },
+    {
+      "name": "crossing",
+      "filename": "crossing.png",
+      "checksum": "b34bba14eaca9a893ae9373c1f871a41",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 754
+    },
+    {
+      "name": "egg_gathering-shadow",
+      "filename": "egg_gathering-shadow.png",
+      "checksum": "ffc9c1a0cbae592ab29e71408da9025e",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 780
+    },
+    {
+      "name": "egg_gathering",
+      "filename": "egg_gathering.png",
+      "checksum": "57a5cea1cfa7fd9c6fe0063a7bd394f5",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 814
+    },
+    {
+      "name": "eta-shadow",
+      "filename": "eta-shadow.png",
+      "checksum": "6e02e6f7ab3788c392abc0ff91d7890a",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 840
+    },
+    {
+      "name": "eta",
+      "filename": "eta.png",
+      "checksum": "2aedcd8e51d9494dfb269657e934794a",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 874
+    },
+    {
+      "name": "farm-shadow",
+      "filename": "farm-shadow.png",
+      "checksum": "a9d428557fad8d7f67e012f8483d9ea9",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 900
+    },
+    {
+      "name": "farm",
+      "filename": "farm.png",
+      "checksum": "b5fb302a751eadfc69569f8bb0e5bf57",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 934
+    },
+    {
+      "name": "firewood-shadow",
+      "filename": "firewood-shadow.png",
+      "checksum": "556a881c48dc91b6b532dec2d296e210",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 960
+    },
+    {
+      "name": "firewood",
+      "filename": "firewood.png",
+      "checksum": "4767ab6c43b241bb0cc542e363364200",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 994
+    },
+    {
+      "name": "forest_fruits-shadow",
+      "filename": "forest_fruits-shadow.png",
+      "checksum": "1467cfee655fb2561bb118071b16e539",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1020
+    },
+    {
+      "name": "forest_fruits",
+      "filename": "forest_fruits.png",
+      "checksum": "afc92b0f6976e7646138c56c8c96a915",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1054
+    },
+    {
+      "name": "health_hut-shadow",
+      "filename": "health_hut-shadow.png",
+      "checksum": "77e385441463f359a8ec20f3184ed706",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1080
+    },
+    {
+      "name": "health_hut",
+      "filename": "health_hut.png",
+      "checksum": "ee8507a4bfc492313091544d9100c0c0",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1114
+    },
+    {
+      "name": "historical_site-shadow",
+      "filename": "historical_site-shadow.png",
+      "checksum": "eca55734eb43b60c70d97702e1017dcd",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1140
+    },
+    {
+      "name": "historical_site",
+      "filename": "historical_site.png",
+      "checksum": "71b7fb604e0aa1a6c18f48c1456b48a2",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1174
+    },
+    {
+      "name": "homestead-shadow",
+      "filename": "homestead-shadow.png",
+      "checksum": "9f7a895405faad6b061e8f971963c47e",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1200
+    },
+    {
+      "name": "homestead",
+      "filename": "homestead.png",
+      "checksum": "7d003a9b72e1ded2685b911c61675ec9",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1234
+    },
+    {
+      "name": "hunting_camp-shadow",
+      "filename": "hunting_camp-shadow.png",
+      "checksum": "ba83a05f589e900f87300edc5fc7b0f0",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1260
+    },
+    {
+      "name": "hunting_camp",
+      "filename": "hunting_camp.png",
+      "checksum": "485c943a28f2799d395bdb06beafe5cd",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1294
+    },
+    {
+      "name": "island-shadow",
+      "filename": "island-shadow.png",
+      "checksum": "6684fc3b403518d95382b6989bdecac3",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1320
+    },
+    {
+      "name": "island",
+      "filename": "island.png",
+      "checksum": "8f6ae47748ea0093e4f7eabf5551985b",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1354
+    },
+    {
+      "name": "lake-shadow",
+      "filename": "lake-shadow.png",
+      "checksum": "45967fb55d21b71d7e1d1f8bf60c4017",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1380
+    },
+    {
+      "name": "lake",
+      "filename": "lake.png",
+      "checksum": "364d3b3c671ef04f1f0a34126f0c5b1f",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1414
+    },
+    {
+      "name": "landing-shadow",
+      "filename": "landing-shadow.png",
+      "checksum": "f30a80798eed06d04d0402f1532c8e3f",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1440
+    },
+    {
+      "name": "landing",
+      "filename": "landing.png",
+      "checksum": "62b88e47d4089e81c0cf31d645a45d57",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1474
+    },
+    {
+      "name": "line-shadow",
+      "filename": "line-shadow.png",
+      "checksum": "b645a12dc477b136a2eb1f33b3aa1486",
+      "width": 34,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1500
+    },
+    {
+      "name": "line",
+      "filename": "line.png",
+      "checksum": "1aa786d79ad69ed52b111413025e367b",
+      "width": 26,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1534
+    },
+    {
+      "name": "marker-shadow",
+      "filename": "marker-shadow.png",
+      "checksum": "ffd7201ff3b0b0aa0d9631eb471f6b32",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1560
+    },
+    {
+      "name": "marker-stroked-shadow",
+      "filename": "marker-stroked-shadow.png",
+      "checksum": "cf3014454cbd02d54c2d2407daefc4c1",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1594
+    },
+    {
+      "name": "marker-stroked",
+      "filename": "marker-stroked.png",
+      "checksum": "d42b03417b8fef37afec01a24a1d174c",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1628
+    },
+    {
+      "name": "marker",
+      "filename": "marker.png",
+      "checksum": "f5b7f4a7e7adc5e1460a11e23974a823",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1654
+    },
+    {
+      "name": "medicinal_plants-shadow",
+      "filename": "medicinal_plants-shadow.png",
+      "checksum": "be65c02d28a77af335f257fbf93c6e29",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1680
+    },
+    {
+      "name": "medicinal_plants",
+      "filename": "medicinal_plants.png",
+      "checksum": "15118249d17a90aa79166e230c6d6df5",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1714
+    },
+    {
+      "name": "no_go_zone-shadow",
+      "filename": "no_go_zone-shadow.png",
+      "checksum": "bcc27e7f49aa8954c9eb42e41af0087f",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1740
+    },
+    {
+      "name": "no_go_zone",
+      "filename": "no_go_zone.png",
+      "checksum": "be5f3d764ec0fdf13008264df8bf1166",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1774
+    },
+    {
+      "name": "old_farm-shadow",
+      "filename": "old_farm-shadow.png",
+      "checksum": "242e62e6a0c409967bc67840e9037103",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1800
+    },
+    {
+      "name": "old_farm",
+      "filename": "old_farm.png",
+      "checksum": "94ca0a9ec5940d034a81037e33c23dfe",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1834
+    },
+    {
+      "name": "old_homestead-shadow",
+      "filename": "old_homestead-shadow.png",
+      "checksum": "32c24599f513e024994616184a7ee7ac",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1860
+    },
+    {
+      "name": "old_homestead",
+      "filename": "old_homestead.png",
+      "checksum": "676f81f4bc37a8385edeebfb36494fcd",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1894
+    },
+    {
+      "name": "old_hunting_camp-shadow",
+      "filename": "old_hunting_camp-shadow.png",
+      "checksum": "148b3787c464e2c26e7af23551a2ee20",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1920
+    },
+    {
+      "name": "old_hunting_camp",
+      "filename": "old_hunting_camp.png",
+      "checksum": "3c8b98b3828c9e5ad15135c64c84f882",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 1954
+    },
+    {
+      "name": "old_timber-shadow",
+      "filename": "old_timber-shadow.png",
+      "checksum": "6c480a2b2da9d2afafb14d73cec7e3a7",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 1980
+    },
+    {
+      "name": "old_timber",
+      "filename": "old_timber.png",
+      "checksum": "068219d43f5bc2c8637c7bf43c399171",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2014
+    },
+    {
+      "name": "old_village-shadow",
+      "filename": "old_village-shadow.png",
+      "checksum": "1d28abdea75b8c1874d9faf1e56691f6",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2040
+    },
+    {
+      "name": "old_village",
+      "filename": "old_village.png",
+      "checksum": "32f3fcfdc202d1cb8912743dfde45c22",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2074
+    },
+    {
+      "name": "out",
+      "filename": "out.png",
+      "checksum": "0df5eeab23c9b38c72ed95ef95b9086b",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2100
+    },
+    {
+      "name": "palms-shadow",
+      "filename": "palms-shadow.png",
+      "checksum": "4bb85de4222682800676be1067cb2855",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2134
+    },
+    {
+      "name": "palms",
+      "filename": "palms.png",
+      "checksum": "e91df5e714564c4a3ccb7c008e6bf594",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2168
+    },
+    {
+      "name": "point-shadow",
+      "filename": "point-shadow.png",
+      "checksum": "22c96c81738ca934670c7e464eec16f3",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2194
+    },
+    {
+      "name": "point",
+      "filename": "point.png",
+      "checksum": "127cd5938faf5854dbe68504165a1015",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2228
+    },
+    {
+      "name": "poison-shadow",
+      "filename": "poison-shadow.png",
+      "checksum": "7ed29f7da24aebd157f26c4e7f41e238",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2254
+    },
+    {
+      "name": "poison",
+      "filename": "poison.png",
+      "checksum": "d94fa7d69727713e67de0d889526a213",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2288
+    },
+    {
+      "name": "pond-shadow",
+      "filename": "pond-shadow.png",
+      "checksum": "68ecf8e6ba783d2cb44b12548765960a",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2314
+    },
+    {
+      "name": "pond",
+      "filename": "pond.png",
+      "checksum": "c75b5e8ab85d5bd60af79bff4c992f30",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2348
+    },
+    {
+      "name": "pools-shadow",
+      "filename": "pools-shadow.png",
+      "checksum": "b61c5dca800b9fde5c3acaf93263971e",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2374
+    },
+    {
+      "name": "pools",
+      "filename": "pools.png",
+      "checksum": "f81d61e291737ec3a32bbcacc4973bd2",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2408
+    },
+    {
+      "name": "precious_stones-shadow",
+      "filename": "precious_stones-shadow.png",
+      "checksum": "28ac8968c43ad5007dda386d481cb6a0",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2434
+    },
+    {
+      "name": "precious_stones",
+      "filename": "precious_stones.png",
+      "checksum": "618c0622fbf5ed18da209c5500e02c23",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2468
+    },
+    {
+      "name": "ranch-shadow",
+      "filename": "ranch-shadow.png",
+      "checksum": "69c11f33d278476eba2d14fef8989586",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2494
+    },
+    {
+      "name": "ranch",
+      "filename": "ranch.png",
+      "checksum": "7007d91b246fcc22942c4d697cf9207e",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2528
+    },
+    {
+      "name": "rapids-shadow",
+      "filename": "rapids-shadow.png",
+      "checksum": "861ba7a0fcbda7468b89f30a48b9ab59",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2554
+    },
+    {
+      "name": "rapids",
+      "filename": "rapids.png",
+      "checksum": "824ec950419fb076cddcffbea3431974",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2588
+    },
+    {
+      "name": "rare_bird-shadow",
+      "filename": "rare_bird-shadow.png",
+      "checksum": "95ed8ab4b4aa28347ff2e25e7d078a87",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2614
+    },
+    {
+      "name": "rare_bird",
+      "filename": "rare_bird.png",
+      "checksum": "d11f0c52bd19be389546c6035c86fc70",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2648
+    },
+    {
+      "name": "resin-shadow",
+      "filename": "resin-shadow.png",
+      "checksum": "2ce3f9c006506cad61019c5941447908",
+      "width": 23,
+      "height": 28,
+      "positionX": 0,
+      "positionY": 2674
+    },
+    {
+      "name": "resin",
+      "filename": "resin.png",
+      "checksum": "569f7559d804b9a59077c5d107c04971",
+      "width": 15,
+      "height": 20,
+      "positionX": 0,
+      "positionY": 2704
+    },
+    {
+      "name": "river-shadow",
+      "filename": "river-shadow.png",
+      "checksum": "ddecf995ebff36a7fa1bb10a7cb677db",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2726
+    },
+    {
+      "name": "river",
+      "filename": "river.png",
+      "checksum": "ce500bb6b25ec3a7c3945b8506182f09",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2760
+    },
+    {
+      "name": "rock_carvings-shadow",
+      "filename": "rock_carvings-shadow.png",
+      "checksum": "d456c03c05aeceac1051b1b405d66982",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2786
+    },
+    {
+      "name": "rock_carvings",
+      "filename": "rock_carvings.png",
+      "checksum": "68b0eda00b1f4bd4a0ebc63ce4848678",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2820
+    },
+    {
+      "name": "sacred_site-shadow",
+      "filename": "sacred_site-shadow.png",
+      "checksum": "efa82e6b4abaadebf4365a9539460830",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2846
+    },
+    {
+      "name": "sacred_site",
+      "filename": "sacred_site.png",
+      "checksum": "c3987a8da5f3cd2231350b0ab49c45d7",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2880
+    },
+    {
+      "name": "satellite_village-shadow",
+      "filename": "satellite_village-shadow.png",
+      "checksum": "b20425135ae63c5dbef8f7aeb7992e20",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2906
+    },
+    {
+      "name": "satellite_village",
+      "filename": "satellite_village.png",
+      "checksum": "69b3155771ab81dcd3c1b58f35045ee3",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 2940
+    },
+    {
+      "name": "savannah-shadow",
+      "filename": "savannah-shadow.png",
+      "checksum": "e5a9c60d89c94e05ab7cfc40b705fed6",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 2966
+    },
+    {
+      "name": "savannah",
+      "filename": "savannah.png",
+      "checksum": "36a4ece758b94c844aa2370249e5ccda",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 3000
+    },
+    {
+      "name": "school-shadow",
+      "filename": "school-shadow.png",
+      "checksum": "f49d5bc9995d22b3fc61fc49745488f0",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 3026
+    },
+    {
+      "name": "school",
+      "filename": "school.png",
+      "checksum": "f89006933161b2b7d0d80851340e0105",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 3060
+    },
+    {
+      "name": "swamp-shadow",
+      "filename": "swamp-shadow.png",
+      "checksum": "42bc63978e67d8538204ee6a141922d0",
+      "width": 32,
+      "height": 44,
+      "positionX": 0,
+      "positionY": 3086
+    },
+    {
+      "name": "swamp",
+      "filename": "swamp.png",
+      "checksum": "ac1e05c6baa69ca3ad284018bb1e6f4f",
+      "width": 24,
+      "height": 36,
+      "positionX": 0,
+      "positionY": 3132
+    },
+    {
+      "name": "timber-shadow",
+      "filename": "timber-shadow.png",
+      "checksum": "687c47af564fd0eba49b5323cf9a4a7e",
+      "width": 31,
+      "height": 27,
+      "positionX": 0,
+      "positionY": 3170
+    },
+    {
+      "name": "timber",
+      "filename": "timber.png",
+      "checksum": "3bbd556b049b207b7343dcb4c2bb528a",
+      "width": 23,
+      "height": 19,
+      "positionX": 0,
+      "positionY": 3199
+    },
+    {
+      "name": "track-shadow",
+      "filename": "track-shadow.png",
+      "checksum": "e0059fcd4dbad9538743d14228319ffa",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 3220
+    },
+    {
+      "name": "track",
+      "filename": "track.png",
+      "checksum": "1d2f69afd81b5119f7ab350945c8e6aa",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 3254
+    },
+    {
+      "name": "trapping-shadow",
+      "filename": "trapping-shadow.png",
+      "checksum": "6954b1df1b419fc0480190c87c58f765",
+      "width": 33,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 3280
+    },
+    {
+      "name": "trapping",
+      "filename": "trapping.png",
+      "checksum": "befcbf41ca2c66de351cdc6bfcdd4a60",
+      "width": 25,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 3314
+    },
+    {
+      "name": "turtle-shadow",
+      "filename": "turtle-shadow.png",
+      "checksum": "d71a80e54b52fb52815b81c40798662c",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 3340
+    },
+    {
+      "name": "turtle",
+      "filename": "turtle.png",
+      "checksum": "514599926eb225376a91afca4edf72dd",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 3374
+    },
+    {
+      "name": "village-shadow",
+      "filename": "village-shadow.png",
+      "checksum": "e4bf0ef78598c4eb2610995c98676bc9",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 3400
+    },
+    {
+      "name": "village",
+      "filename": "village.png",
+      "checksum": "fb0a7554d30e186f57636650572d6f29",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 3434
+    },
+    {
+      "name": "waterfall-shadow",
+      "filename": "waterfall-shadow.png",
+      "checksum": "4bc2f6d1f11d153e83b9d68e50f9ca24",
+      "width": 32,
+      "height": 32,
+      "positionX": 0,
+      "positionY": 3460
+    },
+    {
+      "name": "waterfall",
+      "filename": "waterfall.png",
+      "checksum": "7e6738ddda77e2143102719d8e023669",
+      "width": 24,
+      "height": 24,
+      "positionX": 0,
+      "positionY": 3494
+    }
+  ]
+}
