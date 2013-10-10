@@ -58,7 +58,7 @@ function generateCategories() {
 
         categories[id] = field;
     });
-    fs.writeFileSync('data/presets/categories.json', stringify(categories));
+    fs.writeFileSync('data/presets_wapichana/categories.json', stringify(categories));
 }
 
 function generateFields() {
@@ -85,7 +85,7 @@ function generateFields() {
 
         fields[id] = field;
     });
-    fs.writeFileSync('data/presets/fields.json', stringify(fields));
+    fs.writeFileSync('data/presets_wapichana/fields.json', stringify(fields));
 }
 
 function generatePresets() {
@@ -104,7 +104,7 @@ function generatePresets() {
         presets[id] = preset;
     });
 
-    fs.writeFileSync('data/presets/presets.json', stringify(presets));
+    fs.writeFileSync('data/presets_wapichana/presets.json', stringify(presets));
 
     var presetsYaml = _.cloneDeep(translations);
     _.forEach(presetsYaml.presets, function(preset) {

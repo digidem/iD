@@ -9,10 +9,10 @@ all: \
 
 DATA_FILES = $(shell find data -type f -name '*.json' -o -name '*.md')
 data/data.js: $(DATA_FILES) dist/locales/en.json dist/img/maki-sprite.png
-	node build.js
+	node build_wapichana.js
 
 dist/locales/en.json: data/core.yaml data/presets.yaml
-	node build.js
+	node build_wapichana.js
 
 dist/iD.js: \
 	js/lib/bootstrap-tooltip.js \
@@ -95,8 +95,8 @@ dist/img/line-presets.png: svg/line-presets.svg
 dist/img/relation-presets.png: svg/relation-presets.svg
 	if [ `which inkscape` ]; then $(SPRITE) --export-png=$@ $<; else echo "Inkscape is not installed"; fi;
 
-dist/img/maki-sprite.png: $(wildcard node_modules/maki/renders/*.png)
-	node data/maki_sprite
+dist/img/maki-sprite.png: $(wildcard wapichana_icons/*.png)
+	node data/wapichana_sprite
 
 D3_FILES = \
 	node_modules/d3/src/start.js \
