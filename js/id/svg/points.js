@@ -2,8 +2,7 @@ iD.svg.Points = function(projection, context) {
     function markerPath(selection, klass) {
         selection
             .attr('class', klass)
-            .attr('transform', 'translate(-8, -23)')
-            .attr('d', 'M 17,8 C 17,13 11,21 8.5,23.5 C 6,21 0,13 0,8 C 0,4 4,-0.5 8.5,-0.5 C 13,-0.5 17,4 17,8 z');
+            .attr('r', '12');
     }
 
     function sortY(a, b) {
@@ -22,16 +21,21 @@ iD.svg.Points = function(projection, context) {
             .attr('class', function(d) { return 'node point ' + d.id; })
             .order();
 
-        group.append('path')
+        group.append('circle')
             .call(markerPath, 'shadow');
 
-        group.append('path')
-            .call(markerPath, 'stroke');
+        // group.append('circle')
+        //     .call(markerPath, 'stroke');
+
+        group.append('use')
+          .attr('class', 'icon-shadow')
+          .attr('transform', 'translate(-16, -16)')
+          .attr('clip-path', 'url(#clip-square-32)')
 
         group.append('use')
             .attr('class', 'icon')
-            .attr('transform', 'translate(-6, -20)')
-            .attr('clip-path', 'url(#clip-square-12)');
+            .attr('transform', 'translate(-12, -12)')
+            .attr('clip-path', 'url(#clip-square-24)');
 
         groups.attr('transform', iD.svg.PointTransform(projection))
             .call(iD.svg.TagClasses());
@@ -43,7 +47,12 @@ iD.svg.Points = function(projection, context) {
         groups.select('.icon')
             .attr('xlink:href', function(entity) {
                 var preset = context.presets().match(entity, context.graph());
-                return preset.icon ? '#maki-' + preset.icon + '-12' : '';
+                return preset.icon ? '#maki-' + preset.icon + '-12' : '#maki-point-12';
+            });
+        groups.select('.icon-shadow')
+            .attr('xlink:href', function(entity) {
+                var preset = context.presets().match(entity, context.graph());
+                return preset.icon ? '#maki-' + preset.icon + '-shadow-12' : '#maki-point-12';
             });
 
         groups.exit()

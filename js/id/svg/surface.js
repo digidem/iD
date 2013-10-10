@@ -81,7 +81,7 @@ iD.svg.Surface = function(context) {
             .attr('xlink:href', function(d) { return context.imagePath('pattern/' + d[1] + '.png'); });
 
         defs.selectAll()
-            .data([12, 18, 20])
+            .data([12, 18, 20, 24, 32])
             .enter().append('clipPath')
             .attr('id', function(d) { return 'clip-square-' + d; })
             .append('rect')
