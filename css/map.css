@@ -54,6 +54,10 @@ g.point .stroke {
     fill: #fff;
 }
 
+g.point .icon-shadow {
+  opacity: 0;
+}
+
 g.point .shadow {
     fill: none;
     stroke: #f6634f;
@@ -61,12 +65,12 @@ g.point .shadow {
     stroke-opacity: 0;
 }
 
-g.point.hover:not(.selected) .shadow {
-    stroke-opacity: 0.5;
+g.point.hover:not(.selected) .icon-shadow {
+    opacity: 0.5;
 }
 
-g.point.selected .shadow {
-    stroke-opacity: 0.7;
+g.point.selected .icon-shadow {
+    opacity: 1;
 }
 
 g.point.active, g.point.active * {
