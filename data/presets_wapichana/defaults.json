@@ -1,0 +1,29 @@
+{
+    "area": [
+		"category-landcover",
+		"landuse/hunting",
+		"landuse/fishing",
+		"landuse/conservation",
+		"spiritual/no_go_zone",
+		"spiritual/sacred_site"
+    ],
+    "line": [
+		"way/line",
+		"way/track",
+		"water/river"
+    ],
+    "point": [
+        "category-amenity",
+		"category-community",
+		"category-fauna",
+		"category-flora",
+		"category-infrastructure",
+		"category-water",
+		"category-other",
+        "point"
+    ],
+    "vertex": [
+    ],
+    "relation": [
+    ]
+}

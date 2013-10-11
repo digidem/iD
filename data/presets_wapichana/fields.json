@@ -1,0 +1,673 @@
+{
+    "access": {
+        "keys": [
+            "access",
+            "foot",
+            "motor_vehicle",
+            "bicycle",
+            "horse"
+        ],
+        "type": "access",
+        "label": "Access",
+        "placeholder": "Unknown",
+        "strings": {
+            "types": {
+                "access": "General",
+                "foot": "Foot",
+                "motor_vehicle": "Motor Vehicles",
+                "bicycle": "Bicycles",
+                "horse": "Horses"
+            },
+            "options": {
+                "yes": {
+                    "title": "Allowed",
+                    "description": "Access permitted by law; a right of way"
+                },
+                "no": {
+                    "title": "Prohibited",
+                    "description": "Access not permitted to the general public"
+                },
+                "permissive": {
+                    "title": "Permissive",
+                    "description": "Access permitted until such time as the owner revokes the permission"
+                },
+                "private": {
+                    "title": "Private",
+                    "description": "Access permitted only with permission of the owner on an individual basis"
+                },
+                "designated": {
+                    "title": "Designated",
+                    "description": "Access permitted according to signs or specific local laws"
+                },
+                "destination": {
+                    "title": "Destination",
+                    "description": "Access permitted only to reach a destination"
+                }
+            }
+        }
+    },
+    "access_toilets": {
+        "key": "access",
+        "type": "combo",
+        "label": "Access",
+        "options": [
+            "public",
+            "permissive",
+            "private",
+            "customers"
+        ]
+    },
+    "address": {
+        "type": "address",
+        "keys": [
+            "addr:housename",
+            "addr:housenumber",
+            "addr:street",
+            "addr:city",
+            "addr:postcode"
+        ],
+        "icon": "address",
+        "universal": true,
+        "label": "Address",
+        "strings": {
+            "placeholders": {
+                "housename": "Housename",
+                "number": "123",
+                "street": "Street",
+                "city": "City",
+                "postcode": "Postal code"
+            }
+        }
+    },
+    "admin_level": {
+        "key": "admin_level",
+        "type": "number",
+        "label": "Admin Level"
+    },
+    "aeroway": {
+        "key": "aeroway",
+        "type": "combo",
+        "label": "Type"
+    },
+    "amenity": {
+        "key": "amenity",
+        "type": "combo",
+        "label": "Type"
+    },
+    "artist": {
+        "key": "artist_name",
+        "type": "text",
+        "label": "Artist"
+    },
+    "artwork_type": {
+        "key": "artwork_type",
+        "type": "combo",
+        "label": "Type"
+    },
+    "atm": {
+        "key": "atm",
+        "type": "check",
+        "label": "ATM"
+    },
+    "backrest": {
+        "key": "backrest",
+        "type": "check",
+        "label": "Backrest"
+    },
+    "barrier": {
+        "key": "barrier",
+        "type": "combo",
+        "label": "Type"
+    },
+    "bicycle_parking": {
+        "key": "bicycle_parking",
+        "type": "combo",
+        "label": "Type"
+    },
+    "boundary": {
+        "key": "boundary",
+        "type": "combo",
+        "label": "Type"
+    },
+    "building": {
+        "key": "building",
+        "type": "combo",
+        "label": "Building"
+    },
+    "building_area": {
+        "key": "building",
+        "type": "check",
+        "default": "yes",
+        "geometry": "area",
+        "label": "Building"
+    },
+    "building_yes": {
+        "key": "building",
+        "type": "combo",
+        "default": "yes",
+        "label": "Building"
+    },
+    "capacity": {
+        "key": "capacity",
+        "type": "number",
+        "label": "Capacity",
+        "placeholder": "50, 100, 200..."
+    },
+    "cardinal_direction": {
+        "key": "direction",
+        "type": "combo",
+        "options": [
+            "N",
+            "E",
+            "S",
+            "W",
+            "NE",
+            "SE",
+            "SW",
+            "NNE",
+            "ENE",
+            "ESE",
+            "SSE",
+            "SSW",
+            "WSW",
+            "WNW",
+            "NNW"
+        ],
+        "label": "Direction"
+    },
+    "clock_direction": {
+        "key": "direction",
+        "type": "combo",
+        "options": [
+            "clockwise",
+            "anticlockwise"
+        ],
+        "label": "Direction",
+        "strings": {
+            "options": {
+                "clockwise": "Clockwise",
+                "anticlockwise": "Counterclockwise"
+            }
+        }
+    },
+    "collection_times": {
+        "key": "collection_times",
+        "type": "text",
+        "label": "Collection Times"
+    },
+    "construction": {
+        "key": "construction",
+        "type": "combo",
+        "label": "Type"
+    },
+    "country": {
+        "key": "country",
+        "type": "combo",
+        "label": "Country"
+    },
+    "crossing": {
+        "key": "crossing",
+        "type": "combo",
+        "label": "Type"
+    },
+    "cuisine": {
+        "key": "cuisine",
+        "type": "combo",
+        "indexed": true,
+        "label": "Cuisine"
+    },
+    "denomination": {
+        "key": "denomination",
+        "type": "combo",
+        "label": "Denomination"
+    },
+    "denotation": {
+        "key": "denotation",
+        "type": "combo",
+        "label": "Denotation"
+    },
+    "description": {
+        "key": "description",
+        "type": "textarea",
+        "label": "Description"
+    },
+    "elevation": {
+        "key": "ele",
+        "type": "number",
+        "icon": "elevation",
+        "universal": true,
+        "label": "Elevation"
+    },
+    "emergency": {
+        "key": "emergency",
+        "type": "check",
+        "label": "Emergency"
+    },
+    "entrance": {
+        "key": "entrance",
+        "type": "combo",
+        "label": "Type"
+    },
+    "fax": {
+        "key": "fax",
+        "type": "tel",
+        "label": "Fax",
+        "placeholder": "+31 42 123 4567"
+    },
+    "fee": {
+        "key": "fee",
+        "type": "check",
+        "label": "Fee"
+    },
+    "fire_hydrant/type": {
+        "key": "fire_hydrant:type",
+        "type": "combo",
+        "options": [
+            "pillar",
+            "pond",
+            "underground",
+            "wall"
+        ],
+        "label": "Type"
+    },
+    "fixme": {
+        "key": "fixme",
+        "type": "textarea",
+        "label": "Fix Me"
+    },
+    "generator/method": {
+        "key": "generator:method",
+        "type": "combo",
+        "label": "Method"
+    },
+    "generator/source": {
+        "key": "generator:source",
+        "type": "combo",
+        "label": "Source"
+    },
+    "generator/type": {
+        "key": "generator:type",
+        "type": "combo",
+        "label": "Type"
+    },
+    "highway": {
+        "key": "highway",
+        "type": "combo",
+        "label": "Type"
+    },
+    "historic": {
+        "key": "historic",
+        "type": "combo",
+        "label": "Type"
+    },
+    "iata": {
+        "key": "iata",
+        "type": "text",
+        "label": "IATA"
+    },
+    "icao": {
+        "key": "icao",
+        "type": "text",
+        "label": "ICAO"
+    },
+    "incline": {
+        "key": "incline",
+        "type": "combo",
+        "label": "Incline"
+    },
+    "internet_access": {
+        "key": "internet_access",
+        "type": "combo",
+        "options": [
+            "yes",
+            "no",
+            "wlan",
+            "wired",
+            "terminal"
+        ],
+        "label": "Internet Access",
+        "strings": {
+            "options": {
+                "yes": "Yes",
+                "no": "No",
+                "wlan": "Wifi",
+                "wired": "Wired",
+                "terminal": "Terminal"
+            }
+        }
+    },
+    "landuse": {
+        "key": "landuse",
+        "type": "combo",
+        "label": "Type"
+    },
+    "lanes": {
+        "key": "lanes",
+        "type": "number",
+        "label": "Lanes",
+        "placeholder": "1, 2, 3..."
+    },
+    "layer": {
+        "key": "layer",
+        "type": "combo",
+        "label": "Layer"
+    },
+    "leisure": {
+        "key": "leisure",
+        "type": "combo",
+        "label": "Type"
+    },
+    "levels": {
+        "key": "building:levels",
+        "type": "number",
+        "label": "Levels",
+        "placeholder": "2, 4, 6..."
+    },
+    "lit": {
+        "key": "lit",
+        "type": "check",
+        "label": "Lit"
+    },
+    "location": {
+        "key": "location",
+        "type": "combo",
+        "label": "Location"
+    },
+    "man_made": {
+        "key": "man_made",
+        "type": "combo",
+        "label": "Type"
+    },
+    "maxspeed": {
+        "key": "maxspeed",
+        "type": "maxspeed",
+        "label": "Speed Limit",
+        "placeholder": "40, 50, 60..."
+    },
+    "name": {
+        "key": "name",
+        "type": "localized",
+        "label": "Name",
+        "placeholder": "Common name (if any)"
+    },
+    "natural": {
+        "key": "natural",
+        "type": "combo",
+        "label": "Natural"
+    },
+    "network": {
+        "key": "network",
+        "type": "text",
+        "label": "Network"
+    },
+    "note": {
+        "key": "note",
+        "type": "textarea",
+        "universal": true,
+        "icon": "note",
+        "label": "Note"
+    },
+    "office": {
+        "key": "office",
+        "type": "combo",
+        "label": "Type"
+    },
+    "oneway": {
+        "key": "oneway",
+        "type": "check",
+        "label": "One Way"
+    },
+    "oneway_yes": {
+        "key": "oneway",
+        "type": "check",
+        "default": "yes",
+        "label": "One Way"
+    },
+    "opening_hours": {
+        "key": "opening_hours",
+        "type": "text",
+        "label": "Hours"
+    },
+    "operator": {
+        "key": "operator",
+        "type": "text",
+        "label": "Operator"
+    },
+    "park_ride": {
+        "key": "park_ride",
+        "type": "check",
+        "label": "Park and Ride"
+    },
+    "parking": {
+        "key": "parking",
+        "type": "combo",
+        "options": [
+            "surface",
+            "multi-storey",
+            "underground",
+            "sheds",
+            "carports",
+            "garage_boxes",
+            "lane"
+        ],
+        "label": "Type"
+    },
+    "phone": {
+        "key": "phone",
+        "type": "tel",
+        "icon": "telephone",
+        "universal": true,
+        "label": "Phone",
+        "placeholder": "+31 42 123 4567"
+    },
+    "place": {
+        "key": "place",
+        "type": "combo",
+        "label": "Type"
+    },
+    "power": {
+        "key": "power",
+        "type": "combo",
+        "label": "Type"
+    },
+    "railway": {
+        "key": "railway",
+        "type": "combo",
+        "label": "Type"
+    },
+    "ref": {
+        "key": "ref",
+        "type": "text",
+        "label": "Reference"
+    },
+    "relation": {
+        "key": "type",
+        "type": "combo",
+        "label": "Type"
+    },
+    "religion": {
+        "key": "religion",
+        "type": "combo",
+        "options": [
+            "christian",
+            "muslim",
+            "buddhist",
+            "jewish",
+            "hindu",
+            "shinto",
+            "taoist"
+        ],
+        "label": "Religion",
+        "strings": {
+            "options": {
+                "christian": "Christian",
+                "muslim": "Muslim",
+                "buddhist": "Buddhist",
+                "jewish": "Jewish",
+                "hindu": "Hindu",
+                "shinto": "Shinto",
+                "taoist": "Taoist"
+            }
+        }
+    },
+    "restriction": {
+        "key": "restriction",
+        "type": "combo",
+        "label": "Type"
+    },
+    "route": {
+        "key": "route",
+        "type": "combo",
+        "label": "Type"
+    },
+    "route_master": {
+        "key": "route_master",
+        "type": "combo",
+        "label": "Type"
+    },
+    "sac_scale": {
+        "key": "sac_scale",
+        "type": "combo",
+        "label": "Path Difficulty"
+    },
+    "service": {
+        "key": "service",
+        "type": "combo",
+        "options": [
+            "parking_aisle",
+            "driveway",
+            "alley",
+            "drive-through",
+            "emergency_access"
+        ],
+        "label": "Type"
+    },
+    "shelter": {
+        "key": "shelter",
+        "type": "check",
+        "label": "Shelter"
+    },
+    "shop": {
+        "key": "shop",
+        "type": "combo",
+        "label": "Type"
+    },
+    "source": {
+        "key": "source",
+        "type": "text",
+        "icon": "source",
+        "universal": true,
+        "label": "Source"
+    },
+    "sport": {
+        "key": "sport",
+        "type": "combo",
+        "label": "Sport"
+    },
+    "structure": {
+        "type": "radio",
+        "keys": [
+            "bridge",
+            "tunnel",
+            "embankment",
+            "cutting"
+        ],
+        "label": "Structure",
+        "placeholder": "Unknown",
+        "strings": {
+            "options": {
+                "bridge": "Bridge",
+                "tunnel": "Tunnel",
+                "embankment": "Embankment",
+                "cutting": "Cutting"
+            }
+        }
+    },
+    "supervised": {
+        "key": "supervised",
+        "type": "check",
+        "label": "Supervised"
+    },
+    "surface": {
+        "key": "surface",
+        "type": "combo",
+        "label": "Surface"
+    },
+    "toilets/disposal": {
+        "key": "toilets:disposal",
+        "type": "combo",
+        "label": "Disposal"
+    },
+    "tourism": {
+        "key": "tourism",
+        "type": "combo",
+        "label": "Type"
+    },
+    "towertype": {
+        "key": "tower:type",
+        "type": "combo",
+        "label": "Tower type"
+    },
+    "tracktype": {
+        "key": "tracktype",
+        "type": "combo",
+        "label": "Type"
+    },
+    "trail_visibility": {
+        "key": "trail_visibility",
+        "type": "combo",
+        "label": "Trail Visibility"
+    },
+    "vending": {
+        "key": "vending",
+        "type": "combo",
+        "label": "Type of Goods"
+    },
+    "water": {
+        "key": "water",
+        "type": "combo",
+        "label": "Type"
+    },
+    "waterway": {
+        "key": "waterway",
+        "type": "combo",
+        "label": "Type"
+    },
+    "website": {
+        "key": "website",
+        "type": "url",
+        "icon": "website",
+        "placeholder": "http://example.com/",
+        "universal": true,
+        "label": "Website"
+    },
+    "wetland": {
+        "key": "wetland",
+        "type": "combo",
+        "label": "Type"
+    },
+    "wheelchair": {
+        "key": "wheelchair",
+        "type": "radio",
+        "options": [
+            "yes",
+            "limited",
+            "no"
+        ],
+        "icon": "wheelchair",
+        "universal": true,
+        "label": "Wheelchair Access"
+    },
+    "wikipedia": {
+        "key": "wikipedia",
+        "type": "wikipedia",
+        "icon": "wikipedia",
+        "universal": true,
+        "label": "Wikipedia"
+    },
+    "wood": {
+        "key": "wood",
+        "type": "combo",
+        "label": "Type"
+    }
+}

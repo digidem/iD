@@ -1,7 +1,7 @@
 {
     "geometry": "point",
     "name": "Fauna",
-    "icon": "category-fauna",
+    "icon": "marker-stroked",
     "members": [
         "fauna/egg_gathering",
         "fauna/rare_bird",

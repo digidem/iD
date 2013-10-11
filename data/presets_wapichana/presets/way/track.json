@@ -1,7 +1,8 @@
 {
     "icon": "track",
     "geometry": [
-        "point"
+        "point",
+		"line"
     ],
     "tags": {
         "way": "track"

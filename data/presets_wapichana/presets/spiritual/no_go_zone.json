@@ -1,7 +1,8 @@
 {
     "icon": "no_go_zone",
     "geometry": [
-        "point"
+        "point",
+		"area"
     ],
     "tags": {
         "spiritual": "no_go_zone"

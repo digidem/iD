@@ -1,0 +1,11 @@
+{
+    "icon": "hunting",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "landuse": "hunting"
+    },
+    "name": "Hunting Area"
+}

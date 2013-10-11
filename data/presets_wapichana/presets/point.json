@@ -1,5 +1,6 @@
 {
     "name": "Point",
+	"icon": "marker-stroked",
     "tags": {},
     "geometry": ["point"]
 }

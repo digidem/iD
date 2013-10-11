@@ -1,0 +1,11 @@
+{
+    "icon": "conservation",
+    "geometry": [
+        "point",
+		"area"
+    ],
+    "tags": {
+        "landuse": "conservation"
+    },
+    "name": "Conservation Area"
+}

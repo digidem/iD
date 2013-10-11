@@ -1,0 +1,895 @@
+{
+    "amenity": {
+        "fields": [
+            "amenity"
+        ],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "amenity": "*"
+        },
+        "name": "Amenity"
+    },
+    "amenity/church": {
+        "icon": "church",
+        "fields": [
+            "religion",
+            "denomination"
+        ],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "terms": [
+            "abbey",
+            "basilica",
+            "bethel",
+            "cathedral",
+            "chancel",
+            "chantry",
+            "chapel",
+            "church",
+            "fold",
+            "house of God",
+            "house of prayer",
+            "house of worship",
+            "minster",
+            "mission",
+            "mosque",
+            "oratory",
+            "parish",
+            "sacellum",
+            "sanctuary",
+            "shrine",
+            "synagogue",
+            "tabernacle",
+            "temple"
+        ],
+        "tags": {
+            "amenity": "church"
+        },
+        "name": "Church"
+    },
+    "amenity/health_hut": {
+        "icon": "health_hut",
+        "fields": [],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "terms": [
+            "clinic",
+            "emergency room",
+            "health service",
+            "hospice",
+            "infirmary",
+            "institution",
+            "nursing home",
+            "rest home",
+            "sanatorium",
+            "sanitarium",
+            "sick bay",
+            "surgery",
+            "ward",
+            "hospital"
+        ],
+        "tags": {
+            "amenity": "health_hut"
+        },
+        "name": "Health Hut"
+    },
+    "amenity/school": {
+        "icon": "school",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "terms": [
+            "academy",
+            "alma mater",
+            "blackboard",
+            "college",
+            "department",
+            "discipline",
+            "establishment",
+            "faculty",
+            "hall",
+            "halls of ivy",
+            "institute",
+            "institution",
+            "jail*",
+            "schoolhouse",
+            "seminary",
+            "university"
+        ],
+        "tags": {
+            "amenity": "school"
+        },
+        "name": "School"
+    },
+    "area": {
+        "name": "Area",
+        "tags": {
+            "area": "yes"
+        },
+        "geometry": [
+            "area"
+        ]
+    },
+    "community": {
+        "fields": [
+            "leisure"
+        ],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "community": "*"
+        },
+        "name": "Community"
+    },
+    "community/burial_grounds": {
+        "icon": "burial_grounds",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "community": "burial_grounds"
+        },
+        "name": "Burial Grounds"
+    },
+    "community/farm": {
+        "icon": "farm",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "community": "farm"
+        },
+        "name": "Farm"
+    },
+    "community/homestead": {
+        "icon": "homestead",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "community": "homestead"
+        },
+        "name": "Homestead"
+    },
+    "community/hunting_camp": {
+        "icon": "hunting_camp",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "community": "hunting_camp"
+        },
+        "name": "Hunting Camp"
+    },
+    "community/landing": {
+        "icon": "landing",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "community": "landing"
+        },
+        "name": "Landing"
+    },
+    "community/old_farm": {
+        "icon": "old_farm",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "community": "farm",
+            "status": "old"
+        },
+        "name": "Old Farm"
+    },
+    "community/old_homestead": {
+        "icon": "old_homestead",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "community": "homestead",
+            "status": "old"
+        },
+        "name": "Old Homestead"
+    },
+    "community/old_hunting_camp": {
+        "icon": "old_hunting_camp",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "community": "hunting_camp",
+            "status": "old"
+        },
+        "name": "Old Hunting Camp"
+    },
+    "community/old_village": {
+        "icon": "old_village",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "community": "village",
+            "status": "old"
+        },
+        "name": "Farm"
+    },
+    "community/ranch": {
+        "icon": "ranch",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "community": "ranch"
+        },
+        "name": "Ranch"
+    },
+    "community/satellite_village": {
+        "icon": "satellite_village",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "community": "village",
+            "type": "satellite"
+        },
+        "name": "Satellite Village"
+    },
+    "community/village": {
+        "icon": "village",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "community": "village"
+        },
+        "name": "Village"
+    },
+    "fauna": {
+        "fields": [
+            "leisure"
+        ],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "fauna": "*"
+        },
+        "name": "Fauna"
+    },
+    "fauna/egg_gathering": {
+        "icon": "egg_gathering",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "fauna": "egg_gathering"
+        },
+        "name": "Egg Gathering"
+    },
+    "fauna/rare_bird": {
+        "icon": "rare_bird",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "fauna": "rare_bird"
+        },
+        "name": "Rare Bird"
+    },
+    "fauna/trapping": {
+        "icon": "trapping",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "fauna": "trapping"
+        },
+        "name": "Trapping"
+    },
+    "fauna/turtle": {
+        "icon": "turtle",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "fauna": "turtle"
+        },
+        "name": "Turtle"
+    },
+    "flora": {
+        "fields": [
+            "leisure"
+        ],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "flora": "*"
+        },
+        "name": "Flora"
+    },
+    "flora/balata": {
+        "icon": "balata",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "balata"
+        },
+        "name": "Balata"
+    },
+    "flora/bamboo": {
+        "icon": "bamboo",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "bamboo"
+        },
+        "name": "Bamboo"
+    },
+    "flora/building_material": {
+        "icon": "building_material",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "building_material"
+        },
+        "name": "Building Material"
+    },
+    "flora/craft_material": {
+        "icon": "craft_material",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "flora": "craft_material"
+        },
+        "name": "Craft Material"
+    },
+    "flora/eta": {
+        "icon": "eta",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "eta"
+        },
+        "name": "Eta Palm"
+    },
+    "flora/firewood": {
+        "icon": "firewood",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "firewood"
+        },
+        "name": "Firewood Gathering Area"
+    },
+    "flora/forest_fruits": {
+        "icon": "forest_fruits",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "forest_fruits"
+        },
+        "name": "Forest Fruits"
+    },
+    "flora/medicinal_plants": {
+        "icon": "medicinal_plants",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "flora": "medicinal_plants"
+        },
+        "name": "Medicinal Plants"
+    },
+    "flora/old_timber": {
+        "icon": "old_timber",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "timber",
+            "status": "old"
+        },
+        "name": "Old timber area"
+    },
+    "flora/palms": {
+        "icon": "palms",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "palms"
+        },
+        "name": "Palms"
+    },
+    "flora/poison": {
+        "icon": "poison",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "poison"
+        },
+        "name": "Poison collecting area"
+    },
+    "flora/resin": {
+        "icon": "resin",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "resin"
+        },
+        "name": "Resin"
+    },
+    "flora/timber": {
+        "icon": "timber",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "flora": "timber"
+        },
+        "name": "Timber Area"
+    },
+    "heritage": {
+        "fields": [
+            "leisure"
+        ],
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "heritage": "*"
+        },
+        "name": "Heritage"
+    },
+    "heritage/historical_site": {
+        "icon": "historical_site",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "heritage": "historical_site"
+        },
+        "name": "Historical Site"
+    },
+    "heritage/rock_carvings": {
+        "icon": "rock_carvings",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "heritage": "rock_carvings"
+        },
+        "name": "Rock Carvings"
+    },
+    "infrastructure": {
+        "fields": [
+            "leisure"
+        ],
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "infrastructure": "*"
+        },
+        "name": "Infrastructure"
+    },
+    "infrastructure/airstrip": {
+        "icon": "airstrip",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "infrastructure": "airstrip"
+        },
+        "name": "Historical Site"
+    },
+    "infrastructure/bridge": {
+        "icon": "bridge",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "infrastructure": "bridge"
+        },
+        "name": "Bridge"
+    },
+    "infrastructure/coral": {
+        "icon": "coral",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "infrastructure": "coral"
+        },
+        "name": "Coral"
+    },
+    "landscape/bush": {
+        "icon": "bush",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "landscape": "bush"
+        },
+        "name": "Bush"
+    },
+    "landscape/bush_island": {
+        "icon": "bush_island",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "landscape": "bush_island"
+        },
+        "name": "Bush Island"
+    },
+    "landscape/savannah": {
+        "icon": "savannah",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "landscape": "savannah"
+        },
+        "name": "Savannah"
+    },
+    "landscape/savannah_island": {
+        "icon": "savannah_island",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "landscape": "savannah_island"
+        },
+        "name": "Savannah Island"
+    },
+    "landscape/swamp": {
+        "icon": "swamp",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "landscape": "swamp"
+        },
+        "name": "Swamp"
+    },
+    "landuse/conservation": {
+        "icon": "conservation",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "landuse": "conservation"
+        },
+        "name": "Conservation Area"
+    },
+    "landuse/fishing": {
+        "icon": "fishing",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "landuse": "fishing"
+        },
+        "name": "Fishing Area"
+    },
+    "landuse/hunting": {
+        "icon": "hunting",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "landuse": "hunting"
+        },
+        "name": "Hunting Area"
+    },
+    "line": {
+        "name": "Line",
+        "tags": {},
+        "geometry": [
+            "line"
+        ]
+    },
+    "mineral": {
+        "fields": [
+            "leisure"
+        ],
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "mineral": "*"
+        },
+        "name": "Mineral"
+    },
+    "mineral/clay": {
+        "icon": "clay",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "mineral": "clay"
+        },
+        "name": "Clay"
+    },
+    "mineral/precious_stones": {
+        "icon": "precious_stones",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "mineral": "precious_stones",
+            "display": "private"
+        },
+        "name": "Precious Stones"
+    },
+    "point": {
+        "name": "Point",
+        "icon": "marker-stroked",
+        "tags": {},
+        "geometry": [
+            "point"
+        ]
+    },
+    "relation": {
+        "name": "Relation",
+        "icon": "relation",
+        "tags": {},
+        "geometry": [
+            "relation"
+        ],
+        "fields": [
+            "relation"
+        ]
+    },
+    "spiritual/no_go_zone": {
+        "icon": "no_go_zone",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "spiritual": "no_go_zone"
+        },
+        "name": "No Go Zone"
+    },
+    "spiritual/sacred_site": {
+        "icon": "sacred_site",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "spiritual": "sacred_site"
+        },
+        "name": "Sacred Site"
+    },
+    "territory": {
+        "fields": [
+            "leisure"
+        ],
+        "geometry": [
+            "point",
+            "vertex",
+            "line",
+            "area"
+        ],
+        "tags": {
+            "territory": "*"
+        },
+        "name": "Territory"
+    },
+    "territory/boundary": {
+        "icon": "territory-boundary",
+        "geometry": [
+            "point",
+            "line",
+            "area",
+            "vertex"
+        ],
+        "tags": {
+            "territory": "boundary"
+        },
+        "name": "Territory Boundary"
+    },
+    "vertex": {
+        "name": "Other",
+        "tags": {},
+        "geometry": [
+            "vertex"
+        ]
+    },
+    "water": {
+        "fields": [
+            "leisure"
+        ],
+        "geometry": [
+            "point",
+            "vertex",
+            "line",
+            "area"
+        ],
+        "tags": {
+            "water": "*"
+        },
+        "name": "Water"
+    },
+    "water/crossing": {
+        "icon": "crossing",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "water": "crossing"
+        },
+        "name": "River/Creek Crossing"
+    },
+    "water/island": {
+        "icon": "island",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "water": "island"
+        },
+        "name": "Island"
+    },
+    "water/lake": {
+        "icon": "lake",
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "water": "lake"
+        },
+        "name": "Lake"
+    },
+    "water/pond": {
+        "icon": "pond",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "water": "pond"
+        },
+        "name": "Pond"
+    },
+    "water/pools": {
+        "icon": "pools",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "water": "pools"
+        },
+        "name": "Deep Pools"
+    },
+    "water/rapids": {
+        "icon": "rapids",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "water": "rapids"
+        },
+        "name": "Rapids"
+    },
+    "water/river": {
+        "icon": "river",
+        "geometry": [
+            "point",
+            "line",
+            "vertex",
+            "area"
+        ],
+        "terms": [
+            "beck",
+            "branch",
+            "brook",
+            "course",
+            "creek",
+            "estuary",
+            "rill",
+            "rivulet",
+            "run",
+            "runnel",
+            "stream",
+            "tributary",
+            "watercourse"
+        ],
+        "tags": {
+            "water": "river"
+        },
+        "name": "River"
+    },
+    "water/waterfall": {
+        "icon": "waterfall",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "water": "waterfall"
+        },
+        "name": "Waterfall"
+    },
+    "way": {
+        "fields": [
+            "leisure"
+        ],
+        "geometry": [
+            "point",
+            "vertex",
+            "line"
+        ],
+        "tags": {
+            "way": "*"
+        },
+        "name": "Way"
+    },
+    "way/line": {
+        "icon": "line",
+        "geometry": [
+            "point",
+            "line"
+        ],
+        "tags": {
+            "way": "line"
+        },
+        "name": "Hunting Line"
+    },
+    "way/track": {
+        "icon": "track",
+        "geometry": [
+            "point",
+            "line"
+        ],
+        "tags": {
+            "way": "track"
+        },
+        "name": "Track"
+    }
+}

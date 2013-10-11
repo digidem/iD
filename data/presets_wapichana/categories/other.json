@@ -1,9 +1,8 @@
 {
     "geometry": "point",
     "name": "Other",
-    "icon": "category-spirtual",
+    "icon": "marker-stroked",
     "members": [
-        "spiritual/no_go_zone",
         "spiritual/sacred_site",
         "heritage/historical_site",
         "heritage/rock_carvings",

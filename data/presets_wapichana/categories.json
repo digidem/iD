@@ -1,0 +1,109 @@
+{
+    "category-amenity": {
+        "geometry": "point",
+        "name": "Amenity",
+        "icon": "marker-stroked",
+        "members": [
+            "amenity/church",
+            "amenity/health_hut",
+            "amenity/school"
+        ]
+    },
+    "category-community": {
+        "geometry": "point",
+        "name": "Community",
+        "icon": "marker-stroked",
+        "members": [
+            "community/burial_grounds",
+            "community/farm",
+            "community/homestead",
+            "community/hunting_camp",
+            "community/landing",
+            "community/old_farm",
+            "community/old_homestead",
+            "community/old_hunting_camp",
+            "community/old_village",
+            "community/ranch",
+            "community/satellite_village",
+            "community/village"
+        ]
+    },
+    "category-fauna": {
+        "geometry": "point",
+        "name": "Fauna",
+        "icon": "marker-stroked",
+        "members": [
+            "fauna/egg_gathering",
+            "fauna/rare_bird",
+            "fauna/trapping",
+            "fauna/turtle"
+        ]
+    },
+    "category-flora": {
+        "geometry": "point",
+        "name": "Flora",
+        "icon": "marker-stroked",
+        "members": [
+            "flora/balata",
+            "flora/bamboo",
+            "flora/building_material",
+            "flora/craft_material",
+            "flora/eta",
+            "flora/firewood",
+            "flora/forest_fruits",
+            "flora/medicinal_plants",
+            "flora/palms",
+            "flora/poison",
+            "flora/resin",
+            "flora/old_timber",
+            "flora/timber"
+        ]
+    },
+    "category-infrastructure": {
+        "geometry": "point",
+        "name": "Infrastructure",
+        "icon": "marker-stroked",
+        "members": [
+            "infrastructure/airstrip",
+            "infrastructure/bridge",
+            "infrastructure/coral"
+        ]
+    },
+    "category-landcover": {
+        "geometry": "area",
+        "name": "Landcover",
+        "icon": "marker-stroked",
+        "members": [
+            "landscape/bush",
+            "landscape/savannah",
+            "landscape/bush_island",
+            "landscape/savannah_island",
+            "landscape/swamp"
+        ]
+    },
+    "category-other": {
+        "geometry": "point",
+        "name": "Other",
+        "icon": "marker-stroked",
+        "members": [
+            "spiritual/sacred_site",
+            "heritage/historical_site",
+            "heritage/rock_carvings",
+            "mineral/clay",
+            "mineral/precious_stones"
+        ]
+    },
+    "category-water": {
+        "geometry": "point",
+        "name": "Water",
+        "icon": "marker-stroked",
+        "members": [
+            "water/lake",
+            "water/pools",
+            "water/rapids",
+            "water/island",
+            "water/waterfall",
+            "water/crossing"
+        ]
+    }
+}

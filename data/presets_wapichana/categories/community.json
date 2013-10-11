@@ -1,7 +1,7 @@
 {
     "geometry": "point",
     "name": "Community",
-    "icon": "category-community",
+    "icon": "marker-stroked",
     "members": [
         "community/burial_grounds",
         "community/farm",

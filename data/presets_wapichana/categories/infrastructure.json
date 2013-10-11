@@ -1,7 +1,7 @@
 {
     "geometry": "point",
     "name": "Infrastructure",
-    "icon": "category-infrastructure",
+    "icon": "marker-stroked",
     "members": [
         "infrastructure/airstrip",
         "infrastructure/bridge",

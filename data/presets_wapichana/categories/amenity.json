@@ -1,7 +1,7 @@
 {
     "geometry": "point",
     "name": "Amenity",
-    "icon": "category-amenity",
+    "icon": "marker-stroked",
     "members": [
         "amenity/church",
         "amenity/health_hut",
