@@ -64,7 +64,7 @@ iD.ui.preset = function(context) {
 
             context.presets().universal().forEach(function(field) {
                 if (preset.fields.indexOf(field) < 0) {
-                    fields.push(UIField(field, entity));
+                    fields.push(UIField(field, entity, field.show));
                 }
             });
         }
