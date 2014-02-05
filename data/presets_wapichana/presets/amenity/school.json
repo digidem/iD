@@ -1,5 +1,8 @@
 {
     "icon": "school",
+    "fields": [
+        "school_type"
+    ],
     "geometry": [
         "point",
         "area"

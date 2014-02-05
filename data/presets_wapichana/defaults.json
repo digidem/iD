@@ -1,6 +1,7 @@
 {
     "area": [
 		"category-landcover",
+		"category-landrights",
 		"landuse/hunting",
 		"landuse/fishing",
 		"landuse/conservation",

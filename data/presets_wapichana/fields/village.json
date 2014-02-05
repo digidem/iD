@@ -1,0 +1,10 @@
+{
+    "key": "village",
+    "type": "combo",
+    "options": [
+        "Shorinab",
+        "Sawarwao"
+    ],
+    "label": "Village",
+	"placeholder": "Village Name (if this belongs to a particular village)"
+}

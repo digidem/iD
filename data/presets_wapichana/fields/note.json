@@ -2,6 +2,8 @@
     "key": "note",
     "type": "textarea",
     "universal": true,
+	"show": true,
     "icon": "note",
-    "label": "Note"
+    "label": "Note",
+	"placeholder": "Any story or description of this place"
 }

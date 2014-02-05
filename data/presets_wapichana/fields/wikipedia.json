@@ -2,6 +2,6 @@
     "key": "wikipedia",
     "type": "wikipedia",
     "icon": "wikipedia",
-    "universal": true,
+    "universal": false,
     "label": "Wikipedia"
 }

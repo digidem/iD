@@ -1,5 +1,8 @@
 {
     "icon": "bush_island",
+	"fields": [
+		"name"
+	],
     "geometry": [
         "point",
 		"area"

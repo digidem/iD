@@ -13,6 +13,8 @@ en:
         name: Infrastructure
       "category-landcover": 
         name: Landcover
+      "category-landrights": 
+        name: Land Rights
       "category-other": 
         name: Other
       "category-water": 
@@ -177,6 +179,7 @@ en:
         label: Network
       note: 
         label: Note
+        placeholder: Any story or description of this place
       office: 
         label: Type
       oneway: 
@@ -187,6 +190,9 @@ en:
         label: Hours
       operator: 
         label: Operator
+      owner: 
+        label: Owner
+        placeholder: Owner (if any)
       park_ride: 
         label: Park and Ride
       parking: 
@@ -222,6 +228,11 @@ en:
         label: Type
       sac_scale: 
         label: Path Difficulty
+      school_type: 
+        label: School Age Group
+        options: 
+          primary: Primary
+          secondary: Secondary
       service: 
         label: Type
       shelter: 
@@ -232,6 +243,12 @@ en:
         label: Source
       sport: 
         label: Sport
+      status: 
+        label: Status
+        options: 
+          proposed: Proposed
+          submitted: Submitted to government
+          granted: Granted by government
       structure: 
         label: Structure
         placeholder: Unknown
@@ -256,6 +273,9 @@ en:
         label: Trail Visibility
       vending: 
         label: Type of Goods
+      village: 
+        label: Village
+        placeholder: Village Name (if this belongs to a particular village)
       water: 
         label: Type
       waterway: 
@@ -404,6 +424,15 @@ en:
       infrastructure/coral: 
         name: Coral
         terms: "<translate with synonyms or related terms for 'Coral', separated by commas>"
+      landrights/extension: 
+        name: Land Title Extension
+        terms: "<translate with synonyms or related terms for 'Land Title Extension', separated by commas>"
+      landrights/landclaim: 
+        name: Land Claim Boundary
+        terms: "<translate with synonyms or related terms for 'Land Claim Boundary', separated by commas>"
+      landrights/title: 
+        name: Land Title
+        terms: "<translate with synonyms or related terms for 'Land Title', separated by commas>"
       landscape/bush: 
         name: Bush
         terms: "<translate with synonyms or related terms for 'Bush', separated by commas>"
@@ -455,9 +484,6 @@ en:
       territory: 
         name: Territory
         terms: "<translate with synonyms or related terms for 'Territory', separated by commas>"
-      territory/boundary: 
-        name: Territory Boundary
-        terms: "<translate with synonyms or related terms for 'Territory Boundary', separated by commas>"
       vertex: 
         name: Other
         terms: "<translate with synonyms or related terms for 'Other', separated by commas>"

@@ -1,5 +1,8 @@
 {
     "icon": "conservation",
+	"fields": [
+		"village"
+	],
     "geometry": [
         "point",
 		"area"

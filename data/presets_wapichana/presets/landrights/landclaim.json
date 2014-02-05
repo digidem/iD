@@ -7,7 +7,7 @@
 		"vertex"
     ],
     "tags": {
-        "territory": "boundary"
+        "landrights": "landclaim"
     },
-    "name": "Territory Boundary"
+    "name": "Land Claim Boundary"
 }

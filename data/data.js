@@ -1662,7 +1662,8 @@ iD.data = {
                     "temple"
                 ],
                 "tags": {
-                    "amenity": "church"
+                    "amenity": "church",
+                    "religion": "christian"
                 },
                 "name": "Church"
             },
@@ -1696,6 +1697,9 @@ iD.data = {
             },
             "amenity/school": {
                 "icon": "school",
+                "fields": [
+                    "school_type"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -1758,6 +1762,9 @@ iD.data = {
             },
             "community/farm": {
                 "icon": "farm",
+                "fields": [
+                    "owner"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -1769,6 +1776,9 @@ iD.data = {
             },
             "community/homestead": {
                 "icon": "homestead",
+                "fields": [
+                    "owner"
+                ],
                 "geometry": [
                     "point"
                 ],
@@ -1779,6 +1789,9 @@ iD.data = {
             },
             "community/hunting_camp": {
                 "icon": "hunting_camp",
+                "fields": [
+                    "owner"
+                ],
                 "geometry": [
                     "point"
                 ],
@@ -1789,6 +1802,9 @@ iD.data = {
             },
             "community/landing": {
                 "icon": "landing",
+                "fields": [
+                    "owner"
+                ],
                 "geometry": [
                     "point"
                 ],
@@ -1799,6 +1815,9 @@ iD.data = {
             },
             "community/old_farm": {
                 "icon": "old_farm",
+                "fields": [
+                    "owner"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -1811,6 +1830,9 @@ iD.data = {
             },
             "community/old_homestead": {
                 "icon": "old_homestead",
+                "fields": [
+                    "owner"
+                ],
                 "geometry": [
                     "point"
                 ],
@@ -1822,6 +1844,9 @@ iD.data = {
             },
             "community/old_hunting_camp": {
                 "icon": "old_hunting_camp",
+                "fields": [
+                    "owner"
+                ],
                 "geometry": [
                     "point"
                 ],
@@ -1833,6 +1858,9 @@ iD.data = {
             },
             "community/old_village": {
                 "icon": "old_village",
+                "fields": [
+                    "name"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -1845,6 +1873,9 @@ iD.data = {
             },
             "community/ranch": {
                 "icon": "ranch",
+                "fields": [
+                    "owner"
+                ],
                 "geometry": [
                     "point"
                 ],
@@ -1855,6 +1886,9 @@ iD.data = {
             },
             "community/satellite_village": {
                 "icon": "satellite_village",
+                "fields": [
+                    "name"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -1867,6 +1901,9 @@ iD.data = {
             },
             "community/village": {
                 "icon": "village",
+                "fields": [
+                    "name"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -1891,6 +1928,9 @@ iD.data = {
             },
             "fauna/egg_gathering": {
                 "icon": "egg_gathering",
+                "fields": [
+                    "access"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -2152,6 +2192,53 @@ iD.data = {
                 },
                 "name": "Coral"
             },
+            "landrights/extension": {
+                "icon": "territory-boundary",
+                "fields": [
+                    "village",
+                    "status"
+                ],
+                "geometry": [
+                    "point",
+                    "line",
+                    "area",
+                    "vertex"
+                ],
+                "tags": {
+                    "landrights": "extension"
+                },
+                "name": "Land Title Extension"
+            },
+            "landrights/landclaim": {
+                "icon": "territory-boundary",
+                "geometry": [
+                    "point",
+                    "line",
+                    "area",
+                    "vertex"
+                ],
+                "tags": {
+                    "landrights": "landclaim"
+                },
+                "name": "Land Claim Boundary"
+            },
+            "landrights/title": {
+                "icon": "territory-boundary",
+                "fields": [
+                    "village",
+                    "status"
+                ],
+                "geometry": [
+                    "point",
+                    "line",
+                    "area",
+                    "vertex"
+                ],
+                "tags": {
+                    "landrights": "title"
+                },
+                "name": "Land Title"
+            },
             "landscape/bush": {
                 "icon": "bush",
                 "geometry": [
@@ -2165,6 +2252,9 @@ iD.data = {
             },
             "landscape/bush_island": {
                 "icon": "bush_island",
+                "fields": [
+                    "name"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -2187,6 +2277,9 @@ iD.data = {
             },
             "landscape/savannah_island": {
                 "icon": "savannah_island",
+                "fields": [
+                    "name"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -2198,6 +2291,9 @@ iD.data = {
             },
             "landscape/swamp": {
                 "icon": "swamp",
+                "fields": [
+                    "name"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -2209,6 +2305,9 @@ iD.data = {
             },
             "landuse/conservation": {
                 "icon": "conservation",
+                "fields": [
+                    "village"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -2220,6 +2319,9 @@ iD.data = {
             },
             "landuse/fishing": {
                 "icon": "fishing",
+                "fields": [
+                    "village"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -2231,6 +2333,9 @@ iD.data = {
             },
             "landuse/hunting": {
                 "icon": "hunting",
+                "fields": [
+                    "village"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -2301,6 +2406,9 @@ iD.data = {
             },
             "spiritual/no_go_zone": {
                 "icon": "no_go_zone",
+                "fields": [
+                    "note"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -2312,6 +2420,9 @@ iD.data = {
             },
             "spiritual/sacred_site": {
                 "icon": "sacred_site",
+                "fields": [
+                    "note"
+                ],
                 "geometry": [
                     "point",
                     "area"
@@ -2335,19 +2446,6 @@ iD.data = {
                     "territory": "*"
                 },
                 "name": "Territory"
-            },
-            "territory/boundary": {
-                "icon": "territory-boundary",
-                "geometry": [
-                    "point",
-                    "line",
-                    "area",
-                    "vertex"
-                ],
-                "tags": {
-                    "territory": "boundary"
-                },
-                "name": "Territory Boundary"
             },
             "vertex": {
                 "name": "Other",
@@ -2510,6 +2608,7 @@ iD.data = {
         "defaults": {
             "area": [
                 "category-landcover",
+                "category-landrights",
                 "landuse/hunting",
                 "landuse/fishing",
                 "landuse/conservation",
@@ -2617,6 +2716,16 @@ iD.data = {
                     "landscape/swamp"
                 ]
             },
+            "category-landrights": {
+                "geometry": "area",
+                "name": "Land Rights",
+                "icon": "marker-stroked",
+                "members": [
+                    "landrights/landclaim",
+                    "landrights/title",
+                    "landrights/extension"
+                ]
+            },
             "category-other": {
                 "geometry": "point",
                 "name": "Other",
@@ -2712,7 +2821,7 @@ iD.data = {
                     "addr:postcode"
                 ],
                 "icon": "address",
-                "universal": true,
+                "universal": false,
                 "label": "Address",
                 "strings": {
                     "placeholders": {
@@ -3049,8 +3158,10 @@ iD.data = {
                 "key": "note",
                 "type": "textarea",
                 "universal": true,
+                "show": true,
                 "icon": "note",
-                "label": "Note"
+                "label": "Note",
+                "placeholder": "Any story or description of this place"
             },
             "office": {
                 "key": "office",
@@ -3078,6 +3189,12 @@ iD.data = {
                 "type": "text",
                 "label": "Operator"
             },
+            "owner": {
+                "key": "name",
+                "type": "text",
+                "label": "Owner",
+                "placeholder": "Owner (if any)"
+            },
             "park_ride": {
                 "key": "park_ride",
                 "type": "check",
@@ -3101,7 +3218,7 @@ iD.data = {
                 "key": "phone",
                 "type": "tel",
                 "icon": "telephone",
-                "universal": true,
+                "universal": false,
                 "label": "Phone",
                 "placeholder": "+31 42 123 4567"
             },
@@ -3175,6 +3292,21 @@ iD.data = {
                 "type": "combo",
                 "label": "Path Difficulty"
             },
+            "school_type": {
+                "key": "school_type",
+                "type": "combo",
+                "options": [
+                    "primary",
+                    "secondary"
+                ],
+                "label": "School Age Group",
+                "strings": {
+                    "options": {
+                        "primary": "Primary",
+                        "secondary": "Secondary"
+                    }
+                }
+            },
             "service": {
                 "key": "service",
                 "type": "combo",
@@ -3208,6 +3340,23 @@ iD.data = {
                 "key": "sport",
                 "type": "combo",
                 "label": "Sport"
+            },
+            "status": {
+                "key": "status",
+                "type": "radio",
+                "options": [
+                    "proposed",
+                    "submitted",
+                    "granted"
+                ],
+                "label": "Status",
+                "strings": {
+                    "options": {
+                        "proposed": "Proposed",
+                        "submitted": "Submitted to government",
+                        "granted": "Granted by government"
+                    }
+                }
             },
             "structure": {
                 "type": "radio",
@@ -3268,6 +3417,16 @@ iD.data = {
                 "type": "combo",
                 "label": "Type of Goods"
             },
+            "village": {
+                "key": "village",
+                "type": "combo",
+                "options": [
+                    "Shorinab",
+                    "Sawarwao"
+                ],
+                "label": "Village",
+                "placeholder": "Village Name (if this belongs to a particular village)"
+            },
             "water": {
                 "key": "water",
                 "type": "combo",
@@ -3283,7 +3442,7 @@ iD.data = {
                 "type": "url",
                 "icon": "website",
                 "placeholder": "http://example.com/",
-                "universal": true,
+                "universal": false,
                 "label": "Website"
             },
             "wetland": {
@@ -3300,14 +3459,14 @@ iD.data = {
                     "no"
                 ],
                 "icon": "wheelchair",
-                "universal": true,
+                "universal": false,
                 "label": "Wheelchair Access"
             },
             "wikipedia": {
                 "key": "wikipedia",
                 "type": "wikipedia",
                 "icon": "wikipedia",
-                "universal": true,
+                "universal": false,
                 "label": "Wikipedia"
             },
             "wood": {
@@ -15705,6 +15864,9 @@ iD.data = {
                 "category-landcover": {
                     "name": "Landcover"
                 },
+                "category-landrights": {
+                    "name": "Land Rights"
+                },
                 "category-other": {
                     "name": "Other"
                 },
@@ -15937,7 +16099,8 @@ iD.data = {
                     "label": "Network"
                 },
                 "note": {
-                    "label": "Note"
+                    "label": "Note",
+                    "placeholder": "Any story or description of this place"
                 },
                 "office": {
                     "label": "Type"
@@ -15953,6 +16116,10 @@ iD.data = {
                 },
                 "operator": {
                     "label": "Operator"
+                },
+                "owner": {
+                    "label": "Owner",
+                    "placeholder": "Owner (if any)"
                 },
                 "park_ride": {
                     "label": "Park and Ride"
@@ -16003,6 +16170,13 @@ iD.data = {
                 "sac_scale": {
                     "label": "Path Difficulty"
                 },
+                "school_type": {
+                    "label": "School Age Group",
+                    "options": {
+                        "primary": "Primary",
+                        "secondary": "Secondary"
+                    }
+                },
                 "service": {
                     "label": "Type"
                 },
@@ -16017,6 +16191,14 @@ iD.data = {
                 },
                 "sport": {
                     "label": "Sport"
+                },
+                "status": {
+                    "label": "Status",
+                    "options": {
+                        "proposed": "Proposed",
+                        "submitted": "Submitted to government",
+                        "granted": "Granted by government"
+                    }
                 },
                 "structure": {
                     "label": "Structure",
@@ -16051,6 +16233,10 @@ iD.data = {
                 },
                 "vending": {
                     "label": "Type of Goods"
+                },
+                "village": {
+                    "label": "Village",
+                    "placeholder": "Village Name (if this belongs to a particular village)"
                 },
                 "water": {
                     "label": "Type"
@@ -16252,6 +16438,18 @@ iD.data = {
                     "name": "Coral",
                     "terms": ""
                 },
+                "landrights/extension": {
+                    "name": "Land Title Extension",
+                    "terms": ""
+                },
+                "landrights/landclaim": {
+                    "name": "Land Claim Boundary",
+                    "terms": ""
+                },
+                "landrights/title": {
+                    "name": "Land Title",
+                    "terms": ""
+                },
                 "landscape/bush": {
                     "name": "Bush",
                     "terms": ""
@@ -16318,10 +16516,6 @@ iD.data = {
                 },
                 "territory": {
                     "name": "Territory",
-                    "terms": ""
-                },
-                "territory/boundary": {
-                    "name": "Territory Boundary",
                     "terms": ""
                 },
                 "vertex": {

@@ -1,5 +1,8 @@
 {
     "icon": "hunting",
+	"fields": [
+		"village"
+	],
     "geometry": [
         "point",
 		"area"

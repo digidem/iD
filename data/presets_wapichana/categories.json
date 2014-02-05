@@ -81,6 +81,16 @@
             "landscape/swamp"
         ]
     },
+    "category-landrights": {
+        "geometry": "area",
+        "name": "Land Rights",
+        "icon": "marker-stroked",
+        "members": [
+            "landrights/landclaim",
+            "landrights/title",
+            "landrights/extension"
+        ]
+    },
     "category-other": {
         "geometry": "point",
         "name": "Other",

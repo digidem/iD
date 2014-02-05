@@ -1,5 +1,8 @@
 {
     "icon": "old_farm",
+	"fields": [
+		"owner"
+	],
     "geometry": [
         "point",
 		"area"

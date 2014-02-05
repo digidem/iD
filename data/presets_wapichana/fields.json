@@ -67,7 +67,7 @@
             "addr:postcode"
         ],
         "icon": "address",
-        "universal": true,
+        "universal": false,
         "label": "Address",
         "strings": {
             "placeholders": {
@@ -404,8 +404,10 @@
         "key": "note",
         "type": "textarea",
         "universal": true,
+        "show": true,
         "icon": "note",
-        "label": "Note"
+        "label": "Note",
+        "placeholder": "Any story or description of this place"
     },
     "office": {
         "key": "office",
@@ -433,6 +435,12 @@
         "type": "text",
         "label": "Operator"
     },
+    "owner": {
+        "key": "name",
+        "type": "text",
+        "label": "Owner",
+        "placeholder": "Owner (if any)"
+    },
     "park_ride": {
         "key": "park_ride",
         "type": "check",
@@ -456,7 +464,7 @@
         "key": "phone",
         "type": "tel",
         "icon": "telephone",
-        "universal": true,
+        "universal": false,
         "label": "Phone",
         "placeholder": "+31 42 123 4567"
     },
@@ -530,6 +538,21 @@
         "type": "combo",
         "label": "Path Difficulty"
     },
+    "school_type": {
+        "key": "school_type",
+        "type": "combo",
+        "options": [
+            "primary",
+            "secondary"
+        ],
+        "label": "School Age Group",
+        "strings": {
+            "options": {
+                "primary": "Primary",
+                "secondary": "Secondary"
+            }
+        }
+    },
     "service": {
         "key": "service",
         "type": "combo",
@@ -563,6 +586,23 @@
         "key": "sport",
         "type": "combo",
         "label": "Sport"
+    },
+    "status": {
+        "key": "status",
+        "type": "radio",
+        "options": [
+            "proposed",
+            "submitted",
+            "granted"
+        ],
+        "label": "Status",
+        "strings": {
+            "options": {
+                "proposed": "Proposed",
+                "submitted": "Submitted to government",
+                "granted": "Granted by government"
+            }
+        }
     },
     "structure": {
         "type": "radio",
@@ -623,6 +663,16 @@
         "type": "combo",
         "label": "Type of Goods"
     },
+    "village": {
+        "key": "village",
+        "type": "combo",
+        "options": [
+            "Shorinab",
+            "Sawarwao"
+        ],
+        "label": "Village",
+        "placeholder": "Village Name (if this belongs to a particular village)"
+    },
     "water": {
         "key": "water",
         "type": "combo",
@@ -638,7 +688,7 @@
         "type": "url",
         "icon": "website",
         "placeholder": "http://example.com/",
-        "universal": true,
+        "universal": false,
         "label": "Website"
     },
     "wetland": {
@@ -655,14 +705,14 @@
             "no"
         ],
         "icon": "wheelchair",
-        "universal": true,
+        "universal": false,
         "label": "Wheelchair Access"
     },
     "wikipedia": {
         "key": "wikipedia",
         "type": "wikipedia",
         "icon": "wikipedia",
-        "universal": true,
+        "universal": false,
         "label": "Wikipedia"
     },
     "wood": {

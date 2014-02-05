@@ -1,0 +1,17 @@
+{
+    "icon": "territory-boundary",
+	"fields": [
+		"village",
+		"status"
+	],
+    "geometry": [
+        "point",
+		"line",
+		"area",
+		"vertex"
+    ],
+    "tags": {
+        "landrights": "extension"
+    },
+    "name": "Land Title Extension"
+}

@@ -1,5 +1,8 @@
 {
     "icon": "egg_gathering",
+	"fields": [
+	"access"
+	],
     "geometry": [
         "point",
 		"area"

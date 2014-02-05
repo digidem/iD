@@ -1,5 +1,8 @@
 {
     "icon": "old_homestead",
+	"fields": [
+		"owner"
+	],
     "geometry": [
         "point"
     ],

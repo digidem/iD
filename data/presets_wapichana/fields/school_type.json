@@ -1,0 +1,15 @@
+{
+    "key": "school_type",
+    "type": "combo",
+    "options": [
+        "primary",
+        "secondary"
+    ],
+    "label": "School Age Group",
+    "strings": {
+        "options": {
+          "primary": "Primary",
+          "secondary": "Secondary"
+        }
+    }
+}

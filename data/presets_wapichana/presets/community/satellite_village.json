@@ -1,5 +1,8 @@
 {
     "icon": "satellite_village",
+	"fields": [
+		"name"
+	],
     "geometry": [
         "point",
 		"area"

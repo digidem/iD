@@ -1,5 +1,8 @@
 {
     "icon": "village",
+	"fields": [
+		"name"
+	],
     "geometry": [
         "point",
 		"area"

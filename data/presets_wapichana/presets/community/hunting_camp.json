@@ -1,5 +1,8 @@
 {
     "icon": "hunting_camp",
+	"fields": [
+		"owner"
+	],
     "geometry": [
         "point"
     ],

@@ -34,7 +34,8 @@
         "temple"
     ],
     "tags": {
-        "amenity": "church"
+        "amenity": "church",
+		"religion": "christian"
     },
     "name": "Church"
 }

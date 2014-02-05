@@ -2,7 +2,7 @@
     "key": "phone",
     "type": "tel",
     "icon": "telephone",
-    "universal": true,
+    "universal": false,
     "label": "Phone",
     "placeholder": "+31 42 123 4567"
 }

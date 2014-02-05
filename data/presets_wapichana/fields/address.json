@@ -8,7 +8,7 @@
         "addr:postcode"
     ],
     "icon": "address",
-    "universal": true,
+    "universal": false,
     "label": "Address",
     "strings": {
         "placeholders": {

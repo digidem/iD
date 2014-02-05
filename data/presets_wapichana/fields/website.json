@@ -3,6 +3,6 @@
     "type": "url",
     "icon": "website",
     "placeholder": "http://example.com/",
-    "universal": true,
+    "universal": false,
     "label": "Website"
 }

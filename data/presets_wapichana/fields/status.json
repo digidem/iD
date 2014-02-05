@@ -1,0 +1,17 @@
+{
+    "key": "status",
+    "type": "radio",
+    "options": [
+        "proposed",
+        "submitted",
+		"granted"
+    ],
+    "label": "Status",
+    "strings": {
+        "options": {
+          "proposed": "Proposed",
+          "submitted": "Submitted to government",
+		  "granted": "Granted by government"
+        }
+    }
+}

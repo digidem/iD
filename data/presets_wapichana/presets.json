@@ -48,7 +48,8 @@
             "temple"
         ],
         "tags": {
-            "amenity": "church"
+            "amenity": "church",
+            "religion": "christian"
         },
         "name": "Church"
     },
@@ -82,6 +83,9 @@
     },
     "amenity/school": {
         "icon": "school",
+        "fields": [
+            "school_type"
+        ],
         "geometry": [
             "point",
             "area"
@@ -144,6 +148,9 @@
     },
     "community/farm": {
         "icon": "farm",
+        "fields": [
+            "owner"
+        ],
         "geometry": [
             "point",
             "area"
@@ -155,6 +162,9 @@
     },
     "community/homestead": {
         "icon": "homestead",
+        "fields": [
+            "owner"
+        ],
         "geometry": [
             "point"
         ],
@@ -165,6 +175,9 @@
     },
     "community/hunting_camp": {
         "icon": "hunting_camp",
+        "fields": [
+            "owner"
+        ],
         "geometry": [
             "point"
         ],
@@ -175,6 +188,9 @@
     },
     "community/landing": {
         "icon": "landing",
+        "fields": [
+            "owner"
+        ],
         "geometry": [
             "point"
         ],
@@ -185,6 +201,9 @@
     },
     "community/old_farm": {
         "icon": "old_farm",
+        "fields": [
+            "owner"
+        ],
         "geometry": [
             "point",
             "area"
@@ -197,6 +216,9 @@
     },
     "community/old_homestead": {
         "icon": "old_homestead",
+        "fields": [
+            "owner"
+        ],
         "geometry": [
             "point"
         ],
@@ -208,6 +230,9 @@
     },
     "community/old_hunting_camp": {
         "icon": "old_hunting_camp",
+        "fields": [
+            "owner"
+        ],
         "geometry": [
             "point"
         ],
@@ -219,6 +244,9 @@
     },
     "community/old_village": {
         "icon": "old_village",
+        "fields": [
+            "name"
+        ],
         "geometry": [
             "point",
             "area"
@@ -231,6 +259,9 @@
     },
     "community/ranch": {
         "icon": "ranch",
+        "fields": [
+            "owner"
+        ],
         "geometry": [
             "point"
         ],
@@ -241,6 +272,9 @@
     },
     "community/satellite_village": {
         "icon": "satellite_village",
+        "fields": [
+            "name"
+        ],
         "geometry": [
             "point",
             "area"
@@ -253,6 +287,9 @@
     },
     "community/village": {
         "icon": "village",
+        "fields": [
+            "name"
+        ],
         "geometry": [
             "point",
             "area"
@@ -277,6 +314,9 @@
     },
     "fauna/egg_gathering": {
         "icon": "egg_gathering",
+        "fields": [
+            "access"
+        ],
         "geometry": [
             "point",
             "area"
@@ -538,6 +578,53 @@
         },
         "name": "Coral"
     },
+    "landrights/extension": {
+        "icon": "territory-boundary",
+        "fields": [
+            "village",
+            "status"
+        ],
+        "geometry": [
+            "point",
+            "line",
+            "area",
+            "vertex"
+        ],
+        "tags": {
+            "landrights": "extension"
+        },
+        "name": "Land Title Extension"
+    },
+    "landrights/landclaim": {
+        "icon": "territory-boundary",
+        "geometry": [
+            "point",
+            "line",
+            "area",
+            "vertex"
+        ],
+        "tags": {
+            "landrights": "landclaim"
+        },
+        "name": "Land Claim Boundary"
+    },
+    "landrights/title": {
+        "icon": "territory-boundary",
+        "fields": [
+            "village",
+            "status"
+        ],
+        "geometry": [
+            "point",
+            "line",
+            "area",
+            "vertex"
+        ],
+        "tags": {
+            "landrights": "title"
+        },
+        "name": "Land Title"
+    },
     "landscape/bush": {
         "icon": "bush",
         "geometry": [
@@ -551,6 +638,9 @@
     },
     "landscape/bush_island": {
         "icon": "bush_island",
+        "fields": [
+            "name"
+        ],
         "geometry": [
             "point",
             "area"
@@ -573,6 +663,9 @@
     },
     "landscape/savannah_island": {
         "icon": "savannah_island",
+        "fields": [
+            "name"
+        ],
         "geometry": [
             "point",
             "area"
@@ -584,6 +677,9 @@
     },
     "landscape/swamp": {
         "icon": "swamp",
+        "fields": [
+            "name"
+        ],
         "geometry": [
             "point",
             "area"
@@ -595,6 +691,9 @@
     },
     "landuse/conservation": {
         "icon": "conservation",
+        "fields": [
+            "village"
+        ],
         "geometry": [
             "point",
             "area"
@@ -606,6 +705,9 @@
     },
     "landuse/fishing": {
         "icon": "fishing",
+        "fields": [
+            "village"
+        ],
         "geometry": [
             "point",
             "area"
@@ -617,6 +719,9 @@
     },
     "landuse/hunting": {
         "icon": "hunting",
+        "fields": [
+            "village"
+        ],
         "geometry": [
             "point",
             "area"
@@ -687,6 +792,9 @@
     },
     "spiritual/no_go_zone": {
         "icon": "no_go_zone",
+        "fields": [
+            "note"
+        ],
         "geometry": [
             "point",
             "area"
@@ -698,6 +806,9 @@
     },
     "spiritual/sacred_site": {
         "icon": "sacred_site",
+        "fields": [
+            "note"
+        ],
         "geometry": [
             "point",
             "area"
@@ -721,19 +832,6 @@
             "territory": "*"
         },
         "name": "Territory"
-    },
-    "territory/boundary": {
-        "icon": "territory-boundary",
-        "geometry": [
-            "point",
-            "line",
-            "area",
-            "vertex"
-        ],
-        "tags": {
-            "territory": "boundary"
-        },
-        "name": "Territory Boundary"
     },
     "vertex": {
         "name": "Other",

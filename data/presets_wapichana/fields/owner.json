@@ -1,0 +1,6 @@
+{
+    "key": "name",
+	"type": "text",
+    "label": "Owner",
+    "placeholder": "Owner (if any)"
+}

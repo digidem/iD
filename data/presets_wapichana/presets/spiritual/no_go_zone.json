@@ -1,5 +1,8 @@
 {
     "icon": "no_go_zone",
+	"fields": [
+		"note"
+	],
     "geometry": [
         "point",
 		"area"
