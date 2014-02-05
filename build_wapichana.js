@@ -4,8 +4,8 @@ var fs = require('fs'),
     YAML = require('js-yaml'),
     _ = require('./js/lib/lodash'),
     jsonschema = require('jsonschema'),
-    fieldSchema = require('./data/presets/schema/field.json'),
-    presetSchema = require('./data/presets/schema/preset.json');
+    fieldSchema = require('./data/presets_wapichana/schema/field.json'),
+    presetSchema = require('./data/presets_wapichana/schema/preset.json');
 
 function readtxt(f) {
     return fs.readFileSync(f, 'utf8');
