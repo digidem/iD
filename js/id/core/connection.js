@@ -397,5 +397,11 @@ iD.Connection = function() {
         return oauth.authenticate(done);
     };
 
+    connection.tileZoom = function(_) {
+        if (!arguments.length) return tileZoom;
+        tileZoom = _;
+        return connection;
+    };
+
     return d3.rebind(connection, event, 'on');
 };
