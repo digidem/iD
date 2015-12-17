@@ -33,7 +33,7 @@ describe('iD.Relation', function () {
                 r = iD.Relation({members: [{id: a.id}, {id: b.id}]}),
                 graph = iD.Graph([a, b, r]);
 
-            expect(r.extent(graph)).to.eql([[0, 0], [5, 10]])
+            expect(r.extent(graph).equals([[0, 0], [5, 10]])).to.be.ok;
         });
 
         it("returns the known extent of incomplete relations", function () {
@@ -42,7 +42,13 @@ describe('iD.Relation', function () {
                 r = iD.Relation({members: [{id: a.id}, {id: b.id}]}),
                 graph = iD.Graph([a, r]);
 
-            expect(r.extent(graph)).to.eql([[0, 0], [0, 0]])
+            expect(r.extent(graph).equals([[0, 0], [0, 0]])).to.be.ok;
+        });
+
+        it("does not error on self-referencing relations", function () {
+            var r = iD.Relation();
+            r = r.addMember({id: r.id});
+            expect(r.extent(iD.Graph([r]))).to.eql(iD.geo.Extent());
         });
     });
 
@@ -204,7 +210,7 @@ describe('iD.Relation', function () {
     });
 
     describe("#asGeoJSON", function (){
-        it('converts a multipolygon to a GeoJSON MultiPolygon feature', function() {
+        it('converts a multipolygon to a GeoJSON MultiPolygon geometry', function() {
             var a = iD.Node({loc: [1, 1]}),
                 b = iD.Node({loc: [3, 3]}),
                 c = iD.Node({loc: [2, 2]}),
@@ -213,10 +219,8 @@ describe('iD.Relation', function () {
                 g = iD.Graph([a, b, c, w, r]),
                 json = r.asGeoJSON(g);
 
-            expect(json.type).to.equal('Feature');
-            expect(json.properties).to.eql({type: 'multipolygon'});
-            expect(json.geometry.type).to.equal('MultiPolygon');
-            expect(json.geometry.coordinates).to.eql([[[a.loc, b.loc, c.loc, a.loc]]]);
+            expect(json.type).to.equal('MultiPolygon');
+            expect(json.coordinates).to.eql([[[a.loc, b.loc, c.loc, a.loc]]]);
         });
 
         it('forces clockwise winding order for outer multipolygon ways', function() {
@@ -228,7 +232,7 @@ describe('iD.Relation', function () {
                 g = iD.Graph([a, b, c, w, r]),
                 json = r.asGeoJSON(g);
 
-            expect(json.geometry.coordinates[0][0]).to.eql([a.loc, b.loc, c.loc, a.loc]);
+            expect(json.coordinates[0][0]).to.eql([a.loc, b.loc, c.loc, a.loc]);
         });
 
         it('forces counterclockwise winding order for inner multipolygon ways', function() {
@@ -470,6 +474,22 @@ describe('iD.Relation', function () {
                 g  = iD.Graph([a, b, c, w1, r]);
 
             expect(r.multipolygon(g)).to.eql([[[a.loc, b.loc, c.loc]]]);
+        });
+    });
+
+    describe(".creationOrder comparator", function () {
+        specify("orders existing relations newest-first", function () {
+            var a = iD.Relation({ id: 'r1' }),
+                b = iD.Relation({ id: 'r2' });
+            expect(iD.Relation.creationOrder(a, b)).to.be.above(0);
+            expect(iD.Relation.creationOrder(b, a)).to.be.below(0);
+        });
+
+        specify("orders new relations newest-first", function () {
+            var a = iD.Relation({ id: 'r-1' }),
+                b = iD.Relation({ id: 'r-2' });
+            expect(iD.Relation.creationOrder(a, b)).to.be.above(0);
+            expect(iD.Relation.creationOrder(b, a)).to.be.below(0);
         });
     });
 });

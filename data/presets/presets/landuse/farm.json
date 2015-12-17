@@ -1,4 +1,7 @@
 {
+    "fields": [
+        "crop"
+    ],
     "geometry": [
         "point",
         "area"
@@ -8,5 +11,6 @@
     },
     "terms": [],
     "name": "Farm",
-    "icon": "farm"
+    "icon": "farm",
+    "searchable": false
 }

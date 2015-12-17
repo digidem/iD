@@ -48,7 +48,9 @@ iD.modes.DragNode = function(context) {
     }
 
     function start(entity) {
-        cancelled = d3.event.sourceEvent.shiftKey;
+        cancelled = d3.event.sourceEvent.shiftKey ||
+            context.features().hasHiddenConnections(entity, context.graph());
+
         if (cancelled) return behavior.cancel();
 
         wasMidpoint = entity.type === 'midpoint';
@@ -103,7 +105,7 @@ iD.modes.DragNode = function(context) {
         var d = datum();
         if (d.type === 'node' && d.id !== entity.id) {
             loc = d.loc;
-        } else if (d.type === 'way') {
+        } else if (d.type === 'way' && !d3.select(d3.event.sourceEvent.target).classed('fill')) {
             loc = iD.geo.chooseEdge(context.childNodes(d), context.mouse(), context.projection).loc;
         }
 
@@ -163,7 +165,7 @@ iD.modes.DragNode = function(context) {
     }
 
     var behavior = iD.behavior.drag()
-        .delegate("g.node, g.point, g.midpoint")
+        .delegate('g.node, g.point, g.midpoint')
         .surface(context.surface().node())
         .origin(origin)
         .on('start', start)

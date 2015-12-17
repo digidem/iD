@@ -1,5 +1,6 @@
 {
     "fields": [
+        "tree_type",
         "denotation"
     ],
     "icon": "park",

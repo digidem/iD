@@ -24,8 +24,7 @@ iD.behavior.Draw = function(context) {
             })[0] : d3.mouse(p);
         }
 
-        var eventTarget = d3.event.target,
-            element = d3.select(this),
+        var element = d3.select(this),
             touchId = d3.event.touches ? d3.event.changedTouches[0].identifier : null,
             time = +new Date(),
             pos = point();
@@ -93,7 +92,7 @@ iD.behavior.Draw = function(context) {
         context.install(hover);
         context.install(edit);
 
-        if (!iD.behavior.Draw.usedTails[tail.text()]) {
+        if (!context.inIntro() && !iD.behavior.Draw.usedTails[tail.text()]) {
             context.install(tail);
         }
 
@@ -117,7 +116,7 @@ iD.behavior.Draw = function(context) {
         context.uninstall(hover);
         context.uninstall(edit);
 
-        if (!iD.behavior.Draw.usedTails[tail.text()]) {
+        if (!context.inIntro() && !iD.behavior.Draw.usedTails[tail.text()]) {
             context.uninstall(tail);
             iD.behavior.Draw.usedTails[tail.text()] = true;
         }

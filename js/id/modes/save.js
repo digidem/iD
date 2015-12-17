@@ -1,16 +1,10 @@
 iD.modes.Save = function(context) {
     var ui = iD.ui.Commit(context)
         .on('cancel', cancel)
-        .on('fix', fix)
         .on('save', save);
 
     function cancel() {
         context.enter(iD.modes.Browse(context));
-    }
-
-    function fix(d) {
-        context.map().zoomTo(d.entity);
-        context.enter(iD.modes.Select(context, [d.entity.id]));
     }
 
     function save(e) {
@@ -36,7 +30,7 @@ iD.modes.Save = function(context) {
                     confirm
                         .select('.modal-section.message-text')
                         .append('p')
-                        .text(err.responseText);
+                        .text(err.responseText || t('save.unknown_error_details'));
                 } else {
                     context.flush();
                     success(e, changeset_id);
@@ -71,7 +65,7 @@ iD.modes.Save = function(context) {
             context.install(behavior);
         });
 
-        context.connection().authenticate(function(err) {
+        context.connection().authenticate(function() {
             context.ui().sidebar.show(ui);
         });
     };

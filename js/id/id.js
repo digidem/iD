@@ -5,7 +5,7 @@ window.iD = function () {
     var context = {},
         storage;
 
-    // https://github.com/systemed/iD/issues/772
+    // https://github.com/openstreetmap/iD/issues/772
     // http://mathiasbynens.be/notes/localstorage-pattern#comment-9
     try { storage = localStorage; } catch (e) {}
     storage = storage || (function() {
@@ -24,8 +24,20 @@ window.iD = function () {
             else storage.setItem(k, v);
         } catch(e) {
             // localstorage quota exceeded
+            /* jshint devel:true */
             if (typeof console !== 'undefined') console.error('localStorage quota exceeded');
+            /* jshint devel:false */
         }
+    };
+
+    /* Accessor for setting minimum zoom for editing features. */
+
+    var minEditableZoom = 16;
+    context.minEditableZoom = function(_) {
+        if (!arguments.length) return minEditableZoom;
+        minEditableZoom = _;
+        connection.tileZoom(_);
+        return context;
     };
 
     var history = iD.History(context),
@@ -76,11 +88,6 @@ window.iD = function () {
 
     /* History */
     context.graph = history.graph;
-    context.perform = history.perform;
-    context.replace = history.replace;
-    context.pop = history.pop;
-    context.undo = history.undo;
-    context.redo = history.redo;
     context.changes = history.changes;
     context.intersects = history.intersects;
 
@@ -100,9 +107,27 @@ window.iD = function () {
 
     context.flush = function() {
         connection.flush();
+        features.reset();
         history.reset();
         return context;
     };
+
+    // Debounce save, since it's a synchronous localStorage write,
+    // and history changes can happen frequently (e.g. when dragging).
+    var debouncedSave = _.debounce(context.save, 350);
+    function withDebouncedSave(fn) {
+        return function() {
+            var result = fn.apply(history, arguments);
+            debouncedSave();
+            return result;
+        };
+    }
+
+    context.perform = withDebouncedSave(history.perform);
+    context.replace = withDebouncedSave(history.replace);
+    context.pop = withDebouncedSave(history.pop);
+    context.undo = withDebouncedSave(history.undo);
+    context.redo = withDebouncedSave(history.redo);
 
     /* Graph */
     context.hasEntity = function(id) {
@@ -169,9 +194,6 @@ window.iD = function () {
         });
     };
 
-    context.editable = function() {
-        return map.editable() && mode && mode.id !== 'save';
-    };
 
     /* Behaviors */
     context.install = function(behavior) {
@@ -183,19 +205,27 @@ window.iD = function () {
     };
 
     /* Projection */
-    context.projection = d3.geo.mercator()
-        .scale(512 / Math.PI)
-        .precision(0);
+    context.projection = iD.geo.RawMercator();
 
     /* Background */
     var background = iD.Background(context);
     context.background = function() { return background; };
+
+    /* Features */
+    var features = iD.Features(context);
+    context.features = function() { return features; };
+    context.hasHiddenConnections = function(id) {
+        var graph = history.graph(),
+            entity = graph.entity(id);
+        return features.hasHiddenConnections(entity, graph);
+    };
 
     /* Map */
     var map = iD.Map(context);
     context.map = function() { return map; };
     context.layers = function() { return map.layers; };
     context.surface = function() { return map.surface; };
+    context.editable = function() { return map.editable(); };
     context.mouse = map.mouse;
     context.extent = map.extent;
     context.pan = map.pan;
@@ -210,17 +240,32 @@ window.iD = function () {
     };
 
     /* Presets */
-    var presets = iD.presets()
-        .load(iD.data.presets);
+    var presets = iD.presets();
 
-    context.presets = function() {
-        return presets;
+    context.presets = function(_) {
+        if (!arguments.length) return presets;
+        presets.load(_);
+        iD.areaKeys = presets.areaKeys();
+        return context;
+    };
+
+    context.imagery = function(_) {
+        background.load(_);
+        return context;
     };
 
     context.container = function(_) {
         if (!arguments.length) return container;
         container = _;
         container.classed('id-container', true);
+        return context;
+    };
+
+    /* Taginfo */
+    var taginfo;
+    context.taginfo = function(_) {
+        if (!arguments.length) return taginfo;
+        taginfo = _;
         return context;
     };
 
@@ -253,13 +298,13 @@ window.iD = function () {
     return d3.rebind(context, dispatch, 'on');
 };
 
-iD.version = '1.2.0';
+iD.version = '1.6.1';
 
 (function() {
     var detected = {};
 
     var ua = navigator.userAgent,
-        msie = new RegExp("MSIE ([0-9]{1,}[\\.0-9]{0,})");
+        msie = new RegExp('MSIE ([0-9]{1,}[\\.0-9]{0,})');
 
     if (msie.exec(ua) !== null) {
         var rv = parseFloat(RegExp.$1);

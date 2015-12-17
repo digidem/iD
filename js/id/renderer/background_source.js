@@ -1,6 +1,7 @@
 iD.BackgroundSource = function(data) {
     var source = _.clone(data),
-        offset = [0, 0];
+        offset = [0, 0],
+        name = source.name;
 
     source.scaleExtent = data.scaleExtent || [0, 20];
 
@@ -16,6 +17,14 @@ iD.BackgroundSource = function(data) {
         return source;
     };
 
+    source.name = function() {
+        return name;
+    };
+
+    source.imageryUsed = function() {
+        return source.id || name;
+    };
+
     source.url = function(coord) {
         return data.template
             .replace('{x}', coord[0])
@@ -26,6 +35,17 @@ iD.BackgroundSource = function(data) {
             .replace(/\{switch:([^}]+)\}/, function(s, r) {
                 var subdomains = r.split(',');
                 return subdomains[(coord[0] + coord[1]) % subdomains.length];
+            })
+            .replace('{u}', function() {
+                var u = '';
+                for (var zoom = coord[2]; zoom > 0; zoom--) {
+                    var b = 0;
+                    var mask = 1 << (zoom - 1);
+                    if ((coord[0] & mask) !== 0) b++;
+                    if ((coord[1] & mask) !== 0) b += 2;
+                    u += b.toString();
+                }
+                return u;
             });
     };
 
@@ -42,7 +62,7 @@ iD.BackgroundSource = function(data) {
     };
 
     source.isLocatorOverlay = function() {
-        return source.name === 'Locator Overlay';
+        return name === 'Locator Overlay';
     };
 
     source.copyrightNotices = function() {};
@@ -54,9 +74,11 @@ iD.BackgroundSource.Bing = function(data, dispatch) {
     // http://msdn.microsoft.com/en-us/library/ff701716.aspx
     // http://msdn.microsoft.com/en-us/library/ff701701.aspx
 
+    data.template = 'https://ecn.t{switch:0,1,2,3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&mkt=en-gb&n=z';
+
     var bing = iD.BackgroundSource(data),
         key = 'Arzdiw4nlOJzRwOz__qailc8NiR31Tt51dN2D7cm57NrnceZnCpgOkmJhNpGoppU', // Same as P2 and JOSM
-        url = 'http://dev.virtualearth.net/REST/v1/Imagery/Metadata/Aerial?include=ImageryProviders&key=' +
+        url = 'https://dev.virtualearth.net/REST/v1/Imagery/Metadata/Aerial?include=ImageryProviders&key=' +
             key + '&jsonp={callback}',
         providers = [];
 
@@ -75,25 +97,6 @@ iD.BackgroundSource.Bing = function(data, dispatch) {
         dispatch.change();
     });
 
-    var template = "http://ecn.t{t}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&mkt=en-gb&n=z",
-        subdomains = [0, 1, 2, 3];
-
-    bing.url = function(coord) {
-        var u = '';
-
-        for (var zoom = coord[2]; zoom > 0; zoom--) {
-            var b = 0;
-            var mask = 1 << (zoom - 1);
-            if ((coord[0] & mask) !== 0) b++;
-            if ((coord[1] & mask) !== 0) b += 2;
-            u += b.toString();
-        }
-
-        return template
-            .replace('{t}', subdomains[(coord[0] + coord[1]) % 4])
-            .replace('{u}', u);
-    };
-
     bing.copyrightNotices = function(zoom, extent) {
         zoom = Math.min(zoom, 21);
         return providers.filter(function(provider) {
@@ -107,8 +110,36 @@ iD.BackgroundSource.Bing = function(data, dispatch) {
         }).join(', ');
     };
 
-    bing.logo = "bing_maps.png";
-    bing.terms_url = "http://opengeodata.org/microsoft-imagery-details";
+    bing.logo = 'bing_maps.png';
+    bing.terms_url = 'http://opengeodata.org/microsoft-imagery-details';
 
     return bing;
+};
+
+iD.BackgroundSource.None = function() {
+    var source = iD.BackgroundSource({id: 'none', template: ''});
+
+    source.name = function() {
+        return t('background.none');
+    };
+
+    source.imageryUsed = function() {
+        return 'None';
+    };
+
+    return source;
+};
+
+iD.BackgroundSource.Custom = function(template) {
+    var source = iD.BackgroundSource({id: 'custom', template: template});
+
+    source.name = function() {
+        return t('background.custom');
+    };
+
+    source.imageryUsed = function() {
+        return 'Custom (' + template + ')';
+    };
+
+    return source;
 };
