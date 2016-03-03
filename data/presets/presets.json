@@ -456,6 +456,9 @@
             "vertex",
             "line"
         ],
+        "terms": [
+            "seat"
+        ],
         "tags": {
             "amenity": "bench"
         },
@@ -519,12 +522,15 @@
             "area"
         ],
         "terms": [
-            "bike"
+            "bike",
+            "repair",
+            "chain",
+            "pump"
         ],
         "tags": {
             "amenity": "bicycle_repair_station"
         },
-        "name": "Bicycle Repair Station"
+        "name": "Bicycle Repair Tool Stand"
     },
     "amenity/biergarten": {
         "icon": "beer",
@@ -609,6 +615,7 @@
             "area"
         ],
         "terms": [
+            "bistro",
             "coffee",
             "tea"
         ],
@@ -868,7 +875,7 @@
         },
         "name": "Dentist"
     },
-    "amenity/doctor": {
+    "amenity/doctors": {
         "icon": "hospital",
         "fields": [
             "address",
@@ -963,6 +970,25 @@
         ],
         "name": "Fast Food"
     },
+    "amenity/ferry_terminal": {
+        "icon": "ferry",
+        "fields": [
+            "network",
+            "operator",
+            "address",
+            "building_area"
+        ],
+        "geometry": [
+            "point",
+            "vertex",
+            "area"
+        ],
+        "terms": [],
+        "tags": {
+            "amenity": "ferry_terminal"
+        },
+        "name": "Ferry Terminal"
+    },
     "amenity/fire_station": {
         "icon": "fire-station",
         "fields": [
@@ -1004,6 +1030,7 @@
         "terms": [
             "petrol",
             "fuel",
+            "gasoline",
             "propane",
             "diesel",
             "lng",
@@ -1077,6 +1104,18 @@
             "amenity": "hospital"
         },
         "name": "Hospital Grounds"
+    },
+    "amenity/hunting_stand": {
+        "geometry": [
+            "point",
+            "vertex",
+            "area"
+        ],
+        "terms": [],
+        "tags": {
+            "amenity": "hunting_stand"
+        },
+        "name": "Hunting Stand"
     },
     "amenity/kindergarten": {
         "icon": "school",
@@ -1213,6 +1252,21 @@
             "amenity": "parking_entrance"
         },
         "name": "Parking Garage Entrance/Exit"
+    },
+    "amenity/parking_space": {
+        "fields": [
+            "capacity"
+        ],
+        "geometry": [
+            "point",
+            "vertex",
+            "area"
+        ],
+        "terms": [],
+        "tags": {
+            "amenity": "parking_space"
+        },
+        "name": "Parking Space"
     },
     "amenity/pharmacy": {
         "icon": "pharmacy",
@@ -1438,7 +1492,7 @@
             "operator",
             "address",
             "building_area",
-            "collection_times"
+            "opening_hours"
         ],
         "geometry": [
             "point",
@@ -1858,7 +1912,8 @@
             "building_area",
             "access_toilets",
             "gender",
-            "fee"
+            "fee",
+            "diaper"
         ],
         "geometry": [
             "point",
@@ -2134,12 +2189,41 @@
             "amenity": "waste_basket"
         },
         "terms": [
+            "bin",
             "rubbish",
             "litter",
             "trash",
             "garbage"
         ],
         "name": "Waste Basket"
+    },
+    "amenity/waste_disposal": {
+        "icon": "waste-basket",
+        "geometry": [
+            "point",
+            "vertex"
+        ],
+        "tags": {
+            "amenity": "waste_disposal"
+        },
+        "terms": [
+            "rubbish",
+            "litter",
+            "trash"
+        ],
+        "name": "Garbage Dumpster"
+    },
+    "amenity/water_point": {
+        "icon": "water",
+        "geometry": [
+            "area",
+            "vertex",
+            "point"
+        ],
+        "tags": {
+            "amenity": "water_point"
+        },
+        "name": "RV Drinking Water"
     },
     "area": {
         "name": "Area",
@@ -4771,9 +4855,27 @@
         },
         "terms": [
             "woods road",
-            "fire road"
+            "forest road",
+            "logging road",
+            "fire road",
+            "farm road",
+            "agricultural road",
+            "ranch road",
+            "carriage road",
+            "primitive",
+            "unmaintained",
+            "rut",
+            "offroad",
+            "4wd",
+            "4x4",
+            "four wheel drive",
+            "atv",
+            "quad",
+            "jeep",
+            "double track",
+            "two track"
         ],
-        "name": "Track"
+        "name": "Unmaintained Track Road"
     },
     "highway/traffic_signals": {
         "geometry": [
@@ -4865,7 +4967,7 @@
             "highway": "unclassified"
         },
         "terms": [],
-        "name": "Unclassified Road"
+        "name": "Minor Road"
     },
     "historic": {
         "fields": [
@@ -5394,7 +5496,7 @@
             "sport_ice",
             "operator",
             "address",
-            "building_area",
+            "building",
             "opening_hours"
         ],
         "geometry": [
@@ -5715,7 +5817,7 @@
         },
         "name": "Slipway"
     },
-    "leisure/sports_center": {
+    "leisure/sports_centre": {
         "icon": "pitch",
         "fields": [
             "sport",
@@ -5734,6 +5836,28 @@
             "gym"
         ],
         "name": "Sports Center / Gym"
+    },
+    "leisure/sports_centre/swimming": {
+        "icon": "swimming",
+        "fields": [
+            "access_simple",
+            "operator",
+            "address",
+            "building"
+        ],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "terms": [
+            "dive",
+            "water"
+        ],
+        "tags": {
+            "leisure": "sports_centre",
+            "sport": "swimming"
+        },
+        "name": "Swimming Pool Facility"
     },
     "leisure/stadium": {
         "icon": "pitch",
@@ -5759,8 +5883,11 @@
         ],
         "geometry": [
             "point",
-            "vertex",
             "area"
+        ],
+        "terms": [
+            "dive",
+            "water"
         ],
         "tags": {
             "leisure": "swimming_pool"
@@ -5784,6 +5911,26 @@
             "leisure": "track"
         },
         "name": "Racetrack (non-Motorsport)"
+    },
+    "leisure/water_park": {
+        "icon": "swimming",
+        "fields": [
+            "operator",
+            "address"
+        ],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "terms": [
+            "swim",
+            "pool",
+            "dive"
+        ],
+        "tags": {
+            "leisure": "water_park"
+        },
+        "name": "Water Park"
     },
     "line": {
         "name": "Line",
@@ -5837,6 +5984,16 @@
         },
         "name": "Breakwater"
     },
+    "man_made/chimney": {
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "man_made": "chimney"
+        },
+        "name": "Chimney"
+    },
     "man_made/cutline": {
         "geometry": [
             "line"
@@ -5865,6 +6022,29 @@
         },
         "name": "Flagpole",
         "icon": "embassy"
+    },
+    "man_made/gasometer": {
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "terms": [
+            "gas holder"
+        ],
+        "tags": {
+            "man_made": "gasometer"
+        },
+        "name": "Gasometer"
+    },
+    "man_made/groyne": {
+        "geometry": [
+            "line",
+            "area"
+        ],
+        "tags": {
+            "man_made": "groyne"
+        },
+        "name": "Groyne"
     },
     "man_made/lighthouse": {
         "icon": "lighthouse",
@@ -5998,6 +6178,16 @@
         },
         "name": "Storage Tank"
     },
+    "man_made/surveillance": {
+        "icon": "camera",
+        "geometry": [
+            "point"
+        ],
+        "tags": {
+            "man_made": "surveillance"
+        },
+        "name": "Surveillance"
+    },
     "man_made/survey_point": {
         "icon": "monument",
         "fields": [
@@ -6086,6 +6276,24 @@
             "man_made": "water_works"
         },
         "name": "Water Works"
+    },
+    "man_made/works": {
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "terms": [
+            "car assembly plant",
+            "aluminium processing plant",
+            "brewery",
+            "furniture manufacture factory",
+            "oil refinery",
+            "plastic recycling"
+        ],
+        "tags": {
+            "man_made": "works"
+        },
+        "name": "Works"
     },
     "military/airfield": {
         "icon": "airfield",
@@ -7624,8 +7832,9 @@
         "name": "Antiques Shop"
     },
     "shop/art": {
-        "icon": "art-gallery",
+        "icon": "shop",
         "fields": [
+            "artwork_type",
             "operator",
             "address",
             "building_area",
@@ -7635,10 +7844,15 @@
             "point",
             "area"
         ],
+        "terms": [
+            "art*",
+            "exhibit*",
+            "gallery"
+        ],
         "tags": {
             "shop": "art"
         },
-        "name": "Art Gallery"
+        "name": "Art Store"
     },
     "shop/baby_goods": {
         "icon": "shop",
@@ -7780,6 +7994,10 @@
         "geometry": [
             "point",
             "area"
+        ],
+        "terms": [
+            "bike",
+            "repair"
         ],
         "tags": {
             "shop": "bicycle"
@@ -8108,7 +8326,7 @@
         "name": "Cosmetics Store"
     },
     "shop/craft": {
-        "icon": "art-gallery",
+        "icon": "shop",
         "fields": [
             "operator",
             "address",
@@ -8122,6 +8340,11 @@
         "tags": {
             "shop": "craft"
         },
+        "terms": [
+            "art*",
+            "paint*",
+            "frame"
+        ],
         "name": "Arts and Crafts Store"
     },
     "shop/curtain": {
@@ -8395,6 +8618,12 @@
         "tags": {
             "shop": "frame"
         },
+        "terms": [
+            "art*",
+            "paint*",
+            "photo*",
+            "frame"
+        ],
         "name": "Framing Shop"
     },
     "shop/funeral_directors": {
@@ -9242,6 +9471,23 @@
         },
         "name": "Stationery Store"
     },
+    "shop/storage_rental": {
+        "icon": "shop",
+        "fields": [
+            "operator",
+            "address",
+            "building",
+            "opening_hours"
+        ],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "tags": {
+            "shop": "storage_rental"
+        },
+        "name": "Storage Rental"
+    },
     "shop/supermarket": {
         "icon": "grocery",
         "fields": [
@@ -9695,6 +9941,31 @@
         },
         "name": "Chalet"
     },
+    "tourism/gallery": {
+        "icon": "art-gallery",
+        "fields": [
+            "artwork_type",
+            "operator",
+            "address",
+            "building_area",
+            "opening_hours"
+        ],
+        "geometry": [
+            "point",
+            "area"
+        ],
+        "terms": [
+            "art*",
+            "exhibit*",
+            "paint*",
+            "photo*",
+            "sculpt*"
+        ],
+        "tags": {
+            "tourism": "gallery"
+        },
+        "name": "Art Gallery"
+    },
     "tourism/guest_house": {
         "icon": "lodging",
         "fields": [
@@ -9797,11 +10068,15 @@
             "area"
         ],
         "terms": [
-            "exhibition",
-            "foundation",
+            "art*",
+            "exhibit*",
             "gallery",
+            "foundation",
             "hall",
-            "institution"
+            "institution",
+            "paint*",
+            "photo*",
+            "sculpt*"
         ],
         "tags": {
             "tourism": "museum"
@@ -10281,6 +10556,19 @@
             "network"
         ]
     },
+    "type/site": {
+        "geometry": [
+            "relation"
+        ],
+        "tags": {
+            "type": "site"
+        },
+        "name": "Site",
+        "icon": "relation",
+        "fields": [
+            "site"
+        ]
+    },
     "vertex": {
         "name": "Other",
         "tags": {},
@@ -10304,6 +10592,21 @@
         },
         "searchable": false,
         "name": "Waterway"
+    },
+    "waterway/boatyard": {
+        "icon": "harbor",
+        "fields": [
+            "operator"
+        ],
+        "geometry": [
+            "area",
+            "vertex",
+            "point"
+        ],
+        "tags": {
+            "waterway": "boatyard"
+        },
+        "name": "Boatyard"
     },
     "waterway/canal": {
         "icon": "waterway-canal",
@@ -10343,6 +10646,22 @@
             "waterway": "ditch"
         },
         "name": "Ditch"
+    },
+    "waterway/dock": {
+        "icon": "harbor",
+        "fields": [
+            "dock",
+            "operator"
+        ],
+        "geometry": [
+            "area",
+            "vertex",
+            "point"
+        ],
+        "tags": {
+            "waterway": "dock"
+        },
+        "name": "Dock"
     },
     "waterway/drain": {
         "icon": "waterway-stream",
@@ -10487,6 +10806,18 @@
             "waterway": "stream"
         },
         "name": "Stream"
+    },
+    "waterway/water_point": {
+        "icon": "water",
+        "geometry": [
+            "area",
+            "vertex",
+            "point"
+        ],
+        "tags": {
+            "waterway": "water_point"
+        },
+        "name": "Marine Drinking Water"
     },
     "waterway/weir": {
         "icon": "dam",

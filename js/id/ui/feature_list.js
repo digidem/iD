@@ -39,8 +39,15 @@ iD.ui.FeatureList = function(context) {
         var list = listWrap.append('div')
             .attr('class', 'feature-list cf');
 
+        context
+            .on('exit.feature-list', clearSearch);
         context.map()
             .on('drawn.feature-list', mapDrawn);
+
+        function clearSearch() {
+            search.property('value', '');
+            drawList();
+        }
 
         function mapDrawn(e) {
             if (e.full) {
@@ -223,7 +230,14 @@ iD.ui.FeatureList = function(context) {
                 context.map().centerZoom([d.location[1], d.location[0]], 20);
             }
             else if (d.entity) {
-                context.enter(iD.modes.Select(context, [d.entity.id]));
+                if (d.entity.type === 'node') {
+                    context.map().center(d.entity.loc);
+                } else if (d.entity.type === 'way') {
+                    var center = context.projection(context.map().center()),
+                        edge = iD.geo.chooseEdge(context.childNodes(d.entity), center, context.projection);
+                    context.map().center(edge.loc);
+                }
+                context.enter(iD.modes.Select(context, [d.entity.id]).suppressMenu(true));
             } else {
                 context.zoomToEntity(d.id);
             }
@@ -231,7 +245,7 @@ iD.ui.FeatureList = function(context) {
 
         function geocode() {
             var searchVal = encodeURIComponent(search.property('value'));
-            d3.json('http://nominatim.openstreetmap.org/search/' + searchVal + '?limit=10&format=json', function(err, resp) {
+            d3.json('https://nominatim.openstreetmap.org/search/' + searchVal + '?limit=10&format=json', function(err, resp) {
                 geocodeResults = resp || [];
                 drawList();
             });

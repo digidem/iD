@@ -9,6 +9,7 @@ iD.modes.Select = function(context, selectedIDs) {
         behaviors = [
             iD.behavior.Copy(context),
             iD.behavior.Paste(context),
+            iD.behavior.Breathe(context),
             iD.behavior.Hover(context),
             iD.behavior.Select(context),
             iD.behavior.Lasso(context),
@@ -26,7 +27,7 @@ iD.modes.Select = function(context, selectedIDs) {
 
     function singular() {
         if (selectedIDs.length === 1) {
-            return context.entity(selectedIDs[0]);
+            return context.hasEntity(selectedIDs[0]);
         }
     }
 
@@ -145,8 +146,10 @@ iD.modes.Select = function(context, selectedIDs) {
             }
         }
 
-        function ret() {
-            context.enter(iD.modes.Browse(context));
+        function esc() {
+            if (!context.inIntro()) {
+                context.enter(iD.modes.Browse(context));
+            }
         }
 
 
@@ -161,14 +164,13 @@ iD.modes.Select = function(context, selectedIDs) {
         operations.unshift(iD.operations.Delete(selectedIDs, context));
 
         keybinding
-            .on('⎋', ret, true)
-            .on('↩', ret, true)
+            .on('⎋', esc, true)
             .on('space', toggleMenu);
 
         operations.forEach(function(operation) {
             operation.keys.forEach(function(key) {
                 keybinding.on(key, function() {
-                    if (!operation.disabled()) {
+                    if (!(context.inIntro() || operation.disabled())) {
                         operation();
                     }
                 });

@@ -28,18 +28,14 @@ iD.ui = function(context) {
             .attr('id', 'bar')
             .attr('class', 'fillD');
 
-        var m = content.append('div')
+        content.append('div')
             .attr('id', 'map')
             .call(map);
 
-        content.append('div')
-            .attr('class', 'map-in-map')
-            .style('display', 'none')
+        content
             .call(iD.ui.MapInMap(context));
 
         content.append('div')
-            .attr('class', 'infobox fillD2')
-            .style('display', 'none')
             .call(iD.ui.Info(context));
 
         bar.append('div')
@@ -123,7 +119,7 @@ iD.ui = function(context) {
             .append('a')
             .attr('target', '_blank')
             .attr('tabindex', -1)
-            .attr('href', 'http://github.com/openstreetmap/iD')
+            .attr('href', 'https://github.com/openstreetmap/iD')
             .text(iD.version);
 
         var issueLinks = aboutList.append('li');
@@ -169,14 +165,14 @@ iD.ui = function(context) {
         var mapDimensions = map.dimensions();
 
         d3.select(window).on('resize.editor', function() {
-            mapDimensions = m.dimensions();
-            map.dimensions(m.dimensions());
+            mapDimensions = content.dimensions(null);
+            map.dimensions(mapDimensions);
         });
 
         function pan(d) {
             return function() {
                 d3.event.preventDefault();
-                context.pan(d);
+                if (!context.inIntro()) context.pan(d);
             };
         }
 

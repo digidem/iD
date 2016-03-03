@@ -153,13 +153,15 @@ feel free to use newer features wisely.
 
 ## Tests
 
-Test your code and make sure it passes. Our testing harness requires [node.js](http://nodejs.org/)
-and a few modules:
+Test your code and make sure it passes.
 
-1. [Install node.js](http://nodejs.org/) version 0.10.0 or later - 'Install' will download a package for your OS
-2. Go to the directory where you have checked out `iD`
-3. Run `npm install`
-4. Run `npm test` to see whether your tests pass or fail.
+First ensure you have a `phantomjs` binary, version 2.0 or later, available on your `$PATH`. On a Mac,
+you can install this via homebrew with `brew install phantomjs`. Then:
+
+1. Go to the directory where you have checked out `iD`
+2. run `npm install`
+3. run `make`
+4. run `npm test` to see whether your tests pass or fail.
 
 ## Building / Installing
 
@@ -168,6 +170,17 @@ required for this.
 
 iD will be built to the `dist` directory. This directory is self-contained; you can copy it
 into the public directory of your webserver to deploy iD.
+
+## Live reloading
+
+You can use [live-server](https://www.npmjs.com/package/live-server) *(npm module)* to
+reload the browser automatically whenever there is a change in code.
+
+1. run `npm install -g live-server`
+2. run  `live-server .` or `live-server dist`
+ *(You will be automatically redirected to the local server page.)*
+
+*(Note: Sometimes auto reload might not display correctly and you might need to rebuild iD by running `make`.)*
 
 ## Licensing
 

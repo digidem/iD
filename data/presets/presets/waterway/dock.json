@@ -1,0 +1,16 @@
+{
+    "icon": "harbor",
+    "fields": [
+        "dock",
+        "operator"
+    ],
+    "geometry": [
+        "area",
+        "vertex",
+        "point"
+    ],
+    "tags": {
+        "waterway": "dock"
+    },
+    "name": "Dock"
+}

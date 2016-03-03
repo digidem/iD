@@ -2,11 +2,12 @@ window.iD = function () {
     window.locale.en = iD.data.en;
     window.locale.current('en');
 
-    var context = {},
-        storage;
+    var dispatch = d3.dispatch('enter', 'exit'),
+        context = {};
 
     // https://github.com/openstreetmap/iD/issues/772
     // http://mathiasbynens.be/notes/localstorage-pattern#comment-9
+    var storage;
     try { storage = localStorage; } catch (e) {}  // eslint-disable-line no-empty
     storage = storage || (function() {
         var s = {};
@@ -30,68 +31,23 @@ window.iD = function () {
         }
     };
 
-    /* Accessor for setting minimum zoom for editing features. */
 
-    var minEditableZoom = 16;
-    context.minEditableZoom = function(_) {
-        if (!arguments.length) return minEditableZoom;
-        minEditableZoom = _;
-        connection.tileZoom(_);
-        return context;
-    };
+    /* Straight accessors. Avoid using these if you can. */
+    var ui, connection, history;
+    context.ui = function() { return ui; };
+    context.connection = function() { return connection; };
+    context.history = function() { return history; };
 
-    var history = iD.History(context),
-        dispatch = d3.dispatch('enter', 'exit'),
-        mode,
-        container,
-        ui = iD.ui(context),
-        connection = iD.Connection(),
-        locale = iD.detect().locale,
-        localePath;
 
-    if (locale && iD.data.locales.indexOf(locale) === -1) {
-        locale = locale.split('-')[0];
+    /* Connection */
+    function entitiesLoaded(err, result) {
+        if (!err) history.merge(result.data, result.extent);
     }
 
     context.preauth = function(options) {
         connection.switch(options);
         return context;
     };
-
-    context.locale = function(loc, path) {
-        locale = loc;
-        localePath = path;
-
-        // Also set iD.detect().locale (unless we detected 'en-us' and openstreetmap wants 'en')..
-        if (!(loc.toLowerCase() === 'en' && iD.detect().locale.toLowerCase() === 'en-us')) {
-            iD.detect().locale = loc;
-        }
-
-        return context;
-    };
-
-    context.loadLocale = function(cb) {
-        if (locale && locale !== 'en' && iD.data.locales.indexOf(locale) !== -1) {
-            localePath = localePath || context.assetPath() + 'locales/' + locale + '.json';
-            d3.json(localePath, function(err, result) {
-                window.locale[locale] = result;
-                window.locale.current(locale);
-                cb();
-            });
-        } else {
-            cb();
-        }
-    };
-
-    /* Straight accessors. Avoid using these if you can. */
-    context.ui = function() { return ui; };
-    context.connection = function() { return connection; };
-    context.history = function() { return history; };
-
-    /* Connection */
-    function entitiesLoaded(err, result) {
-        if (!err) history.merge(result.data, result.extent);
-    }
 
     context.loadTiles = function(projection, dimensions, callback) {
         function done(err, result) {
@@ -133,13 +89,17 @@ window.iD = function () {
         });
     };
 
+    var minEditableZoom = 16;
+    context.minEditableZoom = function(_) {
+        if (!arguments.length) return minEditableZoom;
+        minEditableZoom = _;
+        connection.tileZoom(_);
+        return context;
+    };
+
+
     /* History */
-    context.graph = history.graph;
-    context.changes = history.changes;
-    context.intersects = history.intersects;
-
     var inIntro = false;
-
     context.inIntro = function(_) {
         if (!arguments.length) return inIntro;
         inIntro = _;
@@ -153,48 +113,38 @@ window.iD = function () {
     };
 
     context.flush = function() {
+        context.debouncedSave.cancel();
         connection.flush();
         features.reset();
         history.reset();
+        _.each(iD.services, function(service) {
+            var reset = service().reset;
+            if (reset) reset(context);
+        });
         return context;
     };
 
-    // Debounce save, since it's a synchronous localStorage write,
-    // and history changes can happen frequently (e.g. when dragging).
-    var debouncedSave = _.debounce(context.save, 350);
-    function withDebouncedSave(fn) {
-        return function() {
-            var result = fn.apply(history, arguments);
-            debouncedSave();
-            return result;
-        };
-    }
-
-    context.perform = withDebouncedSave(history.perform);
-    context.replace = withDebouncedSave(history.replace);
-    context.pop = withDebouncedSave(history.pop);
-    context.overwrite = withDebouncedSave(history.overwrite);
-    context.undo = withDebouncedSave(history.undo);
-    context.redo = withDebouncedSave(history.redo);
 
     /* Graph */
     context.hasEntity = function(id) {
         return history.graph().hasEntity(id);
     };
-
     context.entity = function(id) {
         return history.graph().entity(id);
     };
-
     context.childNodes = function(way) {
         return history.graph().childNodes(way);
     };
-
     context.geometry = function(id) {
         return context.entity(id).geometry(history.graph());
     };
 
+
     /* Modes */
+    var mode;
+    context.mode = function() {
+        return mode;
+    };
     context.enter = function(newMode) {
         if (mode) {
             mode.exit();
@@ -206,10 +156,6 @@ window.iD = function () {
         dispatch.enter(mode);
     };
 
-    context.mode = function() {
-        return mode;
-    };
-
     context.selectedIDs = function() {
         if (mode && mode.selectedIDs) {
             return mode.selectedIDs();
@@ -218,14 +164,15 @@ window.iD = function () {
         }
     };
 
+
     /* Behaviors */
     context.install = function(behavior) {
         context.surface().call(behavior);
     };
-
     context.uninstall = function(behavior) {
         context.surface().call(behavior.off);
     };
+
 
     /* Copy/Paste */
     var copyIDs = [], copyGraph;
@@ -237,15 +184,14 @@ window.iD = function () {
         return context;
     };
 
-    /* Projection */
-    context.projection = iD.geo.RawMercator();
 
     /* Background */
-    var background = iD.Background(context);
+    var background;
     context.background = function() { return background; };
 
+
     /* Features */
-    var features = iD.Features(context);
+    var features;
     context.features = function() { return features; };
     context.hasHiddenConnections = function(id) {
         var graph = history.graph(),
@@ -253,19 +199,13 @@ window.iD = function () {
         return features.hasHiddenConnections(entity, graph);
     };
 
+
     /* Map */
-    var map = iD.Map(context);
+    var map;
     context.map = function() { return map; };
     context.layers = function() { return map.layers; };
     context.surface = function() { return map.surface; };
     context.editable = function() { return map.editable(); };
-    context.mouse = map.mouse;
-    context.extent = map.extent;
-    context.pan = map.pan;
-    context.zoomIn = map.zoomIn;
-    context.zoomOut = map.zoomOut;
-    context.zoomInFurther = map.zoomInFurther;
-    context.zoomOutFurther = map.zoomOutFurther;
 
     context.surfaceRect = function() {
         // Work around a bug in Firefox.
@@ -274,9 +214,9 @@ window.iD = function () {
         return context.surface().node().parentNode.getBoundingClientRect();
     };
 
-    /* Presets */
-    var presets = iD.presets();
 
+    /* Presets */
+    var presets;
     context.presets = function(_) {
         if (!arguments.length) return presets;
         presets.load(_);
@@ -284,17 +224,28 @@ window.iD = function () {
         return context;
     };
 
+
+    /* Imagery */
     context.imagery = function(_) {
         background.load(_);
         return context;
     };
 
+
+    /* Container */
+    var container, embed;
     context.container = function(_) {
         if (!arguments.length) return container;
         container = _;
         container.classed('id-container', true);
         return context;
     };
+    context.embed = function(_) {
+        if (!arguments.length) return embed;
+        embed = _;
+        return context;
+    };
+
 
     /* Taginfo */
     var taginfo;
@@ -304,13 +255,8 @@ window.iD = function () {
         return context;
     };
 
-    var embed = false;
-    context.embed = function(_) {
-        if (!arguments.length) return embed;
-        embed = _;
-        return context;
-    };
 
+    /* Assets */
     var assetPath = '';
     context.assetPath = function(_) {
         if (!arguments.length) return assetPath;
@@ -325,15 +271,99 @@ window.iD = function () {
         return context;
     };
 
-    context.imagePath = function(_) {
-        var asset = 'img/' + _;
-        return assetMap[asset] || assetPath + asset;
+    context.asset = function(_) {
+        var filename = assetPath + _;
+        return assetMap[filename] || filename;
     };
+
+    context.imagePath = function(_) {
+        return context.asset('img/' + _);
+    };
+
+    var locale, localePath;
+    context.locale = function(loc, path) {
+        locale = loc;
+        localePath = path;
+
+        // Also set iD.detect().locale (unless we detected 'en-us' and openstreetmap wants 'en')..
+        if (!(loc.toLowerCase() === 'en' && iD.detect().locale.toLowerCase() === 'en-us')) {
+            iD.detect().locale = loc;
+        }
+
+        return context;
+    };
+
+    context.loadLocale = function(cb) {
+        if (locale && locale !== 'en' && iD.data.locales.indexOf(locale) !== -1) {
+            localePath = localePath || context.asset('locales/' + locale + '.json');
+            d3.json(localePath, function(err, result) {
+                window.locale[locale] = result;
+                window.locale.current(locale);
+                cb();
+            });
+        } else {
+            cb();
+        }
+    };
+
+
+    /* Init */
+
+    context.projection = iD.geo.RawMercator();
+
+    locale = iD.detect().locale;
+    if (locale && iD.data.locales.indexOf(locale) === -1) {
+        locale = locale.split('-')[0];
+    }
+
+    history = iD.History(context);
+    context.graph = history.graph;
+    context.changes = history.changes;
+    context.intersects = history.intersects;
+
+    // Debounce save, since it's a synchronous localStorage write,
+    // and history changes can happen frequently (e.g. when dragging).
+    context.debouncedSave = _.debounce(context.save, 350);
+    function withDebouncedSave(fn) {
+        return function() {
+            var result = fn.apply(history, arguments);
+            context.debouncedSave();
+            return result;
+        };
+    }
+
+    context.perform = withDebouncedSave(history.perform);
+    context.replace = withDebouncedSave(history.replace);
+    context.pop = withDebouncedSave(history.pop);
+    context.overwrite = withDebouncedSave(history.overwrite);
+    context.undo = withDebouncedSave(history.undo);
+    context.redo = withDebouncedSave(history.redo);
+
+    ui = iD.ui(context);
+
+    connection = iD.Connection();
+
+    background = iD.Background(context);
+
+    features = iD.Features(context);
+
+    map = iD.Map(context);
+    context.mouse = map.mouse;
+    context.extent = map.extent;
+    context.pan = map.pan;
+    context.zoomIn = map.zoomIn;
+    context.zoomOut = map.zoomOut;
+    context.zoomInFurther = map.zoomInFurther;
+    context.zoomOutFurther = map.zoomOutFurther;
+    context.redrawEnable = map.redrawEnable;
+
+    presets = iD.presets();
 
     return d3.rebind(context, dispatch, 'on');
 };
 
-iD.version = '1.8.3';
+
+iD.version = '1.9.0';
 
 (function() {
     var detected = {};
