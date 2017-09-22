@@ -202,7 +202,7 @@ export default {
 
 
     entityURL: function(entity) {
-        return urlroot + '/' + entity.type + '/' + entity.osmId();
+        return url + '/' + entity.type + '/' + entity.osmId();
     },
 
 
@@ -528,7 +528,7 @@ export default {
 
 
     switch: function(options) {
-        urlroot = options.urlroot;
+        url = options.url;
         oauth.options(_.extend({
             url: urlroot,
             loading: authLoading,
