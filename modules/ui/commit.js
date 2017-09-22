@@ -53,8 +53,8 @@ export function uiCommit(context) {
         if (!changeset) {
             var detected = utilDetect();
             var tags = {
-              created_by: 'iD ' + iD.version,
-              imagery_used: imageryUsed.join(';'),
+              created_by: 'iD ' + context.version,
+              imagery_used: context.history().imageryUsed().join(';').substr(0, 255),
               host: (window.location.origin + window.location.pathname),
               locale: detected.locale
             }
