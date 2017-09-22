@@ -4,6 +4,9 @@ import { svgIcon } from '../svg/index';
 
 
 export function uiAccount(context) {
+  // there is no ui account!
+  return function () {}
+
     var osm = context.connection();
 
 
