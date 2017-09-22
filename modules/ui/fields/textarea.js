@@ -20,7 +20,6 @@ export function uiFieldTextarea(field) {
             .append('textarea')
             .attr('id', 'preset-input-' + field.id)
             .attr('placeholder', field.placeholder() || t('inspector.unknown'))
-            .attr('maxlength', 255)
             .call(utilNoAuto)
             .on('input', change(true))
             .on('blur', change())
