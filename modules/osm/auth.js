@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+
 export function osmAuth () {
   var o = {}
   return {
@@ -9,7 +11,7 @@ export function osmAuth () {
       console.log(opts.method, opts.path, {
         headers: (opts.options || {}).header || {}
       })
-      var xhr = d3.xhr(o.url + opts.path)
+      var xhr = d3.request(o.url + opts.path)
       var headers = (opts.options || {}).header || {}
       Object.keys(headers).forEach(function (name) {
         xhr.header(name, headers[name])
