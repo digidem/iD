@@ -1,12 +1,15 @@
 import * as d3 from 'd3';
 import { osmPavedTags } from '../osm/tags';
 
+/**
+* Adds `camino` to the list of keys that are included as classes in svg
+*/
 
 export function svgTagClasses() {
     var primaries = [
             'building', 'highway', 'railway', 'waterway', 'aeroway',
             'motorway', 'boundary', 'power', 'amenity', 'natural', 'landuse',
-            'leisure', 'military', 'place'
+            'leisure', 'military', 'place', 'camino'
         ],
         statuses = [
             'proposed', 'construction', 'disused', 'abandoned', 'dismantled',
