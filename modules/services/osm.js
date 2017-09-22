@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import _ from 'lodash';
-import osmAuth from '../osm/auth';
+import { osmAuth } from '../osm/auth';
 import { JXON } from '../util/jxon';
 import { d3geoTile } from '../lib/d3.geo.tile';
 import { geoExtent } from '../geo';
@@ -374,8 +374,7 @@ export default {
 
             callback(undefined, {
                 id: 'anonymous'
-              })
-            }
+            })
         }
 
         oauth.xhr({ method: 'GET', path: '/api/0.6/user/details' }, done);

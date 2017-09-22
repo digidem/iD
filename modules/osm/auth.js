@@ -1,4 +1,4 @@
-osmAuth = function () {
+export function osmAuth () {
   var o = {}
   return {
     authenticated: function () { return true },
