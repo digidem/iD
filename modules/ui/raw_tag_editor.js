@@ -97,7 +97,6 @@ export function uiRawTagEditor(context) {
             .append('input')
             .property('type', 'text')
             .attr('class', 'key')
-            .attr('maxlength', 255)
             .call(utilNoAuto)
             .on('blur', keyChange)
             .on('change', keyChange);
@@ -108,7 +107,6 @@ export function uiRawTagEditor(context) {
             .append('input')
             .property('type', 'text')
             .attr('class', 'value')
-            .attr('maxlength', 255)
             .call(utilNoAuto)
             .on('blur', valueChange)
             .on('change', valueChange)
