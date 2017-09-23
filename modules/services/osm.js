@@ -368,16 +368,9 @@ export default {
             callback(undefined, userDetails);
             return;
         }
-
-        function done(err, user_details) {
-            if (err) return callback(err);
-
-            callback(undefined, {
-                id: 'anonymous'
-            })
-        }
-
-        oauth.xhr({ method: 'GET', path: '/api/0.6/user/details' }, done);
+        callback(undefined, {
+            id: 'anonymous'
+        })
     },
 
 
