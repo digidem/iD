@@ -18,7 +18,7 @@ export function osmAuth () {
       })
       var data = (opts.content == null) ? undefined : opts.content
       xhr.send(opts.method, data, function (err, xhr) {
-        cb(err, xhr.response)
+        cb(err, xhr ? xhr.response : null)
       })
     },
     preauth: function (c) {},
