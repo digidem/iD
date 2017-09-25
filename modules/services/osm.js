@@ -364,13 +364,9 @@ export default {
 
 
     userDetails: function(callback) {
-        if (userDetails) {
-            callback(undefined, userDetails);
-            return;
-        }
-        callback(undefined, {
-            id: 'anonymous'
-        })
+      callback(undefined, {
+          id: 'anonymous'
+      })
     },
 
 
