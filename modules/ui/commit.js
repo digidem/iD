@@ -55,7 +55,7 @@ export function uiCommit(context) {
             var tags = {
               comment: context.storage('comment') || '',
               created_by: 'iD ' + context.version,
-              imagery_used: context.history().imageryUsed().join(';').substr(0, 255),
+              imagery_used: context.history().imageryUsed().join(';'),
               host: (window.location.origin + window.location.pathname),
               locale: detected.locale
             }
