@@ -80,9 +80,6 @@ en:
       access_simple:
         # access=*
         label: Allowed Access
-      access_toilets:
-        # access=*
-        label: Access
       address:
         # 'addr:block_number=*, addr:city=*, addr:block_number=*, addr:conscriptionnumber=*, addr:county=*, addr:country=*, addr:county=*, addr:district=*, addr:floor=*, addr:hamlet=*, addr:housename=*, addr:housenumber=*, addr:neighbourhood=*, addr:place=*, addr:postcode=*, addr:province=*, addr:quarter=*, addr:state=*, addr:street=*, addr:subdistrict=*, addr:suburb=*, addr:unit=*'
         label: Address
@@ -777,6 +774,9 @@ en:
       maxweight:
         # maxweight=*
         label: Max Weight
+      memorial:
+        # memorial=*
+        label: Type
       milestone_position:
         # 'railway:position=*'
         label: Milestone Position
@@ -1038,6 +1038,15 @@ en:
         label: Power Output
         # plant/output/electricity field placeholder
         placeholder: '500 MW, 1000 MW, 2000 MW...'
+      playground/baby:
+        # baby=*
+        label: Baby Seat
+      playground/max_age:
+        # max_age=*
+        label: Maximum Age
+      playground/min_age:
+        # max_age=*
+        label: Minimum Age
       population:
         # population=*
         label: Population
@@ -1289,6 +1298,14 @@ en:
           tunnel: Tunnel
         # structure field placeholder
         placeholder: Unknown
+      structure_waterway:
+        # tunnel=*
+        label: Structure
+        options:
+          # tunnel=yes
+          tunnel: Tunnel
+        # structure_waterway field placeholder
+        placeholder: Unknown
       studio:
         # studio=*
         label: Type
@@ -1415,9 +1432,6 @@ en:
         label: Type
         # tunnel field placeholder
         placeholder: Default
-      tunnel_waterway:
-        # tunnel=*
-        label: Tunnel
       vending:
         # vending=*
         label: Type of Goods
@@ -1431,6 +1445,26 @@ en:
           house: Up to 5m (16ft)
           # visibility=street
           street: 5 to 20m (16 to 65ft)
+      volcano/status:
+        # 'volcano:status=*'
+        label: Volcano Status
+        options:
+          # 'volcano:status=active'
+          active: Active
+          # 'volcano:status=dormant'
+          dormant: Dormant
+          # 'volcano:status=extinct'
+          extinct: Extinct
+      volcano/type:
+        # 'volcano:type=*'
+        label: Volcano Type
+        options:
+          # 'volcano:type=scoria'
+          scoria: Scoria
+          # 'volcano:type=shield'
+          shield: Shield
+          # 'volcano:type=stratovolcano'
+          stratovolcano: Stratovolcano
       wall:
         # wall=*
         label: Type
@@ -1462,7 +1496,7 @@ en:
         label: Wikipedia
     presets:
       address:
-        # 'addr:housenumber=*'
+        # 'addr:*=*'
         name: Address
         terms: '<translate with synonyms or related terms for ''Address'', separated by commas>'
       advertising/billboard:
@@ -2496,9 +2530,9 @@ en:
         terms: '<translate with synonyms or related terms for ''Clockmaker'', separated by commas>'
       craft/confectionery:
         # craft=confectionery
-        name: Confectionery
-        # 'terms: sweets,candy'
-        terms: '<translate with synonyms or related terms for ''Confectionery'', separated by commas>'
+        name: Candy Maker
+        # 'terms: sweet,candy'
+        terms: '<translate with synonyms or related terms for ''Candy Maker'', separated by commas>'
       craft/distillery:
         # craft=distillery
         name: Distillery
@@ -2783,7 +2817,7 @@ en:
       healthcare/alternative:
         # healthcare=alternative
         name: Alternative Medicine
-        # 'terms: acupuncture,anthroposophical,applied_kinesiology,aromatherapy,ayurveda,heabalism,homeopathy,hydrotherapy,hypnosis,naturopathy,osteopathy,reflexology,reiki,shiatsu,traditional,tuina,unani'
+        # 'terms: acupuncture,anthroposophical,applied kinesiology,aromatherapy,ayurveda,herbalism,homeopathy,hydrotherapy,hypnosis,naturopathy,osteopathy,reflexology,reiki,shiatsu,traditional,tuina,unani'
         terms: '<translate with synonyms or related terms for ''Alternative Medicine'', separated by commas>'
       healthcare/alternative/chiropractic:
         # 'healthcare=alternative, healthcare:speciality=chiropractic'
@@ -2833,7 +2867,7 @@ en:
       healthcare/podiatrist:
         # healthcare=podiatrist
         name: Podiatrist
-        # 'terms: foot,feet'
+        # 'terms: foot,feet,nails'
         terms: '<translate with synonyms or related terms for ''Podiatrist'', separated by commas>'
       healthcare/psychotherapist:
         # healthcare=psychotherapist
@@ -3337,7 +3371,7 @@ en:
       leisure/fitness_station:
         # leisure=fitness_station
         name: Outdoor Fitness Station
-        # 'terms: fitness,gym'
+        # 'terms: fitness,gym,trim trail'
         terms: '<translate with synonyms or related terms for ''Outdoor Fitness Station'', separated by commas>'
       leisure/garden:
         # leisure=garden
@@ -3599,6 +3633,7 @@ en:
       man_made/survey_point:
         # man_made=survey_point
         name: Survey Point
+        # 'terms: trig point,triangulation pillar,trigonometrical station'
         terms: '<translate with synonyms or related terms for ''Survey Point'', separated by commas>'
       man_made/tower:
         # man_made=tower
@@ -3938,6 +3973,64 @@ en:
         # place=village
         name: Village
         terms: '<translate with synonyms or related terms for ''Village'', separated by commas>'
+      playground/balance_beam:
+        # playground=balancebeam
+        name: Balance Beam
+        terms: '<translate with synonyms or related terms for ''Balance Beam'', separated by commas>'
+      playground/basket_spinner:
+        # playground=basketrotator
+        name: Basket Spinner
+        # 'terms: basket rotator'
+        terms: '<translate with synonyms or related terms for ''Basket Spinner'', separated by commas>'
+      playground/basket_swing:
+        # playground=basketswing
+        name: Basket Swing
+        terms: '<translate with synonyms or related terms for ''Basket Swing'', separated by commas>'
+      playground/climbing_frame:
+        # playground=climbingframe
+        name: Climbing Frame
+        terms: '<translate with synonyms or related terms for ''Climbing Frame'', separated by commas>'
+      playground/cushion:
+        # playground=cushion
+        name: Bouncy Cushion
+        terms: '<translate with synonyms or related terms for ''Bouncy Cushion'', separated by commas>'
+      playground/horizontal_bar:
+        # playground=horizontal_bar
+        name: Horizontal Bar
+        # 'terms: high bar'
+        terms: '<translate with synonyms or related terms for ''Horizontal Bar'', separated by commas>'
+      playground/rocker:
+        # playground=springy
+        name: Springy Rocker
+        terms: '<translate with synonyms or related terms for ''Springy Rocker'', separated by commas>'
+      playground/roundabout:
+        # playground=roundabout
+        name: Play Roundabout
+        terms: '<translate with synonyms or related terms for ''Play Roundabout'', separated by commas>'
+      playground/sandpit:
+        # playground=sandpit
+        name: Sandpit
+        terms: '<translate with synonyms or related terms for ''Sandpit'', separated by commas>'
+      playground/seesaw:
+        # playground=seesaw
+        name: Seesaw
+        terms: '<translate with synonyms or related terms for ''Seesaw'', separated by commas>'
+      playground/slide:
+        # playground=slide
+        name: Slide
+        terms: '<translate with synonyms or related terms for ''Slide'', separated by commas>'
+      playground/structure:
+        # playground=structure
+        name: Play Structure
+        terms: '<translate with synonyms or related terms for ''Play Structure'', separated by commas>'
+      playground/swing:
+        # playground=swing
+        name: Swing
+        terms: '<translate with synonyms or related terms for ''Swing'', separated by commas>'
+      playground/zipwire:
+        # playground=zipwire
+        name: Zip Wire
+        terms: '<translate with synonyms or related terms for ''Zip Wire'', separated by commas>'
       point:
         name: Point
         terms: '<translate with synonyms or related terms for ''Point'', separated by commas>'
@@ -4259,6 +4352,7 @@ en:
       shop/confectionery:
         # shop=confectionery
         name: Candy Store
+        # 'terms: sweet'
         terms: '<translate with synonyms or related terms for ''Candy Store'', separated by commas>'
       shop/convenience:
         # shop=convenience
@@ -4354,8 +4448,6 @@ en:
       shop/furnace:
         # shop=furnace
         name: Furnace Store
-        # 'terms: oven,stove'
-        terms: '<translate with synonyms or related terms for ''Furnace Store'', separated by commas>'
       shop/furniture:
         # shop=furniture
         name: Furniture Store

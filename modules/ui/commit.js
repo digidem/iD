@@ -1,5 +1,11 @@
-import * as d3 from 'd3';
-import _ from 'lodash';
+import _clone from 'lodash-es/clone';
+import _forEach from 'lodash-es/forEach';
+import _isEqual from 'lodash-es/isEqual';
+import _unionBy from 'lodash-es/unionBy';
+
+import { dispatch as d3_dispatch } from 'd3-dispatch';
+import { select as d3_select } from 'd3-selection';
+
 import { t } from '../util/locale';
 import { osmChangeset } from '../osm';
 import { uiChangesetEditor } from './changeset_editor';
@@ -22,7 +28,7 @@ var readOnlyTags = [
 
 
 export function uiCommit(context) {
-    var dispatch = d3.dispatch('cancel', 'save'),
+    var dispatch = d3_dispatch('cancel', 'save'),
         userDetails,
         _selection;
 
@@ -72,7 +78,7 @@ export function uiCommit(context) {
             changeset = new osmChangeset({ tags: tags });
         }
 
-        tags = _.clone(changeset.tags);
+        tags = _clone(changeset.tags);
 
         var header = selection.selectAll('.header')
             .data([0]);
@@ -133,7 +139,7 @@ export function uiCommit(context) {
         osm.userDetails(function(err, user) {
             if (err) return;
 
-            var userLink = d3.select(document.createElement('div'));
+            var userLink = d3_select(document.createElement('div'));
 
             userDetails = user;
 
@@ -157,24 +163,33 @@ export function uiCommit(context) {
         });
 
 
+        // Request Review
         var requestReview = saveSection.selectAll('.request-review')
             .data([0]);
 
-        requestReview = requestReview.enter()
-            .append('p')
-            .attr('class', 'request-review')
-            .text(t('commit.request_review'))
-            .merge(requestReview);
+        // Enter
+        var requestReviewEnter = requestReview.enter()
+            .append('div')
+            .attr('class', 'request-review');
 
-        var requestReviewField = requestReview.selectAll('input')
-            .data([0]);
+        var labelEnter = requestReviewEnter
+            .append('label')
+            .attr('for', 'commit-input-request-review');
 
-        requestReviewField = requestReviewField.enter()
+        labelEnter
             .append('input')
             .attr('type', 'checkbox')
-            .merge(requestReviewField);
+            .attr('id', 'commit-input-request-review');
 
-        requestReviewField
+        labelEnter
+            .append('span')
+            .text(t('commit.request_review'));
+
+        // Update
+        requestReview = requestReview
+            .merge(requestReviewEnter);
+
+        var requestReviewInput = requestReview.selectAll('input')
             .property('checked', isReviewRequested(changeset.tags))
             .on('change', toggleRequestReview);
 
@@ -213,7 +228,7 @@ export function uiCommit(context) {
 
         buttonSection.selectAll('.save-button')
             .attr('disabled', function() {
-                var n = d3.select('#preset-input-comment').node();
+                var n = d3_select('#preset-input-comment').node();
                 return (n && n.value.length) ? null : true;
             })
             .on('click.save', function() {
@@ -235,7 +250,7 @@ export function uiCommit(context) {
             .call(rawTagEditor
                 .expanded(expanded)
                 .readOnlyTags(readOnlyTags)
-                .tags(_.clone(changeset.tags))
+                .tags(_clone(changeset.tags))
             );
 
 
@@ -244,7 +259,7 @@ export function uiCommit(context) {
 
 
         function toggleRequestReview() {
-            var rr = requestReviewField.property('checked');
+            var rr = requestReviewInput.property('checked');
             updateChangeset({ review_requested: (rr ? 'yes' : undefined) });
 
             var expanded = !tagSection.selectAll('a.hide-toggle.expanded').empty();
@@ -253,7 +268,7 @@ export function uiCommit(context) {
                 .call(rawTagEditor
                     .expanded(expanded)
                     .readOnlyTags(readOnlyTags)
-                    .tags(_.clone(changeset.tags))
+                    .tags(_clone(changeset.tags))
                 );
         }
     }
@@ -286,7 +301,7 @@ export function uiCommit(context) {
             context.storage('hashtags', null);       // always remove stored hashtags - #4304
             if (commentOnly) { inHashTags = null; }  // optionally override hashtags field
         }
-        return _.unionBy(inComment, inHashTags, function (s) {
+        return _unionBy(inComment, inHashTags, function (s) {
             return s.toLowerCase();
         });
 
@@ -320,9 +335,9 @@ export function uiCommit(context) {
 
 
     function updateChangeset(changed, onInput) {
-        var tags = _.clone(changeset.tags);
+        var tags = _clone(changeset.tags);
 
-        _.forEach(changed, function(v, k) {
+        _forEach(changed, function(v, k) {
             k = k.trim().substr(0, 255);
             if (readOnlyTags.indexOf(k) !== -1) return;
 
@@ -377,7 +392,7 @@ export function uiCommit(context) {
             delete tags.changesets_count;
         }
 
-        if (!_.isEqual(changeset.tags, tags)) {
+        if (!_isEqual(changeset.tags, tags)) {
             changeset = changeset.update({ tags: tags });
         }
     }

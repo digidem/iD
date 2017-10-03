@@ -153,15 +153,20 @@
                 "address"
             ],
             "geometry": [
-                "point"
+                "point",
+                "vertex",
+                "area"
             ],
             "tags": {
-                "addr:housenumber": "*"
+                "addr:*": "*"
             },
             "addTags": {},
             "removeTags": {},
-            "matchScore": 0.2,
-            "name": "Address"
+            "reference": {
+                "key": "addr"
+            },
+            "name": "Address",
+            "matchScore": 0.15
         },
         "advertising/billboard": {
             "fields": [
@@ -2589,7 +2594,7 @@
             "icon": "poi-storage-tank",
             "fields": [
                 "operator",
-                "access_toilets",
+                "access_simple",
                 "fee",
                 "water_point"
             ],
@@ -2948,7 +2953,7 @@
                 "toilets/disposal",
                 "operator",
                 "building_area",
-                "access_toilets",
+                "access_simple",
                 "gender",
                 "fee",
                 "diaper"
@@ -3466,16 +3471,16 @@
             "name": "Animal Watering Place"
         },
         "area": {
-            "name": "Area",
             "fields": [
                 "name"
+            ],
+            "geometry": [
+                "area"
             ],
             "tags": {
                 "area": "yes"
             },
-            "geometry": [
-                "area"
-            ],
+            "name": "Area",
             "matchScore": 0.1
         },
         "area/highway": {
@@ -5030,13 +5035,13 @@
                 "area"
             ],
             "terms": [
-                "sweets",
+                "sweet",
                 "candy"
             ],
             "tags": {
                 "craft": "confectionery"
             },
-            "name": "Confectionery"
+            "name": "Candy Maker"
         },
         "craft/distillery": {
             "icon": "poi-storage-tank",
@@ -6259,10 +6264,10 @@
             "terms": [
                 "acupuncture",
                 "anthroposophical",
-                "applied_kinesiology",
+                "applied kinesiology",
                 "aromatherapy",
                 "ayurveda",
-                "heabalism",
+                "herbalism",
                 "homeopathy",
                 "hydrotherapy",
                 "hypnosis",
@@ -6524,7 +6529,8 @@
             ],
             "terms": [
                 "foot",
-                "feet"
+                "feet",
+                "nails"
             ],
             "tags": {
                 "healthcare": "podiatrist"
@@ -7753,6 +7759,7 @@
             "icon": "monument",
             "fields": [
                 "name",
+                "memorial",
                 "inscription"
             ],
             "geometry": [
@@ -8918,7 +8925,8 @@
             },
             "terms": [
                 "fitness",
-                "gym"
+                "gym",
+                "trim trail"
             ],
             "name": "Outdoor Fitness Station"
         },
@@ -9485,6 +9493,14 @@
         },
         "leisure/playground": {
             "icon": "playground",
+            "fields": [
+                "name",
+                "operator",
+                "surface",
+                "playground/max_age",
+                "playground/min_age",
+                "access_simple"
+            ],
             "geometry": [
                 "point",
                 "area"
@@ -9688,14 +9704,14 @@
             "name": "Water Park"
         },
         "line": {
-            "name": "Line",
             "fields": [
                 "name"
             ],
-            "tags": {},
             "geometry": [
                 "line"
             ],
+            "tags": {},
+            "name": "Line",
             "matchScore": 0.1
         },
         "man_made": {
@@ -10051,6 +10067,11 @@
             "geometry": [
                 "point",
                 "vertex"
+            ],
+            "terms": [
+                "trig point",
+                "triangulation pillar",
+                "trigonometrical station"
             ],
             "tags": {
                 "man_made": "survey_point"
@@ -10580,7 +10601,9 @@
             "icon": "volcano",
             "fields": [
                 "name",
-                "elevation"
+                "elevation",
+                "volcano/status",
+                "volcano/type"
             ],
             "geometry": [
                 "point",
@@ -11462,15 +11485,179 @@
             },
             "name": "Village"
         },
-        "point": {
-            "name": "Point",
-            "fields": [
-                "name"
+        "playground/balance_beam": {
+            "icon": "playground",
+            "geometry": [
+                "point",
+                "line"
             ],
-            "tags": {},
+            "tags": {
+                "playground": "balancebeam"
+            },
+            "name": "Balance Beam"
+        },
+        "playground/basket_spinner": {
+            "icon": "playground",
             "geometry": [
                 "point"
             ],
+            "terms": [
+                "basket rotator"
+            ],
+            "tags": {
+                "playground": "basketrotator"
+            },
+            "name": "Basket Spinner"
+        },
+        "playground/basket_swing": {
+            "icon": "playground",
+            "geometry": [
+                "point"
+            ],
+            "tags": {
+                "playground": "basketswing"
+            },
+            "name": "Basket Swing"
+        },
+        "playground/climbing_frame": {
+            "icon": "playground",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "playground": "climbingframe"
+            },
+            "name": "Climbing Frame"
+        },
+        "playground/cushion": {
+            "icon": "playground",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "playground": "cushion"
+            },
+            "name": "Bouncy Cushion"
+        },
+        "playground/horizontal_bar": {
+            "icon": "pitch",
+            "fields": [
+                "height"
+            ],
+            "geometry": [
+                "point"
+            ],
+            "terms": [
+                "high bar"
+            ],
+            "tags": {
+                "playground": "horizontal_bar"
+            },
+            "name": "Horizontal Bar"
+        },
+        "playground/rocker": {
+            "icon": "playground",
+            "geometry": [
+                "point"
+            ],
+            "tags": {
+                "playground": "springy"
+            },
+            "name": "Springy Rocker"
+        },
+        "playground/roundabout": {
+            "icon": "stadium",
+            "fields": [
+                "bench"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "playground": "roundabout"
+            },
+            "name": "Play Roundabout"
+        },
+        "playground/sandpit": {
+            "icon": "playground",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "playground": "sandpit"
+            },
+            "name": "Sandpit"
+        },
+        "playground/seesaw": {
+            "icon": "playground",
+            "geometry": [
+                "point"
+            ],
+            "tags": {
+                "playground": "seesaw"
+            },
+            "name": "Seesaw"
+        },
+        "playground/slide": {
+            "icon": "playground",
+            "geometry": [
+                "point",
+                "line"
+            ],
+            "tags": {
+                "playground": "slide"
+            },
+            "name": "Slide"
+        },
+        "playground/structure": {
+            "icon": "pitch",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "playground": "structure"
+            },
+            "name": "Play Structure"
+        },
+        "playground/swing": {
+            "icon": "playground",
+            "fields": [
+                "playground/baby",
+                "wheelchair"
+            ],
+            "geometry": [
+                "point"
+            ],
+            "tags": {
+                "playground": "swing"
+            },
+            "name": "Swing"
+        },
+        "playground/zipwire": {
+            "icon": "playground",
+            "geometry": [
+                "point",
+                "line"
+            ],
+            "tags": {
+                "playground": "zipwire"
+            },
+            "name": "Zip Wire"
+        },
+        "point": {
+            "fields": [
+                "name"
+            ],
+            "geometry": [
+                "point"
+            ],
+            "tags": {},
+            "name": "Point",
             "matchScore": 0.1
         },
         "power/sub_station": {
@@ -12106,16 +12293,16 @@
             "name": "Tram"
         },
         "relation": {
-            "name": "Relation",
             "icon": "relation",
-            "tags": {},
-            "geometry": [
-                "relation"
-            ],
             "fields": [
                 "name",
                 "relation"
-            ]
+            ],
+            "geometry": [
+                "relation"
+            ],
+            "tags": {},
+            "name": "Relation"
         },
         "route/ferry": {
             "icon": "ferry-line",
@@ -12174,6 +12361,29 @@
                 "value": "seafood"
             },
             "name": "Fishmonger",
+            "searchable": false
+        },
+        "shop/furnace": {
+            "icon": "shop",
+            "fields": [
+                "name",
+                "operator",
+                "address",
+                "building_area",
+                "opening_hours"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "terms": [
+                "oven",
+                "stove"
+            ],
+            "tags": {
+                "shop": "furnace"
+            },
+            "name": "Furnace Store",
             "searchable": false
         },
         "shop/vacant": {
@@ -12866,6 +13076,9 @@
                 "point",
                 "area"
             ],
+            "terms": [
+                "sweet"
+            ],
             "tags": {
                 "shop": "confectionery"
             },
@@ -13274,28 +13487,6 @@
                 "shop": "funeral_directors"
             },
             "name": "Funeral Home"
-        },
-        "shop/furnace": {
-            "icon": "shop",
-            "fields": [
-                "name",
-                "operator",
-                "address",
-                "building_area",
-                "opening_hours"
-            ],
-            "geometry": [
-                "point",
-                "area"
-            ],
-            "terms": [
-                "oven",
-                "stove"
-            ],
-            "tags": {
-                "shop": "furnace"
-            },
-            "name": "Furnace Store"
         },
         "shop/furniture": {
             "icon": "shop",
@@ -15739,14 +15930,14 @@
             "name": "Waterway"
         },
         "vertex": {
-            "name": "Other",
-            "tags": {},
             "fields": [
                 "name"
             ],
             "geometry": [
                 "vertex"
             ],
+            "tags": {},
+            "name": "Other",
             "matchScore": 0.1
         },
         "waterway/boatyard": {
@@ -15799,7 +15990,7 @@
         "waterway/ditch": {
             "icon": "waterway-ditch",
             "fields": [
-                "tunnel_waterway",
+                "structure_waterway",
                 "intermittent"
             ],
             "geometry": [
@@ -15836,7 +16027,7 @@
         "waterway/drain": {
             "icon": "waterway-stream",
             "fields": [
-                "tunnel_waterway",
+                "structure_waterway",
                 "intermittent"
             ],
             "geometry": [
@@ -15875,7 +16066,7 @@
             "icon": "waterway-river",
             "fields": [
                 "name",
-                "tunnel_waterway",
+                "structure_waterway",
                 "width",
                 "intermittent"
             ],
@@ -15917,7 +16108,7 @@
             "fields": [
                 "name",
                 "operator",
-                "access_toilets",
+                "access_simple",
                 "fee",
                 "water_point"
             ],
@@ -15947,7 +16138,7 @@
             "icon": "waterway-stream",
             "fields": [
                 "name",
-                "tunnel_waterway",
+                "structure_waterway",
                 "width",
                 "intermittent"
             ],
@@ -15990,7 +16181,7 @@
             "icon": "waterway-stream",
             "fields": [
                 "name",
-                "tunnel_waterway",
+                "structure_waterway",
                 "width",
                 "intermittent"
             ],
@@ -56153,6 +56344,14 @@
                 "point",
                 "area"
             ],
+            "fields": [
+                "name",
+                "operator",
+                "surface",
+                "playground/max_age",
+                "playground/min_age",
+                "access_simple"
+            ],
             "suggestion": true
         },
         "leisure/playground/놀이터": {
@@ -56165,6 +56364,14 @@
             "geometry": [
                 "point",
                 "area"
+            ],
+            "fields": [
+                "name",
+                "operator",
+                "surface",
+                "playground/max_age",
+                "playground/min_age",
+                "access_simple"
             ],
             "suggestion": true
         },

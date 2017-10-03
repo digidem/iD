@@ -1,77 +1,109 @@
 /* eslint-disable no-console */
 
-const _ = require('lodash');
+const _cloneDeep = require('lodash/cloneDeep');
+const _extend = require('lodash/extend');
+const _forEach = require('lodash/forEach');
+const _isEmpty = require('lodash/isEmpty');
+const _merge = require('lodash/merge');
+const _toPairs = require('lodash/toPairs');
+
 const fs = require('fs');
 const glob = require('glob');
 const jsonschema = require('jsonschema');
 const path = require('path');
 const shell = require('shelljs');
 const YAML = require('js-yaml');
+const colors = require('colors/safe');
 
 const fieldSchema = require('./data/presets/schema/field.json');
 const presetSchema = require('./data/presets/schema/preset.json');
 const suggestions = require('name-suggestion-index/name-suggestions.json');
 
 
-// Create symlinks if necessary..  { 'target': 'source' }
-const symlinks = {
-    'land.html': 'dist/land.html',
-    'img': 'dist/img',
+module.exports = function buildData() {
+    var building;
+    return function() {
+        // Note: even though this function is sync adding
+        // the `building` variable for consistency and future proofing
+        if (building) return;
+        building = true;
+        console.log('building data');
+        console.time(colors.green('data built'));
+
+        // Create symlinks if necessary..  { 'target': 'source' }
+        const symlinks = {
+            'land.html': 'dist/land.html',
+            img: 'dist/img'
+        };
+
+        for (var target of Object.keys(symlinks)) {
+            if (!shell.test('-L', target)) {
+                console.log(
+                    `Creating symlink:  ${target} -> ${symlinks[target]}`
+                );
+                shell.ln('-sf', symlinks[target], target);
+            }
+        }
+
+        // Translation strings
+        var tstrings = {
+            categories: {},
+            fields: {},
+            presets: {}
+        };
+
+        // Start clean
+        shell.rm('-f', [
+            'data/presets/categories.json',
+            'data/presets/fields.json',
+            'data/presets/presets.json',
+            'data/presets.yaml',
+            'data/taginfo.json',
+            'dist/locales/en.json'
+        ]);
+
+        var categories = generateCategories(tstrings);
+        var fields = generateFields(tstrings);
+        var presets = generatePresets(tstrings);
+        var defaults = read('data/presets/defaults.json');
+        var translations = generateTranslations(fields, presets, tstrings);
+        var taginfo = generateTaginfo(presets);
+
+        // Additional consistency checks
+        validateCategoryPresets(categories, presets);
+        validatePresetFields(presets, fields);
+        validateDefaults(defaults, categories, presets);
+
+        // Save individual data files
+        var tasks = [
+            writeFileProm(
+                'data/presets/categories.json',
+                JSON.stringify({ categories: categories }, null, 4)
+            ),
+            writeFileProm(
+                'data/presets/fields.json',
+                JSON.stringify({ fields: fields }, null, 4)
+            ),
+            writeFileProm(
+                'data/presets/presets.json',
+                JSON.stringify({ presets: presets }, null, 4)
+            ),
+            writeFileProm('data/presets.yaml', translationsToYAML(translations)),
+            writeFileProm('data/taginfo.json', JSON.stringify(taginfo, null, 4)),
+            writeEnJson(tstrings)
+        ];
+
+        return Promise.all(tasks)
+            .then(function () {
+                console.timeEnd(colors.green('data built'));
+                building = false;
+            })
+            .catch(function (err) {
+                console.error(err);
+                process.exit(1);
+            });
+    };
 };
-
-for (var target of Object.keys(symlinks)) {
-    if (!shell.test('-L', target)) {
-        console.log(`Creating symlink:  ${target} -> ${symlinks[target]}`);
-        shell.ln('-sf', symlinks[target], target);
-    }
-}
-
-
-// Translation strings
-var tstrings = {
-    categories: {},
-    fields: {},
-    presets: {}
-};
-
-
-// Start clean
-shell.rm('-f', [
-    'data/presets/categories.json',
-    'data/presets/fields.json',
-    'data/presets/presets.json',
-    'data/presets.yaml',
-    'data/taginfo.json',
-    'dist/locales/en.json'
-]);
-
-var categories = generateCategories();
-var fields = generateFields();
-var presets = generatePresets();
-var defaults = read('data/presets/defaults.json');
-var translations = generateTranslations(fields, presets);
-var taginfo = generateTaginfo(presets);
-
-// Additional consistency checks
-validateCategoryPresets(categories, presets);
-validatePresetFields(presets, fields);
-validateDefaults(defaults, categories, presets);
-
-// Save individual data files
-fs.writeFileSync('data/presets/categories.json', JSON.stringify({ categories: categories }, null, 4));
-fs.writeFileSync('data/presets/fields.json', JSON.stringify({ fields: fields }, null, 4));
-fs.writeFileSync('data/presets/presets.json', JSON.stringify({ presets: presets }, null, 4));
-fs.writeFileSync('data/presets.yaml', translationsToYAML(translations));
-fs.writeFileSync('data/taginfo.json', JSON.stringify(taginfo, null, 4));
-
-// Push changes from data/core.yaml into en.json
-var core = YAML.load(fs.readFileSync('data/core.yaml', 'utf8'));
-var imagery = YAML.load(fs.readFileSync('node_modules/editor-layer-index/i18n/en.yaml', 'utf8'));
-var en = _.merge(core, { en: { presets: tstrings }}, imagery);
-fs.writeFileSync('dist/locales/en.json', JSON.stringify(en, null, 4));
-
-process.exit();
-
 
 function read(f) {
     return JSON.parse(fs.readFileSync(f, 'utf8'));
@@ -92,7 +124,7 @@ function validate(file, instance, schema) {
     }
 }
 
-function generateCategories() {
+function generateCategories(tstrings) {
     var categories = {};
     glob.sync(__dirname + '/data/presets/categories/*.json').forEach(function(file) {
         var field = read(file),
@@ -105,7 +137,7 @@ function generateCategories() {
     return categories;
 }
 
-function generateFields() {
+function generateFields(tstrings) {
     var fields = {};
     glob.sync(__dirname + '/data/presets/fields/**/*.json').forEach(function(file) {
         var field = read(file),
@@ -147,7 +179,7 @@ function suggestionsToPresets(presets) {
                     delete existing[name];
                 }
                 if (!existing[name]) {
-                    tags = _.extend({name: name.replace(/"/g, '')}, suggestions[key][value][name].tags);
+                    tags = _extend({name: name.replace(/"/g, '')}, suggestions[key][value][name].tags);
                     addSuggestion(item, tags, name.replace(/"/g, ''), count);
                 }
             }
@@ -164,7 +196,7 @@ function suggestionsToPresets(presets) {
         }
 
         presets[category.replace(/"/g, '')] = {
-            tags: parent.tags ? _.merge(tags, parent.tags) : tags,
+            tags: parent.tags ? _merge(tags, parent.tags) : tags,
             name: name,
             icon: parent.icon,
             geometry: parent.geometry,
@@ -185,7 +217,7 @@ function stripLeadingUnderscores(str) {
     return str.split('/').map(function(s) { return s.replace(/^_/,''); }).join('/');
 }
 
-function generatePresets() {
+function generatePresets(tstrings) {
     var presets = {};
 
     glob.sync(__dirname + '/data/presets/presets/**/*.json').forEach(function(file) {
@@ -201,20 +233,20 @@ function generatePresets() {
         presets[id] = preset;
     });
 
-    presets = _.merge(presets, suggestionsToPresets(presets));
+    presets = _merge(presets, suggestionsToPresets(presets));
     return presets;
 
 }
 
-function generateTranslations(fields, presets) {
-    var translations = _.cloneDeep(tstrings);
+function generateTranslations(fields, presets, tstrings) {
+    var translations = _cloneDeep(tstrings);
 
-    _.forEach(translations.fields, function(field, id) {
+    _forEach(translations.fields, function(field, id) {
         var f = fields[id];
         if (f.keys) {
-            field['label#'] = _.each(f.keys).map(function(key) { return key + '=*'; }).join(', ');
-            if (!_.isEmpty(field.options)) {
-                _.each(field.options, function(v,k) {
+            field['label#'] = _forEach(f.keys).map(function(key) { return key + '=*'; }).join(', ');
+            if (!_isEmpty(field.options)) {
+                _forEach(field.options, function(v,k) {
                     if (id === 'access') {
                         field.options[k]['title#'] = field.options[k]['description#'] = 'access=' + k;
                     } else {
@@ -224,8 +256,8 @@ function generateTranslations(fields, presets) {
             }
         } else if (f.key) {
             field['label#'] = f.key + '=*';
-            if (!_.isEmpty(field.options)) {
-                _.each(field.options, function(v,k) {
+            if (!_isEmpty(field.options)) {
+                _forEach(field.options, function(v,k) {
                     field.options[k + '#'] = f.key + '=' + k;
                 });
             }
@@ -236,10 +268,10 @@ function generateTranslations(fields, presets) {
         }
     });
 
-    _.forEach(translations.presets, function(preset, id) {
+    _forEach(translations.presets, function(preset, id) {
         var p = presets[id];
-        if (!_.isEmpty(p.tags))
-            preset['name#'] = _.toPairs(p.tags).map(function(pair) { return pair[0] + '=' + pair[1]; }).join(', ');
+        if (!_isEmpty(p.tags))
+            preset['name#'] = _toPairs(p.tags).map(function(pair) { return pair[0] + '=' + pair[1]; }).join(', ');
         if (p.searchable !== false) {
             if (p.terms && p.terms.length)
                 preset['terms#'] = 'terms: ' + p.terms.join();
@@ -269,7 +301,7 @@ function generateTaginfo(presets) {
         'tags': []
     };
 
-    _.forEach(presets, function(preset) {
+    _forEach(presets, function(preset) {
         if (preset.suggestion)
             return;
 
@@ -291,7 +323,7 @@ function generateTaginfo(presets) {
 }
 
 function validateCategoryPresets(categories, presets) {
-    _.forEach(categories, function(category) {
+    _forEach(categories, function(category) {
         if (category.members) {
             category.members.forEach(function(preset) {
                 if (presets[preset] === undefined) {
@@ -304,7 +336,7 @@ function validateCategoryPresets(categories, presets) {
 }
 
 function validatePresetFields(presets, fields) {
-    _.forEach(presets, function(preset) {
+    _forEach(presets, function(preset) {
         if (preset.fields) {
             preset.fields.forEach(function(field) {
                 if (fields[field] === undefined) {
@@ -317,7 +349,7 @@ function validatePresetFields(presets, fields) {
 }
 
 function validateDefaults (defaults, categories, presets) {
-    _.forEach(defaults.defaults, function (members, name) {
+    _forEach(defaults.defaults, function (members, name) {
         members.forEach(function (id) {
             if (!presets[id] && !categories[id]) {
                 console.error('Unknown category or preset: ' + id + ' in default ' + name);
@@ -337,4 +369,45 @@ function translationsToYAML(translations) {
 
     return YAML.safeDump({ en: { presets: translations }}, { sortKeys: commentFirst, lineWidth: -1 })
         .replace(/\'.*#\':/g, '#');
+}
+
+function writeEnJson(tstrings) {
+    var readCoreYaml = readFileProm('data/core.yaml', 'utf8');
+    var readImagery = readFileProm(
+        'node_modules/editor-layer-index/i18n/en.yaml',
+        'utf8'
+    );
+
+    return Promise.all([readCoreYaml, readImagery]).then(function(data) {
+        var core = YAML.load(data[0]);
+        var imagery = YAML.load(data[1]);
+        var en = _merge(core, { en: { presets: tstrings } }, imagery);
+        return writeFileProm(
+            'dist/locales/en.json',
+            JSON.stringify(en, null, 4)
+        );
+    });
+}
+
+function writeFileProm(path, content) {
+    return new Promise(function(res, rej) {
+        fs.writeFile(path, content, function(err) {
+            if (err) {
+                return rej(err);
+            }
+            res();
+        });
+    });
+}
+
+
+function readFileProm(path, options) {
+    return new Promise(function(res, rej) {
+        fs.readFile(path, options, function(err, data) {
+            if (err) {
+                return rej(err);
+            }
+            res(data);
+        });
+    });
 }

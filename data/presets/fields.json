@@ -5,21 +5,11 @@
             "type": "combo",
             "label": "Allowed Access",
             "options": [
+                "yes",
                 "permissive",
                 "private",
                 "customers",
                 "no"
-            ]
-        },
-        "access_toilets": {
-            "key": "access",
-            "type": "combo",
-            "label": "Access",
-            "options": [
-                "yes",
-                "permissive",
-                "private",
-                "customers"
             ]
         },
         "access": {
@@ -1091,6 +1081,11 @@
             "label": "Max Weight",
             "snake_case": false
         },
+        "memorial": {
+            "key": "memorial",
+            "type": "typeCombo",
+            "label": "Type"
+        },
         "milestone_position": {
             "key": "railway:position",
             "type": "text",
@@ -1377,6 +1372,21 @@
             "type": "text",
             "label": "Power Output",
             "placeholder": "500 MW, 1000 MW, 2000 MW..."
+        },
+        "playground/baby": {
+            "key": "baby",
+            "type": "check",
+            "label": "Baby Seat"
+        },
+        "playground/max_age": {
+            "key": "max_age",
+            "type": "number",
+            "label": "Maximum Age"
+        },
+        "playground/min_age": {
+            "key": "max_age",
+            "type": "number",
+            "label": "Minimum Age"
         },
         "population": {
             "key": "population",
@@ -1740,6 +1750,19 @@
                 }
             }
         },
+        "structure_waterway": {
+            "type": "structureRadio",
+            "keys": [
+                "tunnel"
+            ],
+            "label": "Structure",
+            "placeholder": "Unknown",
+            "strings": {
+                "options": {
+                    "tunnel": "Tunnel"
+                }
+            }
+        },
         "structure": {
             "type": "structureRadio",
             "keys": [
@@ -1919,11 +1942,6 @@
             "type": "semiCombo",
             "label": "Trees"
         },
-        "tunnel_waterway": {
-            "key": "tunnel",
-            "type": "combo",
-            "label": "Tunnel"
-        },
         "tunnel": {
             "key": "tunnel",
             "type": "typeCombo",
@@ -1944,6 +1962,30 @@
                     "house": "Up to 5m (16ft)",
                     "street": "5 to 20m (16 to 65ft)",
                     "area": "Over 20m (65ft)"
+                }
+            }
+        },
+        "volcano/status": {
+            "key": "volcano:status",
+            "type": "combo",
+            "label": "Volcano Status",
+            "strings": {
+                "options": {
+                    "active": "Active",
+                    "dormant": "Dormant",
+                    "extinct": "Extinct"
+                }
+            }
+        },
+        "volcano/type": {
+            "key": "volcano:type",
+            "type": "combo",
+            "label": "Volcano Type",
+            "strings": {
+                "options": {
+                    "stratovolcano": "Stratovolcano",
+                    "shield": "Shield",
+                    "scoria": "Scoria"
                 }
             }
         },

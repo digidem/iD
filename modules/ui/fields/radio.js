@@ -1,4 +1,10 @@
-import * as d3 from 'd3';
+import _clone from 'lodash-es/clone';
+import _pull from 'lodash-es/pull';
+import _union from 'lodash-es/union';
+
+import { dispatch as d3_dispatch } from 'd3-dispatch';
+import { select as d3_select } from 'd3-selection';
+
 import { t } from '../../util/locale';
 import { uiField } from '../field';
 import { utilRebind } from '../../util';
@@ -8,11 +14,12 @@ export { uiFieldRadio as uiFieldStructureRadio };
 
 
 export function uiFieldRadio(field, context) {
-    var dispatch = d3.dispatch('change'),
-        placeholder = d3.select(null),
-        wrap = d3.select(null),
-        labels = d3.select(null),
-        radios = d3.select(null),
+    var dispatch = d3_dispatch('change'),
+        placeholder = d3_select(null),
+        wrap = d3_select(null),
+        labels = d3_select(null),
+        radios = d3_select(null),
+        radioData = _clone(field.options || field.keys),
         typeField,
         layerField,
         oldType = {},
@@ -20,8 +27,7 @@ export function uiFieldRadio(field, context) {
 
 
     function selectedKey() {
-        var selector = '.form-field-structure .toggle-list label.active input',
-            node = d3.selectAll(selector);
+        var node = wrap.selectAll('.toggle-list label.active input');
         return !node.empty() && node.datum();
     }
 
@@ -47,7 +53,7 @@ export function uiFieldRadio(field, context) {
         placeholder = wrap.selectAll('.placeholder');
 
         labels = wrap.selectAll('label')
-            .data(field.options || field.keys);
+            .data(radioData);
 
         enter = labels.enter()
             .append('label');
@@ -80,7 +86,7 @@ export function uiFieldRadio(field, context) {
 
 
         var extrasWrap = selection.selectAll('.structure-extras-wrap')
-                .data(selected ? [0] : []);
+            .data(selected ? [0] : []);
 
         extrasWrap.exit()
             .remove();
@@ -148,8 +154,10 @@ export function uiFieldRadio(field, context) {
                     .on('change', changeLayer);
             }
             layerField.tags(tags);
+            field.keys = _union(field.keys, ['layer']);
         } else {
             layerField = null;
+            _pull(field.keys, 'layer');
         }
 
         var layerItem = list.selectAll('.structure-layer-item')
@@ -190,7 +198,16 @@ export function uiFieldRadio(field, context) {
         if (!key) return;
 
         var val = t[key];
-        if (val !== 'no') oldType[key] = val;
+        if (val !== 'no') {
+            oldType[key] = val;
+        }
+
+        if (field.type === 'structureRadio') {
+            if (val === 'no' || (key !== 'bridge' && key !== 'tunnel')) {
+                t.layer = undefined;
+            }
+        }
+
         dispatch.call('change', this, t, onInput);
     }
 
@@ -212,7 +229,7 @@ export function uiFieldRadio(field, context) {
         }
 
         radios.each(function(d) {
-            var active = d3.select(this).property('checked');
+            var active = d3_select(this).property('checked');
             if (active) activeKey = d;
 
             if (field.key) {
@@ -259,6 +276,12 @@ export function uiFieldRadio(field, context) {
         }
 
         if (field.type === 'structureRadio') {
+            // For waterways without a tunnel tag, set 'culvert' as
+            // the oldType to default to if the user picks 'tunnel'
+            if (!!tags.waterway && !oldType.tunnel) {
+                oldType.tunnel = 'culvert';
+            }
+
             wrap.call(structureExtras, tags);
         }
     };

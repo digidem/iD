@@ -1,8 +1,12 @@
-import * as d3 from 'd3';
-import _ from 'lodash';
-import { d3keybinding } from '../lib/d3.keybinding.js';
+import {
+    event as d3_event,
+    select as d3_select
+} from 'd3-selection';
+
+import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
+
 import { t, textDirection } from '../util/locale';
-import { svgIcon } from '../svg/index';
+import { svgIcon } from '../svg';
 import { uiTooltipHtml } from './tooltipHtml';
 import { tooltip } from '../util/tooltip';
 
@@ -40,7 +44,7 @@ export function uiMapData(context) {
 
 
         function setFill(d) {
-            _.each(fills, function(opt) {
+            fills.forEach(function(opt) {
                 context.surface().classed('fill-' + opt, Boolean(opt === d));
             });
 
@@ -73,11 +77,6 @@ export function uiMapData(context) {
 
         function toggleLayer(which) {
             setLayer(which, !showsLayer(which));
-        }
-
-
-        function clickGpx() {
-            toggleLayer('gpx');
         }
 
 
@@ -191,82 +190,133 @@ export function uiMapData(context) {
         }
 
 
+        function drawOsmItem(selection) {
+            var osm = layers.layer('osm'),
+                showsOsm = osm.enabled();
+
+            var ul = selection
+                .selectAll('.layer-list-osm')
+                .data(osm ? [0] : []);
+
+            // Exit
+            ul.exit()
+                .remove();
+
+            // Enter
+            var ulEnter = ul.enter()
+                .append('ul')
+                .attr('class', 'layer-list layer-list-osm');
+
+            var liEnter = ulEnter
+                .append('li')
+                .attr('class', 'list-item-osm');
+
+            var labelEnter = liEnter
+                .append('label')
+                .call(tooltip()
+                    .title(t('map_data.layers.osm.tooltip'))
+                    .placement('top')
+                );
+
+            labelEnter
+                .append('input')
+                .attr('type', 'checkbox')
+                .on('change', function() { toggleLayer('osm'); });
+
+            labelEnter
+                .append('span')
+                .text(t('map_data.layers.osm.title'));
+
+            // Update
+            ul = ul
+                .merge(ulEnter);
+
+            ul.selectAll('.list-item-osm')
+                .classed('active', showsOsm)
+                .selectAll('input')
+                .property('checked', showsOsm);
+        }
+
+
         function drawGpxItem(selection) {
             var gpx = layers.layer('gpx'),
                 hasGpx = gpx && gpx.hasGpx(),
                 showsGpx = hasGpx && gpx.enabled();
 
-            var gpxLayerItem = selection
+            var ul = selection
                 .selectAll('.layer-list-gpx')
                 .data(gpx ? [0] : []);
 
             // Exit
-            gpxLayerItem.exit()
+            ul.exit()
                 .remove();
 
             // Enter
-            var enter = gpxLayerItem.enter()
+            var ulEnter = ul.enter()
                 .append('ul')
-                .attr('class', 'layer-list layer-list-gpx')
-                .append('li')
-                .classed('list-item-gpx', true);
+                .attr('class', 'layer-list layer-list-gpx');
 
-            enter
+            var liEnter = ulEnter
+                .append('li')
+                .attr('class', 'list-item-gpx');
+
+            liEnter
                 .append('button')
                 .attr('class', 'list-item-gpx-extent')
                 .call(tooltip()
                     .title(t('gpx.zoom'))
                     .placement((textDirection === 'rtl') ? 'right' : 'left'))
                 .on('click', function() {
-                    d3.event.preventDefault();
-                    d3.event.stopPropagation();
+                    d3_event.preventDefault();
+                    d3_event.stopPropagation();
                     gpx.fitZoom();
                 })
                 .call(svgIcon('#icon-search'));
 
-            enter
+            liEnter
                 .append('button')
                 .attr('class', 'list-item-gpx-browse')
                 .call(tooltip()
                     .title(t('gpx.browse'))
-                    .placement((textDirection === 'rtl') ? 'right' : 'left'))
+                    .placement((textDirection === 'rtl') ? 'right' : 'left')
+                )
                 .on('click', function() {
-                    d3.select(document.createElement('input'))
+                    d3_select(document.createElement('input'))
                         .attr('type', 'file')
                         .on('change', function() {
-                            gpx.files(d3.event.target.files);
+                            gpx.files(d3_event.target.files);
                         })
                         .node().click();
                 })
                 .call(svgIcon('#icon-geolocate'));
 
-            var labelGpx = enter
+            var labelEnter = liEnter
                 .append('label')
-                .call(tooltip().title(t('gpx.drag_drop')).placement('top'));
+                .call(tooltip()
+                    .title(t('gpx.drag_drop'))
+                    .placement('top')
+                );
 
-            labelGpx
+            labelEnter
                 .append('input')
                 .attr('type', 'checkbox')
-                .on('change', clickGpx);
+                .on('change', function() { toggleLayer('gpx'); });
 
-            labelGpx
+            labelEnter
                 .append('span')
                 .text(t('gpx.local_layer'));
 
-
             // Update
-            gpxLayerItem = gpxLayerItem
-                .merge(enter);
+            ul = ul
+                .merge(ulEnter);
 
-            gpxLayerItem
+            ul.selectAll('.list-item-gpx')
                 .classed('active', showsGpx)
+                .selectAll('label')
+                .classed('deemphasize', !hasGpx)
                 .selectAll('input')
                 .property('disabled', !hasGpx)
                 .property('checked', showsGpx);
-
-            gpxLayerItem
-                .selectAll('label')
-                .classed('deemphasize', !hasGpx);
         }
 
 
@@ -289,7 +339,8 @@ export function uiMapData(context) {
                             key = (d === 'wireframe' ? t('area_fill.wireframe.key') : null);
 
                         if (name === 'feature' && autoHiddenFeature(d)) {
-                            tip += '<div>' + t('map_data.autohidden') + '</div>';
+                            var msg = showsLayer('osm') ? t('map_data.autohidden') : t('map_data.osmhidden');
+                            tip += '<div>' + msg + '</div>';
                         }
                         return uiTooltipHtml(tip, key);
                     })
@@ -324,11 +375,16 @@ export function uiMapData(context) {
 
 
         function update() {
-            dataLayerContainer.call(drawMapillaryItems);
-            dataLayerContainer.call(drawGpxItem);
+            dataLayerContainer
+                .call(drawOsmItem)
+                .call(drawMapillaryItems)
+                .call(drawGpxItem);
 
-            fillList.call(drawList, fills, 'radio', 'area_fill', setFill, showsFill);
-            featureList.call(drawList, features, 'checkbox', 'feature', clickFeature, showsFeature);
+            fillList
+                .call(drawList, fills, 'radio', 'area_fill', setFill, showsFill);
+
+            featureList
+                .call(drawList, features, 'checkbox', 'feature', clickFeature, showsFeature);
         }
 
 
@@ -338,16 +394,16 @@ export function uiMapData(context) {
 
 
         function togglePanel() {
-            if (d3.event) d3.event.preventDefault();
+            if (d3_event) d3_event.preventDefault();
             tooltipBehavior.hide(button);
             setVisible(!button.classed('active'));
         }
 
 
         function toggleWireframe() {
-            if (d3.event) {
-                d3.event.preventDefault();
-                d3.event.stopPropagation();
+            if (d3_event) {
+                d3_event.preventDefault();
+                d3_event.stopPropagation();
             }
             setFill((fillSelected === 'wireframe' ? fillDefault : 'wireframe'));
             context.map().pan([0,0]);  // trigger a redraw
@@ -362,7 +418,7 @@ export function uiMapData(context) {
                 if (show) {
                     update();
                     selection.on('mousedown.map_data-inside', function() {
-                        return d3.event.stopPropagation();
+                        return d3_event.stopPropagation();
                     });
                     content.style('display', 'block')
                         .style('right', '-300px')
@@ -376,7 +432,7 @@ export function uiMapData(context) {
                         .duration(200)
                         .style('right', '-300px')
                         .on('end', function() {
-                            d3.select(this).style('display', 'none');
+                            d3_select(this).style('display', 'none');
                         });
                     selection.on('mousedown.map_data-inside', null);
                 }
@@ -412,10 +468,10 @@ export function uiMapData(context) {
             .classed('hide-toggle', true)
             .classed('expanded', true)
             .on('click', function() {
-                var exp = d3.select(this).classed('expanded');
+                var exp = d3_select(this).classed('expanded');
                 dataLayerContainer.style('display', exp ? 'none' : 'block');
-                d3.select(this).classed('expanded', !exp);
-                d3.event.preventDefault();
+                d3_select(this).classed('expanded', !exp);
+                d3_event.preventDefault();
             });
 
         var dataLayerContainer = content
@@ -432,10 +488,10 @@ export function uiMapData(context) {
             .classed('hide-toggle', true)
             .classed('expanded', false)
             .on('click', function() {
-                var exp = d3.select(this).classed('expanded');
+                var exp = d3_select(this).classed('expanded');
                 fillContainer.style('display', exp ? 'none' : 'block');
-                d3.select(this).classed('expanded', !exp);
-                d3.event.preventDefault();
+                d3_select(this).classed('expanded', !exp);
+                d3_event.preventDefault();
             });
 
         var fillContainer = content
@@ -456,10 +512,10 @@ export function uiMapData(context) {
             .classed('hide-toggle', true)
             .classed('expanded', false)
             .on('click', function() {
-                var exp = d3.select(this).classed('expanded');
+                var exp = d3_select(this).classed('expanded');
                 featureContainer.style('display', exp ? 'none' : 'block');
-                d3.select(this).classed('expanded', !exp);
-                d3.event.preventDefault();
+                d3_select(this).classed('expanded', !exp);
+                d3_event.preventDefault();
             });
 
         var featureContainer = content
@@ -477,12 +533,12 @@ export function uiMapData(context) {
 
         setFill(fillDefault);
 
-        var keybinding = d3keybinding('features')
+        var keybinding = d3_keybinding('features')
             .on(key, togglePanel)
             .on(t('area_fill.wireframe.key'), toggleWireframe)
             .on([t('background.key'), t('help.key')], hidePanel);
 
-        d3.select(document)
+        d3_select(document)
             .call(keybinding);
 
         context.surface().on('mousedown.map_data-outside', hidePanel);
