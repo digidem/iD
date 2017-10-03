@@ -1,31 +1,31 @@
 import * as d3 from 'd3';
 
 export function osmAuth () {
-  var o = {}
+  var o = {};
   return {
-    authenticated: function () { return true },
-    logout: function () { return this },
-    authenticate: function (cb) { return cb() },
-    bootstrapToken: function (token, cb) { cb(null, this) },
+    authenticated: function () { return true; },
+    logout: function () { return this; },
+    authenticate: function (cb) { return cb(); },
+    bootstrapToken: function (token, cb) { cb(null, this); },
     xhr: function (opts, cb) {
       console.log(opts.method, opts.path, {
         headers: (opts.options || {}).header || {}
-      })
-      var xhr = d3.request(o.url + opts.path)
-      var headers = (opts.options || {}).header || {}
+      });
+      var xhr = d3.request(o.url + opts.path);
+      var headers = (opts.options || {}).header || {};
       Object.keys(headers).forEach(function (name) {
-        xhr.header(name, headers[name])
-      })
-      var data = (opts.content == null) ? undefined : opts.content
+        xhr.header(name, headers[name]);
+      });
+      var data = (opts.content == null) ? undefined : opts.content;
       xhr.send(opts.method, data, function (err, xhr) {
-        cb(err, xhr ? xhr.response : null)
-      })
+        cb(err, xhr ? xhr.response : null);
+      });
     },
     preauth: function (c) {},
     options: function (_) {
-      if (!arguments.length) return o
-      o = _
-      o.url = o.url || 'http://www.openstreetmap.org'
+      if (!arguments.length) return o;
+      o = _;
+      o.url = o.url || 'http://www.openstreetmap.org';
     }
-  }
+  };
 }

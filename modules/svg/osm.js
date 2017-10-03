@@ -56,6 +56,5 @@ export function svgOsm(projection, context, dispatch) {
         return this;
     };
 
-
     return drawOsm;
 }

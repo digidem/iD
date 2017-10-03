@@ -1,4 +1,3 @@
-import * as d3 from 'd3';
 import _chunk from 'lodash-es/chunk';
 import _extend from 'lodash-es/extend';
 import _forEach from 'lodash-es/forEach';
@@ -380,7 +379,7 @@ export default {
     userDetails: function(callback) {
       callback(undefined, {
           id: 'anonymous'
-      })
+      });
     },
 
 
