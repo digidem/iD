@@ -531,7 +531,7 @@ export default {
 
     switch: function(options) {
         urlroot = options.url;
-        oauth.options(_.extend({
+        oauth.options(_extend({
             url: urlroot,
             loading: authLoading,
             done: authDone
