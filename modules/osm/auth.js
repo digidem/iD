@@ -18,7 +18,7 @@ export function osmAuth () {
       });
       var data = (opts.content == null) ? undefined : opts.content;
       xhr.send(opts.method, data, function (err, xhr) {
-        cb(err, xhr ? xhr.response : null);
+        cb(err, xhr ? xhr.responseXML : null);
       });
     },
     preauth: function (c) {},
