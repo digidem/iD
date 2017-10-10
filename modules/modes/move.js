@@ -1,9 +1,13 @@
-import * as d3 from 'd3';
-import { d3keybinding } from '../lib/d3.keybinding.js';
+import {
+    event as d3_event,
+    select as d3_select
+} from 'd3-selection';
+
+import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
 import { t } from '../util/locale';
 
-import { actionMove } from '../actions/index';
-import { behaviorEdit } from '../behavior/index';
+import { actionMove } from '../actions';
+import { behaviorEdit } from '../behavior';
 
 import {
     modeBrowse,
@@ -17,7 +21,7 @@ import {
     operationReflectLong,
     operationReflectShort,
     operationRotate
-} from '../operations/index';
+} from '../operations';
 
 
 export function modeMove(context, entityIDs, baseGraph) {
@@ -26,7 +30,7 @@ export function modeMove(context, entityIDs, baseGraph) {
         button: 'browse'
     };
 
-    var keybinding = d3keybinding('move'),
+    var keybinding = d3_keybinding('move'),
         behaviors = [
             behaviorEdit(context),
             operationCircularize(entityIDs, context).behavior,
@@ -51,21 +55,24 @@ export function modeMove(context, entityIDs, baseGraph) {
 
 
     function edge(point, size) {
-        var pad = [30, 100, 30, 100],
+        var pad = [80, 20, 50, 20],   // top, right, bottom, left
             x = 0,
             y = 0;
 
-        if (point[0] > size[0] - pad[0])
+        if (point[0] > size[0] - pad[1])
             x = -10;
-        if (point[0] < pad[2])
+        if (point[0] < pad[3])
             x = 10;
-        if (point[1] > size[1] - pad[1])
+        if (point[1] > size[1] - pad[2])
             y = -10;
-        if (point[1] < pad[3])
+        if (point[1] < pad[0])
             y = 10;
 
-        if (x || y) return [x, y];
-        else return null;
+        if (x || y) {
+            return [x, y];
+        } else {
+            return null;
+        }
     }
 
 
@@ -100,22 +107,27 @@ export function modeMove(context, entityIDs, baseGraph) {
 
 
     function stopNudge() {
-        if (nudgeInterval) window.clearInterval(nudgeInterval);
-        nudgeInterval = null;
+        if (nudgeInterval) {
+            window.clearInterval(nudgeInterval);
+            nudgeInterval = null;
+        }
     }
 
 
     function move() {
         doMove();
         var nudge = edge(context.mouse(), context.map().dimensions());
-        if (nudge) startNudge(nudge);
-        else stopNudge();
+        if (nudge) {
+            startNudge(nudge);
+        } else {
+            stopNudge();
+        }
     }
 
 
     function finish() {
-        d3.event.stopPropagation();
-        context.enter(modeSelect(context, entityIDs).suppressMenu(true));
+        d3_event.stopPropagation();
+        context.enter(modeSelect(context, entityIDs));
         stopNudge();
     }
 
@@ -126,7 +138,7 @@ export function modeMove(context, entityIDs, baseGraph) {
             context.enter(modeBrowse(context));
         } else {
             context.pop();
-            context.enter(modeSelect(context, entityIDs).suppressMenu(true));
+            context.enter(modeSelect(context, entityIDs));
         }
         stopNudge();
     }
@@ -157,7 +169,7 @@ export function modeMove(context, entityIDs, baseGraph) {
             .on('⎋', cancel)
             .on('↩', finish);
 
-        d3.select(document)
+        d3_select(document)
             .call(keybinding);
     };
 

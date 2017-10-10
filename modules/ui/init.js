@@ -1,5 +1,10 @@
-import * as d3 from 'd3';
-import { d3keybinding } from '../lib/d3.keybinding.js';
+import {
+    event as d3_event,
+    select as d3_select
+} from 'd3-selection';
+
+import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
+
 import { t, textDirection } from '../util/locale';
 import { tooltip } from '../util/tooltip';
 
@@ -17,25 +22,34 @@ import { uiFullScreen } from './full_screen';
 import { uiGeolocate } from './geolocate';
 import { uiHelp } from './help';
 import { uiInfo } from './info';
+import { uiIntro } from './intro';
 import { uiLoading } from './loading';
 import { uiMapData } from './map_data';
 import { uiMapInMap } from './map_in_map';
 import { uiModes } from './modes';
+import { uiNotice } from './notice';
 import { uiRestore } from './restore';
 import { uiSave } from './save';
 import { uiScale } from './scale';
+import { uiShortcuts } from './shortcuts';
 import { uiSidebar } from './sidebar';
 import { uiSpinner } from './spinner';
 import { uiSplash } from './splash';
 import { uiStatus } from './status';
 import { uiUndoRedo } from './undo_redo';
+import { uiVersion } from './version';
 import { uiZoom } from './zoom';
 import { uiCmd } from './cmd';
 
 
 export function uiInit(context) {
+    var uiInitCounter = 0;
+
 
     function render(container) {
+        container
+            .attr('dir', textDirection);
+
         var map = context.map();
 
         var hash = behaviorHash(context);
@@ -58,7 +72,8 @@ export function uiInit(context) {
 
         var content = container
             .append('div')
-            .attr('id', 'content');
+            .attr('id', 'content')
+            .attr('class', 'active');
 
         var bar = content
             .append('div')
@@ -71,16 +86,10 @@ export function uiInit(context) {
             .attr('dir', 'ltr')
             .call(map);
 
-        if (textDirection === 'rtl') {
-            d3.select('body').attr('dir', 'rtl');
-        }
-
         content
-            .call(uiMapInMap(context));
-
-        content
-            .append('div')
-            .call(uiInfo(context));
+            .call(uiMapInMap(context))
+            .call(uiInfo(context))
+            .call(uiNotice(context));
 
         bar
             .append('div')
@@ -114,6 +123,7 @@ export function uiInit(context) {
             .attr('class', 'spinner')
             .call(uiSpinner(context));
 
+
         var controls = bar
             .append('div')
             .attr('class', 'map-controls');
@@ -143,6 +153,7 @@ export function uiInit(context) {
             .attr('class', 'map-control help-control')
             .call(uiHelp(context));
 
+
         var about = content
             .append('div')
             .attr('id', 'about');
@@ -153,6 +164,12 @@ export function uiInit(context) {
             .attr('dir', 'ltr')
             .call(uiAttribution(context));
 
+        about
+            .append('div')
+            .attr('class', 'api-status')
+            .call(uiStatus(context));
+
+
         var footer = about
             .append('div')
             .attr('id', 'footer')
@@ -160,31 +177,34 @@ export function uiInit(context) {
 
         footer
             .append('div')
-            .attr('class', 'api-status')
-            .call(uiStatus(context));
+            .attr('id', 'flash-wrap')
+            .attr('class', 'footer-hide');
 
-        footer
+        var footerWrap = footer
+            .append('div')
+            .attr('id', 'footer-wrap')
+            .attr('class', 'footer-show');
+
+        footerWrap
             .append('div')
             .attr('id', 'scale-block')
             .call(uiScale(context));
 
-        var aboutList = footer
+        var aboutList = footerWrap
             .append('div')
             .attr('id', 'info-block')
             .append('ul')
             .attr('id', 'about-list');
 
         if (!context.embed()) {
-            aboutList.call(uiAccount(context));
+            aboutList
+                .call(uiAccount(context));
         }
 
         aboutList
             .append('li')
-            .append('a')
-            .attr('target', '_blank')
-            .attr('tabindex', -1)
-            .attr('href', 'https://github.com/openstreetmap/iD')
-            .text(context.version);
+            .attr('class', 'version')
+            .call(uiVersion(context));
 
         var issueLinks = aboutList
             .append('li');
@@ -193,7 +213,7 @@ export function uiInit(context) {
             .append('a')
             .attr('target', '_blank')
             .attr('tabindex', -1)
-            .attr('href', 'https://github.com/openstreetmap/iD/issues')
+            .attr('href', 'https://github.com/digidem/iD-mapeo/issues')
             .call(svgIcon('#icon-bug', 'light'))
             .call(tooltip().title(t('report_a_bug')).placement('top'));
 
@@ -228,30 +248,30 @@ export function uiInit(context) {
 
         var mapDimensions = map.dimensions();
 
+
         function onResize() {
             mapDimensions = utilGetDimensions(content, true);
             map.dimensions(mapDimensions);
         }
 
-        d3.select(window)
+        d3_select(window)
             .on('resize.editor', onResize);
 
         onResize();
 
         function pan(d) {
             return function() {
-                d3.event.preventDefault();
-                if (!context.inIntro()) {
-                    context.pan(d, 100);
-                }
+                d3_event.preventDefault();
+                context.pan(d, 100);
             };
         }
 
-        // pan amount
-        var pa = 10;
 
-        var keybinding = d3keybinding('main')
-            .on('⌫', function() { d3.event.preventDefault(); })
+        // pan amount
+        var pa = 80;
+
+        var keybinding = d3_keybinding('main')
+            .on('⌫', function() { d3_event.preventDefault(); })
             .on('←', pan([pa, 0]))
             .on('↑', pan([0, pa]))
             .on('→', pan([-pa, 0]))
@@ -261,32 +281,50 @@ export function uiInit(context) {
             .on(['⇧→', uiCmd('⌘→')], pan([-mapDimensions[0], 0]))
             .on(['⇧↓', uiCmd('⌘↓')], pan([0, -mapDimensions[1]]));
 
-        d3.select(document)
+        d3_select(document)
             .call(keybinding);
 
         context.enter(modeBrowse(context));
 
-        context.container()
-            .call(uiSplash(context))
-            .call(uiRestore(context));
-
-        var authenticating = uiLoading(context)
-            .message(t('loading_auth'))
-            .blocking(true);
-
-        context.connection()
-            .on('authLoading.ui', function() {
+        if (!uiInitCounter++) {
+            if (!hash.startWalkthrough) {
                 context.container()
-                    .call(authenticating);
-            })
-            .on('authDone.ui', function() {
-                authenticating.close();
-            });
+                    .call(uiSplash(context))
+                    .call(uiRestore(context));
+            }
+
+            context.container()
+                .call(uiShortcuts(context));
+        }
+
+        var osm = context.connection(),
+            auth = uiLoading(context).message(t('loading_auth')).blocking(true);
+
+        if (osm && auth) {
+            osm
+                .on('authLoading.ui', function() {
+                    context.container()
+                        .call(auth);
+                })
+                .on('authDone.ui', function() {
+                    auth.close();
+                });
+        }
+
+        uiInitCounter++;
+
+        if (hash.startWalkthrough) {
+            hash.startWalkthrough = false;
+            context.container().call(uiIntro(context));
+        }
     }
 
 
+    var renderCallback;
+
     function ui(node, callback) {
-        var container = d3.select(node);
+        renderCallback = callback;
+        var container = d3_select(node);
         context.container(container);
         context.loadLocale(function(err) {
             if (!err) {
@@ -297,6 +335,19 @@ export function uiInit(context) {
             }
         });
     }
+
+
+    ui.restart = function(arg) {
+        context.locale(arg);
+        context.loadLocale(function(err) {
+            if (!err) {
+                context.container().selectAll('*').remove();
+                render(context.container());
+                if (renderCallback) renderCallback();
+            }
+        });
+    };
+
 
     ui.sidebar = uiSidebar(context);
 

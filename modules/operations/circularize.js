@@ -1,7 +1,8 @@
-import _ from 'lodash';
+import _uniq from 'lodash-es/uniq';
+
 import { t } from '../util/locale';
-import { actionCircularize } from '../actions/index';
-import { behaviorOperation } from '../behavior/index';
+import { actionCircularize } from '../actions';
+import { behaviorOperation } from '../behavior';
 
 
 export function operationCircularize(selectedIDs, context) {
@@ -13,14 +14,14 @@ export function operationCircularize(selectedIDs, context) {
 
 
     var operation = function() {
-        context.perform(action, t('operations.circularize.annotation.' + geometry));
+        context.perform(action, operation.annotation());
     };
 
 
     operation.available = function() {
         return selectedIDs.length === 1 &&
             entity.type === 'way' &&
-            _.uniq(entity.nodes).length > 1;
+            _uniq(entity.nodes).length > 1;
     };
 
 
@@ -40,6 +41,11 @@ export function operationCircularize(selectedIDs, context) {
         return disable ?
             t('operations.circularize.' + disable) :
             t('operations.circularize.description.' + geometry);
+    };
+
+
+    operation.annotation = function() {
+        return t('operations.circularize.annotation.' + geometry);
     };
 
 

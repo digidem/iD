@@ -1,5 +1,7 @@
-import _ from 'lodash';
-import { osmEntity } from '../osm/index';
+import _filter from 'lodash-es/filter';
+
+import { dataFeatureIcons } from '../../data';
+import { osmEntity } from '../osm';
 import { svgPointTransform, svgTagClasses } from './index';
 
 
@@ -19,7 +21,7 @@ export function svgPoints(projection, context) {
 
     return function drawPoints(selection, graph, entities, filter) {
         var wireframe = context.surface().classed('fill-wireframe'),
-            points = wireframe ? [] : _.filter(entities, function(e) {
+            points = wireframe ? [] : _filter(entities, function(e) {
                 return e.geometry(graph) === 'point';
             });
 
@@ -42,6 +44,13 @@ export function svgPoints(projection, context) {
         enter.append('path')
             .call(markerPath, 'shadow');
 
+        enter.append('ellipse')
+            .attr('cx', 0.5)
+            .attr('cy', 1)
+            .attr('rx', 6.5)
+            .attr('ry', 3)
+            .attr('class', 'stroke');
+
         enter.append('path')
             .call(markerPath, 'stroke');
 
@@ -62,8 +71,15 @@ export function svgPoints(projection, context) {
         groups.select('.stroke');
         groups.select('.icon')
             .attr('xlink:href', function(entity) {
-                var preset = context.presets().match(entity, graph);
-                return (preset && preset.icon) ? '#' + preset.icon + '-11' : '';
+                var preset = context.presets().match(entity, graph),
+                    picon = preset && preset.icon;
+
+                if (!picon)
+                    return '';
+                else {
+                    var isMaki = dataFeatureIcons.indexOf(picon) !== -1;
+                    return '#' + picon + (isMaki ? '-11' : '');
+                }
             });
     };
 }

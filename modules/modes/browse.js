@@ -5,9 +5,9 @@ import {
     behaviorLasso,
     behaviorPaste,
     behaviorSelect
-} from '../behavior/index';
+} from '../behavior';
 
-import { modeDragNode } from './index';
+import { modeDragNode } from './drag_node';
 
 
 export function modeBrowse(context) {
@@ -23,7 +23,8 @@ export function modeBrowse(context) {
         behaviorHover(context).on('hover', context.ui().sidebar.hover),
         behaviorSelect(context),
         behaviorLasso(context),
-        modeDragNode(context).behavior
+        // This resulted in accidental dragging of nodes when in browse mode.
+        // modeDragNode(context).behavior
     ];
 
 
