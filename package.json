@@ -1,5 +1,5 @@
 {
-  "name": "@digidem/id",
+  "name": "id-mapeo",
   "version": "3.0.0",
   "description": "iD Editor for osm-p2p & mapeo-desktop",
   "main": "iD.js",
