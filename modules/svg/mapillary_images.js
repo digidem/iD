@@ -1,15 +1,16 @@
 import _throttle from 'lodash-es/throttle';
 import { select as d3_select } from 'd3-selection';
-import { svgPointTransform } from './point_transform';
+import { svgPath, svgPointTransform } from './index';
 import { services } from '../services';
 
 
 export function svgMapillaryImages(projection, context, dispatch) {
-    var throttledRedraw = _throttle(function () { dispatch.call('change'); }, 1000),
-        minZoom = 12,
-        minViewfieldZoom = 17,
-        layer = d3_select(null),
-        _mapillary;
+    var throttledRedraw = _throttle(function () { dispatch.call('change'); }, 1000);
+    var minZoom = 12;
+    var minMarkerZoom = 16;
+    var minViewfieldZoom = 18;
+    var layer = d3_select(null);
+    var _mapillary;
 
 
     function init() {
@@ -19,7 +20,7 @@ export function svgMapillaryImages(projection, context, dispatch) {
     }
 
 
-    function getMapillary() {
+    function getService() {
         if (services.mapillary && !_mapillary) {
             _mapillary = services.mapillary;
             _mapillary.event.on('loadedImages', throttledRedraw);
@@ -32,10 +33,10 @@ export function svgMapillaryImages(projection, context, dispatch) {
 
 
     function showLayer() {
-        var mapillary = getMapillary();
-        if (!mapillary) return;
+        var service = getService();
+        if (!service) return;
 
-        mapillary.loadViewer(context);
+        service.loadViewer(context);
         editOn();
 
         layer
@@ -48,9 +49,9 @@ export function svgMapillaryImages(projection, context, dispatch) {
 
 
     function hideLayer() {
-        var mapillary = getMapillary();
-        if (mapillary) {
-            mapillary.hideViewer();
+        var service = getService();
+        if (service) {
+            service.hideViewer();
         }
 
         throttledRedraw.cancel();
@@ -75,58 +76,96 @@ export function svgMapillaryImages(projection, context, dispatch) {
 
 
     function click(d) {
-        var mapillary = getMapillary();
-        if (!mapillary) return;
+        var service = getService();
+        if (!service) return;
 
-        context.map().centerEase(d.loc);
-
-        mapillary
-            .selectedImage(d.key, true)
+        service
+            .selectImage(d)
             .updateViewer(d.key, context)
             .showViewer();
+
+        context.map().centerEase(d.loc);
+    }
+
+
+    function mouseover(d) {
+        var service = getService();
+        if (service) service.setStyles(d);
+    }
+
+
+    function mouseout() {
+        var service = getService();
+        if (service) service.setStyles(null);
     }
 
 
     function transform(d) {
         var t = svgPointTransform(projection)(d);
-        if (d.ca) t += ' rotate(' + Math.floor(d.ca) + ',0,0)';
+        if (d.ca) {
+            t += ' rotate(' + Math.floor(d.ca) + ',0,0)';
+        }
         return t;
     }
 
 
     function update() {
-        var mapillary = getMapillary(),
-            data = (mapillary ? mapillary.images(projection) : []),
-            imageKey = mapillary ? mapillary.selectedImage() : null;
+        var viewer = d3_select('#photoviewer');
+        var selected = viewer.empty() ? undefined : viewer.datum();
 
-        var markers = layer.selectAll('.viewfield-group')
-            .data(data, function(d) { return d.key; });
+        var z = ~~context.map().zoom();
+        var showMarkers = (z >= minMarkerZoom);
+        var showViewfields = (z >= minViewfieldZoom);
 
-        markers.exit()
+        var service = getService();
+        var sequences = (service ? service.sequences(projection) : []);
+        var images = (service && showMarkers ? service.images(projection) : []);
+
+        var traces = layer.selectAll('.sequences').selectAll('.sequence')
+            .data(sequences, function(d) { return d.properties.key; });
+
+        // exit
+        traces.exit()
             .remove();
 
-        var enter = markers.enter()
+        // enter/update
+        traces = traces.enter()
+            .append('path')
+            .attr('class', 'sequence')
+            .merge(traces)
+            .attr('d', svgPath(projection).geojson);
+
+
+        var groups = layer.selectAll('.markers').selectAll('.viewfield-group')
+            .data(images, function(d) { return d.key; });
+
+        // exit
+        groups.exit()
+            .remove();
+
+        // enter
+        var groupsEnter = groups.enter()
             .append('g')
             .attr('class', 'viewfield-group')
-            .classed('selected', function(d) { return d.key === imageKey; })
+            .on('mouseover', mouseover)
+            .on('mouseout', mouseout)
             .on('click', click);
 
-        markers = markers
-            .merge(enter)
-            .attr('transform', transform);
+        groupsEnter
+            .append('g')
+            .attr('class', 'viewfield-scale');
 
+        // update
+        var markers = groups
+            .merge(groupsEnter)
+            .sort(function(a, b) {
+                return (a === selected) ? 1
+                    : (b === selected) ? -1
+                    : b.loc[1] - a.loc[1];  // sort Y
+            })
+            .attr('transform', transform)
+            .select('.viewfield-scale');
 
-       var viewfields = markers.selectAll('.viewfield')
-            .data(~~context.map().zoom() >= minViewfieldZoom ? [0] : []);
-
-        viewfields.exit()
-            .remove();
-
-        viewfields.enter()
-            .append('path')
-            .attr('class', 'viewfield')
-            .attr('transform', 'scale(1.5,1.5),translate(-8, -13)')
-            .attr('d', 'M 6,9 C 8,8.4 8,8.4 10,9 L 16,-2 C 12,-5 4,-5 0,-2 z');
 
         markers.selectAll('circle')
             .data([0])
@@ -135,30 +174,61 @@ export function svgMapillaryImages(projection, context, dispatch) {
             .attr('dx', '0')
             .attr('dy', '0')
             .attr('r', '6');
+
+        var viewfields = markers.selectAll('.viewfield')
+            .data(showViewfields ? [0] : []);
+
+        viewfields.exit()
+            .remove();
+
+        viewfields.enter()               // viewfields may or may not be drawn...
+            .insert('path', 'circle')    // but if they are, draw below the circles
+            .attr('class', 'viewfield')
+            .attr('transform', 'scale(1.5,1.5),translate(-8, -13)')
+            .attr('d', viewfieldPath);
+
+        function viewfieldPath() {
+            var d = this.parentNode.__data__;
+            if (d.pano) {
+                return 'M 8,13 m -10,0 a 10,10 0 1,0 20,0 a 10,10 0 1,0 -20,0';
+            } else {
+                return 'M 6,9 C 8,8.4 8,8.4 10,9 L 16,-2 C 12,-5 4,-5 0,-2 z';
+            }
+        }
     }
 
 
     function drawImages(selection) {
         var enabled = svgMapillaryImages.enabled,
-            mapillary = getMapillary();
+            service = getService();
 
         layer = selection.selectAll('.layer-mapillary-images')
-            .data(mapillary ? [0] : []);
+            .data(service ? [0] : []);
 
         layer.exit()
             .remove();
 
-        layer = layer.enter()
+        var layerEnter = layer.enter()
             .append('g')
             .attr('class', 'layer-mapillary-images')
-            .style('display', enabled ? 'block' : 'none')
+            .style('display', enabled ? 'block' : 'none');
+
+        layerEnter
+            .append('g')
+            .attr('class', 'sequences');
+
+        layerEnter
+            .append('g')
+            .attr('class', 'markers');
+
+        layer = layerEnter
             .merge(layer);
 
         if (enabled) {
-            if (mapillary && ~~context.map().zoom() >= minZoom) {
+            if (service && ~~context.map().zoom() >= minZoom) {
                 editOn();
                 update();
-                mapillary.loadImages(projection);
+                service.loadImages(projection);
             } else {
                 editOff();
             }
@@ -180,7 +250,7 @@ export function svgMapillaryImages(projection, context, dispatch) {
 
 
     drawImages.supported = function() {
-        return !!getMapillary();
+        return !!getService();
     };
 
 

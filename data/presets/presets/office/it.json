@@ -1,5 +1,5 @@
 {
-    "icon": "commercial",
+    "icon": "suitcase",
     "fields": [
         "name",
         "address",
@@ -8,12 +8,16 @@
     ],
     "geometry": [
         "point",
-        "vertex",
         "area"
     ],
     "tags": {
         "office": "it"
     },
-    "terms": [],
-    "name": "IT Office"
+    "terms": [
+        "computer",
+        "information",
+        "software",
+        "technology"
+    ],
+    "name": "Information Technology Office"
 }

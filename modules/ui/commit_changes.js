@@ -16,12 +16,12 @@ import {
 
 export function uiCommitChanges(context) {
     var detected = utilDetect();
+    var _entityID;
 
 
     function commitChanges(selection) {
-
-        var history = context.history(),
-            summary = history.difference().summary();
+        var history = context.history();
+        var summary = history.difference().summary();
 
         var container = selection.selectAll('.modal-section.commit-section')
             .data([0]);
@@ -91,18 +91,18 @@ export function uiCommitChanges(context) {
         items
             .on('mouseover', mouseover)
             .on('mouseout', mouseout)
-            .on('click', zoomToEntity);
+            .on('click', click);
 
 
         // Download changeset link
-        var changeset = new osmChangeset().update({ id: undefined }),
-            changes = history.changes(actionDiscardTags(history.difference()));
+        var changeset = new osmChangeset().update({ id: undefined });
+        var changes = history.changes(actionDiscardTags(history.difference()));
 
         delete changeset.id;  // Export without chnageset_id
 
-        var data = JXON.stringify(changeset.osmChangeJXON(changes)),
-            blob = new Blob([data], {type: 'text/xml;charset=utf-8;'}),
-            fileName = 'changes.osc';
+        var data = JXON.stringify(changeset.osmChangeJXON(changes));
+        var blob = new Blob([data], {type: 'text/xml;charset=utf-8;'});
+        var fileName = 'changes.osc';
 
         var linkEnter = container.selectAll('.download-changes')
             .data([0])
@@ -144,16 +144,25 @@ export function uiCommitChanges(context) {
         }
 
 
-        function zoomToEntity(change) {
-            var entity = change.entity;
-            if (change.changeType !== 'deleted' &&
-                context.graph().entity(entity.id).geometry(context.graph()) !== 'vertex') {
+        function click(change) {
+            if (change.changeType === 'deleted') {
+                _entityID = null;
+            } else {
+                var entity = change.entity;
+                _entityID = change.entity.id;
                 context.map().zoomTo(entity);
-                context.surface().selectAll(utilEntityOrMemberSelector([entity.id], context.graph()))
+                context.surface().selectAll(utilEntityOrMemberSelector([_entityID], context.graph()))
                     .classed('hover', true);
             }
         }
     }
+
+
+    commitChanges.entityID = function(_) {
+        if (!arguments.length) return _entityID;
+        _entityID = _;
+        return commitChanges;
+    };
 
 
     return commitChanges;

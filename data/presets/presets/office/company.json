@@ -1,5 +1,5 @@
 {
-    "icon": "commercial",
+    "icon": "suitcase",
     "fields": [
         "name",
         "address",
@@ -9,12 +9,11 @@
     ],
     "geometry": [
         "point",
-        "vertex",
         "area"
     ],
     "tags": {
         "office": "company"
     },
     "terms": [],
-    "name": "Company Office"
+    "name": "Corporate Office"
 }

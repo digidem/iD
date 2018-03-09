@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-
-const _cloneDeep = require('lodash/cloneDeep');
-const _extend = require('lodash/extend');
-const _forEach = require('lodash/forEach');
-const _isEmpty = require('lodash/isEmpty');
-const _merge = require('lodash/merge');
-const _toPairs = require('lodash/toPairs');
+const requireESM = require('@std/esm')(module, { esm: 'js' });
+const _cloneDeep = requireESM('lodash-es/cloneDeep').default;
+const _extend = requireESM('lodash-es/extend').default;
+const _forEach = requireESM('lodash-es/forEach').default;
+const _isEmpty = requireESM('lodash-es/isEmpty').default;
+const _merge = requireESM('lodash-es/merge').default;
+const _toPairs = requireESM('lodash-es/toPairs').default;
 
 const fs = require('fs');
 const glob = require('glob');
@@ -189,6 +189,22 @@ function suggestionsToPresets(presets) {
     function addSuggestion(category, tags, name, count) {
         var tag = category.split('/'),
             parent = presets[tag[0] + '/' + tag[1]];
+
+
+        // Hacky code to add healthcare tagging not yet present in name-suggestion-index
+        // This will be fixed by https://github.com/osmlab/name-suggestion-index/issues/57
+        if (tag[0] === 'amenity') {
+            var healthcareTags = {
+                clinic: 'clinic',
+                dentist: 'dentist',
+                doctors: 'doctor',
+                hospital: 'hospital',
+                pharmacy: 'pharmacy'
+            };
+            if (healthcareTags.hasOwnProperty(tag[1])) {
+                tags.healthcare = healthcareTags[tag[1]];
+            }
+        }
 
         if (!parent) {
             console.log('WARN: no preset for suggestion = ' + tag);

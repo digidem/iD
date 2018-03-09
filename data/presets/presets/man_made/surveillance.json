@@ -1,12 +1,14 @@
 {
     "icon": "attraction",
     "geometry": [
-        "point"
+        "point",
+        "vertex"
     ],
     "fields": [
         "surveillance",
         "surveillance/type",
-        "surveillance/zone"
+        "surveillance/zone",
+        "direction"
      ],
     "terms": [
         "anpr",

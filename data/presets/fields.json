@@ -201,6 +201,11 @@
             "type": "typeCombo",
             "label": "Type"
         },
+        "agrarian": {
+            "key": "agrarian",
+            "type": "semiCombo",
+            "label": "Products"
+        },
         "amenity": {
             "key": "amenity",
             "type": "typeCombo",
@@ -311,6 +316,11 @@
             "type": "typeCombo",
             "label": "Type"
         },
+        "boules": {
+            "key": "boules",
+            "type": "typeCombo",
+            "label": "Type"
+        },
         "boundary": {
             "key": "boundary",
             "type": "combo",
@@ -320,6 +330,11 @@
             "key": "brand",
             "type": "text",
             "label": "Brand"
+        },
+        "brewery": {
+            "key": "brewery",
+            "type": "semiCombo",
+            "label": "Draft Beers"
         },
         "bridge": {
             "key": "bridge",
@@ -343,6 +358,12 @@
             "key": "bunker_type",
             "type": "combo",
             "label": "Type"
+        },
+        "cables": {
+            "key": "cables",
+            "type": "number",
+            "label": "Cables",
+            "placeholder": "1, 2, 3..."
         },
         "camera/direction": {
             "key": "camera:direction",
@@ -373,46 +394,10 @@
             "label": "Capacity",
             "placeholder": "50, 100, 200..."
         },
-        "cardinal_direction": {
-            "key": "direction",
-            "type": "combo",
-            "label": "Direction",
-            "strings": {
-                "options": {
-                    "N": "North",
-                    "E": "East",
-                    "S": "South",
-                    "W": "West",
-                    "NE": "Northeast",
-                    "SE": "Southeast",
-                    "SW": "Southwest",
-                    "NW": "Northwest",
-                    "NNE": "North-northeast",
-                    "ENE": "East-northeast",
-                    "ESE": "East-southeast",
-                    "SSE": "South-southeast",
-                    "SSW": "South-southwest",
-                    "WSW": "West-southwest",
-                    "WNW": "West-northwest",
-                    "NNW": "North-northwest"
-                }
-            }
-        },
         "castle_type": {
             "key": "castle_type",
             "type": "combo",
             "label": "Type"
-        },
-        "clock_direction": {
-            "key": "direction",
-            "type": "combo",
-            "label": "Direction",
-            "strings": {
-                "options": {
-                    "clockwise": "Clockwise",
-                    "anticlockwise": "Counterclockwise"
-                }
-            }
         },
         "clothes": {
             "key": "clothes",
@@ -471,6 +456,18 @@
             "key": "craft",
             "type": "typeCombo",
             "label": "Type"
+        },
+        "crane/type": {
+            "key": "crane:type",
+            "type": "combo",
+            "label": "Crane Type",
+            "strings": {
+                "options": {
+                    "portal_crane": "Portal Crane",
+                    "floor-mounted_crane": "Floor-mounted Crane",
+                    "travel_lift": "Travel Lift"
+                }
+            }
         },
         "crop": {
             "key": "crop",
@@ -551,6 +548,11 @@
                 }
             }
         },
+        "dance/style": {
+            "key": "dance:style",
+            "type": "semiCombo",
+            "label": "Dance Styles"
+        },
         "date": {
             "key": "date",
             "type": "check",
@@ -577,6 +579,12 @@
             "label": "Description",
             "universal": true
         },
+        "devices": {
+            "key": "devices",
+            "type": "number",
+            "label": "Devices",
+            "placeholder": "1, 2, 3..."
+        },
         "diaper": {
             "key": "diaper",
             "type": "combo",
@@ -591,6 +599,66 @@
                 "4",
                 "5"
             ]
+        },
+        "direction_cardinal": {
+            "key": "direction",
+            "type": "combo",
+            "label": "Direction",
+            "strings": {
+                "options": {
+                    "N": "North",
+                    "E": "East",
+                    "S": "South",
+                    "W": "West",
+                    "NE": "Northeast",
+                    "SE": "Southeast",
+                    "SW": "Southwest",
+                    "NW": "Northwest",
+                    "NNE": "North-northeast",
+                    "ENE": "East-northeast",
+                    "ESE": "East-southeast",
+                    "SSE": "South-southeast",
+                    "SSW": "South-southwest",
+                    "WSW": "West-southwest",
+                    "WNW": "West-northwest",
+                    "NNW": "North-northwest"
+                }
+            }
+        },
+        "direction_clock": {
+            "key": "direction",
+            "type": "combo",
+            "label": "Direction",
+            "strings": {
+                "options": {
+                    "clockwise": "Clockwise",
+                    "anticlockwise": "Counterclockwise"
+                }
+            }
+        },
+        "direction_vertex": {
+            "key": "direction",
+            "type": "combo",
+            "label": "Direction",
+            "strings": {
+                "options": {
+                    "forward": "Forward",
+                    "backward": "Backward",
+                    "both": "Both / All"
+                }
+            }
+        },
+        "direction": {
+            "key": "direction",
+            "type": "number",
+            "label": "Direction (Degrees Clockwise)",
+            "placeholder": "45, 90, 180, 270"
+        },
+        "dispensing": {
+            "key": "dispensing",
+            "type": "check",
+            "label": "Dispenses Prescriptions",
+            "default": "yes"
         },
         "display": {
             "key": "display",
@@ -711,6 +779,11 @@
                 }
             }
         },
+        "fitness_station": {
+            "key": "fitness_station",
+            "type": "typeCombo",
+            "label": "Equipment Type"
+        },
         "fixme": {
             "key": "fixme",
             "type": "textarea",
@@ -722,6 +795,11 @@
             "type": "typeCombo",
             "label": "Type",
             "placeholder": "Default"
+        },
+        "frequency": {
+            "key": "frequency",
+            "type": "combo",
+            "label": "Operating Frequency"
         },
         "fuel_multi": {
             "key": "fuel:",
@@ -776,6 +854,11 @@
             "type": "combo",
             "label": "Type"
         },
+        "government": {
+            "key": "government",
+            "type": "typeCombo",
+            "label": "Type"
+        },
         "grape_variety": {
             "key": "grape_variety",
             "type": "semiCombo",
@@ -795,7 +878,7 @@
         "hashtags": {
             "key": "hashtags",
             "type": "semiCombo",
-            "label": "Hashtags",
+            "label": "Suggested Hashtags",
             "placeholder": "#example"
         },
         "healthcare": {
@@ -1086,11 +1169,10 @@
             "type": "typeCombo",
             "label": "Type"
         },
-        "milestone_position": {
-            "key": "railway:position",
-            "type": "text",
-            "placeholder": "Distance to one decimal (123.4)",
-            "label": "Milestone Position"
+        "monitoring_multi": {
+            "key": "monitoring:",
+            "type": "multiCombo",
+            "label": "Monitoring"
         },
         "mtb/scale": {
             "key": "mtb:scale",
@@ -1224,7 +1306,9 @@
                 "options": {
                     "undefined": "Assumed to be Yes",
                     "yes": "Yes",
-                    "no": "No"
+                    "no": "No",
+                    "reversible": "Reversible",
+                    "alternating": "Alternating"
                 }
             }
         },
@@ -1236,7 +1320,9 @@
                 "options": {
                     "undefined": "Assumed to be No",
                     "yes": "Yes",
-                    "no": "No"
+                    "no": "No",
+                    "reversible": "Reversible",
+                    "alternating": "Alternating"
                 }
             }
         },
@@ -1262,17 +1348,6 @@
             "label": "Par",
             "placeholder": "3, 4, 5..."
         },
-        "parallel_direction": {
-            "key": "direction",
-            "type": "combo",
-            "label": "Direction",
-            "strings": {
-                "options": {
-                    "forward": "Forward",
-                    "backward": "Backward"
-                }
-            }
-        },
         "park_ride": {
             "key": "park_ride",
             "type": "check",
@@ -1297,7 +1372,14 @@
         "payment_multi": {
             "key": "payment:",
             "type": "multiCombo",
-            "label": "Payment Types"
+            "label": "Payment Types",
+            "universal": true
+        },
+        "phases": {
+            "key": "phases",
+            "type": "number",
+            "label": "Phases",
+            "placeholder": "1, 2, 3..."
         },
         "phone": {
             "key": "phone",
@@ -1384,7 +1466,7 @@
             "label": "Maximum Age"
         },
         "playground/min_age": {
-            "key": "max_age",
+            "key": "min_age",
             "type": "number",
             "label": "Minimum Age"
         },
@@ -1418,22 +1500,34 @@
             "type": "typeCombo",
             "label": "Type"
         },
+        "railway/position": {
+            "key": "railway:position",
+            "type": "text",
+            "placeholder": "Distance to one decimal (123.4)",
+            "label": "Milestone Position"
+        },
+        "railway/signal/direction": {
+            "key": "railway:signal:direction",
+            "type": "combo",
+            "label": "Direction",
+            "strings": {
+                "options": {
+                    "forward": "Forward",
+                    "backward": "Backward",
+                    "both": "Both / All"
+                }
+            }
+        },
+        "rating": {
+            "key": "rating",
+            "type": "combo",
+            "label": "Power Rating",
+            "snake_case": false
+        },
         "recycling_accepts": {
             "key": "recycling:",
             "type": "multiCombo",
             "label": "Accepts"
-        },
-        "recycling_type": {
-            "key": "recycling_type",
-            "default": "container",
-            "type": "combo",
-            "label": "Recycling Type",
-            "strings": {
-                "options": {
-                    "container": "Container",
-                    "centre": "Recycling Center"
-                }
-            }
         },
         "ref_aeroway_gate": {
             "key": "ref",
@@ -1487,6 +1581,11 @@
             "key": "ref",
             "type": "text",
             "label": "Reference Code"
+        },
+        "ref/isil": {
+            "key": "ref:isil",
+            "type": "text",
+            "label": "ISIL Code"
         },
         "relation": {
             "key": "type",
@@ -1676,6 +1775,8 @@
             "icon": "source",
             "universal": true,
             "label": "Sources",
+            "snake_case": false,
+            "caseSensitive": true,
             "options": [
                 "survey",
                 "local knowledge",
@@ -1789,6 +1890,11 @@
             "type": "combo",
             "label": "Type"
         },
+        "substance": {
+            "key": "substance",
+            "type": "combo",
+            "label": "Substance"
+        },
         "substation": {
             "key": "substation",
             "type": "typeCombo",
@@ -1830,6 +1936,19 @@
             "key": "surveillance:zone",
             "type": "combo",
             "label": "Surveillance Zone"
+        },
+        "switch": {
+            "key": "switch",
+            "type": "combo",
+            "label": "Type",
+            "strings": {
+                "options": {
+                    "mechanical": "Mechanical",
+                    "circuit_breaker": "Circuit Breaker",
+                    "disconnector": "Disconnector",
+                    "earthing": "Earthing"
+                }
+            }
         },
         "tactile_paving": {
             "key": "tactile_paving",
@@ -1910,6 +2029,11 @@
                 }
             }
         },
+        "trade": {
+            "key": "trade",
+            "type": "typeCombo",
+            "label": "Type"
+        },
         "traffic_calming": {
             "key": "traffic_calming",
             "type": "typeCombo",
@@ -1920,6 +2044,18 @@
             "type": "combo",
             "label": "Type",
             "default": "signal"
+        },
+        "traffic_signals/direction": {
+            "key": "traffic_signals:direction",
+            "type": "combo",
+            "label": "Direction",
+            "strings": {
+                "options": {
+                    "forward": "Forward",
+                    "backward": "Backward",
+                    "both": "Both / All"
+                }
+            }
         },
         "trail_visibility": {
             "key": "trail_visibility",
@@ -1934,6 +2070,23 @@
                     "bad": "Bad: no markers, path sometimes invisible/pathless",
                     "horrible": "Horrible: often pathless, some orientation skills required",
                     "no": "No: pathless, excellent orientation skills required"
+                }
+            }
+        },
+        "transformer": {
+            "key": "transformer",
+            "type": "combo",
+            "label": "Type",
+            "strings": {
+                "options": {
+                    "distribution": "Distribution",
+                    "generator": "Generator",
+                    "converter": "Converter",
+                    "traction": "Traction",
+                    "auto": "Autotransformer",
+                    "phase_angle_regulator": "Phase Angle Regulator",
+                    "auxiliary": "Auxiliary",
+                    "yes": "Unknown"
                 }
             }
         },
@@ -1989,6 +2142,26 @@
                 }
             }
         },
+        "voltage": {
+            "key": "voltage",
+            "type": "combo",
+            "label": "Voltage"
+        },
+        "voltage/primary": {
+            "key": "voltage:primary",
+            "type": "combo",
+            "label": "Primary Voltage"
+        },
+        "voltage/secondary": {
+            "key": "voltage:secondary",
+            "type": "combo",
+            "label": "Secondary Voltage"
+        },
+        "voltage/tertiary": {
+            "key": "voltage:tertiary",
+            "type": "combo",
+            "label": "Tertiary Voltage"
+        },
         "wall": {
             "key": "wall",
             "type": "combo",
@@ -2034,6 +2207,11 @@
             "universal": true,
             "label": "Wheelchair Access"
         },
+        "wholesale": {
+            "key": "wholesale",
+            "type": "typeCombo",
+            "label": "Wholesale"
+        },
         "width": {
             "key": "width",
             "type": "number",
@@ -2049,6 +2227,28 @@
             "icon": "wikipedia",
             "universal": true,
             "label": "Wikipedia"
+        },
+        "windings": {
+            "key": "windings",
+            "type": "number",
+            "label": "Windings",
+            "placeholder": "1, 2, 3..."
+        },
+        "windings/configuration": {
+            "key": "windings:configuration",
+            "type": "combo",
+            "label": "Windings Configuration",
+            "strings": {
+                "options": {
+                    "star": "Star / Wye",
+                    "delta": "Delta",
+                    "open-delta": "Open Delta",
+                    "zigzag": "Zig Zag",
+                    "open": "Open",
+                    "scott": "Scott",
+                    "leblanc": "Leblanc"
+                }
+            }
         }
     }
 }

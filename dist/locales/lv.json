@@ -151,7 +151,6 @@
             "translate": "Tulkot",
             "localized_translation_language": "Izvelties valodu"
         },
-        "zoom_in_edit": "Pietuvināt, lai labotu",
         "logout": "atslēgties",
         "loading_auth": "Savienojas ar OpenStreetMap...",
         "status": {
@@ -195,7 +194,6 @@
         "background": {
             "title": "Fons",
             "description": "Fona iestatījumi",
-            "percent_brightness": "{opacity}% caurspīdīgums",
             "reset": "Atiestatīt"
         },
         "feature": {
@@ -230,8 +228,7 @@
             "cancel": "Atcelt"
         },
         "splash": {
-            "welcome": "Laipni lūgti iD OpenStreetMap redaktorā",
-            "start": "Labot tagad"
+            "welcome": "Laipni lūgti iD OpenStreetMap redaktorā"
         },
         "source_switch": {
             "live": "live",
@@ -248,10 +245,6 @@
             "untagged_area": "Neapzīmēts apgabals",
             "tag_suggests_area": "Apzīmējums {tag} parasti tiek lietots apgabaliem, bet objekts nav apgabals",
             "deprecated_tags": "Novecojuši apzīmējumi: {tags}"
-        },
-        "zoom": {
-            "in": "Pietuvināt",
-            "out": "Attālināt"
         },
         "help": {
             "title": "Palīdzība"
@@ -351,9 +344,6 @@
                 },
                 "capacity": {
                     "label": "Ietilpība"
-                },
-                "cardinal_direction": {
-                    "label": "Virziens"
                 },
                 "construction": {
                     "label": "Tips"
@@ -653,9 +643,6 @@
                 "highway": {
                     "name": "Šoseja"
                 },
-                "highway/bus_stop": {
-                    "name": "Autobusa pietura"
-                },
                 "highway/cycleway": {
                     "name": "Veloceliņš"
                 },
@@ -889,9 +876,6 @@
                 },
                 "railway/rail": {
                     "name": "Sliedes"
-                },
-                "railway/station": {
-                    "name": "Dzelzceļa stacija"
                 },
                 "railway/subway": {
                     "name": "Metro"

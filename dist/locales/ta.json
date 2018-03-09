@@ -157,7 +157,6 @@
         "background": {
             "title": "பின்னணி",
             "description": "பின்னணி அமைப்புகள்",
-            "percent_brightness": "{opacity}% ஒளிர்வு",
             "none": "எதுவுமில்லை",
             "custom": "தனிப்பயன்",
             "reset": "மீட்டமைக்க"
@@ -219,15 +218,8 @@
         "confirm": {
             "cancel": "ரத்து"
         },
-        "splash": {
-            "start": "இப்போது திருத்து"
-        },
         "tag_reference": {
             "description": "விளக்கம்"
-        },
-        "zoom": {
-            "in": "பெரிதாக்கு",
-            "out": "சிறிதாக்கு"
         },
         "help": {
             "title": "உதவி"
@@ -338,9 +330,6 @@
                 },
                 "access_simple": {
                     "label": "அனுமதிக்கப்பட்ட அணுகல்"
-                },
-                "access_toilets": {
-                    "label": "நுழைவு"
                 },
                 "address": {
                     "label": "முகவரி",
@@ -460,34 +449,6 @@
                 "capacity": {
                     "label": "கொள்ளளவு",
                     "placeholder": "50, 100, 200..."
-                },
-                "cardinal_direction": {
-                    "label": "திசை",
-                    "options": {
-                        "E": "கிழக்கு",
-                        "ENE": "கிழக்கு-வடகிழக்கு",
-                        "ESE": "கிழக்கு-தென்கிழக்கு",
-                        "N": "வடக்கு",
-                        "NE": "வடகிழக்கு",
-                        "NNE": "வடக்கு-வடகிழக்கு",
-                        "NNW": "வடக்கு-வடமேற்கு",
-                        "NW": "வடமேற்கு",
-                        "S": "தெற்கு",
-                        "SE": "தென்கிழக்கு",
-                        "SSE": "தெற்கு-தென்கிழக்கு",
-                        "SSW": "தெற்கு-தென்மேற்கு",
-                        "SW": "தென்மேற்கு",
-                        "W": "மேற்கு",
-                        "WNW": "மேற்கு-வடமேற்கு",
-                        "WSW": "மேற்கு-தென்மேற்கு"
-                    }
-                },
-                "clock_direction": {
-                    "label": "திசை",
-                    "options": {
-                        "anticlockwise": "எதிர் கடிகாரத் திசையில்",
-                        "clockwise": "வலம் சுற்றுகிற"
-                    }
                 },
                 "collection_times": {
                     "label": "சேகரிப்பு காலம்"
@@ -813,13 +774,6 @@
                     "label": "சமநிலை",
                     "placeholder": "3, 4, 5..."
                 },
-                "parallel_direction": {
-                    "label": "திசை",
-                    "options": {
-                        "backward": "பின்னோக்கி",
-                        "forward": "முன்னோக்கி"
-                    }
-                },
                 "parking": {
                     "label": "வகை",
                     "options": {
@@ -1023,9 +977,6 @@
                 "amenity/bicycle_rental": {
                     "name": "சைக்கிள் வாடகை"
                 },
-                "amenity/bus_station": {
-                    "name": "பேருந்து நிலையம் "
-                },
                 "amenity/cafe": {
                     "name": "டீக்கடை"
                 },
@@ -1139,9 +1090,6 @@
                 },
                 "entrance": {
                     "name": "நுழைவு / வெளியேறு"
-                },
-                "highway/bus_stop": {
-                    "name": "பேருந்து நிலையம்"
                 },
                 "highway/footway": {
                     "name": "நடைபாதை"
@@ -1257,12 +1205,6 @@
                 "office": {
                     "name": "அலுவலகம்"
                 },
-                "office/accountant": {
-                    "name": "கணக்காளர்"
-                },
-                "office/newspaper": {
-                    "name": "செய்தித்தாள்"
-                },
                 "place": {
                     "name": "இடம்"
                 },
@@ -1296,14 +1238,8 @@
                 "railway/monorail": {
                     "name": "மோனோ இரயில்"
                 },
-                "railway/platform": {
-                    "name": "இரயில்வே நடைமேடை"
-                },
                 "railway/rail": {
                     "name": "இரயில்"
-                },
-                "railway/station": {
-                    "name": "இரயில் நிலையம்"
                 },
                 "railway/subway": {
                     "name": "சுரங்கப்பாதை"

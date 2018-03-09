@@ -1,5 +1,5 @@
 {
-    "icon": "commercial",
+    "icon": "library",
     "fields": [
         "name",
         "address",
@@ -8,12 +8,11 @@
     ],
     "geometry": [
         "point",
-        "vertex",
         "area"
     ],
     "tags": {
         "office": "newspaper"
     },
     "terms": [],
-    "name": "Newspaper"
+    "name": "Newspaper Office"
 }

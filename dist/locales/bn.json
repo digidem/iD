@@ -184,7 +184,6 @@
             "localized_translation_language": "ভাষা বেছে নিন",
             "localized_translation_name": "নাম"
         },
-        "zoom_in_edit": "সম্পাদনার জন্য জুম ইন করুন",
         "login": "প্রবেশ করুন",
         "logout": "বেরিয়ে যান",
         "loading_auth": "ওপেনস্ট্রীটম্যাপে সংযোগ করা হচ্ছে ...",
@@ -282,7 +281,6 @@
         "background": {
             "title": "পটভূমি",
             "description": "পটভূমি নির্ধারণ",
-            "percent_brightness": "{opacity}% উজ্জ্বলতা",
             "none": "কিছুনা",
             "reset": "রিসেট",
             "minimap": {
@@ -313,8 +311,7 @@
         },
         "splash": {
             "welcome": "iD ওপেনস্ট্রীটম্যাপ সম্পাদকে অাপনাকে স্বাগতম",
-            "walkthrough": "ওয়াকথ্রু শুরু করুন",
-            "start": "এখুনি পরিবর্তন করুন"
+            "walkthrough": "ওয়াকথ্রু শুরু করুন"
         },
         "source_switch": {
             "live": "সরাসরি",
@@ -332,10 +329,6 @@
             "untagged_area": "ট্যাগবিহীন এলাকা",
             "tag_suggests_area": "{tag} ট্যাগটি অনুসারে রেখাটি এলাকা হবে, কিন্তু নয়।",
             "deprecated_tags": "পুরোন ও অব্যবহৃত ট্যাগ: {tags}"
-        },
-        "zoom": {
-            "in": "জুম্ ইন",
-            "out": "জুম্ আউট"
         },
         "cannot_zoom": "বর্তমান মোডে আরও জুম আউট করা যাবে না.",
         "help": {
@@ -415,9 +408,6 @@
                         "horse": "ঘোড়া",
                         "motor_vehicle": "মোটরগাড়ি"
                     }
-                },
-                "access_toilets": {
-                    "label": "প্রবেশ করা"
                 },
                 "address": {
                     "label": "ঠিকানা",
@@ -503,23 +493,6 @@
                 "capacity": {
                     "label": "ধারণক্ষমতা",
                     "placeholder": "৫০, ১০০, ২০০..."
-                },
-                "cardinal_direction": {
-                    "label": "দিক",
-                    "options": {
-                        "E": "পূর্ব",
-                        "N": "উত্তর",
-                        "NE": "উত্তরপূর্ব",
-                        "S": "দক্ষিণ",
-                        "W": "পশ্চিম"
-                    }
-                },
-                "clock_direction": {
-                    "label": "দিক",
-                    "options": {
-                        "anticlockwise": "ঘড়ির কাটার উল্টো দিকে",
-                        "clockwise": "ঘড়ির কাটার দিকে"
-                    }
                 },
                 "collection_times": {
                     "label": "সংগ্রহের সময়"
@@ -901,9 +874,6 @@
                 "highway": {
                     "name": "রাজপথ"
                 },
-                "highway/bus_stop": {
-                    "name": "বাস স্টপ"
-                },
                 "highway/cycleway": {
                     "name": "সাইকেলের রাস্তা"
                 },
@@ -1096,9 +1066,6 @@
                 "office": {
                     "name": "কার্যালয়"
                 },
-                "office/newspaper": {
-                    "name": "সংবাদপত্র"
-                },
                 "office/ngo": {
                     "name": "এনজিও অফিস"
                 },
@@ -1110,9 +1077,6 @@
                 },
                 "office/telecommunication": {
                     "name": "টেলিকম অফিস"
-                },
-                "office/therapist": {
-                    "name": "থেরাপিস্ট"
                 },
                 "place": {
                     "name": "জায়গা"
@@ -1147,14 +1111,8 @@
                 "railway/monorail": {
                     "name": "মনোরেল"
                 },
-                "railway/platform": {
-                    "name": "রেল প্লাটফর্ম"
-                },
                 "railway/rail": {
                     "name": "রেল"
-                },
-                "railway/station": {
-                    "name": "রেল স্টেশন"
                 },
                 "railway/subway": {
                     "name": "ভূতলপথ"

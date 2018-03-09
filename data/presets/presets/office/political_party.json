@@ -1,5 +1,5 @@
 {
-    "icon": "commercial",
+    "icon": "town-hall",
     "fields": [
         "name",
         "address",
@@ -8,7 +8,6 @@
     ],
     "geometry": [
         "point",
-        "vertex",
         "area"
     ],
     "tags": {
