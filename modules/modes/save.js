@@ -173,6 +173,7 @@ export function modeSave(context) {
 
             if (err) {
                 _errors.push({
+                    original: err,
                     msg: err.message || err.responseText,
                     details: [ t('save.status_code', { code: err.status }) ]
                 });
@@ -291,7 +292,7 @@ export function modeSave(context) {
     function upload(changeset) {
         var osm = context.connection();
         if (!osm) {
-            _errors.push({ msg: 'No OSM Service' });
+            _errors.push({ original: null, msg: 'No OSM Service' });
         }
 
         if (_conflicts.length) {
@@ -323,6 +324,7 @@ export function modeSave(context) {
                 save(changeset, true, true);   // tryAgain = true, checkConflicts = true
             } else {
                 _errors.push({
+                    original: err,
                     msg: err.message || err.responseText,
                     details: [ t('save.status_code', { code: err.status }) ]
                 });
@@ -398,6 +400,7 @@ export function modeSave(context) {
 
 
     function showErrors() {
+        console.error(_errors)
         keybindingOn();
         context.history().pop();
         loading.close();
