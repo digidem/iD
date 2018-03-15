@@ -1410,6 +1410,10 @@
         },
         {
             "key": "highway",
+            "value": "passing_place"
+        },
+        {
+            "key": "highway",
             "value": "path"
         },
         {
@@ -2055,6 +2059,10 @@
         {
             "key": "tower:type",
             "value": "observation"
+        },
+        {
+            "key": "man_made",
+            "value": "observatory"
         },
         {
             "key": "man_made",

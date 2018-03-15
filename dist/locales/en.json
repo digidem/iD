@@ -1,5 +1,8 @@
 {
     "en": {
+        "icons": {
+            "information": "info"
+        },
         "modes": {
             "add_area": {
                 "title": "Area",
@@ -2062,6 +2065,10 @@
                 },
                 "maxspeed": {
                     "label": "Speed Limit",
+                    "placeholder": "40, 50, 60..."
+                },
+                "maxspeed/advisory": {
+                    "label": "Advisory Speed Limit",
                     "placeholder": "40, 50, 60..."
                 },
                 "maxstay": {
@@ -4152,6 +4159,10 @@
                     "name": "Motorway",
                     "terms": "autobahn,expressway,freeway,highway,interstate,parkway,thruway,turnpike"
                 },
+                "highway/passing_place": {
+                    "name": "Passing Place",
+                    "terms": "turnout, pullout"
+                },
                 "highway/path": {
                     "name": "Path",
                     "terms": "hike,hiking,trackway,trail,walk"
@@ -4298,7 +4309,7 @@
                 },
                 "historic/memorial": {
                     "name": "Memorial",
-                    "terms": ""
+                    "terms": "dedicatory,epitaph,remember,remembrance,memory,monument,stolperstein"
                 },
                 "historic/monument": {
                     "name": "Monument",
@@ -4807,6 +4818,10 @@
                 "man_made/observation": {
                     "name": "Observation Tower",
                     "terms": "lookout tower,fire tower"
+                },
+                "man_made/observatory": {
+                    "name": "Observatory",
+                    "terms": "astronomical,meteorological"
                 },
                 "man_made/petroleum_well": {
                     "name": "Oil Well",

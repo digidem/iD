@@ -827,6 +827,11 @@ en:
         label: Speed Limit
         # maxspeed field placeholder
         placeholder: '40, 50, 60...'
+      maxspeed/advisory:
+        # 'maxspeed:advisory=*'
+        label: Advisory Speed Limit
+        # maxspeed/advisory field placeholder
+        placeholder: '40, 50, 60...'
       maxstay:
         # maxstay=*
         label: Max Stay
@@ -3195,6 +3200,11 @@ en:
         name: Motorway Link
         # 'terms: ramp,on ramp,off ramp'
         terms: '<translate with synonyms or related terms for ''Motorway Link'', separated by commas>'
+      highway/passing_place:
+        # highway=passing_place
+        name: Passing Place
+        # 'terms: turnout, pullout'
+        terms: '<translate with synonyms or related terms for ''Passing Place'', separated by commas>'
       highway/path:
         # highway=path
         name: Path
@@ -3360,6 +3370,7 @@ en:
       historic/memorial:
         # historic=memorial
         name: Memorial
+        # 'terms: dedicatory,epitaph,remember,remembrance,memory,monument,stolperstein'
         terms: '<translate with synonyms or related terms for ''Memorial'', separated by commas>'
       historic/monument:
         # historic=monument
@@ -3941,6 +3952,11 @@ en:
         name: Observation Tower
         # 'terms: lookout tower,fire tower'
         terms: '<translate with synonyms or related terms for ''Observation Tower'', separated by commas>'
+      man_made/observatory:
+        # man_made=observatory
+        name: Observatory
+        # 'terms: astronomical,meteorological'
+        terms: '<translate with synonyms or related terms for ''Observatory'', separated by commas>'
       man_made/petroleum_well:
         # man_made=petroleum_well
         name: Oil Well
