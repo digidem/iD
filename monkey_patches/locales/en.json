@@ -45,11 +45,6 @@
 				"delete_point": "It's OK to delete features that don't exist in the real world. Deleting a feature removes it from the map, so you should make sure a feature is really gone before you delete it."
 			}
 		},
-		"info_panels": {
-			"history": {
-				"link_text": "History views are coming soon"
-			}
-		},
 		"commit": {
 			"title": "Save your Edits",
 			"upload_explanation": "The changes you save will only be visible on maps that you syncronize with.",
