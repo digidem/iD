@@ -13,7 +13,7 @@
             },
             "add_point": {
                 "title": "Punto",
-                "description": "Añade restaurantes, monumentos, buzones postales, negocios u otros puntos al mapa.",
+                "description": "Añade cascadas, monumentos, u otros puntos al mapa.",
                 "tail": "Haga clic en el mapa para añadir un punto."
             },
             "browse": {
@@ -325,8 +325,8 @@
         },
         "commit": {
             "title": "Subir a OpenStreetMap",
-            "upload_explanation": "Los cambios que sube serán visibles en todos los mapas que usen datos de OpenStreetMap.",
-            "upload_explanation_with_user": "Los cambios que sube como {user} serán visibles en todos los mapas que usen datos de OpenStreetMap.",
+            "upload_explanation": "Una vez guardado, puedes sincronizar tus cambios con otros.",
+            "upload_explanation_with_user": "Una vez guardado, puedes sincronizar tus cambios con otros.",
             "request_review": "Me gustaría que alguien revise mis ediciones.",
             "save": "Subir",
             "cancel": "Cancelar",
@@ -603,15 +603,15 @@
             }
         },
         "success": {
-            "edited_osm": "¡OSM editado!",
-            "just_edited": "¡Acaba de editar OpenStreetMap!",
-            "view_on_osm": "Ver en OSM",
-            "facebook": "Compartir en Facebook",
-            "twitter": "Compartir en Twitter",
-            "google": "Compartir en Google+",
-            "help_html": "Sus cambios deberían aparecer en la capa «estándar» en unos pocos minutos. Otras capas, y ciertos elementos, pueden llevar más tiempo.",
-            "help_link_text": "Detalles",
-            "help_link_url": "https://wiki.openstreetmap.org/wiki/ES:FAQ#Acabo_de_hacer_algunos_cambios_en_el_mapa._.C2.BFC.C3.B3mo_puedo_ver_mis_modificaciones.3F"
+          "edited_osm": "¡Mapeo editado!",
+          "just_edited": "¡Acaba de editar Mapeo!",
+          "view_on_osm": "Ver en OSM",
+          "help_html": "Puedes sincronizar tus cambios con otros ahora con el botón \"Sincronizar\".",
+          "twitter": "Compartir en Twitter",
+          "google": "Compartir en Google+",
+          "help_html": "Sus cambios deberían aparecer en la capa «estándar» en unos pocos minutos. Otras capas, y ciertos elementos, pueden llevar más tiempo.",
+          "help_link_text": "Detalles",
+          "help_link_url": "https://wiki.openstreetmap.org/wiki/ES:FAQ#Acabo_de_hacer_algunos_cambios_en_el_mapa._.C2.BFC.C3.B3mo_puedo_ver_mis_modificaciones.3F"
         },
         "confirm": {
             "okay": "Aceptar",
