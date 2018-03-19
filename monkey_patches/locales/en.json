@@ -17,7 +17,9 @@
 		},
 		"success": {
 			"edited_osm": "Edited!",
-			"just_edited": "You just edited the map!"
+			"just_edited": "You just edited the map!",
+      "view_on_osm": "Ver fuente XML del elemento",
+			"help_html": "You can now syncronize your changes with others now with the Syncronize button"
 		},
 		"splash": {
 			"welcome": "Welcome to the Mapeo editor",
