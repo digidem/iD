@@ -1,7 +1,7 @@
 {
 	"en":{
 		"inspector": {
-			"search_features": "Select or create features",
+			"search_features": "Select or create features"
 		},
 		"save": {
 			"help": "Review your changes and save them.",
@@ -22,7 +22,7 @@
 			"edited_osm": "Edited!",
 			"just_edited": "You just edited the map!",
       "view_on_osm": "Ver fuente XML del elemento",
-      "help_html": "You can now syncronize your changes with others with the Syncronize button"
+      "help_html": "Congratulations, your edits have been saved. Synchronize to a USB drive to share your edits with others."
 		},
 		"splash": {
 			"welcome": "Welcome to the Mapeo editor",

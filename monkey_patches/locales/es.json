@@ -1,7 +1,7 @@
 {
   "es": {
 		"inspector": {
-			"search_features": "Editar el Mapa",
+			"search_features": "Editar el Mapa"
 		},
     "commit": {
       "upload_explanation": "Una vez guardado, puedes sincronizar tus cambios con otros.",
@@ -18,7 +18,7 @@
       "edited_osm": "¡Mapeo editado!",
       "just_edited": "¡Acaba de editar Mapeo!",
       "view_on_osm": "Ver fuente XML del elemento",
-      "help_html": "Puedes sincronizar tus cambios con otros ahora con el botón Sincronizar."
+      "help_html": "Felicidades, tus editos han sido guardado. Puedes sincronizar tus cambios con otros ahora con el botón Sincronizar."
     }
   }
 }

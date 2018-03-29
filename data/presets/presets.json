@@ -38505,6 +38505,48 @@
             ],
             "suggestion": true
         },
+        "amenity/fuel/Costco Gas": {
+            "tags": {
+                "name": "Costco Gas",
+                "amenity": "fuel"
+            },
+            "name": "Costco Gas",
+            "icon": "fuel",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "fields": [
+                "name",
+                "operator",
+                "address",
+                "fuel_multi",
+                "opening_hours",
+                "payment_multi"
+            ],
+            "suggestion": true
+        },
+        "amenity/fuel/Costco Gasoline": {
+            "tags": {
+                "name": "Costco Gasoline",
+                "amenity": "fuel"
+            },
+            "name": "Costco Gasoline",
+            "icon": "fuel",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "fields": [
+                "name",
+                "operator",
+                "address",
+                "fuel_multi",
+                "opening_hours",
+                "payment_multi"
+            ],
+            "suggestion": true
+        },
         "amenity/fuel/Crodux": {
             "tags": {
                 "name": "Crodux",
@@ -55275,6 +55317,31 @@
                 "amenity": "restaurant"
             },
             "name": "Steak 'n Shake",
+            "icon": "restaurant",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "fields": [
+                "name",
+                "cuisine",
+                "address",
+                "building_area",
+                "opening_hours",
+                "capacity",
+                "takeaway",
+                "delivery",
+                "smoking",
+                "outdoor_seating"
+            ],
+            "suggestion": true
+        },
+        "amenity/restaurant/Steak House": {
+            "tags": {
+                "name": "Steak House",
+                "amenity": "restaurant"
+            },
+            "name": "Steak House",
             "icon": "restaurant",
             "geometry": [
                 "point",
@@ -80934,6 +81001,27 @@
             ],
             "suggestion": true
         },
+        "shop/kiosk/Мороженое": {
+            "tags": {
+                "name": "Мороженое",
+                "shop": "kiosk"
+            },
+            "name": "Мороженое",
+            "icon": "shop",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "fields": [
+                "name",
+                "operator",
+                "address",
+                "building_area",
+                "opening_hours",
+                "payment_multi"
+            ],
+            "suggestion": true
+        },
         "shop/kiosk/მარკეტი (Market)": {
             "tags": {
                 "name": "მარკეტი (Market)",
@@ -86143,12 +86231,12 @@
             ],
             "suggestion": true
         },
-        "shop/supermarket/Costco Gasoline": {
+        "shop/supermarket/Costco": {
             "tags": {
-                "name": "Costco Gasoline",
+                "name": "Costco",
                 "shop": "supermarket"
             },
-            "name": "Costco Gasoline",
+            "name": "Costco",
             "icon": "grocery",
             "geometry": [
                 "point",
