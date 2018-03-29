@@ -1,9 +1,15 @@
 {
   "es": {
+		"inspector": {
+			"search_features": "Editar el Mapa",
+		},
     "commit": {
       "upload_explanation": "Una vez guardado, puedes sincronizar tus cambios con otros.",
       "upload_explanation_with_user": "Una vez guardado, puedes sincronizar tus cambios con otros.",
     	"save": "Guardar"
+    },
+    "editing": {
+      "upload_h": "Guardar"
     },
     "inspector": {
       "view_on_osm": "Ver fuente XML del elemento"
