@@ -361,7 +361,7 @@ en:
       The changes you save as {user} will be visible on all maps that you
       syncronize with.
     request_review: I would like someone to review my edits.
-    save: Upload
+    save: Save
     cancel: Cancel
     changes: '{count} Changes'
     download_changes: Download osmChange file
@@ -781,7 +781,7 @@ en:
         deleting.
       multiselect_h: Multiselect
       multiselect_shift_click: >-
-        `{shift}`+{leftclick} left-click to select several features together. 
+        `{shift}`+{leftclick} left-click to select several features together.
         This makes it easier to move or delete multiple items.
       multiselect_lasso: >-
         Another way to select multiple features is to hold down the `{shift}`
@@ -803,7 +803,7 @@ en:
         On the save screen, you'll have a chance to review what you've done. iD
         will also perform some basic checks for missing data and may offer
         helpful suggestions and warnings if something doesn't seem right.
-      upload_h: Upload
+      upload_h: Save
       upload: >-
         Before uploading your changes you must enter a [changeset
         comment](https://wiki.openstreetmap.org/wiki/Good_changeset_comments).
