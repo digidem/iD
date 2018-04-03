@@ -1,7 +1,9 @@
 {
   "en": {
     "icons": {
-      "information": "info"
+      "information": "info",
+      "remove": "remove",
+      "undo": "undo"
     },
     "modes": {
       "add_area": {
@@ -2663,7 +2665,7 @@
           "placeholder": "Default"
         },
         "vending": {
-          "label": "Type of Goods"
+          "label": "Types of Goods"
         },
         "visibility": {
           "label": "Visibility",
@@ -2746,6 +2748,20 @@
             "open": "Open",
             "scott": "Scott",
             "leblanc": "Leblanc"
+          }
+        },
+        "industrial": {
+          "label": "Type"
+        },
+        "usage_rail": {
+          "label": "Usage Type",
+          "options": {
+            "main": "Main",
+            "branch": "Branch",
+            "industrial": "Industrial",
+            "military": "Military",
+            "test": "Test",
+            "tourism": "Tourism"
           }
         }
       },
@@ -6291,15 +6307,15 @@
           "terms": ""
         },
         "type/restriction/only_left_turn": {
-          "name": "Left Turn Only",
+          "name": "Only Left Turn",
           "terms": ""
         },
         "type/restriction/only_right_turn": {
-          "name": "Right Turn Only",
+          "name": "Only Right Turn",
           "terms": ""
         },
         "type/restriction/only_straight_on": {
-          "name": "No Turns",
+          "name": "Only Straight On",
           "terms": ""
         },
         "type/route_master": {
@@ -6440,6 +6456,62 @@
         },
         "waterway/weir": {
           "name": "Weir",
+          "terms": ""
+        },
+        "allotments/plot": {
+          "name": "Community Garden Plot",
+          "terms": ""
+        },
+        "amenity/monastery": {
+          "name": "Monastery Grounds",
+          "terms": "abbey,basilica,bethel,cathedral,chancel,chantry,chapel,church,fold,house of God,house of prayer,house of worship,minster,mission,monastery,mosque,oratory,parish,sacellum,sanctuary,shrine,synagogue,tabernacle,temple"
+        },
+        "amenity/vending_machine/coffee": {
+          "name": "Coffee Vending Machine",
+          "terms": "coffee"
+        },
+        "amenity/vending_machine/electronics": {
+          "name": "Electronics Vending Machine",
+          "terms": "cable,charger,earbud,headphone,phone,tablet"
+        },
+        "amenity/vending_machine/elongated_coin": {
+          "name": "Flat Coin Vending Machine",
+          "terms": "coin,crush,elongated,flatten,penny,souvenir"
+        },
+        "amenity/vending_machine/food": {
+          "name": "Food Vending Machine",
+          "terms": "food"
+        },
+        "amenity/vending_machine/fuel": {
+          "name": "Gas Pump",
+          "terms": "petrol,fuel,gasoline,propane,diesel,lng,cng,biodiesel"
+        },
+        "amenity/vending_machine/ice_cream": {
+          "name": "Ice Cream Vending Machine",
+          "terms": "chocolate,ice cream,frozen,popsicle,vanilla"
+        },
+        "amenity/vending_machine/stamps": {
+          "name": "Postage Vending Machine",
+          "terms": "mail,postage,stamp"
+        },
+        "leisure/outdoor_seating": {
+          "name": "Outdoor Seating Area",
+          "terms": "al fresco,beer garden,dining,cafe,restaurant,pub,bar,patio"
+        },
+        "man_made/antenna": {
+          "name": "Antenna",
+          "terms": "broadcast,cell phone,cell,communication,mobile phone,radio,television,transmission,tv"
+        },
+        "natural/mud": {
+          "name": "Mud",
+          "terms": "wetland"
+        },
+        "shop/pet_grooming": {
+          "name": "Pet Grooming Store",
+          "terms": "dog"
+        },
+        "type/restriction/only_u_turn": {
+          "name": "Only U-turn",
           "terms": ""
         }
       }

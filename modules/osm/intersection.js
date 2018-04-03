@@ -1,5 +1,5 @@
 import _clone from 'lodash-es/clone';
-import _every from 'lodash-es/every';
+import _difference from 'lodash-es/difference';
 import _extend from 'lodash-es/extend';
 import _uniq from 'lodash-es/uniq';
 
@@ -410,8 +410,18 @@ export function osmIntersection(graph, startVertexId, maxDistance) {
                         if (t.id === way.id) {     // match VIA, TO
                             if (v.length === 1 && v[0].type === 'node' && v[0].id === entity.id) {
                                 matchesViaTo = true;    // match VIA node
-                            } else if (_every(v, function(via) { return currPath.indexOf(via.id) !== -1; })) {
-                                matchesViaTo = true;    // match all VIA ways
+
+                            } else {                    // match all VIA ways
+                                var pathVias = [];
+                                for (k = 1; k < currPath.length; k++) {  // k = 1 skips FROM way
+                                    if (currPath[k][0] === 'w') pathVias.push(currPath[k]);
+                                }
+                                var restrictionVias = [];
+                                for (k = 0; k < v.length; k++) {
+                                    if (v[k].type === 'way') restrictionVias.push(v[k].id);
+                                }
+                                var diff = _difference(pathVias, restrictionVias);
+                                matchesViaTo = !diff.length;
                             }
 
                         } else if (isOnly) {
@@ -519,8 +529,10 @@ export function osmIntersection(graph, startVertexId, maxDistance) {
                         if (v.length === 1 && v[0].type === 'node') {   // via node
                             isOnlyVia = (v[0].id === nextNode.id);
                         } else {                                        // via way(s)
-                            for (k = 0; k < v.length; k++) {
-                                if (v[k].type === 'way' && vgraph.entity(v[k].id).first() === nextNode.id) {
+                            for (var i = 0; i < v.length; i++) {
+                                if (v[i].type !== 'way') continue;
+                                var viaWay = vgraph.entity(v[i].id);
+                                if (viaWay.first() === nextNode.id || viaWay.last() === nextNode.id) {
                                     isOnlyVia = true;
                                     break;
                                 }
