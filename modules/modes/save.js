@@ -404,7 +404,7 @@ export function modeSave(context) {
 
 
     function showErrors() {
-        console.error(_errors)
+        console.error(_errors);
         keybindingOn();
         context.history().pop();
         loading.close();
