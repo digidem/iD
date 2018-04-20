@@ -112,7 +112,7 @@ export function uiSuccess(context) {
 
 
         // Gather community polygon IDs intersecting the map..
-        var matchFeatures = data.community.query(context.map().center(), true);
+        var matchFeatures = data.community.query(context.map().center(), true) || [];
         var matchIDs = matchFeatures.map(function(feature) { return feature.id; });
 
         // Gather community resources that are either global or match a polygon.
@@ -213,10 +213,17 @@ export function uiSuccess(context) {
             .attr('href', d.url)
             .text(t('community.' + d.id + '.name'));
 
+        var descriptionHTML = t('community.' + d.id + '.description', replacements);
+
+        if (d.type === 'reddit') {   // linkify subreddits  #4997
+            descriptionHTML = descriptionHTML
+                .replace(/(\/r\/\w*\/*)/i, function(match) { return linkify(d.url, match); });
+        }
+
         selection
             .append('div')
             .attr('class', 'community-description')
-            .html(t('community.' + d.id + '.description', replacements));
+            .html(descriptionHTML);
 
         if (d.extendedDescription || (d.languageCodes && d.languageCodes.length)) {
             selection
@@ -345,8 +352,9 @@ export function uiSuccess(context) {
         }
 
 
-        function linkify(url) {
-            return '<a target="_blank" href="' + url + '">' + url + '</a>';
+        function linkify(url, text) {
+            text = text || url;
+            return '<a target="_blank" href="' + url + '">' + text + '</a>';
         }
     }
 
