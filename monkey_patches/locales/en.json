@@ -21,7 +21,7 @@
 		"success": {
 			"edited_osm": "Edited!",
 			"just_edited": "You just edited the map!",
-      "view_on_osm": "Ver fuente XML del elemento",
+      "view_on_osm": "View XML source of the element",
       "help_html": "Congratulations, your edits have been saved. Synchronize to a USB drive to share your edits with others."
 		},
 		"splash": {

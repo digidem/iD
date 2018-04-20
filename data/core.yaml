@@ -639,7 +639,7 @@ en:
     help_link_text: Details
     help_link_url: >-
       https://wiki.openstreetmap.org/wiki/FAQ#I_have_just_made_some_changes_to_the_map._How_do_I_get_to_see_my_changes.3F
-    view_on_osm: Ver fuente XML del elemento
+    view_on_osm: View XML source of the element
     changeset_id: 'Your changeset #: {changeset_id}'
     like_osm: 'Like OpenStreetMap? Connect with others:'
     more: More
