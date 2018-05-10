@@ -369,7 +369,7 @@ en:
       The changes you save as {user} will be visible on all maps that you
       syncronize with.
     request_review: I would like someone to review my edits.
-    save: Upload
+    save: Save
     cancel: Cancel
     changes: '{count} Changes'
     download_changes: Download osmChange file
@@ -822,9 +822,9 @@ en:
         helpful suggestions and warnings if something doesn't seem right.
       upload_h: Save
       upload: >-
-        Before uploading your changes you must enter a [changeset
+        Before saving your changes you must enter a [changeset
         comment](https://wiki.openstreetmap.org/wiki/Good_changeset_comments).
-        Then click **Save** so your chagnes will be merged into the map.
+        Then click **Save** so your changes will be merged into the map.
       backups_h: Automatic Backups
       backups: >-
         If you can't finish your edits in one sitting, for example if your
