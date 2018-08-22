@@ -2,7 +2,7 @@
   "name": "id-mapeo",
   "version": "1.3.0",
   "description": "iD Editor for osm-p2p & mapeo-desktop",
-  "main": "iD.js",
+  "main": "dist/iD.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/digidem/iD-mapeo.git"
