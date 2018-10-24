@@ -160,7 +160,6 @@
                 "annotation": "{n} gambaran telah digabung.",
                 "not_eligible": "Gambaran-gambaran ini tidak dapat digabungkan.",
                 "not_adjacent": "Ciri-ciri ini tidak dapat digabungkan kerana titik hujung mereka tidak bersambung.",
-                "restriction": "Ciri-ciri ini tidak dapat digabungkan kerana sekurang-kurangnya satu adalah ahli hubungan \"{relation}\".",
                 "incomplete_relation": "Ciri-ciri ini tidak dapat digabungkan kerana sekurang-kurangnya satu belum sepenuhnya dimuat turun.",
                 "conflicting_tags": "Ciri-ciri ini tidak dapat digabungkan kerana beberapa penanda mereka mempunyai nilai yang bercanggah."
             },
@@ -305,8 +304,6 @@
             "localized_translation_name": "Nama"
         },
         "zoom_in_edit": "Zum lebih dekat untuk menyunting",
-        "login": "log masuk",
-        "logout": "log keluar",
         "loading_auth": "Berhubung ke OpenStreetMap...",
         "report_a_bug": "Laporkan suatu pepijat",
         "help_translate": "Bantu penterjemahan",
@@ -449,7 +446,6 @@
             "best_imagery": "Sumber imejan terbaik yang diketahui bagi lokasi ini",
             "switch": "Tukar balik ke latar belakang ini",
             "custom": "Penyuai",
-            "custom_button": "Tukar latar belakang tersuai",
             "reset": "set semula",
             "minimap": {
                 "tooltip": "Tunjukkan peta yang dizum keluar untuk membantu mencari kawasan yang dipaparkan saat ini.",
@@ -626,12 +622,6 @@
         },
         "cannot_zoom": "Had zum jauh telah dicapai dalam mod yang sedang dipakai.",
         "full_screen": "Togol Skrin Penuh",
-        "gpx": {
-            "local_layer": "Fail tempatan",
-            "drag_drop": "Tarik dan lepaskan suatu fail .gpx, .geojson atau .kml masuk halaman ini, atau klik butang di sebelah kanan untuk mengimbas",
-            "zoom": "Zum ke lapisan",
-            "browse": "Semak imbas untuk fail"
-        },
         "mapillary_images": {
             "tooltip": "Gambar jalan dari Mapillary",
             "title": "Tindihan Gambar (Mapillary)"
@@ -918,19 +908,15 @@
                     "label": "Capaian Dibenarkan",
                     "options": {
                         "designated": {
-                            "description": "Capaian yang dibenarkan menurut papan tanda atau undang-undang tempatan yang khusus",
                             "title": "Bertanda"
                         },
                         "destination": {
-                            "description": "Capaian dibenarkan hanya untuk sampai ke destinasi sahaja",
                             "title": "Destinasi"
                         },
                         "dismount": {
-                            "description": "Capaian dibenarkan tetapi pengayuh basikal diwajibkan turun dari basikal",
                             "title": "Turun Dari Basikal"
                         },
                         "no": {
-                            "description": "Capaian tidak dibenarkan untuk orang awam",
                             "title": "Dilarang"
                         },
                         "private": {
@@ -1619,7 +1605,6 @@
                     "placeholder": "1, 2, 3..."
                 },
                 "phone": {
-                    "label": "Telefon",
                     "placeholder": "+31 42 123 4567"
                 },
                 "piste/difficulty": {
@@ -2054,8 +2039,7 @@
                     "name": "Alamat"
                 },
                 "advertising/billboard": {
-                    "name": "Papan Iklan",
-                    "terms": "<translate with synonyms or related terms for 'Billboard', separated by commas>"
+                    "name": "Papan Iklan"
                 },
                 "aerialway": {
                     "name": "Jalan Udara"
@@ -2215,8 +2199,7 @@
                     "name": "Kawasan"
                 },
                 "area/highway": {
-                    "name": "Permukaaan Jalan",
-                    "terms": "<translate with synonyms or related terms for 'Road Surface', separated by commas>"
+                    "name": "Permukaaan Jalan"
                 },
                 "barrier/gate": {
                     "name": "Pintu"
@@ -2232,8 +2215,7 @@
                     "name": "Sempadan Pentadbiran"
                 },
                 "building": {
-                    "name": "Bangunan",
-                    "terms": "<translate with synonyms or related terms for 'Building', separated by commas>"
+                    "name": "Bangunan"
                 },
                 "building/apartments": {
                     "name": "Rumah-rumah Pangsa"
@@ -2242,28 +2224,22 @@
                     "name": "Kabin"
                 },
                 "building/cathedral": {
-                    "name": "Bangunan Katedral",
-                    "terms": "<translate with synonyms or related terms for 'Cathedral Building', separated by commas>"
+                    "name": "Bangunan Katedral"
                 },
                 "building/chapel": {
-                    "name": "Bangunan Gereja Kecil",
-                    "terms": "<translate with synonyms or related terms for 'Chapel Building', separated by commas>"
+                    "name": "Bangunan Gereja Kecil"
                 },
                 "building/church": {
-                    "name": "Bangunan Gereja",
-                    "terms": "<translate with synonyms or related terms for 'Church Building', separated by commas>"
+                    "name": "Bangunan Gereja"
                 },
                 "building/college": {
-                    "name": "Bangunan Kolej",
-                    "terms": "<translate with synonyms or related terms for 'College Building', separated by commas>"
+                    "name": "Bangunan Kolej"
                 },
                 "building/commercial": {
-                    "name": "Bangunan Perniagaan",
-                    "terms": "<translate with synonyms or related terms for 'Commercial Building', separated by commas>"
+                    "name": "Bangunan Perniagaan"
                 },
                 "building/construction": {
-                    "name": "Bangunan Dalam Pembinaan",
-                    "terms": "<translate with synonyms or related terms for 'Building Under Construction', separated by commas>"
+                    "name": "Bangunan Dalam Pembinaan"
                 },
                 "building/garage": {
                     "name": "Garaj"
@@ -2275,12 +2251,10 @@
                     "name": "Rumah Tanaman"
                 },
                 "building/hospital": {
-                    "name": "Bangunan Hospital",
-                    "terms": "<translate with synonyms or related terms for 'Hospital Building', separated by commas>"
+                    "name": "Bangunan Hospital"
                 },
                 "building/hotel": {
-                    "name": "Bangunan Hotel",
-                    "terms": "<translate with synonyms or related terms for 'Hotel Building', separated by commas>"
+                    "name": "Bangunan Hotel"
                 },
                 "building/house": {
                     "name": "Rumah"
@@ -2290,36 +2264,30 @@
                     "terms": "Dangau"
                 },
                 "building/industrial": {
-                    "name": "Bangunan Perindustrian",
-                    "terms": "<translate with synonyms or related terms for 'Industrial Building', separated by commas>"
+                    "name": "Bangunan Perindustrian"
                 },
                 "building/kindergarten": {
-                    "name": "Bangunan Prasekolah/Tadika",
-                    "terms": "<translate with synonyms or related terms for 'Preschool/Kindergarten Building', separated by commas>"
+                    "name": "Bangunan Prasekolah/Tadika"
                 },
                 "building/mosque": {
                     "name": "Bangunan Masjid",
                     "terms": "Bangunan Surau, Musolla"
                 },
                 "building/public": {
-                    "name": "Bangunan Awam",
-                    "terms": "<translate with synonyms or related terms for 'Public Building', separated by commas>"
+                    "name": "Bangunan Awam"
                 },
                 "building/residential": {
-                    "name": "Bangunan Kediaman",
-                    "terms": "<translate with synonyms or related terms for 'Residential Building', separated by commas>"
+                    "name": "Bangunan Kediaman"
                 },
                 "building/retail": {
-                    "name": "Bangunan Kedai",
-                    "terms": "<translate with synonyms or related terms for 'Retail Building', separated by commas>"
+                    "name": "Bangunan Kedai"
                 },
                 "building/roof": {
                     "name": "Atap",
                     "terms": "Bumbung"
                 },
                 "building/school": {
-                    "name": "Bangunan Sekolah",
-                    "terms": "<translate with synonyms or related terms for 'School Building', separated by commas>"
+                    "name": "Bangunan Sekolah"
                 },
                 "building/stable": {
                     "name": "Kandang Kuda"
@@ -2328,8 +2296,7 @@
                     "name": "Stesen Kereta Api"
                 },
                 "building/university": {
-                    "name": "Bangunan Universiti",
-                    "terms": "<translate with synonyms or related terms for 'University Building', separated by commas>"
+                    "name": "Bangunan Universiti"
                 },
                 "building/warehouse": {
                     "name": "Gudang"
@@ -2338,40 +2305,31 @@
                     "name": "Kelab"
                 },
                 "highway/primary": {
-                    "name": "Jalan Utama",
-                    "terms": "<translate with synonyms or related terms for 'Primary Road', separated by commas>"
+                    "name": "Jalan Utama"
                 },
                 "highway/residential": {
-                    "name": "Jalan Kediaman",
-                    "terms": "<translate with synonyms or related terms for 'Residential Road', separated by commas>"
+                    "name": "Jalan Kediaman"
                 },
                 "highway/road": {
-                    "name": "Jalan Tidak Diketahui",
-                    "terms": "<translate with synonyms or related terms for 'Unknown Road', separated by commas>"
+                    "name": "Jalan Tidak Diketahui"
                 },
                 "highway/secondary": {
-                    "name": "Jalan Sekunder",
-                    "terms": "<translate with synonyms or related terms for 'Secondary Road', separated by commas>"
+                    "name": "Jalan Sekunder"
                 },
                 "highway/service": {
-                    "name": "Jalan Perkhidmatan",
-                    "terms": "<translate with synonyms or related terms for 'Service Road', separated by commas>"
+                    "name": "Jalan Perkhidmatan"
                 },
                 "highway/tertiary": {
-                    "name": "Jalan Tertiari",
-                    "terms": "<translate with synonyms or related terms for 'Tertiary Road', separated by commas>"
+                    "name": "Jalan Tertiari"
                 },
                 "highway/track": {
-                    "name": "Jalan Rintis Tidak Diselenggara",
-                    "terms": "<translate with synonyms or related terms for 'Unmaintained Track Road', separated by commas>"
+                    "name": "Jalan Rintis Tidak Diselenggara"
                 },
                 "highway/trunk": {
-                    "name": "Jalan Batang",
-                    "terms": "<translate with synonyms or related terms for 'Trunk Road', separated by commas>"
+                    "name": "Jalan Batang"
                 },
                 "highway/unclassified": {
-                    "name": "Jalan Kecil/Tidak Dikelaskan",
-                    "terms": "<translate with synonyms or related terms for 'Minor/Unclassified Road', separated by commas>"
+                    "name": "Jalan Kecil/Tidak Dikelaskan"
                 },
                 "leisure/pitch/cricket": {
                     "name": "Padang Kriket"
@@ -2635,8 +2593,7 @@
                     "name": "Funikulus"
                 },
                 "railway/level_crossing": {
-                    "name": "Lintasan Kereta Api (Jalan)",
-                    "terms": "<translate with synonyms or related terms for 'Railway Crossing (Road)', separated by commas>"
+                    "name": "Lintasan Kereta Api (Jalan)"
                 },
                 "railway/light_rail": {
                     "name": "Rel Ringan"
@@ -2740,8 +2697,7 @@
                     "name": "Pelancongan"
                 },
                 "type/route/road": {
-                    "name": "Laluan Jalan",
-                    "terms": "<translate with synonyms or related terms for 'Road Route', separated by commas>"
+                    "name": "Laluan Jalan"
                 },
                 "waterway/river": {
                     "name": "Sungai"
@@ -2760,7 +2716,6 @@
                 "attribution": {
                     "text": "Terma & Maklum Balas"
                 },
-                "description": "Imejan satelit Premium DigitalGlobe.",
                 "name": "Imejan DigitalGlobe Premium"
             },
             "DigitalGlobe-Premium-vintage": {
@@ -2773,7 +2728,6 @@
                 "attribution": {
                     "text": "Terma & Maklum Balas"
                 },
-                "description": "Imejan satelit Standard DigitalGlobe.",
                 "name": "Imejan DigitalGlobe Standard"
             },
             "DigitalGlobe-Standard-vintage": {

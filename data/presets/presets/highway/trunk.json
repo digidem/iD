@@ -1,5 +1,5 @@
 {
-    "icon": "highway-trunk",
+    "icon": "iD-highway-trunk",
     "fields": [
         "name",
         "ref_road_number",
@@ -18,6 +18,9 @@
     "tags": {
         "highway": "trunk"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Trunk Road"
 }

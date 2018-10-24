@@ -1,7 +1,8 @@
 {
-    "icon": "poi-ruins",
+    "icon": "temaki-ruins",
     "fields": [
         "name",
+        "site_type",
         "historic/civilization",
         "inscription"
     ],

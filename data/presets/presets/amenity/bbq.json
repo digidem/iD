@@ -1,8 +1,9 @@
 {
-    "icon": "bbq",
+    "icon": "maki-bbq",
     "fields": [
         "covered",
-        "fuel"
+        "fuel",
+        "access_simple"
     ],
     "geometry": [
         "point"

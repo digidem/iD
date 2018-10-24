@@ -52,7 +52,7 @@ export function uiFeatureList(context) {
             .on('input', inputevent);
 
         searchWrap
-            .call(svgIcon('#icon-search', 'pre-text'));
+            .call(svgIcon('#iD-icon-search', 'pre-text'));
 
         var listWrap = selection
             .append('div')
@@ -231,7 +231,7 @@ export function uiFeatureList(context) {
                 .append('button')
                 .property('disabled', true)
                 .attr('class', 'no-results-item')
-                .call(svgIcon('#icon-alert', 'pre-text'));
+                .call(svgIcon('#iD-icon-alert', 'pre-text'));
 
             resultsIndicator.append('span')
                 .attr('class', 'entity-name');
@@ -280,7 +280,7 @@ export function uiFeatureList(context) {
             label
                 .each(function(d) {
                     d3_select(this)
-                        .call(svgIcon('#icon-' + d.geometry, 'pre-text'));
+                        .call(svgIcon('#iD-icon-' + d.geometry, 'pre-text'));
                 });
 
             label
@@ -322,7 +322,7 @@ export function uiFeatureList(context) {
         function click(d) {
             d3_event.preventDefault();
             if (d.location) {
-                context.map().centerZoom([d.location[1], d.location[0]], 20);
+                context.map().centerZoom([d.location[1], d.location[0]], 19);
             }
             else if (d.entity) {
                 if (d.entity.type === 'node') {

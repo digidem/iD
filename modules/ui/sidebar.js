@@ -1,11 +1,27 @@
 import _throttle from 'lodash-es/throttle';
-import { uiFeatureList } from './feature_list';
-import { uiInspector } from './inspector';
+
+import { selectAll as d3_selectAll } from 'd3-selection';
+
+import {
+    osmEntity,
+    osmNote
+} from '../osm';
+
+import {
+    uiDataEditor,
+    uiFeatureList,
+    uiInspector,
+    uiNoteEditor
+} from './index';
 
 
 export function uiSidebar(context) {
-    var inspector = uiInspector(context),
-        current;
+    var inspector = uiInspector(context);
+    var dataEditor = uiDataEditor(context);
+    var noteEditor = uiNoteEditor(context);
+    var _current;
+    var _wasData = false;
+    var _wasNote = false;
 
 
     function sidebar(selection) {
@@ -14,14 +30,31 @@ export function uiSidebar(context) {
             .attr('class', 'feature-list-pane')
             .call(uiFeatureList(context));
 
-
         var inspectorWrap = selection
             .append('div')
             .attr('class', 'inspector-hidden inspector-wrap fr');
 
 
-        function hover(id) {
-            if (!current && context.hasEntity(id)) {
+        function hover(datum) {
+            if (datum && datum.__featurehash__) {   // hovering on data
+                _wasData = true;
+                sidebar
+                    .show(dataEditor.datum(datum));
+
+                selection.selectAll('.sidebar-component')
+                    .classed('inspector-hover', true);
+
+            } else if (datum instanceof osmNote) {
+                if (context.mode().id === 'drag-note') return;
+                _wasNote = true;
+
+                sidebar
+                    .show(noteEditor.note(datum));
+
+                selection.selectAll('.sidebar-component')
+                    .classed('inspector-hover', true);
+
+            } else if (!_current && (datum instanceof osmEntity)) {
                 featureListWrap
                     .classed('inspector-hidden', true);
 
@@ -29,22 +62,28 @@ export function uiSidebar(context) {
                     .classed('inspector-hidden', false)
                     .classed('inspector-hover', true);
 
-                if (inspector.entityID() !== id || inspector.state() !== 'hover') {
+                if (inspector.entityID() !== datum.id || inspector.state() !== 'hover') {
                     inspector
                         .state('hover')
-                        .entityID(id);
+                        .entityID(datum.id);
 
                     inspectorWrap
                         .call(inspector);
                 }
 
-            } else if (!current) {
+            } else if (!_current) {
                 featureListWrap
                     .classed('inspector-hidden', false);
                 inspectorWrap
                     .classed('inspector-hidden', true);
                 inspector
                     .state('hide');
+
+            } else if (_wasData || _wasNote) {
+                _wasNote = false;
+                _wasData = false;
+                d3_selectAll('.note').classed('hover', false);
+                sidebar.hide();
             }
         }
 
@@ -53,7 +92,7 @@ export function uiSidebar(context) {
 
 
         sidebar.select = function(id, newFeature) {
-            if (!current && id) {
+            if (!_current && id) {
                 featureListWrap
                     .classed('inspector-hidden', true);
 
@@ -71,7 +110,7 @@ export function uiSidebar(context) {
                         .call(inspector);
                 }
 
-            } else if (!current) {
+            } else if (!_current) {
                 featureListWrap
                     .classed('inspector-hidden', false);
                 inspectorWrap
@@ -82,17 +121,17 @@ export function uiSidebar(context) {
         };
 
 
-        sidebar.show = function(component) {
+        sidebar.show = function(component, element) {
             featureListWrap
                 .classed('inspector-hidden', true);
             inspectorWrap
                 .classed('inspector-hidden', true);
 
-            if (current) current.remove();
-            current = selection
+            if (_current) _current.remove();
+            _current = selection
                 .append('div')
                 .attr('class', 'sidebar-component')
-                .call(component);
+                .call(component, element);
         };
 
 
@@ -102,8 +141,8 @@ export function uiSidebar(context) {
             inspectorWrap
                 .classed('inspector-hidden', true);
 
-            if (current) current.remove();
-            current = null;
+            if (_current) _current.remove();
+            _current = null;
         };
     }
 

@@ -32,6 +32,22 @@ export function uiSuccess(context) {
     var _location;
 
 
+    // string-to-date parsing in JavaScript is weird
+    function parseEventDate(when) {
+        if (!when) return;
+
+        var raw = when.trim();
+        if (!raw) return;
+
+        if (!/Z$/.test(raw)) {    // if no trailing 'Z', add one
+            raw += 'Z';           // this forces date to be parsed as a UTC date
+        }
+
+        var parsed = new Date(raw);
+        return new Date(parsed.toUTCString().substr(0, 25));  // convert to local timezone
+    }
+
+
     function success(selection) {
         var header = selection
             .append('div')
@@ -41,7 +57,7 @@ export function uiSuccess(context) {
             .append('button')
             .attr('class', 'fr')
             .on('click', function() { dispatch.call('cancel'); })
-            .call(svgIcon('#icon-close'));
+            .call(svgIcon('#iD-icon-close'));
 
         header
             .append('h3')
@@ -67,7 +83,7 @@ export function uiSuccess(context) {
             .attr('target', '_blank')
             .attr('tabindex', -1)
             .attr('href', t('success.help_link_url'))
-            .call(svgIcon('#icon-out-link', 'inline'))
+            .call(svgIcon('#iD-icon-out-link', 'inline'))
             .append('span')
             .text(t('success.help_link_text'));
 
@@ -93,7 +109,7 @@ export function uiSuccess(context) {
             .append('svg')
             .attr('class', 'logo-small')
             .append('use')
-            .attr('xlink:href', '#logo-osm');
+            .attr('xlink:href', '#iD-logo-osm');
 
         var summaryDetail = row
             .append('td')
@@ -190,7 +206,7 @@ export function uiSuccess(context) {
             .attr('class', 'link-out')
             .attr('target', '_blank')
             .attr('tabindex', -1)
-            .call(svgIcon('#icon-out-link', 'inline'))
+            .call(svgIcon('#iD-icon-out-link', 'inline'))
             .attr('href', 'https://github.com/osmlab/osm-community-index/issues')
             .append('span')
             .text(t('success.tell_us'));
@@ -237,8 +253,8 @@ export function uiSuccess(context) {
         }
 
         var nextEvents = (d.events || [])
-            .map(function(event) {                  // add parsed date
-                event.date = new Date(event.when);
+            .map(function(event) {
+                event.date = parseEventDate(event.when);
                 return event;
             })
             .filter(function(event) {               // date is valid and future (or today)

@@ -1,5 +1,5 @@
 {
-    "icon": "highway-motorway",
+    "icon": "iD-highway-motorway",
     "fields": [
         "name",
         "ref_road_number",
@@ -25,6 +25,8 @@
         "highway",
         "interstate",
         "parkway",
+        "road",
+        "street",
         "thruway",
         "turnpike"
     ],

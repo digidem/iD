@@ -34,12 +34,15 @@ export function uiField(context, presetField, entity, options) {
     var _tags = {};
 
 
+    // field implementation
     field.impl = uiFields[field.type](field, context)
         .on('change', function(t, onInput) {
             dispatch.call('change', field, t, onInput);
         });
 
+    // if this field cares about the entity, pass it along
     if (entity && field.impl.entity) {
+        field.entityID = entity.id;
         field.impl.entity(entity);
     }
 
@@ -117,7 +120,7 @@ export function uiField(context, presetField, entity, options) {
                     .attr('class', 'remove-icon')
                     .attr('title', t('icons.remove'))
                     .attr('tabindex', -1)
-                    .call(svgIcon('#operation-delete'));
+                    .call(svgIcon('#iD-operation-delete'));
             }
 
             if (options.revert) {
@@ -126,9 +129,7 @@ export function uiField(context, presetField, entity, options) {
                     .attr('class', 'modified-icon')
                     .attr('title', t('icons.undo'))
                     .attr('tabindex', -1)
-                    .call(
-                        (textDirection === 'rtl') ? svgIcon('#icon-redo') : svgIcon('#icon-undo')
-                    );
+                    .call(svgIcon((textDirection === 'rtl') ? '#iD-icon-redo' : '#iD-icon-undo'));
             }
         }
 

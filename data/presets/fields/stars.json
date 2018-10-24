@@ -1,5 +1,5 @@
 {
     "key": "stars",
-    "type": "number",
+    "type": "combo",
     "label": "Stars"
 }

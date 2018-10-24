@@ -18,6 +18,10 @@ en:
       title: Point
       description: 'Add waterfalls, villages, or other points to the map.'
       tail: Click on the map to add a point.
+    add_note:
+      title: Note
+      description: Spotted an issue? Let other mappers know.
+      tail: Click on the map to add a note.
     browse:
       title: Browse
       description: Pan and zoom the map.
@@ -37,6 +41,7 @@ en:
         point: Added a point.
         vertex: Added a node to a way.
         relation: Added a relation.
+        note: Added a note.
     start:
       annotation:
         line: Started a line.
@@ -163,8 +168,11 @@ en:
       not_eligible: These features can't be merged.
       not_adjacent: These features can't be merged because their endpoints aren't connected.
       restriction: >-
-        These features can't be merged because at least one is a member of a
-        "{relation}" relation.
+        These features can't be merged because it would damage a "{relation}"
+        relation.
+      relation: >-
+        These features can't be merged because they have conflicting relation
+        roles.
       incomplete_relation: >-
         These features can't be merged because at least one hasn't been fully
         downloaded.
@@ -296,6 +304,15 @@ en:
       annotation:
         create: Added a turn restriction
         delete: Deleted a turn restriction
+    detach_node:
+      title: Detach
+      key: E
+      description: Detach this node from these lines/areas.
+      annotation: Detached a node from parent lines/areas.
+      restriction: >-
+        This node can't be detached because it would damage a "{relation}"
+        relation.
+      connected_to_hidden: This node can't be detached because it is connected to a hidden feature.
   restriction:
     controls:
       distance: Distance
@@ -345,8 +362,8 @@ en:
     localized_translation_language: Choose language
     localized_translation_name: Name
   zoom_in_edit: Zoom in to edit
-  login: login
-  logout: logout
+  login: Log In
+  logout: Log Out
   loading_auth: Connecting to OpenStreetMap...
   report_a_bug: Report a bug
   help_translate: Help translate
@@ -413,6 +430,11 @@ en:
       changeset: Changeset
       unknown: Unknown
       link_text: History on openstreetmap.org
+      note_no_history: No History (New Note)
+      note_comments: Comments
+      note_created_date: Created Date
+      note_created_user: Created By
+      note_link_text: Note on openstreetmap.org
     location:
       key: L
       title: Location
@@ -439,6 +461,7 @@ en:
     line: line
     area: area
     relation: relation
+    note: note
   geocoder:
     search: Search worldwide...
     no_results_visible: No results in visible map area
@@ -494,16 +517,6 @@ en:
     best_imagery: Best known imagery source for this location
     switch: Switch back to this background
     custom: Custom
-    custom_button: Edit custom background
-    custom_prompt: |-
-      Enter a tile URL template. Valid tokens are:
-         - {zoom} or {z}, {x}, {y} for Z/X/Y tile scheme
-         - {-y} or {ty} for flipped TMS-style Y coordinates
-         - {u} for quadtile scheme
-         - {switch:a,b,c} for DNS server multiplexing
-
-      Example:
-      {example}
     overlays: Overlays
     imagery_source_faq: Imagery Info / Report a Problem
     reset: reset
@@ -529,6 +542,13 @@ en:
       osm:
         tooltip: Map data from OpenStreetMap
         title: OpenStreetMap data
+      notes:
+        tooltip: Note data from OpenStreetMap
+        title: OpenStreetMap notes
+      custom:
+        tooltip: 'Drag and drop a data file onto the page, or click the button to setup'
+        title: Custom Map Data
+        zoom: Zoom to data
     fill_area: Fill Areas
     map_features: Map Features
     autohidden: >-
@@ -587,6 +607,35 @@ en:
     full:
       description: Full Fill
       tooltip: Areas are drawn fully filled.
+  settings:
+    custom_background:
+      tooltip: Edit custom background
+      header: Custom Background Settings
+      instructions: |-
+        Enter a tile URL template. Valid tokens are:
+           {zoom} or {z}, {x}, {y} for Z/X/Y tile scheme
+           {-y} or {ty} for flipped TMS-style Y coordinates
+           {u} for quadtile scheme
+           {switch:a,b,c} for DNS server multiplexing
+
+        Example:
+        {example}
+      template:
+        placeholder: Enter a url template
+    custom_data:
+      tooltip: Edit custom data layer
+      header: Custom Map Data Settings
+      file:
+        instructions: |-
+          Choose a local data file. Supported types are:
+             .gpx, .kml, .geojson, .json
+        label: Browse files
+      or: Or
+      url:
+        instructions: |-
+          Enter a data file URL or vector tile URL template. Valid tokens are:
+             {zoom} or {z}, {x}, {y} for Z/X/Y tile scheme
+        placeholder: Enter a url
   restore:
     heading: You have unsaved changes
     description: Do you wish to restore unsaved changes from a previous editing session?
@@ -697,13 +746,12 @@ en:
     out: Zoom out
   cannot_zoom: Cannot zoom out further in current mode.
   full_screen: Toggle Full Screen
-  gpx:
-    local_layer: Local file
-    drag_drop: >-
-      Drag and drop a .gpx, .geojson or .kml file on the page, or click the
-      button to the right to browse
-    zoom: Zoom to layer
-    browse: Browse for a file
+  streetside:
+    tooltip: Streetside photos from Microsoft
+    title: Photo Overlay (Bing Streetside)
+    report: Report a privacy concern with this image
+    view_on_bing: View on Bing Maps
+    hires: High resolution
   mapillary_images:
     tooltip: Street-level photos from Mapillary
     title: Photo Overlay (Mapillary)
@@ -717,6 +765,33 @@ en:
     title: Photo Overlay (OpenStreetCam)
   openstreetcam:
     view_on_openstreetcam: View this image on OpenStreetCam
+  note:
+    note: Note
+    title: Edit note
+    anonymous: anonymous
+    closed: (Closed)
+    commentTitle: Comments
+    status:
+      opened: 'opened {when}'
+      reopened: 'reopened {when}'
+      commented: 'commented {when}'
+      closed: 'closed {when}'
+    newComment: New Comment
+    inputPlaceholder: Enter a comment to share with other users.
+    close: Close Note
+    open: Reopen Note
+    comment: Comment
+    close_comment: Close and Comment
+    open_comment: Reopen and Comment
+    report: Report
+    new: New Note
+    newDescription: Describe the issue.
+    save: Save Note
+    login: You must log in to change or comment on this note.
+    upload_explanation: Your comments will be publicly visible to all OpenStreetMap users.
+    upload_explanation_with_user: >-
+      Your comments as {user} will be publicly visible to all OpenStreetMap
+      users.
   help:
     title: Help
     key: H
@@ -1093,6 +1168,35 @@ en:
         down to the "All relations" section of the feature editor, then click
         the {plus} add button to add this feature to a nearby existing relation
         or a new relation.
+    notes:
+      title: Notes
+      intro: >-
+        *Notes* are used to alert other users that a feature requires fixing or
+        attention. Notes mark a specific location on the map. To view existing
+        notes or add new ones, click the {data} **Map data** panel to enable the
+        OpenStreetMap notes layer.
+      add_note_h: Adding Notes
+      add_note: >-
+        To add a new note, click the {note} **Note** button on the toolbar above
+        the map, or press the shortcut key `4`. This will change the mouse
+        cursor to a cross symbol. To place the new note on the map, position the
+        mouse cursor where the note should go, then {leftclick} left-click or
+        press `Space`.
+      move_note: >-
+        Only new notes can be moved. To move a note, place the mouse cursor over
+        the new note, then press and hold the {leftclick} left mouse button
+        while dragging the note to its new location.
+      update_note_h: 'Closing, Reopening, and Commenting'
+      update_note: >-
+        An existing note can be updated by closing it, reopening it, or adding a
+        comment to it. Closing a note indicates that the problem has been
+        resolved. Reopening a note indicates that the original issue is not
+        resolved.
+      save_note_h: Saving Notes
+      save_note: >-
+        You must save any note edits individually by clicking the buttons below
+        the note comments. Note edits are **not** included in changesets that
+        you upload to OpenStreetMap.
     imagery:
       title: Background Imagery
       intro: >-
@@ -1127,8 +1231,9 @@ en:
       intro: >-
         Street level photos are useful for mapping traffic signs, businesses,
         and other details that you can't see from satellite and aerial images.
-        The iD editor supports street level photos from
-        [Mapillary](https://www.mapillary.com) and
+        The iD editor supports street level photos from [Bing
+        Streetside](https://www.microsoft.com/en-us/maps/streetside),
+        [Mapillary](https://www.mapillary.com), and
         [OpenStreetCam](https://www.openstreetcam.org).
       using_h: Using Street Level Photos
       using: >-
@@ -1744,7 +1849,8 @@ en:
         add_point: '''Add point'' mode'
         add_line: '''Add line'' mode'
         add_area: '''Add area'' mode'
-        place_point: Place a point
+        add_note: '''Add note'' mode'
+        place_point: Place a point or note
         disable_snap: Hold to disable point snapping
         stop_line: Finish drawing a line or area
       operations:
@@ -1752,6 +1858,7 @@ en:
         continue_line: Continue a line at the selected node
         merge: Combine (merge) selected features
         disconnect: Disconnect features at the selected node
+        detach_node: Detach selected node from parent lines/areas
         split: Split a line into two at the selected node
         reverse: Reverse a line
         move: Move selected features
@@ -1843,29 +1950,30 @@ en:
         options:
           'yes':
             title: Allowed
-            description: Access permitted by law; a right of way
+            description: Access allowed by law; a right of way
           'no':
             title: Prohibited
-            description: Access not permitted to the general public
+            description: Access not allowed to the general public
           permissive:
             title: Permissive
-            description: >-
-              Access permitted until such time as the owner revokes the
-              permission
+            description: Access allowed until such time as the owner revokes the permission
           private:
             title: Private
             description: >-
-              Access permitted only with permission of the owner on an
-              individual basis
+              Access allowed only with permission of the owner on an individual
+              basis
           designated:
             title: Designated
-            description: Access permitted according to signs or specific local laws
+            description: Access allowed according to signs or specific local laws
           destination:
             title: Destination
-            description: Access permitted only to reach a destination
+            description: Access allowed only to reach a destination
           dismount:
             title: Dismount
-            description: Access permitted but rider must dismount
+            description: Access allowed but rider must dismount
+          permit:
+            title: Permit
+            description: Access allowed only with a valid permit or license
       address:
         label: Address
         placeholders:
@@ -1980,6 +2088,8 @@ en:
           stemcells: stem cell samples
       board_type:
         label: Type
+      booth:
+        label: Booth
       boules:
         label: Type
       boundary:
@@ -2014,6 +2124,8 @@ en:
       capacity:
         label: Capacity
         placeholder: '50, 100, 200...'
+      cash_in:
+        label: Cash In
       castle_type:
         label: Type
       clothes:
@@ -2503,13 +2615,15 @@ en:
           carports: Carports
           garage_boxes: Garage Boxes
           lane: Roadside Lane
+      passenger_information_display:
+        label: Passenger information display
       payment_multi:
         label: Payment Types
       phases:
         label: Phases
         placeholder: '1, 2, 3...'
       phone:
-        label: Phone
+        label: Telephone
         placeholder: +31 42 123 4567
       piste/difficulty:
         label: Difficulty
@@ -2662,6 +2776,16 @@ en:
         label: Shelter
       shop:
         label: Type
+      siren/purpose:
+        label: Purpose
+      siren/type:
+        label: Type
+        options:
+          pneumatic: Pneumatic
+          electronic: Electronic
+          other: Other
+      site_type:
+        label: Site Type
       site:
         label: Type
       smoking:
@@ -2979,7 +3103,7 @@ en:
         terms: tbar
       aeroway/aerodrome:
         name: Airport
-        terms: 'airplane,airport,aerodrome'
+        terms: 'aerodrome,aeroway,airplane,airport,jet,plane'
       aeroway/apron:
         name: Apron
         terms: ramp
@@ -3070,7 +3194,7 @@ en:
         name: Bicycle Repair Tool Stand
         terms: 'bike,repair,chain,pump'
       amenity/biergarten:
-        name: Beer Garden
+        name: Biergarten
         terms: 'beer,bier,booze'
       amenity/boat_rental:
         name: Boat Rental
@@ -3226,7 +3350,7 @@ en:
         terms: ''
       amenity/pharmacy:
         name: Pharmacy
-        terms: 'drug*,med*,prescription'
+        terms: 'apothecary,drug*,med*,prescription'
       amenity/place_of_worship:
         name: Place of Worship
         terms: >-
@@ -3611,6 +3735,9 @@ en:
       building/garages:
         name: Garages
         terms: ''
+      building/grandstand:
+        name: Grandstand
+        terms: 'tribune,stand,stands,bleachers'
       building/greenhouse:
         name: Greenhouse
         terms: ''
@@ -3867,21 +3994,36 @@ en:
       emergency/defibrillator:
         name: Defibrillator
         terms: AED
+      emergency/fire_alarm:
+        name: Fire Alarm Call Box
+        terms: ''
+      emergency/fire_extinguisher:
+        name: Fire Extinguisher
+        terms: ''
       emergency/fire_hydrant:
         name: Fire Hydrant
         terms: fire plug
+      emergency/first_aid_kit:
+        name: First Aid Kit
+        terms: 'bandage,first aid,med,med kit,medic*,medkit'
       emergency/life_ring:
         name: Life Ring
         terms: 'life buoy,kisby ring,kisbie ring,perry buoy'
+      emergency/lifeguard:
+        name: Lifeguard
+        terms: 'CPR,rescue'
       emergency/phone:
         name: Emergency Phone
         terms: ''
+      emergency/siren:
+        name: Siren
+        terms: 'air raid,loud,noise,storm,tornado,warning'
       emergency/water_tank:
         name: Emergency Water Tank
         terms: 'water tank,cistern,reservoir'
       entrance:
         name: Entrance/Exit
-        terms: ''
+        terms: 'entrance,exit,door'
       footway/crossing-raised:
         name: Raised Street Crossing
         terms: 'flat top,hump,speed,slow'
@@ -3990,7 +4132,7 @@ en:
         terms: ''
       highway/bridleway:
         name: Bridle Path
-        terms: 'bridleway,equestrian,horse'
+        terms: 'bridleway,equestrian,horse,trail'
       highway/bus_guideway:
         name: Bus Guideway
         terms: ''
@@ -4029,14 +4171,14 @@ en:
         terms: ''
       highway/motorway_junction:
         name: Motorway Junction / Exit
-        terms: ''
+        terms: exit
       highway/motorway_link:
         name: Motorway Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'exit,ramp,road,street,on ramp,off ramp'
       highway/motorway:
         name: Motorway
         terms: >-
-          autobahn,expressway,freeway,highway,interstate,parkway,thruway,turnpike
+          autobahn,expressway,freeway,highway,interstate,parkway,road,street,thruway,turnpike
       highway/passing_place:
         name: Passing Place
         terms: 'turnout, pullout'
@@ -4051,31 +4193,31 @@ en:
         terms: 'center,centre,plaza,quad,square,walkway'
       highway/primary_link:
         name: Primary Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'on ramp,off ramp,ramp,road,street'
       highway/primary:
         name: Primary Road
-        terms: ''
+        terms: 'road,street'
       highway/raceway:
         name: Racetrack (Motorsport)
         terms: 'auto*,formula one,kart,motocross,nascar,race*,track'
       highway/residential:
         name: Residential Road
-        terms: ''
+        terms: 'road,street'
       highway/rest_area:
         name: Rest Area
         terms: rest stop
       highway/road:
         name: Unknown Road
-        terms: ''
+        terms: 'road,street'
       highway/secondary_link:
         name: Secondary Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'on ramp,off ramp,ramp,road,street'
       highway/secondary:
         name: Secondary Road
-        terms: ''
+        terms: 'road,street'
       highway/service:
         name: Service Road
-        terms: ''
+        terms: 'road,street'
       highway/service/alley:
         name: Alley
         terms: ''
@@ -4108,10 +4250,10 @@ en:
         terms: 'streetlight,street light,lamp,light,gaslight'
       highway/tertiary_link:
         name: Tertiary Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'on ramp,off ramp,ramp,road,street'
       highway/tertiary:
         name: Tertiary Road
-        terms: ''
+        terms: 'road,street'
       highway/track:
         name: Unmaintained Track Road
         terms: >-
@@ -4129,10 +4271,10 @@ en:
         terms: 'light,stoplight,traffic light'
       highway/trunk_link:
         name: Trunk Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'on ramp,off ramp,ramp,road,street'
       highway/trunk:
         name: Trunk Road
-        terms: ''
+        terms: 'road,street'
       highway/turning_circle:
         name: Turning Circle
         terms: cul-de-sac
@@ -4141,7 +4283,7 @@ en:
         terms: cul-de-sac
       highway/unclassified:
         name: Minor/Unclassified Road
-        terms: ''
+        terms: 'road,street'
       historic:
         name: Historic Site
         terms: ''
@@ -4215,7 +4357,7 @@ en:
         terms: 'crop,grow,plant'
       landuse/forest:
         name: Forest
-        terms: tree
+        terms: 'cut,forest,lumber,tree'
       landuse/garages:
         name: Garage Landuse
         terms: ''
@@ -4254,8 +4396,8 @@ en:
       landuse/military/airfield:
         name: Military Airfield
         terms: >-
-          air
-          force,army,base,bomb,fight,force,guard,heli*,jet,marine,navy,plane,troop,war
+          aerodrome,aeroway,air
+          force,airplane,airport,army,base,bomb,fight,force,guard,heli*,jet,marine,navy,plane,troop,war
       landuse/military/barracks:
         name: Barracks
         terms: 'air force,army,base,fight,force,guard,marine,navy,troop,war'
@@ -4336,6 +4478,9 @@ en:
       leisure/bird_hide:
         name: Bird Hide
         terms: 'machan,ornithology'
+      leisure/bleachers:
+        name: Bleachers
+        terms: 'crowd,bench,sports,stand,stands,seat,seating'
       leisure/bowling_alley:
         name: Bowling Alley
         terms: bowling center
@@ -4439,6 +4584,9 @@ en:
       leisure/pitch/american_football:
         name: American Football Field
         terms: ''
+      leisure/pitch/badminton:
+        name: Badminton Court
+        terms: ''
       leisure/pitch/baseball:
         name: Baseball Diamond
         terms: ''
@@ -4537,9 +4685,15 @@ en:
       man_made/bridge:
         name: Bridge
         terms: ''
+      man_made/bunker_silo:
+        name: Bunker Silo
+        terms: 'Silage,Storage'
       man_made/chimney:
         name: Chimney
         terms: ''
+      man_made/clearcut:
+        name: Clearcut Forest
+        terms: 'cut,forest,lumber,tree,wood'
       man_made/crane:
         name: Crane
         terms: ''
@@ -4658,7 +4812,7 @@ en:
         terms: 'cavern,hollow,grotto,shelter,cavity'
       natural/cliff:
         name: Cliff
-        terms: escarpment
+        terms: 'crag,escarpment,rock face,scarp'
       natural/coastline:
         name: Coastline
         terms: shore
@@ -4681,6 +4835,9 @@ en:
         name: Peak
         terms: >-
           acme,aiguille,alp,climax,crest,crown,hill,mount,mountain,pinnacle,summit,tip,top
+      natural/reef:
+        name: Reef
+        terms: 'barrier,coral,ocean,sand,shoal'
       natural/ridge:
         name: Ridge
         terms: crest
@@ -5357,7 +5514,7 @@ en:
         terms: ''
       shop/chemist:
         name: Drugstore
-        terms: 'med*,drug*,gift'
+        terms: 'apothecary,med*,drug*,gift'
       shop/chocolate:
         name: Chocolate Store
         terms: ''
@@ -5507,6 +5664,9 @@ en:
       shop/money_lender:
         name: Money Lender
         terms: ''
+      shop/motorcycle_repair:
+        name: Motorcycle Repair Shop
+        terms: 'auto,bike,garage,motorcycle,repair,service'
       shop/motorcycle:
         name: Motorcycle Dealership
         terms: bike
@@ -5901,6 +6061,18 @@ en:
         name: Weir
         terms: ''
   imagery:
+    AGIV:
+      attribution:
+        text: Orthophoto Flanders most recent © AGIV
+      name: AGIV Flanders most recent aerial imagery
+    AGIV10cm:
+      attribution:
+        text: Orthophoto Flanders © AGIV
+      name: AGIV Flanders 2013-2015 aerial imagery 10cm
+    AGIVFlandersGRB:
+      attribution:
+        text: GRB Flanders © AGIV
+      name: AGIV Flanders GRB
     Bing:
       description: Satellite and aerial imagery.
       name: Bing aerial imagery
@@ -5985,6 +6157,10 @@ en:
       attribution:
         text: '© Geofabrik GmbH, OpenStreetMap contributors, CC-BY-SA'
       name: 'OSM Inspector: Tagging'
+    SPW_ORTHO_LAST:
+      name: SPW(allonie) most recent aerial imagery
+    SPW_PICC:
+      name: SPW(allonie) PICC numerical imagery
     US-TIGER-Roads-2012:
       name: TIGER Roads 2012
     US-TIGER-Roads-2014:
@@ -5999,11 +6175,27 @@ en:
         in OpenStreetMap
       name: TIGER Roads 2017
     US_Forest_Service_roads_overlay:
-      name: U.S. Forest Roads Overlay
       description: >-
         Highway: Green casing = unclassified. Brown casing = track. Surface:
         gravel = light brown fill, Asphalt = black, paved = gray, ground =white,
         concrete = blue, grass = green. Seasonal = white bars
+      name: U.S. Forest Roads Overlay
+    UrbISOrtho2016:
+      attribution:
+        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
+      name: UrbIS-Ortho 2016
+    UrbISOrtho2017:
+      attribution:
+        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
+      name: UrbIS-Ortho 2017
+    UrbisAdmFR:
+      attribution:
+        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
+      name: UrbisAdm FR
+    UrbisAdmNL:
+      attribution:
+        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
+      name: UrbisAdm NL
     Waymarked_Trails-Cycling:
       attribution:
         text: '© waymarkedtrails.org, OpenStreetMap contributors, CC by-SA 3.0'
@@ -6036,10 +6228,64 @@ en:
         Orthofoto layer provided by basemap.at. "Successor" of geoimage.at
         imagery.
       name: basemap.at Orthofoto
+    eufar-balaton:
+      attribution:
+        text: EUFAR Balaton ortofotó 2010
+      description: 1940 geo-tagged photography from Balaton Limnological Institute.
+      name: EUFAR Balaton orthophotos
+    finds.jp_KBN_2500:
+      attribution:
+        text: GSI KIBAN 2500
+      description: 'GSI Kiban 2500 via finds.jp. Good for tracing, but a bit older.'
+      name: Japan GSI KIBAN 2500
+    gsi.go.jp:
+      attribution:
+        text: GSI Japan
+      description: 'Japan GSI ortho Imagery. Usually better than bing, but a bit older.'
+      name: Japan GSI ortho Imagery
+    gsi.go.jp_std_map:
+      attribution:
+        text: GSI Japan
+      description: Japan GSI Standard Map. Widely covered.
+      name: Japan GSI Standard Map
+    helsingborg-orto:
+      attribution:
+        text: © Helsingborg municipality
+      description: 'Orthophotos from the municipality of Helsingborg 2016, public domain'
+      name: Helsingborg Orthophoto
     hike_n_bike:
       attribution:
         text: © OpenStreetMap contributors
       name: Hike & Bike
+    kelkkareitit:
+      attribution:
+        text: © Kelkkareitit.fi
+      description: Kelkkareitit.fi snowmobile trails from OSM (Nordic coverage)
+      name: Nordic snowmobile overlay
+    lantmateriet-orto1960:
+      attribution:
+        text: '© Lantmäteriet, CC0'
+      description: >-
+        Mosaic of Swedish orthophotos from the period 1955–1965. Older and
+        younger pictures may occur.
+      name: Lantmäteriet Historic Orthophoto 1960
+    lantmateriet-orto1975:
+      attribution:
+        text: '© Lantmäteriet, CC0'
+      description: >-
+        Mosaic of Swedish orthophotos from the period 1970–1980. Is under
+        construction.
+      name: Lantmäteriet Historic Orthophoto 1975
+    lantmateriet-topowebb:
+      attribution:
+        text: '© Lantmäteriet, CC0'
+      description: 'Topographic map of Sweden 1:50 000'
+      name: Lantmäteriet Topographic Map
+    linkoping-orto:
+      attribution:
+        text: © Linköping municipality
+      description: 'Orthophotos from the municipality of Linköping 2010, open data'
+      name: Linköping Orthophoto
     mapbox_locator_overlay:
       attribution:
         text: Terms & Feedback
@@ -6062,6 +6308,11 @@ en:
       attribution:
         text: '© OpenStreetMap contributors, CC-BY-SA'
       name: OpenStreetMap (German Style)
+    osmse-ekonomiska:
+      attribution:
+        text: © Lantmäteriet
+      description: Scan of "Economic maps" ca. 1950–1980
+      name: Lantmäteriet Economic Map 1950–1980
     qa_no_address:
       attribution:
         text: 'Simon Poole, Data ©OpenStreetMap contributors'
@@ -6070,12 +6321,22 @@ en:
       attribution:
         text: '© Tiles: skobbler Map data: OpenStreetMap contributors'
       name: skobbler
+    skoterleder:
+      attribution:
+        text: © Skoterleder.org
+      description: Snowmobile trails
+      name: Snowmobile map Sweden
     stamen-terrain-background:
       attribution:
         text: >-
           Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap,
           under ODbL
       name: Stamen Terrain
+    stockholm-orto:
+      attribution:
+        text: '© Stockholm municipality, CC0'
+      description: 'Orthophotos from the municipality of Stockholm 2015, CC0 license'
+      name: Stockholm Orthophoto
     tf-cycle:
       attribution:
         text: 'Maps © Thunderforest, Data © OpenStreetMap contributors'
@@ -6084,67 +6345,6 @@ en:
       attribution:
         text: 'Maps © Thunderforest, Data © OpenStreetMap contributors'
       name: Thunderforest Landscape
-    AGIV:
-      attribution:
-        text: Orthophoto Flanders most recent © AGIV
-      name: AGIV Flanders most recent aerial imagery
-    AGIV10cm:
-      attribution:
-        text: Orthophoto Flanders © AGIV
-      name: AGIV Flanders 2013-2015 aerial imagery 10cm
-    AGIVFlandersGRB:
-      attribution:
-        text: GRB Flanders © AGIV
-      name: AGIV Flanders GRB
-    SPW_ORTHO_LAST:
-      name: SPW(allonie) most recent aerial imagery
-    SPW_PICC:
-      name: SPW(allonie) PICC numerical imagery
-    UrbISOrtho2016:
-      attribution:
-        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
-      name: UrbIS-Ortho 2016
-    UrbISOrtho2017:
-      attribution:
-        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
-      name: UrbIS-Ortho 2017
-    UrbisAdmFR:
-      attribution:
-        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
-      name: UrbisAdm FR
-    UrbisAdmNL:
-      attribution:
-        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
-      name: UrbisAdm NL
-    kelkkareitit:
-      attribution:
-        text: © Kelkkareitit.fi
-      description: Kelkkareitit.fi snowmobile trails from OSM (Nordic coverage)
-      name: Nordic snowmobile overlay
-    lantmateriet-orto1960:
-      attribution:
-        text: '© Lantmäteriet, CC0'
-      description: >-
-        Mosaic of Swedish orthophotos from the period 1955–1965. Older and
-        younger pictures may occur.
-      name: Lantmäteriet Historic Orthophoto 1960
-    lantmateriet-orto1975:
-      attribution:
-        text: '© Lantmäteriet, CC0'
-      description: >-
-        Mosaic of Swedish orthophotos from the period 1970–1980. Is under
-        construction.
-      name: Lantmäteriet Historic Orthophoto 1975
-    osmse-ekonomiska:
-      attribution:
-        text: © Lantmäteriet
-      description: Scan of "Economic maps" ca. 1950–1980
-      name: Lantmäteriet Economic Map 1950–1980
-    skoterleder:
-      attribution:
-        text: © Skoterleder.org
-      description: Snowmobile trails
-      name: Snowmobile map Sweden
     trafikverket-baninfo:
       attribution:
         text: '© Trafikverket, CC0'
@@ -6178,6 +6378,45 @@ en:
       description: Swedish NVDB road network with several options for map layers
       name: Trafikverket Road Network options
   community:
+    bw-facebook:
+      name: Mapping Botswana on Facebook
+      description: Page of OpenStreetMap in Botswana
+    bw-twitter:
+      name: Mapping Botswana on Twitter
+      description: Twitter of OpenStreetMap in Botswana
+    cape-coast-youthmappers:
+      name: University of Cape Coast YouthMappers
+      description: 'Follow us on Twitter: {url}'
+      extendedDescription: >-
+        This is the official handle for the Youth Mappers chapter of the
+        University of Cape Coast, Ghana. we love maps, open data and helping the
+        vulnerable.
+    osm-gh-facebook:
+      name: OpenStreetMap Ghana on Facebook
+      description: Facebook group for people interested in OpenStreetMap.
+      extendedDescription: >-
+        Mappers in Ghana community, promoting OpenStreetMap and Humanitarian
+        OpenStreetMap Team (HOT) projects in Ghana. Join us.
+    osm-gh-twitter:
+      name: OpenStreetMap Ghana on Twitter
+      description: 'Follow us on Twitter: {url}'
+    talk-gh:
+      name: Talk-gh Mailing List
+      description: Talk-gh is the official mailing list for Ghana OSM community.
+    osm-mg-facebook:
+      name: OpenStreetMap Madagascar Facebook Group
+      description: Malagasy Facebook group for people interested in OpenStreetMap.
+    talk-mg:
+      name: Talk-mg Mailing List
+      description: >-
+        Place for OpenStreetMap contributors, communities and users in
+        Madagascar to share and discuss.
+    OSM-BGD-facebook:
+      name: OpenStreetMap Bangladesh
+      description: Improve OpenStreetMap in Bangladesh
+      extendedDescription: >-
+        Mapping in Bangladesh? Have questions, want to connect with the
+        community here? Join us at {url}. All are welcome!
     OSM-India-facebook:
       name: OpenStreetMap India - Participatory neighborhood mapping
       description: Improve OpenStreetMap in India
@@ -6191,6 +6430,34 @@ en:
             Join the 2018 OpenStreetMap region-wide event at State of the Map
             Asia in India
           where: 'Indian Institute of Management, Bangalore, India'
+    OSM-india-mailinglist:
+      name: OpenStreetMap India Mailinglist
+      description: Talk-in is the official Mailinglist for Indian Community
+    OSM-india-twitter:
+      name: OpenStreetMap India Twitter
+      description: 'We are just a tweet away: {url}'
+    OSM-India-Puducherry-Facebook:
+      name: Free Software Hardware Movement - Facebook
+      description: 'FSHM Facebook page to know about community events, activities'
+      extendedDescription: >-
+        FSHM organizes events relating to free software/hardware, technology,
+        activism and OpenStreetMap. Its FB page is the best way to keep in
+        contact with its events.
+    OSM-India-Puducherry-Matrix:
+      name: Free Software Hardware Movement - Matrix
+      description: >-
+        FSHM Riot group to discuss, share and update mapping activities, events
+        in and around Puducherry
+      extendedDescription: >-
+        FSHM community members share their OSM mapping updates / experiences
+        through the Riot.im group, this group is also used to discuss things
+        related to free software / hardware, technology and activism.
+    OSM-IDN-facebook:
+      name: OpenStreetMap Indonesia
+      description: Improve OpenStreetMap in Indonesia
+      extendedDescription: >-
+        Mapping in Indonesia? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
     OSM-japan-facebook:
       name: OpenStreetMap Japan Community
       description: Mappers and OpenStreetMap users in Japan
@@ -6200,6 +6467,41 @@ en:
     OSM-japan-twitter:
       name: OpenStreetMap Japan Twitter
       description: 'Hashtag on Twitter: {url}'
+    OSM-japan-website:
+      name: OpenStreetMap Japan
+      description: Mappers and OpenStreetMap users in Japan
+    OSM-korea-telegram:
+      name: OSM Korea Telegram Channel
+      description: >-
+        Unofficial Channnel for OpenStreetMap contributors, communities and
+        users in Korea to share and discuss.
+    OSM-MY-facebook:
+      name: OpenStreetMap Malaysia on Facebook
+      description: For chat about anything related to OpenStreetMap!
+    OSM-MY-forum:
+      name: OpenStreetMap Malaysia Forum
+      description: Official OpenStreetMap Malaysia Forum
+    OSM-MY-matrix:
+      name: OpenStreetMap Malaysia Riot channel
+      description: 'All mappers are welcome! Sign up at {signupUrl}'
+    OSM-MNG-facebook:
+      name: OpenStreetMap Mongolia
+      description: Improve OpenStreetMap in Mongolia
+      extendedDescription: >-
+        Mapping in Mongolia? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
+    OSM-MMR-facebook:
+      name: OpenStreetMap Myanmar
+      description: Improve OpenStreetMap in Myanmar
+      extendedDescription: >-
+        Mapping in Myanmar? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
+    OSM-Nepal-facebook:
+      name: OpenStreetMap Nepal
+      description: Improve OpenStreetMap in Nepal
+      extendedDescription: >-
+        Mapping in Nepal? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
     OSM-PH-facebook:
       name: OpenStreetMap PH Facebook
       description: >-
@@ -6222,6 +6524,12 @@ en:
     OSM-RU-telegram:
       name: OpenStreetMap RU telegram
       description: OpenStreetMap Russia telegram chat
+    OSM-LKA-facebook:
+      name: OpenStreetMap Sri Lanka
+      description: Improve OpenStreetMap in Sri Lanka
+      extendedDescription: >-
+        Mapping in Sri Lanka? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
     OSM-TW-facebook:
       name: OpenStreetMap Taiwan Community
       description: >-
@@ -6232,18 +6540,320 @@ en:
       description: >-
         Talk-tw is an Official Mailinglist for the Communities to dicuss matters
         about Taiwan
+    OSM-TH-CNX-meetup:
+      name: OSM Meetup Chiang Mai
+      description: Irregular meeting of the OpenStreetMap community in Chiang Mai
+      extendedDescription: >-
+        Members of the OpenStreetMap community meet every few months in Chiang
+        Mai. Get in contact and check out {url} to see when the next meetup is
+        scheduled
+    OSM-TH-facebook:
+      name: OpenStreetMap TH Facebook group
+      description: Facebook group for OpenStreetMappers in Thailand
+    OSM-TH-forum:
+      name: OpenStreetMap TH forum
+      description: OpenStreetMap Thailand web forum
+    al-forum:
+      name: OSM Albania Forum
+      description: OpenStreetMap Albania Forum
+    al-maptime-tirana:
+      name: Maptime Tirana
+      description: Social events organized around mapping - beginners most welcome!
+      extendedDescription: >-
+        Maptime is an open learning environment for all levels and degrees of
+        knowledge, offering intentional educational support for the beginner.
+        Maptime is simultaneously flexible and structured, creating space for
+        mapping tutorials, workshops, ongoing projects with a shared goal, and
+        independent/collaborative work time.
+    al-telegram:
+      name: OSM Albania Telegram channel
+      description: OpenStreetMap Albania Telegram channel
+    at-forum:
+      name: OpenStreetMap Austria Forum
+      description: The official forum for OpenStreetMap questions in and around Austria
+    at-mailinglist:
+      name: Talk-at Mailing List
+      description: Talk-at is the official mailing list for the Austrian OSM community
+    at-twitter:
+      name: OpenStreetMap Austria Twitter
+      description: 'OpenStreetMap Austria On Twitter: {url}'
+    osmgraz-meetup:
+      name: OSM community meetup Graz
+      description: Monthly meetup of the OpenStreetMap community in Graz
+    osmgraz-twitter:
+      name: OSM community Graz on twitter
+      description: OpenStreetMap community in Graz on twitter
+    osm-at:
+      name: OpenStreetMap Austria
+      description: The platform for information on OpenStreetMap in Austria
     byosm:
       name: OpenStreetMap Belarus
       description: OpenStreetMap Belarus telegram chat
+    be-facebook:
+      name: OpenStreetMap BE Community
+      description: Mappers and OpenStreetMap on Facebook in Belgium
+    be-forum:
+      name: OpenStreetMap BE forum
+      description: OpenStreetMap Belgium web forum
+    be-irc:
+      name: OpenStreetMap Belgium IRC
+      description: 'Join #osmbe on irc.oftc.net (port 6667)'
+      extendedDescription: >-
+        Join #osmbe on irc.oftc.net (port 6667), it is bridged with the Matrix
+        chat channel
+    be-mailinglist:
+      name: Talk-be Mailing List
+      description: Talk-be is the official mailing list for the Belgian OSM community
+    be-maptime:
+      name: Maptime Belgium
+      description: Social events organized around mapping - beginners most welcome!
+      extendedDescription: >-
+        Maptime is an open learning environment for all levels and degrees of
+        knowledge, offering intentional educational support for the beginner.
+        Maptime is simultaneously flexible and structured, creating space for
+        mapping tutorials, workshops, ongoing projects with a shared goal, and
+        independent/collaborative work time.
+    be-matrix:
+      name: OpenStreetMap BE Matrix channel
+      description: All mappers are welcome!
+      extendedDescription: >-
+        Most talk is happening at the "OpenStreetMap Belgium" channel. You can
+        ask anything there! The other rooms are for specific subjects.
+    be-meetup:
+      name: OpenStreetMap Belgium Meetup
+      description: Real life meetups of everyone who is interested in OpenStreetMap
+      extendedDescription: >-
+        Physical meetups are great to meet other mappers, ask them questions and
+        to learn a lot. Especially new contributors are very welcome!
+    be-twitter:
+      name: OpenStreetMap Belgium Twitter
+      description: 'OSM Belgium on Twitter: @osm_be'
+    hr-facebook:
+      name: OpenStreetMap Croatia Facebook group
+      description: OpenStreetMap Croatia Facebook group
+    hr-irc:
+      name: OpenStreetMap Croatia on IRC
+      description: 'Join #osm-hr on irc.freenode.org (port 6667)'
+    hr-mailinglist:
+      name: Talk-hr Mailing List
+      description: Talk-hr mailing list
+    czech-community:
+      name: Czech OSM community
+      description: 'Map portal, website and contacts on OSM members in Czechia'
+    osmcz-facebook:
+      name: OpenStreetMap CZ on Facebook
+      description: Follow czech community on Facebook - including translated WeeklyOSM!
+    osmcz-twitter:
+      name: Czech twitter @osmcz
+      description: Follow czech community on Twitter - including translated WeeklyOSM!
     talk-cz-mailinglist:
       name: Czech mailing list (talk-cz)
       description: Talk-cz is the official mailing list for Czech community
+    dk-forum:
+      name: OpenStreetMap Denmark Web Forum
+      description: OpenStreetMap Denmark web forum
+    dk-irc:
+      name: OpenStreetMap Denmark IRC
+      description: 'Join #osm-dk on irc.oftc.net (port 6667)'
+    dk-mailinglist:
+      name: Talk-dk Mailing List
+      description: A mailing list to discuss OpenStreetMap in Denmark
+    fi-forum:
+      name: OpenStreetMap FI forum
+      description: OpenStreetMap Finland web forum
+    fi-irc:
+      name: OpenStreetMap Finland IRC
+      description: 'Join #osm-fi on irc.oftc.net (port 6667)'
+    fi-mailinglist:
+      name: Talk-fi Mailing List
+      description: Talk-fi is the official mailing list for the Finnish OSM community
+    fr-facebook:
+      name: OpenStreetMap France Facebook page
+      description: OpenStreetMap France Facebook page
+    fr-forum:
+      name: OpenStreetMap France web forum
+      description: OpenStreetMap France web forum
+    fr-irc:
+      name: OpenStreetMap France on IRC
+      description: 'Join #osm-fr on irc.oftc.net (port 6667)'
+    fr-mailinglist:
+      name: Talk-fr Mailing List
+      description: Talk-fr mailing list
+    fr-twitter:
+      name: OpenStreetMap France on Twitter
+      description: 'OpenStreetMap France on Twitter: {url}'
+    de-berlin-mailinglist:
+      name: Berlin Mailing List
+      description: This is the mailing list for the Berlin OSM community
+    de-berlin-meetup:
+      name: OpenStreetMap Berlin-Brandenburg Meetup
+      description: Mappers and OpenStreetMap users in the Berlin area
+    de-berlin-telegram:
+      name: '@osmberlin on Telegram'
+      description: OpenStreetMap Berlin Telegram chat
+    de-berlin-twitter:
+      name: OpenStreetMap Berlin Twitter
+      description: 'Follow us on Twitter: {url}'
+    de-forum:
+      name: OpenStreetMap DE forum
+      description: OpenStreetMap Germany web forum
+    de-irc:
+      name: OpenStreetMap Germany IRC
+      description: 'Join #osm-de on irc.oftc.net (port 6667)'
+    de-mailinglist:
+      name: Talk-de Mailing List
+      description: Talk-de is the official mailing list for the German OSM community
+    de-ostwestfalen-lippe-mailinglist:
+      name: OWL Mailing List
+      description: This is the mailing list for the Ostwestfalen-Lippe OSM community
+    de-telegram:
+      name: OpenStreetMap Germany Telegram
+      description: 'Join the OpenStreetMap Germany Telegram supergroup at {url}'
+    osm-de:
+      name: OpenStreetMap Germany
+      description: The platform for information on OpenStreetMap in Germany
+    hu-facebook:
+      name: OpenStreetMap HU on Facebook
+      description: Mappers and OpenStreetMap Facebook in Hungary
+    hu-forum:
+      name: OpenStreetMap HU forum
+      description: OpenStreetMap Hungary web forum
+    hu-meetup:
+      name: OpenStreetMap Hungary Meetup
+      description: The platform for organizing meetups in Hungary
+    is-facebook:
+      name: OSM Iceland on Facebook
+      description: Page of OpenStreetMap in Iceland
+    is-mailinglist:
+      name: Talk-is Mailing List
+      description: Talk-is is the official mailing list for the Icelandic OSM community
+    is-twitter:
+      name: OSM Iceland on Twittter
+      description: Twitter of OpenStreetMap in Iceland
+    it-facebook:
+      name: OpenStreetMap Italy Facebook
+      description: Join the OpenStreetMap Italy community on Facebook
+    it-irc:
+      name: OpenStreetMap Italy IRC
+      description: 'Join #osm-it on irc.oftc.net (port 6667)'
+    it-mailinglist:
+      name: Talk-it Mailing List
+      description: Talk-it is the official mailing list for the Italian OSM community
+    it-telegram:
+      name: '@OpenStreetMapItalia on Telegram'
+      description: OpenStreetMap Italy Telegram chat
+    it-twitter:
+      name: OpenStreetMap Italy Twitter
+      description: 'Follow us on Twitter at {url}'
+    OSM-Rome-meetup:
+      name: Incontro Mappatori Romani
+      description: Improve OpenStreetMap in the Rome area
+      extendedDescription: >-
+        We aim to be a resource for people to discuss and share knowledge on
+        utilizing free geographic data sets especially OpenStreetMap, and Open
+        geo-spatial software that manages, edits, and displays geographic data,
+        and advocate for its use in Lazio.
+    South-Tyrol-Mailing-List:
+      name: OpenStreetMap mailing list for South Tyrol
+      description: OpenStreetMap Italy regional talk list for South Tyrol
+    talk-it-lazio:
+      name: OpenStreetMap IT Lazio
+      description: 'All are welcome! Sign up at {signupUrl}'
+      extendedDescription: Mailinglist for Rome and Lazio area.
+    Trentino-Mailing-List:
+      name: OpenStreetMap mailing list for Trentino
+      description: OpenStreetMap Italy regional talk list for Trentino
+    no-forum:
+      name: OpenStreetMap Norway Web Forum
+      description: OpenStreetMap Norway web forum
+    no-irc:
+      name: OpenStreetMap Norway on IRC
+      description: >-
+        Chat room for mappers and OpenStreetMap users, developers and
+        enthusiasts in Norway
+    no-mailinglist:
+      name: OpenStreetMap Norway mailing list
+      description: >-
+        Mailing list for mappers and OpenStreetMap users, developers and
+        enthusiasts in Norway
+    OSM-PL-facebook-group:
+      name: OpenStreetMap Poland Facebook group
+      description: Group for mappers and users of OpenStreetMap in Poland
+    OSM-PL-forum:
+      name: OpenStreetMap Poland Forum
+      description: Forum of Polish OpenStreetMap community
+    si-forum:
+      name: OpenStreetMap Slovenia Forum
+      description: Forum of OpenStreetMap community in Slovenia
+    si-mailinglist:
+      name: OpenStreetMap Slovenia mailing list
+      description: Mailing list of OpenStreetMap community in Slovenia
+    OSM-ES-mailinglist:
+      name: Talk-es mailing list
+      description: A mailing list to discuss OpenStreetMap in Spain
     OSM-ES-telegram:
       name: '@OSMes on Telegram'
       description: OpenStreetMap Spain Telegram chat
+    osm-se:
+      name: OpenStreetMap.se
+      description: Provide OSM services and information for the local community in Sweden
+    se-facebook:
+      name: OpenStreetMap Sweden Facebook
+      description: OpenStreetMap Sweden on Facebook
+    se-forum:
+      name: OpenStreetMap Sweden Web Forum
+      description: OpenStreetMap Sweden web forum
+    se-irc:
+      name: OpenStreetMap Sweden IRC
+      description: 'Join #osm.se on irc.oftc.net (port 6667)'
+    se-mailinglist:
+      name: Talk-se Mailing List
+      description: A mailing list to discuss OpenStreetMap in Sweden
+    se-twitter:
+      name: OpenStreetMap Sweden on Twitter
+      description: 'Follow us on Twitter: {url}'
+    Nottingham-OSM-pub-meetup:
+      name: East Midlands (Nottingham) Monthly pub meet-up
+      description: Social gathering for East Midlands mappers and users
+      extendedDescription: >-
+        A group have been meeting since March 2011, initially in Nottingham,
+        and, more recently in Derby, and from time to time elsewhere in the East
+        Midlands. These are social gatherings, but are an excellent place to
+        come and ask specific questions about OSM either in the area or in
+        general. In the summer months we usually do some light mapping for an
+        hour in the vicinity of our meeting place. The group as a whole has a
+        special interest in mapping public rights of way and from time to time
+        has mapping meetings for this purpose.
+    gb-mailinglist:
+      name: Talk-gb Mailing List
+      description: >-
+        Talk-gb is the main communication forum list for the British (including
+        Northern Ireland) OSM community
+    mappa-mercia-group:
+      name: Mappa Mercia local group
+      description: A home for OpenStreetMap enthusiasts in the Midlands
+      extendedDescription: >-
+        Mappa Mercia is a project to grow OpenStreetMap in the West Midlands,
+        UK. We run community events, provide training and support local
+        organisations wishing to open up their data.
+    gb-irc:
+      name: OpenStreetMap United Kingdom IRC
+      description: 'Join #osm-gb on irc.oftc.net (port 6667)'
+      extendedDescription: >-
+        Join #osm-gb on irc.oftc.net (port 6667), please be patient and wait for
+        a few minutes if you ask a question
+    OSM-CA-Slack:
+      name: OSM-CA Slack
+      description: 'All are welcome! Sign up at {signupUrl}.'
     OSM-Vancouver-meetup:
       name: OpenStreetMap Vancouver
       description: 'Mappers and OpenStreetMap users in the Vancouver, BC area'
+    OSM-CU-telegram:
+      name: OSM Cuba on Telegram
+      description: OpenStreetMap Cuba Telegram chat
+    OSM-NI-telegram:
+      name: OSM Nicaragua on Telegram
+      description: OpenStreetMap Nicaragua Telegram chat
     Bay-Area-OpenStreetMappers:
       name: Bay Area OpenStreetMappers
       description: Improve OpenStreetMap in the Bay Area
@@ -6277,6 +6887,10 @@ en:
         open, friendly, educational and social and range from happy hours to
         lightning talks or even workshops. Come create a diverse, inspiring
         geospatial community in the Philadelphia with us!
+    MapMinnesota:
+      name: MapMinnesota
+      description: Mappers and OpenStreetMap enthusiasts in the Twin Cities area
+      extendedDescription: Connecting OpenStreetMap enthusiasts in Minnesota and the Twin Cities!
     Mapping-DC-meetup:
       name: Mapping DC
       description: Improve OpenStreetMap in the DC area
@@ -6293,6 +6907,9 @@ en:
         open the doors of cartographic possibility to anyone interested by
         creating a time and space for collaborative learning, exploration, and
         map creation using mapping tools and technologies.
+    us-ma-mailinglist:
+      name: Talk-us-massachusetts Mailing List
+      description: Email mailing list for the Massachusetts OSM community
     OpenCleveland-meetup:
       name: Open Cleveland
       description: Improve OpenStreetMap in the Cleveland area
@@ -6336,6 +6953,13 @@ en:
       description: >-
         Mappers and OpenStreetMap users, developers and enthusiasts in the New
         York Metropolitan area
+    OSM-Portland-forum:
+      name: OpenStreetMap PDX Google Group
+      description: Forum and mailing list for OpenStreetMap users in the Portland area
+      extendedDescription: >-
+        This group is to facilitate improvements to OpenStreetMap in the
+        Portland, Oregon area to support applications such as the Open Trip
+        Planner.
     OSM-Portland:
       name: OpenStreetMap Portland
       description: Mappers and OpenStreetMap users in the Portland area
@@ -6439,6 +7063,9 @@ en:
     Maptime-Australia-Slack:
       name: Maptime Australia Slack
       description: 'Sign up at {signupUrl}'
+    talk-au:
+      name: Talk-au Mailing List
+      description: Place for Aussie mappers to chat
     OSM-AR-facebook:
       name: OpenStreetMap Argentina Facebook
       description: Join the OpenStreetMap Argentina community on Facebook
@@ -6464,423 +7091,6 @@ en:
       name: OpenStreetMap Argentina Twitter
       description: 'Follow us on Twitter at {url}'
       extendedDescription: News from the local community and OpenStreetMap in general.
-    OSM-Reddit:
-      name: OpenStreetMap on Reddit
-      description: >-
-        /r/openstreetmap/ is a great place to learn more about OpenStreetMap. 
-        Ask us anything!
-    cape-coast-youthmappers:
-      name: University of Cape Coast YouthMappers
-      description: 'Follow us on Twitter: {url}'
-      extendedDescription: >-
-        This is the official handle for the Youth Mappers chapter of the
-        University of Cape Coast, Ghana. we love maps, open data and helping the
-        vulnerable.
-    osm-gh-facebook:
-      name: OpenStreetMap Ghana on Facebook
-      description: Facebook group for people interested in OpenStreetMap.
-      extendedDescription: >-
-        Mappers in Ghana community, promoting OpenStreetMap and Humanitarian
-        OpenStreetMap Team (HOT) projects in Ghana. Join us.
-    osm-gh-twitter:
-      name: OpenStreetMap Ghana on Twitter
-      description: 'Follow us on Twitter: {url}'
-    talk-gh:
-      name: Talk-gh Mailing List
-      description: Talk-gh is the official mailing list for Ghana OSM community.
-    osm-mg-facebook:
-      name: OpenStreetMap Madagascar Facebook Group
-      description: Malagasy Facebook group for people interested in OpenStreetMap.
-    talk-mg:
-      name: Talk-mg Mailing List
-      description: >-
-        Place for OpenStreetMap contributors, communities and users in
-        Madagascar to share and discuss.
-    OSM-BGD-facebook:
-      name: OpenStreetMap Bangladesh
-      description: Improve OpenStreetMap in Bangladesh
-      extendedDescription: >-
-        Mapping in Bangladesh? Have questions, want to connect with the
-        community here? Join us at {url}. All are welcome!
-    OSM-india-mailinglist:
-      name: OpenStreetMap India Mailinglist
-      description: Talk-in is the official Mailinglist for Indian Community
-    OSM-india-twitter:
-      name: OpenStreetMap India Twitter
-      description: 'We are just a tweet away: {url}'
-    OSM-India-Puducherry-Facebook:
-      name: Free Software Hardware Movement - Facebook
-      description: 'FSHM Facebook page to know about community events, activities'
-      extendedDescription: >-
-        FSHM organizes events relating to free software/hardware, technology,
-        activism and OpenStreetMap. Its FB page is the best way to keep in
-        contact with its events.
-    OSM-India-Puducherry-Matrix:
-      name: Free Software Hardware Movement - Matrix
-      description: >-
-        FSHM Riot group to discuss, share and update mapping activities, events
-        in and around Puducherry
-      extendedDescription: >-
-        FSHM community members share their OSM mapping updates / experiences
-        through the Riot.im group, this group is also used to discuss things
-        related to free software / hardware, technology and activism.
-    OSM-IDN-facebook:
-      name: OpenStreetMap Indonesia
-      description: Improve OpenStreetMap in Indonesia
-      extendedDescription: >-
-        Mapping in Indonesia? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-japan-website:
-      name: OpenStreetMap Japan
-      description: Mappers and OpenStreetMap users in Japan
-    OSM-korea-telegram:
-      name: OSM Korea Telegram Channel
-      description: >-
-        Unofficial Channnel for OpenStreetMap contributors, communities and
-        users in Korea to share and discuss.
-    OSM-MY-facebook:
-      name: OpenStreetMap Malaysia on Facebook
-      description: For chat about anything related to OpenStreetMap!
-    OSM-MY-forum:
-      name: OpenStreetMap Malaysia Forum
-      description: Official OpenStreetMap Malaysia Forum
-    OSM-MY-matrix:
-      name: OpenStreetMap Malaysia Riot channel
-      description: 'All mappers are welcome! Sign up at {signupUrl}'
-    OSM-MNG-facebook:
-      name: OpenStreetMap Mongolia
-      description: Improve OpenStreetMap in Mongolia
-      extendedDescription: >-
-        Mapping in Mongolia? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-MMR-facebook:
-      name: OpenStreetMap Myanmar
-      description: Improve OpenStreetMap in Myanmar
-      extendedDescription: >-
-        Mapping in Myanmar? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-Nepal-facebook:
-      name: OpenStreetMap Nepal
-      description: Improve OpenStreetMap in Nepal
-      extendedDescription: >-
-        Mapping in Nepal? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-LKA-facebook:
-      name: OpenStreetMap Sri Lanka
-      description: Improve OpenStreetMap in Sri Lanka
-      extendedDescription: >-
-        Mapping in Sri Lanka? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-TH-CNX-meetup:
-      name: OSM Meetup Chiang Mai
-      description: Irregular meeting of the OpenStreetMap community in Chiang Mai
-      extendedDescription: >-
-        Members of the OpenStreetMap community meet every few months in Chiang
-        Mai. Get in contact and check out {url} to see when the next meetup is
-        scheduled
-    OSM-TH-facebook:
-      name: OpenStreetMap TH Facebook group
-      description: Facebook group for OpenStreetMappers in Thailand
-    OSM-TH-forum:
-      name: OpenStreetMap TH forum
-      description: OpenStreetMap Thailand web forum
-    al-forum:
-      name: OSM Albania Forum
-      description: OpenStreetMap Albania Forum
-    al-maptime-tirana:
-      name: Maptime Tirana
-      description: Social events organized around mapping - beginners most welcome!
-      extendedDescription: >-
-        Maptime is an open learning environment for all levels and degrees of
-        knowledge, offering intentional educational support for the beginner.
-        Maptime is simultaneously flexible and structured, creating space for
-        mapping tutorials, workshops, ongoing projects with a shared goal, and
-        independent/collaborative work time.
-    al-telegram:
-      name: OSM Albania Telegram channel
-      description: OpenStreetMap Albania Telegram channel
-    at-forum:
-      name: OpenStreetMap Austria Forum
-      description: The official forum for OpenStreetMap questions in and around Austria
-    at-mailinglist:
-      name: Talk-at Mailing List
-      description: Talk-at is the official mailing list for the Austrian OSM community
-    at-twitter:
-      name: OpenStreetMap Austria Twitter
-      description: 'OpenStreetMap Austria On Twitter: {url}'
-    osmgraz-meetup:
-      name: OSM community meetup Graz
-      description: Monthly meetup of the OpenStreetMap community in Graz
-    osmgraz-twitter:
-      name: OSM community Graz on twitter
-      description: OpenStreetMap community in Graz on twitter
-    osm-at:
-      name: OpenStreetMap Austria
-      description: The platform for information on OpenStreetMap in Austria
-    be-facebook:
-      name: OpenStreetMap BE Community
-      description: Mappers and OpenStreetMap on Facebook in Belgium
-    be-forum:
-      name: OpenStreetMap BE forum
-      description: OpenStreetMap Belgium web forum
-    be-irc:
-      name: OpenStreetMap Belgium IRC
-      description: 'Join #osmbe on irc.oftc.net (port 6667)'
-      extendedDescription: >-
-        Join #osmbe on irc.oftc.net (port 6667), it is bridged with the Matrix
-        chat channel
-    be-mailinglist:
-      name: Talk-be Mailing List
-      description: Talk-be is the official mailing list for the Belgian OSM community
-    be-maptime:
-      name: Maptime Belgium
-      description: Social events organized around mapping - beginners most welcome!
-      extendedDescription: >-
-        Maptime is an open learning environment for all levels and degrees of
-        knowledge, offering intentional educational support for the beginner.
-        Maptime is simultaneously flexible and structured, creating space for
-        mapping tutorials, workshops, ongoing projects with a shared goal, and
-        independent/collaborative work time.
-    be-matrix:
-      name: OpenStreetMap BE Matrix channel
-      description: All mappers are welcome!
-      extendedDescription: >-
-        Most talk is happening at the "OpenStreetMap Belgium" channel. You can
-        ask anything there! The other rooms are for specific subjects.
-    be-meetup:
-      name: OpenStreetMap Belgium Meetup
-      description: Real life meetups of everyone who is interested in OpenStreetMap
-      extendedDescription: >-
-        Physical meetups are great to meet other mappers, ask them questions and
-        to learn a lot. Especially new contributors are very welcome!
-    be-twitter:
-      name: OpenStreetMap Belgium Twitter
-      description: 'OSM Belgium on Twitter: @osm_be'
-    hr-facebook:
-      name: OpenStreetMap Croatia Facebook group
-      description: OpenStreetMap Croatia Facebook group
-    hr-irc:
-      name: OpenStreetMap Croatia on IRC
-      description: 'Join #osm-hr on irc.freenode.org (port 6667)'
-    hr-mailinglist:
-      name: Talk-hr Mailing List
-      description: Talk-hr mailing list
-    czech-community:
-      name: Czech OSM community
-      description: 'Map portal, website and contacts on OSM members in Czechia'
-    osmcz-facebook:
-      name: OpenStreetMap CZ on Facebook
-      description: Follow czech community on Facebook - including translated WeeklyOSM!
-    osmcz-twitter:
-      name: Czech twitter @osmcz
-      description: Follow czech community on Twitter - including translated WeeklyOSM!
-    dk-forum:
-      name: OpenStreetMap Denmark Web Forum
-      description: OpenStreetMap Denmark web forum
-    dk-irc:
-      name: OpenStreetMap Denmark IRC
-      description: 'Join #osm-dk on irc.oftc.net (port 6667)'
-    dk-mailinglist:
-      name: Talk-dk Mailing List
-      description: A mailing list to discuss OpenStreetMap in Denmark
-    fi-forum:
-      name: OpenStreetMap FI forum
-      description: OpenStreetMap Finland web forum
-    fi-irc:
-      name: OpenStreetMap Finland IRC
-      description: 'Join #osm-fi on irc.oftc.net (port 6667)'
-    fi-mailinglist:
-      name: Talk-fi Mailing List
-      description: Talk-fi is the official mailing list for the Finnish OSM community
-    fr-facebook:
-      name: OpenStreetMap France Facebook page
-      description: OpenStreetMap France Facebook page
-    fr-forum:
-      name: OpenStreetMap France web forum
-      description: OpenStreetMap France web forum
-    fr-irc:
-      name: OpenStreetMap France on IRC
-      description: 'Join #osm-fr on irc.oftc.net (port 6667)'
-    fr-mailinglist:
-      name: Talk-fr Mailing List
-      description: Talk-fr mailing list
-    fr-twitter:
-      name: OpenStreetMap France on Twitter
-      description: 'OpenStreetMap France on Twitter: {url}'
-    de-berlin-mailinglist:
-      name: Berlin Mailing List
-      description: This is the mailing list for the Berlin OSM community
-    de-berlin-meetup:
-      name: OpenStreetMap Berlin-Brandenburg Meetup
-      description: Mappers and OpenStreetMap users in the Berlin area
-    de-berlin-telegram:
-      name: '@osmberlin on Telegram'
-      description: OpenStreetMap Berlin Telegram chat
-    de-berlin-twitter:
-      name: OpenStreetMap Berlin Twitter
-      description: 'Follow us on Twitter: {url}'
-    de-forum:
-      name: OpenStreetMap DE forum
-      description: OpenStreetMap Germany web forum
-    de-irc:
-      name: OpenStreetMap Germany IRC
-      description: 'Join #osm-de on irc.oftc.net (port 6667)'
-    de-mailinglist:
-      name: Talk-de Mailing List
-      description: Talk-de is the official mailing list for the German OSM community
-    de-ostwestfalen-lippe-mailinglist:
-      name: OWL Mailing List
-      description: This is the mailing list for the Ostwestfalen-Lippe OSM community
-    de-telegram:
-      name: OpenStreetMap Germany Telegram
-      description: 'Join the OpenStreetMap Germany Telegram supergroup at {url}'
-    osm-de:
-      name: OpenStreetMap Germany
-      description: The platform for information on OpenStreetMap in Germany
-    hu-facebook:
-      name: OpenStreetMap HU on Facebook
-      description: Mappers and OpenStreetMap Facebook in Hungary
-    hu-forum:
-      name: OpenStreetMap HU forum
-      description: OpenStreetMap Hungary web forum
-    hu-meetup:
-      name: OpenStreetMap Hungary Meetup
-      description: The platform for organizing meetups in Hungary
-    it-facebook:
-      name: OpenStreetMap Italy Facebook
-      description: Join the OpenStreetMap Italy community on Facebook
-    it-irc:
-      name: OpenStreetMap Italy IRC
-      description: 'Join #osm-it on irc.oftc.net (port 6667)'
-    it-mailinglist:
-      name: Talk-it Mailing List
-      description: Talk-it is the official mailing list for the Italian OSM community
-    it-telegram:
-      name: '@OpenStreetMapItalia on Telegram'
-      description: OpenStreetMap Italy Telegram chat
-    it-twitter:
-      name: OpenStreetMap Italy Twitter
-      description: 'Follow us on Twitter at {url}'
-    OSM-Rome-meetup:
-      name: Incontro Mappatori Romani
-      description: Improve OpenStreetMap in the Rome area
-      extendedDescription: >-
-        We aim to be a resource for people to discuss and share knowledge on
-        utilizing free geographic data sets especially OpenStreetMap, and Open
-        geo-spatial software that manages, edits, and displays geographic data,
-        and advocate for its use in Lazio.
-    South-Tyrol-Mailing-List:
-      name: OpenStreetMap mailing list for South Tyrol
-      description: OpenStreetMap Italy regional talk list for South Tyrol
-    talk-it-lazio:
-      name: OpenStreetMap IT Lazio
-      description: 'All are welcome! Sign up at {signupUrl}'
-      extendedDescription: Mailinglist for Rome and Lazio area.
-    Trentino-Mailing-List:
-      name: OpenStreetMap mailing list for Trentino
-      description: OpenStreetMap Italy regional talk list for Trentino
-    no-forum:
-      name: OpenStreetMap Norway Web Forum
-      description: OpenStreetMap Norway web forum
-    no-irc:
-      name: OpenStreetMap Norway on IRC
-      description: >-
-        Chat room for mappers and OpenStreetMap users, developers and
-        enthusiasts in Norway
-    no-mailinglist:
-      name: OpenStreetMap Norway mailing list
-      description: >-
-        Mailing list for mappers and OpenStreetMap users, developers and
-        enthusiasts in Norway
-    OSM-PL-facebook-group:
-      name: OpenStreetMap Poland Facebook group
-      description: Group for mappers and users of OpenStreetMap in Poland
-    OSM-PL-forum:
-      name: OpenStreetMap Poland Forum
-      description: Forum of Polish OpenStreetMap community
-    si-forum:
-      name: OpenStreetMap Slovenia Forum
-      description: Forum of OpenStreetMap community in Slovenia
-    si-mailinglist:
-      name: OpenStreetMap Slovenia mailing list
-      description: Mailing list of OpenStreetMap community in Slovenia
-    OSM-ES-mailinglist:
-      name: Talk-es mailing list
-      description: A mailing list to discuss OpenStreetMap in Spain
-    osm-se:
-      name: OpenStreetMap.se
-      description: Provide OSM services and information for the local community in Sweden
-    se-facebook:
-      name: OpenStreetMap Sweden Facebook
-      description: OpenStreetMap Sweden on Facebook
-    se-forum:
-      name: OpenStreetMap Sweden Web Forum
-      description: OpenStreetMap Sweden web forum
-    se-irc:
-      name: OpenStreetMap Sweden IRC
-      description: 'Join #osm.se on irc.oftc.net (port 6667)'
-    se-mailinglist:
-      name: Talk-se Mailing List
-      description: A mailing list to discuss OpenStreetMap in Sweden
-    se-twitter:
-      name: OpenStreetMap Sweden on Twitter
-      description: 'Follow us on Twitter: {url}'
-    Nottingham-OSM-pub-meetup:
-      name: East Midlands (Nottingham) Monthly pub meet-up
-      description: Social gathering for East Midlands mappers and users
-      extendedDescription: >-
-        A group have been meeting since March 2011, initially in Nottingham,
-        and, more recently in Derby, and from time to time elsewhere in the East
-        Midlands. These are social gatherings, but are an excellent place to
-        come and ask specific questions about OSM either in the area or in
-        general. In the summer months we usually do some light mapping for an
-        hour in the vicinity of our meeting place. The group as a whole has a
-        special interest in mapping public rights of way and from time to time
-        has mapping meetings for this purpose.
-    gb-mailinglist:
-      name: Talk-gb Mailing List
-      description: >-
-        Talk-gb is the main communication forum list for the British (including
-        Northern Ireland) OSM community
-    mappa-mercia-group:
-      name: Mappa Mercia local group
-      description: A home for OpenStreetMap enthusiasts in the Midlands
-      extendedDescription: >-
-        Mappa Mercia is a project to grow OpenStreetMap in the West Midlands,
-        UK. We run community events, provide training and support local
-        organisations wishing to open up their data.
-    gb-irc:
-      name: OpenStreetMap United Kingdom IRC
-      description: 'Join #osm-gb on irc.oftc.net (port 6667)'
-      extendedDescription: >-
-        Join #osm-gb on irc.oftc.net (port 6667), please be patient and wait for
-        a few minutes if you ask a question
-    OSM-CA-Slack:
-      name: OSM-CA Slack
-      description: 'All are welcome! Sign up at {signupUrl}.'
-    OSM-CU-telegram:
-      name: OSM Cuba on Telegram
-      description: OpenStreetMap Cuba Telegram chat
-    OSM-NI-telegram:
-      name: OSM Nicaragua on Telegram
-      description: OpenStreetMap Nicaragua Telegram chat
-    MapMinnesota:
-      name: MapMinnesota
-      description: Mappers and OpenStreetMap enthusiasts in the Twin Cities area
-      extendedDescription: Connecting OpenStreetMap enthusiasts in Minnesota and the Twin Cities!
-    us-ma-mailinglist:
-      name: Talk-us-massachusetts Mailing List
-      description: Email mailing list for the Massachusetts OSM community
-    OSM-Portland-forum:
-      name: OpenStreetMap PDX Google Group
-      description: Forum and mailing list for OpenStreetMap users in the Portland area
-      extendedDescription: >-
-        This group is to facilitate improvements to OpenStreetMap in the
-        Portland, Oregon area to support applications such as the Open Trip
-        Planner.
-    talk-au:
-      name: Talk-au Mailing List
-      description: Place for Aussie mappers to chat
     OSM-BO-mailinglist:
       name: Talk-bo Mailing List
       description: >-
@@ -6913,6 +7123,12 @@ en:
     OSM-br-twitter:
       name: OpenStreetMap Brasil Twitter
       description: 'Follow us on Twitter at {url}'
+    RS-telegram:
+      name: OpenStreetMap Rio Grande do Sul Telegram Group
+      description: Join the OpenStreetMap Rio Grande do Sul community on Telegram
+      extendedDescription: >-
+        Join the community to learn more about OpenStreetMap, ask questions or
+        participate in our meetings. Everyone is welcome!
     OSM-CL-facebook:
       name: OpenStreetMap Chile Facebook
       description: Join the OpenStreetMap Chile community on Facebook
@@ -6982,6 +7198,26 @@ en:
     OSM-PE:
       name: OpenStreetMap Peru
       description: News and resources for the OpenStreetMap Peru community
+    LATAM-Facebook:
+      name: OpenStreetMap Latam Facebook
+      description: OpenStreetMap Latam on Facebook
+    LATAM-Telegram:
+      name: OpenStreetMap Latam Telegram
+      description: OpenStreetMap Telegram for Latin America
+    LATAM-Twitter:
+      name: OpenStreetMap Latam Twitter
+      description: 'Follow us on Twitter at {url}'
+    osm-latam:
+      name: OpenStreetMap Latam
+      description: Supporting OpenStreetMap in Latin America
+      events:
+        sotm-latam-2018:
+          name: State of the Map Latam 2018
+          description: >-
+            State of the Map Latam is the annual conference for all mappers and
+            users of OpenStreetMap in Latin America. The program includes talks,
+            panels, workshops, and mapathons related to OpenStreetMap.
+          where: 'Buenos Aires, Argentina'
     OSM-Facebook:
       name: OpenStreetMap on Facebook
       description: Like us on Facebook for news and updates about OpenStreetMap.
@@ -6993,6 +7229,11 @@ en:
       extendedDescription: >-
         {url} is for everyone who needs help with OpenStreetMap.  Whether you
         are a beginner mapper or have a technical question, we're here to help!
+    OSM-Reddit:
+      name: OpenStreetMap on Reddit
+      description: >-
+        /r/openstreetmap/ is a great place to learn more about OpenStreetMap. 
+        Ask us anything!
     OSM-Telegram:
       name: OpenStreetMap Telegram
       description: 'Join the OpenStreetMap Telegram global supergroup at {url}'

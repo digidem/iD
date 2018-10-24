@@ -1,4 +1,5 @@
 import _map from 'lodash-es/map';
+import _includes from 'lodash-es/includes';
 
 import { ascending as d3_ascending } from 'd3-array';
 import { dispatch as d3_dispatch } from 'd3-dispatch';
@@ -23,17 +24,17 @@ import {
 
 
 export function uiRawTagEditor(context) {
-    var taginfo = services.taginfo,
-        dispatch = d3_dispatch('change'),
-        _readOnlyTags = [],
-        _showBlank = false,
-        _updatePreference = true,
-        _expanded = false,
-        _newRow,
-        _state,
-        _preset,
-        _tags,
-        _entityID;
+    var taginfo = services.taginfo;
+    var dispatch = d3_dispatch('change');
+    var _readOnlyTags = [];
+    var _showBlank = false;
+    var _updatePreference = true;
+    var _expanded = false;
+    var _newRow;
+    var _state;
+    var _preset;
+    var _tags;
+    var _entityID;
 
 
     function rawTagEditor(selection) {
@@ -88,7 +89,7 @@ export function uiRawTagEditor(context) {
             .append('button')
             .attr('class', 'add-tag')
             .on('click', addTag)
-            .call(svgIcon('#icon-plus', 'light'));
+            .call(svgIcon('#iD-icon-plus', 'light'));
 
 
         var items = list.selectAll('.tag-row')
@@ -130,7 +131,7 @@ export function uiRawTagEditor(context) {
             .append('button')
             .attr('tabindex', -1)
             .attr('class', 'remove minor')
-            .call(svgIcon('#operation-delete'));
+            .call(svgIcon('#iD-operation-delete'));
 
 
         // Update
@@ -145,16 +146,16 @@ export function uiRawTagEditor(context) {
 
         items
             .each(function(tag) {
-                var row = d3_select(this),
-                    key = row.select('input.key'),      // propagate bound data to child
-                    value = row.select('input.value');  // propagate bound data to child
+                var row = d3_select(this);
+                var key = row.select('input.key');      // propagate bound data to child
+                var value = row.select('input.value');  // propagate bound data to child
 
                 if (_entityID && taginfo) {
                     bindTypeahead(key, value);
                 }
 
-                var isRelation = (_entityID && context.entity(_entityID).type === 'relation'),
-                    reference;
+                var isRelation = (_entityID && context.entity(_entityID).type === 'relation');
+                var reference;
 
                 if (isRelation && tag.key === 'type') {
                     reference = uiTagReference({ rtype: tag.value }, context);
@@ -205,7 +206,8 @@ export function uiRawTagEditor(context) {
 
 
         function bindTypeahead(key, value) {
-            if (isReadOnly({ key: key })) return;
+            if (isReadOnly(key.datum())) return;
+
             var geometry = context.geometry(_entityID);
 
             key.call(d3_combobox()
@@ -235,8 +237,8 @@ export function uiRawTagEditor(context) {
 
 
             function sort(value, data) {
-                var sameletter = [],
-                    other = [];
+                var sameletter = [];
+                var other = [];
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].value.substring(0, value.length) === value) {
                         sameletter.push(data[i]);
@@ -261,10 +263,9 @@ export function uiRawTagEditor(context) {
 
 
         function keyChange(d) {
-            var kOld = d.key,
-                kNew = this.value.trim(),
-                tag = {};
-
+            var kOld = d.key;
+            var kNew = this.value.trim();
+            var tag = {};
 
             if (isReadOnly({ key: kNew })) {
                 this.value = kOld;
@@ -272,19 +273,28 @@ export function uiRawTagEditor(context) {
             }
 
             if (kNew && kNew !== kOld) {
-                var match = kNew.match(/^(.*?)(?:_(\d+))?$/),
-                    base = match[1],
-                    suffix = +(match[2] || 1);
+                var match = kNew.match(/^(.*?)(?:_(\d+))?$/);
+                var base = match[1];
+                var suffix = +(match[2] || 1);
                 while (_tags[kNew]) {  // rename key if already in use
                     kNew = base + '_' + suffix++;
+                }
+
+                if (_includes(kNew, '=')) {
+                    var splitStr = kNew.split('=').map(function(str) { return str.trim(); });
+                    var key = splitStr[0];
+                    var value = splitStr[1];
+
+                    kNew = key;
+                    d.value = value;
                 }
             }
             tag[kOld] = undefined;
             tag[kNew] = d.value;
 
-            d.key = kNew; // Maintain DOM identity through the subsequent update.
+            d.key = kNew;  // Maintain DOM identity through the subsequent update.
 
-            if (_newRow === kOld) {  // see if this row is still a new row
+            if (_newRow === kOld) {   // see if this row is still a new row
                 _newRow = ((d.value === '' || kNew === '') ? kNew : undefined);
             }
 

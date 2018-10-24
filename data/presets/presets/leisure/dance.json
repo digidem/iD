@@ -1,10 +1,11 @@
 {
-    "icon": "music",
+    "icon": "maki-music",
     "fields": [
         "name",
         "operator",
         "address",
         "building_area",
+        "dance/style",
         "opening_hours"
     ],
     "geometry": [

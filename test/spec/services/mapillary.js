@@ -1,9 +1,6 @@
 describe('iD.serviceMapillary', function() {
     var dimensions = [64, 64],
-        ua = navigator.userAgent,
-        isPhantom = (navigator.userAgent.match(/PhantomJS/) !== null),
-        uaMock = function () { return ua; },
-        context, server, mapillary, orig;
+        context, server, mapillary;
 
 
     before(function() {
@@ -24,28 +21,10 @@ describe('iD.serviceMapillary', function() {
         server = sinon.fakeServer.create();
         mapillary = iD.services.mapillary;
         mapillary.reset();
-
-        /* eslint-disable no-global-assign */
-        /* mock userAgent */
-        if (isPhantom) {
-            orig = navigator;
-            navigator = Object.create(orig, { userAgent: { get: uaMock }});
-        } else {
-            orig = navigator.__lookupGetter__('userAgent');
-            navigator.__defineGetter__('userAgent', uaMock);
-        }
     });
 
     afterEach(function() {
         server.restore();
-
-        /* restore userAgent */
-        if (isPhantom) {
-            navigator = orig;
-        } else {
-            navigator.__defineGetter__('userAgent', orig);
-        }
-        /* eslint-enable no-global-assign */
     });
 
 
@@ -156,31 +135,6 @@ describe('iD.serviceMapillary', function() {
     });
 
     describe('#loadSigns', function() {
-       it('loads sign_defs', function() {
-            mapillary.loadSigns(context, context.projection);
-
-            var sign = 'regulatory--maximum-speed-limit-65--g1',
-                match = /img\/traffic-signs\/traffic-signs.json/;
-
-            server.respondWith('GET', match, function (xhr) {
-                xhr.respond(200, { 'Content-Type': 'application/json' },
-                    '{ "' + sign + '": { "height": 24, "pixelRatio": 1, "width": 24, "x": 576, "y": 528} }');
-            });
-            server.respond();
-
-            var sign_defs = mapillary.signDefs();
-
-            expect(sign_defs).to.have.property('regulatory--maximum-speed-limit-65--g1')
-                .that.is.an('object')
-                .that.deep.equals({
-                    height: 24,
-                    pixelRatio: 1,
-                    width: 24,
-                    x: 576,
-                    y: 528
-                });
-        });
-
         it('fires loadedSigns when signs are loaded', function() {
             var spy = sinon.spy();
             mapillary.on('loadedSigns', spy);
@@ -383,50 +337,6 @@ describe('iD.serviceMapillary', function() {
 
             var res = mapillary.sequences(context.projection);
             expect(res).to.deep.eql([gj]);
-        });
-    });
-
-
-    describe('#signsSupported', function() {
-        it('returns false for Internet Explorer', function() {
-            ua = 'Trident/7.0; rv:11.0';
-            iD.Detect(true);  // force redetection
-            expect(mapillary.signsSupported()).to.be.false;
-        });
-
-        it('returns false for Safari 9', function() {
-            ua = 'Version/9.1 Safari/601';
-            iD.Detect(true);  // force redetection
-            expect(mapillary.signsSupported()).to.be.false;
-        });
-
-        it('returns true for Safari 10', function() {
-            ua = 'Version/10.0 Safari/602';
-            iD.Detect(true);  // force redetection
-            expect(mapillary.signsSupported()).to.be.true;
-        });
-    });
-
-    describe('#signHTML', function() {
-        it('returns sign HTML', function() {
-            mapillary.signDefs({
-                'regulatory--maximum-speed-limit-65--g1': {
-                    'height': 24,
-                    'pixelRatio': 1,
-                    'width': 24,
-                    'x': 576,
-                    'y': 528,
-                },
-            });
-
-            var signdata = {
-                    key: '0',
-                    loc: [10,0],
-                    value: 'regulatory--maximum-speed-limit-65--g1',
-                };
-
-            var sprite = context.asset('img/traffic-signs/traffic-signs.png');
-            expect(mapillary.signHTML(signdata)).to.eql('<div style="background-image:url(' + sprite + ');background-repeat:no-repeat;height:24px;width:24px;background-position-x:-576px;background-position-y:-528px"></div>');
         });
     });
 

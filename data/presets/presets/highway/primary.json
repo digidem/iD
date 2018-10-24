@@ -1,5 +1,5 @@
 {
-    "icon": "highway-primary",
+    "icon": "iD-highway-primary",
     "fields": [
         "name",
         "oneway",
@@ -18,6 +18,9 @@
     "tags": {
         "highway": "primary"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Primary Road"
 }

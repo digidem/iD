@@ -1,5 +1,5 @@
 {
-    "icon": "highway-secondary",
+    "icon": "iD-highway-secondary",
     "fields": [
         "name",
         "oneway",
@@ -18,6 +18,9 @@
     "tags": {
         "highway": "secondary"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Secondary Road"
 }

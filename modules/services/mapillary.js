@@ -1,5 +1,4 @@
 /* global Mapillary:false */
-import _filter from 'lodash-es/filter';
 import _find from 'lodash-es/find';
 import _flatten from 'lodash-es/flatten';
 import _forEach from 'lodash-es/forEach';
@@ -10,12 +9,7 @@ import _union from 'lodash-es/union';
 
 import { range as d3_range } from 'd3-array';
 import { dispatch as d3_dispatch } from 'd3-dispatch';
-
-import {
-    request as d3_request,
-    json as d3_json
-} from 'd3-request';
-
+import { request as d3_request } from 'd3-request';
 import {
     select as d3_select,
     selectAll as d3_selectAll
@@ -23,42 +17,28 @@ import {
 
 import rbush from 'rbush';
 
-import { d3geoTile as d3_geoTile } from '../lib/d3.geo.tile';
-import { geoExtent } from '../geo';
-import { utilDetect } from '../util/detect';
-import { utilQsString, utilRebind } from '../util';
+import { geoExtent, geoScaleToZoom } from '../geo';
+import { svgDefs } from '../svg';
+import { utilQsString, utilRebind, utilTiler } from '../util';
 
 
-var apibase = 'https://a.mapillary.com/v3/',
-    viewercss = 'mapillary-js/mapillary.min.css',
-    viewerjs = 'mapillary-js/mapillary.min.js',
-    clientId = 'NzNRM2otQkR2SHJzaXJmNmdQWVQ0dzo1ZWYyMmYwNjdmNDdlNmVi',
-    maxResults = 1000,
-    tileZoom = 14,
-    dispatch = d3_dispatch('loadedImages', 'loadedSigns'),
-    _mlyFallback = false,
-    _mlyCache,
-    _mlyClicks,
-    _mlySelectedImage,
-    _mlySignDefs,
-    _mlySignSprite,
-    _mlyViewer;
+var apibase = 'https://a.mapillary.com/v3/';
+var viewercss = 'mapillary-js/mapillary.min.css';
+var viewerjs = 'mapillary-js/mapillary.min.js';
+var clientId = 'NzNRM2otQkR2SHJzaXJmNmdQWVQ0dzo1ZWYyMmYwNjdmNDdlNmVi';
+var maxResults = 1000;
+var tileZoom = 14;
+var tiler = utilTiler().zoomExtent([tileZoom, tileZoom]).skipNullIsland(true);
+var dispatch = d3_dispatch('loadedImages', 'loadedSigns', 'bearingChanged');
+var _mlyFallback = false;
+var _mlyCache;
+var _mlyClicks;
+var _mlySelectedImage;
+var _mlyViewer;
 
 
 function abortRequest(i) {
     i.abort();
-}
-
-
-function nearNullIsland(x, y, z) {
-    if (z >= 7) {
-        var center = Math.pow(2, z - 1),
-            width = Math.pow(2, z - 6),
-            min = center - (width / 2),
-            max = center + (width / 2) - 1;
-        return x >= min && x <= max && y >= min && y <= max;
-    }
-    return false;
 }
 
 
@@ -72,62 +52,20 @@ function maxPageAtZoom(z) {
 }
 
 
-function localeTimestamp(s) {
-    if (!s) return null;
-    var detected = utilDetect();
-    var options = {
-        day: 'numeric', month: 'short', year: 'numeric',
-        hour: 'numeric', minute: 'numeric', second: 'numeric',
-        timeZone: 'UTC'
-    };
-    var d = new Date(s);
-    if (isNaN(d.getTime())) return null;
-    return d.toLocaleString(detected.locale, options);
-}
-
-
-function getTiles(projection) {
-    var s = projection.scale() * 2 * Math.PI,
-        z = Math.max(Math.log(s) / Math.log(2) - 8, 0),
-        ts = 256 * Math.pow(2, z - tileZoom),
-        origin = [
-            s / 2 - projection.translate()[0],
-            s / 2 - projection.translate()[1]];
-
-    return d3_geoTile()
-        .scaleExtent([tileZoom, tileZoom])
-        .scale(s)
-        .size(projection.clipExtent()[1])
-        .translate(projection.translate())()
-        .map(function(tile) {
-            var x = tile[0] * ts - origin[0],
-                y = tile[1] * ts - origin[1];
-
-            return {
-                id: tile.toString(),
-                xyz: tile,
-                extent: geoExtent(
-                    projection.invert([x, y + ts]),
-                    projection.invert([x + ts, y])
-                )
-            };
-        });
-}
-
-
 function loadTiles(which, url, projection) {
-    var s = projection.scale() * 2 * Math.PI,
-        currZoom = Math.floor(Math.max(Math.log(s) / Math.log(2) - 8, 0));
+    var currZoom = Math.floor(geoScaleToZoom(projection.scale()));
+    var tiles = tiler.getTiles(projection);
 
-    var tiles = getTiles(projection).filter(function(t) {
-            return !nearNullIsland(t.xyz[0], t.xyz[1], t.xyz[2]);
-        });
+    // abort inflight requests that are no longer needed
+    var cache = _mlyCache[which];
+    _forEach(cache.inflight, function(v, k) {
+        var wanted = _find(tiles, function(tile) { return k.indexOf(tile.id + ',') === 0; });
 
-    _filter(which.inflight, function(v, k) {
-        var wanted = _find(tiles, function(tile) { return k === (tile.id + ',0'); });
-        if (!wanted) delete which.inflight[k];
-        return !wanted;
-    }).map(abortRequest);
+        if (!wanted) {
+            abortRequest(v);
+            delete cache.inflight[k];
+        }
+    });
 
     tiles.forEach(function(tile) {
         loadNextTilePage(which, currZoom, url, tile);
@@ -136,17 +74,17 @@ function loadTiles(which, url, projection) {
 
 
 function loadNextTilePage(which, currZoom, url, tile) {
-    var cache = _mlyCache[which],
-        rect = tile.extent.rectangle(),
-        maxPages = maxPageAtZoom(currZoom),
-        nextPage = cache.nextPage[tile.id] || 0,
-        nextURL = cache.nextURL[tile.id] || url +
-            utilQsString({
-                per_page: maxResults,
-                page: nextPage,
-                client_id: clientId,
-                bbox: [rect[0], rect[1], rect[2], rect[3]].join(','),
-            });
+    var cache = _mlyCache[which];
+    var rect = tile.extent.rectangle();
+    var maxPages = maxPageAtZoom(currZoom);
+    var nextPage = cache.nextPage[tile.id] || 0;
+    var nextURL = cache.nextURL[tile.id] || url +
+        utilQsString({
+            per_page: maxResults,
+            page: nextPage,
+            client_id: clientId,
+            bbox: [rect[0], rect[1], rect[2], rect[3]].join(','),
+        });
 
     if (nextPage > maxPages) return;
 
@@ -170,8 +108,8 @@ function loadNextTilePage(which, currZoom, url, tile) {
             if (err || !data.features || !data.features.length) return;
 
             var features = data.features.map(function(feature) {
-                var loc = feature.geometry.coordinates,
-                    d;
+                var loc = feature.geometry.coordinates;
+                var d;
 
                 if (which === 'images') {
                     d = {
@@ -245,7 +183,7 @@ function parsePagination(links) {
             return [
                 /<(.+)>/.exec(elements[0])[1],
                 /rel="(.+)"/.exec(elements[1])[1]
-                ];
+            ];
         } else {
             return ['',''];
         }
@@ -260,14 +198,14 @@ function parsePagination(links) {
 function partitionViewport(psize, projection) {
     var dimensions = projection.clipExtent()[1];
     psize = psize || 16;
-    var cols = d3_range(0, dimensions[0], psize),
-        rows = d3_range(0, dimensions[1], psize),
-        partitions = [];
+    var cols = d3_range(0, dimensions[0], psize);
+    var rows = d3_range(0, dimensions[1], psize);
+    var partitions = [];
 
     rows.forEach(function(y) {
         cols.forEach(function(x) {
-            var min = [x, y + psize],
-                max = [x + psize, y];
+            var min = [x, y + psize];
+            var max = [x + psize, y];
             partitions.push(
                 geoExtent(projection.invert(min), projection.invert(max)));
         });
@@ -384,27 +322,7 @@ export default {
 
 
     signsSupported: function() {
-        var detected = utilDetect();
-        if (detected.ie) return false;
-        if ((detected.browser.toLowerCase() === 'safari') && (parseFloat(detected.version) < 10)) return false;
         return true;
-    },
-
-
-    signHTML: function(d) {
-        if (!_mlySignDefs || !_mlySignSprite) return;
-        var position = _mlySignDefs[d.value];
-        if (!position) return '<div></div>';
-        var iconStyle = [
-            'background-image:url(' + _mlySignSprite + ')',
-            'background-repeat:no-repeat',
-            'height:' + position.height + 'px',
-            'width:' + position.width + 'px',
-            'background-position-x:-' + position.x + 'px',
-            'background-position-y:-' + position.y + 'px',
-        ];
-
-        return '<div style="' + iconStyle.join(';') +'"></div>';
     },
 
 
@@ -418,16 +336,6 @@ export default {
         // if we are looking at signs, we'll actually need to fetch images too
         loadTiles('images', apibase + 'images?', projection);
         loadTiles('objects', apibase + 'objects?', projection);
-
-        // load traffic sign defs
-        if (!_mlySignDefs) {
-            _mlySignSprite = context.asset('img/traffic-signs/traffic-signs.png');
-            _mlySignDefs = {};
-            d3_json(context.asset('img/traffic-signs/traffic-signs.json'), function(err, data) {
-                if (err) return;
-                _mlySignDefs = data;
-            });
-        }
     },
 
 
@@ -436,16 +344,11 @@ export default {
         var wrap = d3_select('#photoviewer').selectAll('.mly-wrapper')
             .data([0]);
 
-        var wrapEnter = wrap.enter()
+        wrap.enter()
             .append('div')
             .attr('id', 'mly')
             .attr('class', 'photo-wrapper mly-wrapper')
             .classed('hide', true);
-
-        wrapEnter
-            .append('div')
-            .attr('class', 'photo-attribution fillD');
-
 
         // load mapillary-viewercss
         d3_select('head').selectAll('#mapillary-viewercss')
@@ -463,6 +366,17 @@ export default {
             .append('script')
             .attr('id', 'mapillary-viewerjs')
             .attr('src', context.asset(viewerjs));
+
+        // load mapillary signs sprite
+        var defs = context.container().select('defs');
+        defs.call(svgDefs(context).addSprites, ['mapillary-sprite']);
+
+        // Register viewer resize handler
+        context.ui().on('photoviewerResize', function() {
+            if (_mlyViewer) {
+                _mlyViewer.resize();
+            }
+        });
     },
 
 
@@ -472,7 +386,7 @@ export default {
 
         var isHidden = wrap.selectAll('.photo-wrapper.mly-wrapper.hide').size();
 
-        if (isHidden) {
+        if (isHidden && _mlyViewer) {
             wrap
                 .selectAll('.photo-wrapper:not(.mly-wrapper)')
                 .classed('hide', true);
@@ -529,7 +443,7 @@ export default {
 
     initViewer: function(imageKey, context) {
         var that = this;
-        if (Mapillary && imageKey) {
+        if (window.Mapillary && imageKey) {
             var opts = {
                 baseImageSize: 320,
                 component: {
@@ -557,6 +471,7 @@ export default {
 
             _mlyViewer = new Mapillary.Viewer('mly', clientId, null, opts);
             _mlyViewer.on('nodechanged', nodeChanged);
+            _mlyViewer.on('bearingchanged', bearingChanged);
             _mlyViewer.moveToKey(imageKey)
                 .catch(function(e) { console.error('mly3', e); });  // eslint-disable-line no-console
         }
@@ -590,6 +505,10 @@ export default {
                 context.map().centerEase(loc);
                 that.selectImage(undefined, node.key, true);
             }
+        }
+
+        function bearingChanged(e) {
+            dispatch.call('bearingChanged', undefined, e);
         }
     },
 
@@ -625,42 +544,7 @@ export default {
                 });
             });
 
-        var wrap = d3_select('#photoviewer .mly-wrapper');
-        var attribution = wrap.selectAll('.photo-attribution').html('');
-
         if (d) {
-            if (d.captured_by) {
-                attribution
-                    .append('a')
-                    .attr('class', 'captured_by')
-                    .attr('target', '_blank')
-                    .attr('href', 'https://www.mapillary.com/app/user/' + encodeURIComponent(d.captured_by))
-                    .text('@' + d.captured_by);
-
-                attribution
-                    .append('span')
-                    .text('|');
-            }
-
-            if (d.captured_at) {
-                attribution
-                    .append('span')
-                    .attr('class', 'captured_at')
-                    .text(localeTimestamp(d.captured_at));
-
-                attribution
-                    .append('span')
-                    .text('|');
-            }
-
-            attribution
-                .append('a')
-                .attr('class', 'image_link')
-                .attr('target', '_blank')
-                .attr('href', 'https://www.mapillary.com/app/?pKey=' + encodeURIComponent(d.key) +
-                    '&focus=photo&lat=' + d.loc[1] + '&lng=' + d.loc[0] + '&z=17')
-                .text('mapillary.com');
-
             this.updateDetections(d);
         }
 
@@ -715,6 +599,19 @@ export default {
             .classed('highlighted', function(d) { return d.properties.key === hoveredSequenceKey; })
             .classed('selected', function(d) { return d.properties.key === selectedSequenceKey; });
 
+        // update viewfields if needed
+        d3_selectAll('.viewfield-group .viewfield')
+            .attr('d', viewfieldPath);
+
+        function viewfieldPath() {
+            var d = this.parentNode.__data__;
+            if (d.pano && d.key !== selectedImageKey) {
+                return 'M 8,13 m -10,0 a 10,10 0 1,0 20,0 a 10,10 0 1,0 -20,0';
+            } else {
+                return 'M 6,9 C 8,8.4 8,8.4 10,9 L 16,-2 C 12,-5 4,-5 0,-2 z';
+            }
+        }
+
         return this;
     },
 
@@ -739,10 +636,8 @@ export default {
 
 
         function loadDetection(detectionKey) {
-            var url = apibase + 'detections/'+
-                detectionKey + '?' + utilQsString({
-                    client_id: clientId,
-                });
+            var url = apibase + 'detections/' +
+                    detectionKey + '?' + utilQsString({ client_id: clientId });
 
             d3_request(url)
                 .mimeType('application/json')
@@ -816,13 +711,6 @@ export default {
 
     cache: function() {
         return _mlyCache;
-    },
-
-
-    signDefs: function(_) {
-        if (!arguments.length) return _mlySignDefs;
-        _mlySignDefs = _;
-        return this;
     }
 
 };

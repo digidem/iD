@@ -22,11 +22,10 @@ export function svgTagClasses() {
         tagClassRe = /^tag-/,
         tags = function(entity) { return entity.tags; };
 
-
     var tagClasses = function(selection) {
         selection.each(function tagClassesEach(entity) {
-            var value = this.className,
-                classes, primary, status;
+            var value = this.className;
+            var classes, primary, status;
 
             if (value.baseVal !== undefined) value = value.baseVal;
 
@@ -34,7 +33,7 @@ export function svgTagClasses() {
                 return name.length && !tagClassRe.test(name);
             }).join(' ');
 
-            var t = tags(entity), i, k, v;
+            var t = _tags(entity), i, k, v;
 
             // pick at most one primary classification tag..
             for (i = 0; i < primaries.length; i++) {
@@ -112,8 +111,8 @@ export function svgTagClasses() {
 
 
     tagClasses.tags = function(_) {
-        if (!arguments.length) return tags;
-        tags = _;
+        if (!arguments.length) return _tags;
+        _tags = _;
         return tagClasses;
     };
 

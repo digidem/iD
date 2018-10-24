@@ -1,5 +1,5 @@
 {
-    "icon": "highway-unclassified",
+    "icon": "iD-highway-unclassified",
     "fields": [
         "name",
         "oneway",
@@ -17,6 +17,9 @@
     "tags": {
         "highway": "unclassified"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Minor/Unclassified Road"
 }

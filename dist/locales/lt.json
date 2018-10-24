@@ -160,7 +160,6 @@
                 "annotation": "Sulieti {n} objektai.",
                 "not_eligible": "Šie geoobjektai negali būti sulieti.",
                 "not_adjacent": "Šių objektų negalima sulieti, nes jų pabaigos taškai nėra sujungti.",
-                "restriction": "Šių objektų negalima sulieti, nes bent vienas iš jų yra ryšyje „{relation}“,",
                 "incomplete_relation": "Šie objektai negali būti sujungti, nes ne visi pilnai atsiųsti.",
                 "conflicting_tags": "Šių objektų negalima sulieti, nes kai kurios iš jų žymų turi nesuderinamas reikšmes."
             },
@@ -304,8 +303,6 @@
             "localized_translation_language": "Pasirinkti kalbą",
             "localized_translation_name": "Pavadinimas"
         },
-        "login": "prisijungti",
-        "logout": "atsijungti",
         "loading_auth": "Jungiamasi prie OpenStreetMap...",
         "report_a_bug": "Pranešti apie klaidą",
         "help_translate": "Padėkite versti",
@@ -404,7 +401,6 @@
             "best_imagery": "Geriausia žinoma ortofotografija šiai vietai",
             "switch": "Persijungti atgal į šį foną",
             "custom": "Savas",
-            "custom_button": "Redaguoti pasirinktiną foną",
             "reset": "iš naujo",
             "minimap": {
                 "tooltip": "Rodyti atitolintą žemėlapį, kad būtų lengviau rasti šiuo metu rodomą vietą."
@@ -562,12 +558,6 @@
         },
         "cannot_zoom": "Negalima atitolinti šiame režime.",
         "full_screen": "Perjungti pilną ekraną",
-        "gpx": {
-            "local_layer": "Vietinis failas",
-            "drag_drop": "Tempkite ir numeskite .gpx, .geojson arba .kml failą ant puslapio arba spauskite mygtuką dešinėje, kad naršytumėte",
-            "zoom": "Išdidinti sluoksnį",
-            "browse": "Naršyti failo"
-        },
         "mapillary_images": {
             "tooltip": "Gatvės lygio nuotraukos iš Mapillary",
             "title": "Nuotraukų perdanga (Mapillary)"
@@ -714,31 +704,24 @@
                     "label": "Leidžiamas priėjimas",
                     "options": {
                         "designated": {
-                            "description": "Priėjimas galimas remiantis ženklais ir savitais vietos įstatymais",
                             "title": "Skirtas"
                         },
                         "destination": {
-                            "description": "Priėjimas leistinas tik atvykti į tikslą",
                             "title": "Tikslinis"
                         },
                         "dismount": {
-                            "description": "Priėjimas leidžiamas, bet dviratininkas turi nulipti nuo dviračio",
                             "title": "Nulipti"
                         },
                         "no": {
-                            "description": "Priėjimas draudžiamas plačiajai visuomenei",
                             "title": "Draudžiamas"
                         },
                         "permissive": {
-                            "description": "Priėjimas leistinas, kai savininkas konkrečiu laiku panaikina draudimą",
                             "title": "Leistinas"
                         },
                         "private": {
-                            "description": "Priėjimas leistinas tik su savininko leidimu",
                             "title": "Privatus"
                         },
                         "yes": {
-                            "description": "Priėjimas leidžiamas įstatymų; pirmumo teisė",
                             "title": "Leidžiamas"
                         }
                     },
@@ -1313,7 +1296,6 @@
                     "label": "Mokėjimo tipai"
                 },
                 "phone": {
-                    "label": "Telefonas",
                     "placeholder": "+31 42 123 4567"
                 },
                 "piste/difficulty": {
@@ -2294,7 +2276,7 @@
                 },
                 "historic/ruins": {
                     "name": "Griuvėsiai",
-                    "terms": "griuvėsiai "
+                    "terms": "griuvėsiai"
                 },
                 "historic/wayside_cross": {
                     "name": "Kryžius prie kelio",

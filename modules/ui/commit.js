@@ -79,9 +79,13 @@ export function uiCommit(context) {
                 tags.hashtags = hashtags;
             }
 
+            // iD 2.8.1 could write a literal 'undefined' here.. see #5021
+            // (old source values expire after 2 days, so 'undefined' checks can go away in v2.9)
             var source = context.storage('source');
-            if (source) {
+            if (source && source !== 'undefined') {
                 tags.source = source;
+            } else if (source === 'undefined') {
+                context.storage('source', null);
             }
 
             _changeset = new osmChangeset({ tags: tags });
@@ -163,7 +167,7 @@ export function uiCommit(context) {
 
             userLink
                 .append('a')
-                .attr('class','user-info')
+                .attr('class', 'user-info')
                 .text(user.display_name)
                 .attr('href', osm.userURL(user.display_name))
                 .attr('tabindex', -1)
@@ -216,14 +220,14 @@ export function uiCommit(context) {
 
         buttonEnter
             .append('button')
-            .attr('class', 'secondary-action col5 button cancel-button')
+            .attr('class', 'secondary-action button cancel-button')
             .append('span')
             .attr('class', 'label')
             .text(t('commit.cancel'));
 
         buttonEnter
             .append('button')
-            .attr('class', 'action col5 button save-button')
+            .attr('class', 'action button save-button')
             .append('span')
             .attr('class', 'label')
             .text(t('commit.save'));
@@ -297,7 +301,9 @@ export function uiCommit(context) {
             }
         }
         if (changed.hasOwnProperty('source')) {
-            if (!onInput) {
+            if (changed.source === undefined) {
+                context.storage('source', null);
+            } else if (!onInput) {
                 context.storage('source', changed.source);
                 context.storage('commentDate', Date.now());
             }

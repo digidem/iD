@@ -1,5 +1,9 @@
 {
     "id": {
+        "icons": {
+            "information": "info",
+            "remove": "hapus"
+        },
         "modes": {
             "add_area": {
                 "title": "Wilayah",
@@ -137,7 +141,6 @@
                 "key": "C",
                 "annotation": "Satukan {n} fitur.",
                 "not_eligible": "Fitur-fitur ini tidak bisa digabung.",
-                "restriction": "Fitur-fitur ini tidak bisa disatukan karena ada setidaknya satu yang merupakan bagian dari relasi \"{relation}\".",
                 "incomplete_relation": "Fitur ini tidak bisa digabungkan karena belum sepenuhnya terunduh.",
                 "conflicting_tags": "Fitur-fitur ini tidak bisa disatukan karena beberapa nilai dari tagnya ada yang bertolak belakang."
             },
@@ -189,6 +192,11 @@
                 }
             }
         },
+        "restriction": {
+            "controls": {
+                "distance": "Jarak"
+            }
+        },
         "undo": {
             "tooltip": "Batalkan: {action}",
             "nothing": "Tak ada yang bisa dibatalkan."
@@ -204,7 +212,6 @@
             "localized_translation_language": "Pilih Bahasa",
             "localized_translation_name": "Nama"
         },
-        "logout": "keluar",
         "loading_auth": "Menghubungkan dengan OpenStreetMap...",
         "report_a_bug": "Laporkan bug",
         "help_translate": "Bantu menerjemahkan",
@@ -218,8 +225,10 @@
             "readonly": "API dalam kondisi hanya-baca. Anda perlu menunggu untuk menyimpan perubahan."
         },
         "commit": {
+            "title": "Unggah ke OpenStreetMap",
             "upload_explanation": "Perubahan yang anda unggah akan tampil di seluruh peta yang menggunakan data OpenStreetMap.",
             "upload_explanation_with_user": "Perubahan yang anda unggah sebagai {user} akan tampil di seluruh peta yang menggunakan data OpenStreetMap.",
+            "save": "Unggah",
             "cancel": "Batal",
             "changes": "{count} Perubahan",
             "warnings": "Peringatan",
@@ -290,7 +299,6 @@
             "best_imagery": "Sumber citra terbaik yang diketahui untuk lokasi ini",
             "switch": "Beralih ke latar belakang ini",
             "custom": "Custom",
-            "custom_button": "Ubah tampilan latar kustom",
             "reset": "ulang",
             "minimap": {
                 "tooltip": "Menampilkan peta diperkecil untuk membantu penentuan letak area yang sedang dilihat."
@@ -434,7 +442,10 @@
             "view_on_mapillary": "Lihat gambar ini di Mapillary"
         },
         "help": {
-            "title": "Bantuan"
+            "title": "Bantuan",
+            "help": {
+                "open_source_h": "Sumber Terbuka"
+            }
         },
         "intro": {
             "done": "selesai",
@@ -475,27 +486,21 @@
                     "label": "Akses diperbolehkan",
                     "options": {
                         "designated": {
-                            "description": "Akses diperbolehkan sesuai dengan tanda atau peraturan lokal yang spesifik",
                             "title": "Ditunjuk"
                         },
                         "destination": {
-                            "description": "Akses diperbolehkan hanya untuk mencapai tujuan",
                             "title": "Tujuan"
                         },
                         "no": {
-                            "description": "Akses terbatas untuk umum",
                             "title": "Terlarang"
                         },
                         "permissive": {
-                            "description": "Akses diperbolehkan sampai batas pemilik membatalkan izin",
                             "title": "Dibolehkan"
                         },
                         "private": {
-                            "description": "Akses diperbolehkan hanya dengan perizinan dari pemilik pada tingkatan pribadi",
                             "title": "Pribadi"
                         },
                         "yes": {
-                            "description": "Akses diperbolehkan oleh hukum; hak pengguna jalan",
                             "title": "Diizinkan"
                         }
                     },
@@ -874,7 +879,6 @@
                     }
                 },
                 "phone": {
-                    "label": "Telepon",
                     "placeholder": "+31 42 123 4567"
                 },
                 "piste/difficulty": {
@@ -1096,9 +1100,6 @@
                 "amenity/bicycle_rental": {
                     "name": "Penyewaan Sepeda",
                     "terms": "Penyewaan Sepeda"
-                },
-                "amenity/biergarten": {
-                    "name": "Taman Bir"
                 },
                 "amenity/boat_rental": {
                     "name": "Penyewaan Perahu Boat"
@@ -2383,15 +2384,13 @@
                     "name": "Pegadaian"
                 },
                 "shop/pet": {
-                    "name": "Toko Peliharaan",
-                    "terms": "<translate with synonyms or related terms for 'Toko Hewan', separated by commas>"
+                    "name": "Toko Peliharaan"
                 },
                 "shop/photo": {
                     "name": "Toko Fotografi"
                 },
                 "shop/pyrotechnics": {
-                    "name": "Toko Kembang Api",
-                    "terms": "<translate with synonyms or related terms for 'Toko Bunga Api', separated by commas>"
+                    "name": "Toko Kembang Api"
                 },
                 "shop/radiotechnics": {
                     "name": "Toko Komponen Radio/Elektronik"
@@ -2403,8 +2402,7 @@
                     "name": "Toko Perlengkapan Menyelam"
                 },
                 "shop/seafood": {
-                    "name": "Toko HIdangan Laut",
-                    "terms": "<translate with synonyms or related terms for 'Toko masakan laut', separated by commas>"
+                    "name": "Toko HIdangan Laut"
                 },
                 "shop/second_hand": {
                     "name": "Jual Titip/Pasar Loak",
@@ -2424,15 +2422,13 @@
                     "terms": "Pasar Swalayan"
                 },
                 "shop/tailor": {
-                    "name": "Tukang Jahit",
-                    "terms": "<translate with synonyms or related terms for 'Penjahit', separated by commas>"
+                    "name": "Tukang Jahit"
                 },
                 "shop/tattoo": {
                     "name": "Jasa Pembuatan Tato"
                 },
                 "shop/tea": {
-                    "name": "Toko Teh",
-                    "terms": "<translate with synonyms or related terms for 'Kedai teh', separated by commas>"
+                    "name": "Toko Teh"
                 },
                 "shop/ticket": {
                     "name": "Penjual Tiket"

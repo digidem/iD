@@ -1,9 +1,9 @@
 {
-    "icon": "beer",
+    "icon": "maki-beer",
     "fields": [
         "name",
         "address",
-        "building_area",
+        "building",
         "opening_hours",
         "smoking",
         "outdoor_seating",
@@ -21,5 +21,5 @@
         "bier",
         "booze"
     ],
-    "name": "Beer Garden"
+    "name": "Biergarten"
 }

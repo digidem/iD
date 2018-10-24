@@ -6,7 +6,7 @@
         "structure",
         "access"
     ],
-    "icon": "highway-bridleway",
+    "icon": "iD-highway-bridleway",
     "geometry": [
         "line"
     ],
@@ -16,7 +16,8 @@
     "terms": [
         "bridleway",
         "equestrian",
-        "horse"
+        "horse",
+        "trail"
     ],
     "name": "Bridle Path"
 }

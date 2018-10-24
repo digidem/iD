@@ -163,7 +163,6 @@
                 "annotation": "{ನ} ವಸ್ತುಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ. ",
                 "not_eligible": "ಈ ವಸ್ತುಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದಿಲ್ಲ.",
                 "not_adjacent": "ಈ ವಸ್ತುಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದಿಲ್ಲ ಏಕೆಂದರೆ ಇವುಗಳ ಕೊನೆಗಳು ಒಂದಕ್ಕೊಂಡಕ್ಕೆ ಸೇರಿಕೊಂಡಿಲ್ಲ.   ",
-                "restriction": "ಈ ವಸ್ತುಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದಿಲ್ಲ ಏಕೆಂದರೆ ಕನಿಷ್ಟ ಒಂದು ವಸ್ತು ಒಂದು {ಸಂಬಂಧಕ್ಕೆ} ಸೇರಿದೆ. ",
                 "incomplete_relation": "ಈ ವಸ್ತುಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದಿಲ್ಲ ಏಕೆಂದರೆ ಇವುಗಳಲ್ಲಿ ಕನಿಷ್ಟಪಕ್ಷ ಒಂದಾದರೂ ಸಂಪೂರ್ಣವಾಗಿ ನಕಲಿಳಿಸಿಲ್ಲ.    ",
                 "conflicting_tags": "ಈ ವಸ್ತುಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದಿಲ್ಲ ಏಕೆಂದರೆ ಇವುಗಳಲ್ಲಿ ಕೆಲವು ವಸ್ತುಗಳ ಗುರುತುಪಟ್ಟಿಗಳ ನಡುವೆ ಸಂಘರ್ಷವಿದೆ.     "
             },
@@ -308,8 +307,6 @@
             "localized_translation_name": "ಹೆಸರು"
         },
         "zoom_in_edit": "ಪರಿಷ್ಕರಿಸಲು zoom ಮಾಡಿ",
-        "login": "ಲಾಗಿನ್",
-        "logout": "ಹೊರನಡೆ",
         "loading_auth": "ಓಪನ್ ಸ್ಟ್ರೀಟ್ ಮ್ಯಾಪ್ ಗೆ ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ.....",
         "report_a_bug": "ದೋಷವನ್ನು ವಿವರಿಸಿ. ",
         "help_translate": "ಅನುವಾದಕ್ಕೆ ನೀವು ಸಹಾಯಮಾಡಿ. ",
@@ -434,7 +431,6 @@
             "best_imagery": "ಈ ಪ್ರದೇಶಕ್ಕೆ ಅಪ್ರತಿಮ ಉಪಗ್ರಹ ಚಿತ್ರಣ  ",
             "switch": "ಈ ಹಿನ್ನಲೆಗೆ ಹಿಂತಿರುಗಿ ",
             "custom": "ಅನುಸರಣ",
-            "custom_button": "ಅನುಸರಣ ಹಿನ್ನಲೆಯನ್ನು ಸಂಪಾದಿಸಿ",
             "reset": "ಮರುಹೊಂದಿಸು",
             "minimap": {
                 "key": "/"
@@ -567,9 +563,6 @@
             "deprecated_tags": "‍ಉಪಯೋಗಿಸದ ಗುರುತುಪಟ್ಟಿಗಳು: {tags}"
         },
         "full_screen": "‍ಪೂರ್ಣ ಪರದೆಗೆ ಹಿಂದಿರುಗು",
-        "gpx": {
-            "local_layer": "ಸ್ಥಳೀಯ ಕಡತ"
-        },
         "mapillary_images": {
             "tooltip": "ರಸ್ತೆ ಮಟ್ಟದ ಚಿತ್ರಗಳು ಮ್ಯಾಪಿಲರೀ ಇಂದ ",
             "title": "ಚಿತ್ರಗಳ ಹೊ‍ದಿಕೆ (Mapillary)"
@@ -768,19 +761,15 @@
                     "label": "ಅನುಮತಿಸಲಾದ ಪ್ರವೇಶ",
                     "options": {
                         "designated": {
-                            "description": "‍ಪ್ರವೇಶ‍ವು ಸಂಚಾರದ ಚಿಹ್ನೆಗಳಿಗೂ ಹಾಗೂ ಸ್ಥಳೀಯ ಕಾನೂನುಗಳಿಗೆ ಅನುಗುಣವಾಗಿವೆ ",
                             "title": "ನಿಯೋಜಿತ"
                         },
                         "destination": {
-                            "description": "‍‍ಪ್ರವೇಶ ಅನುಮತಿ ನಿರ್ದಿಷ್ಟ ಸ್ಥಳಕ್ ‍ಮಾತ್ರ",
                             "title": "ತಲಪುದಾಣ"
                         },
                         "dismount": {
-                            "description": "ೞ್‍",
                             "title": "ಬೇರ್ಪಡಿಸು"
                         },
                         "no": {
-                            "description": "ಸಾರ್ವಜನಿಕ ಪ್ರವೇಶಕ್ಕೆ ಅನುಮತಿ ಇಲ್ಲ",
                             "title": "ನಿಷೇಧಿಸಲಾಗಿದೆ"
                         },
                         "permissive": {
@@ -1284,7 +1273,6 @@
                     }
                 },
                 "phone": {
-                    "label": "ದೂರವಾಣಿ",
                     "placeholder": "+31 42 123 4567"
                 },
                 "piste/difficulty": {
@@ -1448,24 +1436,11 @@
                 "aeroway/aerodrome": {
                     "name": "ವಿಮಾನ ನಿಲ್ದಾಣ"
                 },
-                "aeroway/hangar": {
-                    "terms": "<translate with synonyms or related terms for 'Hangar', separated by commas>"
-                },
-                "aeroway/helipad": {
-                    "terms": "<translate with synonyms or related terms for 'Helipad', separated by commas>"
-                },
                 "aeroway/runway": {
-                    "name": "ಓಡುದಾರಿ",
-                    "terms": "<translate with synonyms or related terms for 'Runway', separated by commas>"
-                },
-                "aeroway/taxiway": {
-                    "terms": "<translate with synonyms or related terms for 'Taxiway', separated by commas>"
+                    "name": "ಓಡುದಾರಿ"
                 },
                 "amenity": {
                     "name": "ಸೌಕರ್ಯ"
-                },
-                "amenity/arts_centre": {
-                    "terms": "<translate with synonyms or related terms for 'Arts Center', separated by commas>"
                 },
                 "amenity/atm": {
                     "name": "ಎಟಿಎಮ್ "
@@ -1473,18 +1448,8 @@
                 "amenity/bank": {
                     "name": "ಬ್ಯಾಂಕ್"
                 },
-                "amenity/bar": {
-                    "terms": "<translate with synonyms or related terms for 'Bar', separated by commas>"
-                },
-                "amenity/bbq": {
-                    "terms": "<translate with synonyms or related terms for 'Barbecue/Grill', separated by commas>"
-                },
                 "amenity/bench": {
-                    "name": " ನ್ಯಾಯಪೀಠ",
-                    "terms": "<translate with synonyms or related terms for 'Bench', separated by commas>"
-                },
-                "amenity/bicycle_parking": {
-                    "terms": "<translate with synonyms or related terms for 'Bicycle Parking', separated by commas>"
+                    "name": " ನ್ಯಾಯಪೀಠ"
                 },
                 "amenity/cinema": {
                     "name": "ಸಿನಿಮಾ"

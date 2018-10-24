@@ -1,5 +1,5 @@
 {
-    "icon": "highway-residential",
+    "icon": "iD-highway-residential",
     "fields": [
         "name",
         "oneway",
@@ -17,6 +17,9 @@
     "tags": {
         "highway": "residential"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Residential Road"
 }

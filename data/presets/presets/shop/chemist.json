@@ -1,5 +1,5 @@
 {
-    "icon": "grocery",
+    "icon": "maki-grocery",
     "fields": [
         "name",
         "operator",
@@ -16,6 +16,7 @@
         "shop": "chemist"
     },
     "terms": [
+        "apothecary",
         "med*",
         "drug*",
         "gift"

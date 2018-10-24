@@ -2,13 +2,13 @@
 
 const fs = require('fs');
 const rollup = require('rollup');
-const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
+const includePaths = require('rollup-plugin-includepaths');
+const nodeResolve = require('rollup-plugin-node-resolve');
 const json = require('rollup-plugin-json');
 const colors = require('colors/safe');
 
 module.exports = function buildSrc() {
-    var cache;
     var building = false;
     return function () {
         if (building) return;
@@ -26,18 +26,22 @@ module.exports = function buildSrc() {
             .rollup({
                 input: './modules/id.js',
                 plugins: [
+                    includePaths( {
+                        paths: ['node_modules/d3/node_modules'],  // npm2 or windows
+                        include: {
+                            'martinez-polygon-clipping': 'node_modules/martinez-polygon-clipping/dist/martinez.umd.js'
+                        }
+                    }),
                     nodeResolve({
                         module: true,
                         main: true,
                         browser: false
                     }),
                     commonjs(),
-                    json()
-                ],
-                cache: cache
+                    json({ indent: '' })
+                ]
             })
             .then(function (bundle) {
-                cache = bundle;
                 return bundle.write({
                     format: 'iife',
                     file: 'dist/iD.js',
@@ -51,7 +55,6 @@ module.exports = function buildSrc() {
             })
             .catch(function (err) {
                 building = false;
-                cache = undefined;
                 console.error(err);
                 process.exit(1);
             });

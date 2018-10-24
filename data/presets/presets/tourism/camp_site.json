@@ -1,9 +1,10 @@
 {
-    "icon": "campsite",
+    "icon": "maki-campsite",
     "fields": [
         "name",
         "operator",
         "address",
+        "access_simple",
         "capacity",
         "fee",
         "internet_access",

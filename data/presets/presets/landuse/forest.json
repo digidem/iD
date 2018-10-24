@@ -1,5 +1,5 @@
 {
-    "icon": "park-alt1",
+    "icon": "maki-park-alt1",
     "fields": [
         "name",
         "leaf_type",
@@ -13,6 +13,9 @@
         "landuse": "forest"
     },
     "terms": [
+        "cut",
+        "forest",
+        "lumber",
         "tree"
     ],
     "name": "Forest"
