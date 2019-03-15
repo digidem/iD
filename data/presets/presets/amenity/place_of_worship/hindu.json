@@ -1,7 +1,8 @@
 {
-    "icon": "poi-hinduist",
+    "icon": "temaki-hinduism",
     "fields": [
         "name",
+        "religion",
         "denomination",
         "building_area",
         "address",

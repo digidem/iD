@@ -15,11 +15,14 @@ import { actionChangeTags } from '../actions';
 import { modeBrowse } from '../modes';
 import { svgIcon } from '../svg';
 import { uiPresetIcon } from './preset_icon';
+import { uiQuickLinks } from './quick_links';
 import { uiRawMemberEditor } from './raw_member_editor';
 import { uiRawMembershipEditor } from './raw_membership_editor';
 import { uiRawTagEditor } from './raw_tag_editor';
 import { uiTagReference } from './tag_reference';
 import { uiPresetEditor } from './preset_editor';
+import { uiEntityIssues } from './entity_issues';
+import { uiTooltipHtml } from './tooltipHtml';
 import { utilCleanTags, utilRebind } from '../util';
 
 
@@ -33,11 +36,12 @@ export function uiEntityEditor(context) {
     var _activePreset;
     var _tagReference;
 
-    var presetEditor = uiPresetEditor(context)
-        .on('change', changeTags);
-    var rawTagEditor = uiRawTagEditor(context)
-        .on('change', changeTags);
-
+    var entityIssues = uiEntityIssues(context);
+    var quickLinks = uiQuickLinks();
+    var presetEditor = uiPresetEditor(context).on('change', changeTags);
+    var rawTagEditor = uiRawTagEditor(context).on('change', changeTags);
+    var rawMemberEditor = uiRawMemberEditor(context);
+    var rawMembershipEditor = uiRawMembershipEditor(context);
 
     function entityEditor(selection) {
         var entity = context.entity(_entityID);
@@ -48,28 +52,28 @@ export function uiEntityEditor(context) {
             .data([0]);
 
         // Enter
-        var enter = header.enter()
+        var headerEnter = header.enter()
             .append('div')
             .attr('class', 'header fillL cf');
 
-        enter
+        headerEnter
             .append('button')
             .attr('class', 'fl preset-reset preset-choose')
-            .call(svgIcon((textDirection === 'rtl') ? '#icon-forward' : '#icon-backward'));
+            .call(svgIcon((textDirection === 'rtl') ? '#iD-icon-forward' : '#iD-icon-backward'));
 
-        enter
+        headerEnter
             .append('button')
             .attr('class', 'fr preset-close')
             .on('click', function() { context.enter(modeBrowse(context)); })
-            .call(svgIcon(_modified ? '#icon-apply' : '#icon-close'));
+            .call(svgIcon(_modified ? '#iD-icon-apply' : '#iD-icon-close'));
 
-        enter
+        headerEnter
             .append('h3')
             .text(t('inspector.edit'));
 
         // Update
         header = header
-            .merge(enter);
+            .merge(headerEnter);
 
         header.selectAll('.preset-reset')
             .on('click', function() {
@@ -82,11 +86,11 @@ export function uiEntityEditor(context) {
             .data([0]);
 
         // Enter
-        enter = body.enter()
+        var bodyEnter = body.enter()
             .append('div')
             .attr('class', 'inspector-body');
 
-        enter
+        bodyEnter
             .append('div')
             .attr('class', 'preset-list-item inspector-inner')
             .append('div')
@@ -95,25 +99,35 @@ export function uiEntityEditor(context) {
             .attr('class', 'preset-list-button preset-reset')
             .call(tooltip().title(t('inspector.back_tooltip')).placement('bottom'))
             .append('div')
-            .attr('class', 'label');
-
-        enter
+            .attr('class', 'label')
             .append('div')
-            .attr('class', 'inspector-border preset-editor');
+            .attr('class', 'label-inner');
 
-        enter
+        bodyEnter
             .append('div')
-            .attr('class', 'inspector-border raw-tag-editor inspector-inner');
+            .attr('class', 'preset-quick-links');
 
-        enter
+        bodyEnter
             .append('div')
-            .attr('class', 'inspector-border raw-member-editor inspector-inner');
+            .attr('class', 'entity-issues');
 
-        enter
+        bodyEnter
+            .append('div')
+            .attr('class', 'preset-editor');
+
+        bodyEnter
+            .append('div')
+            .attr('class', 'raw-tag-editor inspector-inner');
+
+        bodyEnter
+            .append('div')
+            .attr('class', 'raw-member-editor inspector-inner');
+
+        bodyEnter
             .append('div')
             .attr('class', 'raw-membership-editor inspector-inner');
 
-        enter
+        bodyEnter
             .append('input')
             .attr('type', 'text')
             .attr('class', 'key-trap');
@@ -121,8 +135,9 @@ export function uiEntityEditor(context) {
 
         // Update
         body = body
-            .merge(enter);
+            .merge(bodyEnter);
 
+        // update header
         if (_tagReference) {
             body.selectAll('.preset-list-button-wrap')
                 .call(_tagReference.button);
@@ -142,8 +157,41 @@ export function uiEntityEditor(context) {
                 .preset(_activePreset)
             );
 
-        body.select('.preset-list-item .label')
-            .text(_activePreset.name());
+        // NOTE: split on en-dash, not a hypen (to avoid conflict with hyphenated names)
+        var label = body.select('.label-inner');
+        var nameparts = label.selectAll('.namepart')
+            .data(_activePreset.name().split(' – '), function(d) { return d; });
+
+        nameparts.exit()
+            .remove();
+
+        nameparts
+            .enter()
+            .append('div')
+            .attr('class', 'namepart')
+            .text(function(d) { return d; });
+
+        // update quick links
+        var choices = [{
+            id: 'zoom_to',
+            label: 'inspector.zoom_to.title',
+            tooltip: function() {
+                return uiTooltipHtml(t('inspector.zoom_to.tooltip_feature'), t('inspector.zoom_to.key'));
+            },
+            click: function zoomTo() {
+                context.mode().zoomToSelected();
+            }
+        }];
+
+        body.select('.preset-quick-links')
+            .call(quickLinks.choices(choices));
+
+
+        // update editor sections
+        body.select('.entity-issues')
+            .call(entityIssues
+                .entityID(_entityID)
+            );
 
         body.select('.preset-editor')
             .call(presetEditor
@@ -164,7 +212,7 @@ export function uiEntityEditor(context) {
         if (entity.type === 'relation') {
             body.select('.raw-member-editor')
                 .style('display', 'block')
-                .call(uiRawMemberEditor(context)
+                .call(rawMemberEditor
                     .entityID(_entityID)
                 );
         } else {
@@ -173,7 +221,7 @@ export function uiEntityEditor(context) {
         }
 
         body.select('.raw-membership-editor')
-            .call(uiRawMembershipEditor(context)
+            .call(rawMembershipEditor
                 .entityID(_entityID)
             );
 
@@ -243,27 +291,33 @@ export function uiEntityEditor(context) {
     }
 
 
-    entityEditor.modified = function(_) {
+    entityEditor.modified = function(val) {
         if (!arguments.length) return _modified;
-        _modified = _;
+        _modified = val;
         d3_selectAll('button.preset-close use')
-            .attr('xlink:href', (_modified ? '#icon-apply' : '#icon-close'));
+            .attr('xlink:href', (_modified ? '#iD-icon-apply' : '#iD-icon-close'));
         return entityEditor;
     };
 
 
-    entityEditor.state = function(_) {
+    entityEditor.state = function(val) {
         if (!arguments.length) return _state;
-        _state = _;
+        _state = val;
         return entityEditor;
     };
 
 
-    entityEditor.entityID = function(_) {
+    entityEditor.entityID = function(val) {
         if (!arguments.length) return _entityID;
-        _entityID = _;
+        _entityID = val;
         _base = context.graph();
         _coalesceChanges = false;
+
+        // reset the scroll to the top of the inspector
+        var body = d3_selectAll('.entity-editor-pane .inspector-body');
+        if (!body.empty()) {
+            body.node().scrollTop = 0;
+        }
 
         var presetMatch = context.presets().match(context.entity(_entityID), _base);
 
@@ -273,10 +327,10 @@ export function uiEntityEditor(context) {
     };
 
 
-    entityEditor.preset = function(_) {
+    entityEditor.preset = function(val) {
         if (!arguments.length) return _activePreset;
-        if (_ !== _activePreset) {
-            _activePreset = _;
+        if (val !== _activePreset) {
+            _activePreset = val;
             _tagReference = uiTagReference(_activePreset.reference(context.geometry(_entityID)), context)
                 .showing(false);
         }

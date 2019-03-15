@@ -1,10 +1,10 @@
 {
-    "icon": "category-path",
+    "icon": "iD-category-path",
     "geometry": "line",
     "name": "Path Features",
     "members": [
-        "footway/crosswalk",
-        "footway/sidewalk",
+        "highway/footway/marked",
+        "highway/footway/sidewalk",
         "highway/steps",
         "highway/path",
         "highway/footway",

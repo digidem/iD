@@ -4,7 +4,7 @@ describe.skip('iD.modeAddPoint', function() {
     beforeEach(function() {
         var container = d3.select(document.createElement('div'));
 
-        context = iD.Context()
+        context = iD.coreContext()
             .container(container);
 
         context.loadTiles = function () {};
@@ -18,7 +18,7 @@ describe.skip('iD.modeAddPoint', function() {
     });
 
     describe('clicking the map', function () {
-        it('adds a node', function() {
+        it('adds a point', function() {
             happen.mousedown(context.surface().node(), {});
             happen.mouseup(window, {});
             expect(context.changes().created).to.have.length(1);
@@ -26,7 +26,7 @@ describe.skip('iD.modeAddPoint', function() {
             d3.select('window').on('click.draw-block', null);
         });
 
-        it('selects the node', function() {
+        it('selects an existing point rather than adding a new one', function() {
             happen.mousedown(context.surface().node(), {});
             happen.mouseup(window, {});
             expect(context.mode().id).to.equal('select');

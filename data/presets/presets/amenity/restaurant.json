@@ -1,16 +1,28 @@
 {
-    "icon": "restaurant",
+    "icon": "maki-restaurant",
     "fields": [
         "name",
         "cuisine",
         "address",
         "building_area",
         "opening_hours",
-        "capacity",
+        "outdoor_seating"
+    ],
+    "moreFields": [
         "takeaway",
         "delivery",
+        "capacity",
+        "diet_multi",
         "smoking",
-        "outdoor_seating"
+        "internet_access",
+        "internet_access/fee",
+        "internet_access/ssid",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair",
+        "bar"
     ],
     "geometry": [
         "point",

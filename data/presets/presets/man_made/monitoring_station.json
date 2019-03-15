@@ -1,7 +1,8 @@
 {
-    "icon": "poi-mast",
+    "icon": "temaki-antenna",
     "geometry": [
         "point",
+        "vertex",
         "area"
     ],
     "fields": [

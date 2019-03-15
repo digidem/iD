@@ -7,13 +7,11 @@ import {
     touches as d3_touches
 } from 'd3-selection';
 
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
 import { behaviorEdit } from './edit';
 import { behaviorHover } from './hover';
 import { behaviorTail } from './tail';
 import { geoChooseEdge, geoVecLength } from '../geo';
-import { utilRebind } from '../util/rebind';
-
+import { utilKeybinding, utilRebind } from '../util';
 
 var _usedTails = {};
 var _disableSpace = false;
@@ -25,9 +23,9 @@ export function behaviorDraw(context) {
         'move', 'click', 'clickWay', 'clickNode', 'undo', 'cancel', 'finish'
     );
 
-    var keybinding = d3_keybinding('draw');
+    var keybinding = utilKeybinding('draw');
 
-    var hover = behaviorHover(context).altDisables(true)
+    var _hover = behaviorHover(context).altDisables(true).ignoreVertex(true)
         .on('hover', context.ui().sidebar.hover);
     var tail = behaviorTail();
     var edit = behaviorEdit(context);
@@ -41,7 +39,9 @@ export function behaviorDraw(context) {
     // related code
     // - `mode/drag_node.js` `datum()`
     function datum() {
-        if (d3_event.altKey) return {};
+        var mode = context.mode();
+        var isNote = mode && (mode.id.indexOf('note') !== -1);
+        if (d3_event.altKey || isNote) return {};
 
         var element;
         if (d3_event.type === 'keydown') {
@@ -115,6 +115,9 @@ export function behaviorDraw(context) {
         _mouseLeave = true;
     }
 
+    function allowsVertex(d) {
+        return d.geometry(context.graph()) === 'vertex' || context.presets().allowsVertex(d, context.graph());
+    }
 
     // related code
     // - `mode/drag_node.js`     `doMode()`
@@ -124,7 +127,7 @@ export function behaviorDraw(context) {
         var d = datum();
         var target = d && d.properties && d.properties.entity;
 
-        if (target && target.type === 'node') {   // Snap to a node
+        if (target && target.type === 'node' && allowsVertex(target)) {   // Snap to a node
             dispatch.call('clickNode', this, target, d);
             return;
 
@@ -138,7 +141,6 @@ export function behaviorDraw(context) {
                 return;
             }
         }
-
         dispatch.call('click', this, context.map().mouseCoordinates(), d);
     }
 
@@ -190,8 +192,8 @@ export function behaviorDraw(context) {
     }
 
 
-    function draw(selection) {
-        context.install(hover);
+    function behavior(selection) {
+        context.install(_hover);
         context.install(edit);
 
         if (!context.inIntro() && !_usedTails[tail.text()]) {
@@ -215,13 +217,13 @@ export function behaviorDraw(context) {
         d3_select(document)
             .call(keybinding);
 
-        return draw;
+        return behavior;
     }
 
 
-    draw.off = function(selection) {
+    behavior.off = function(selection) {
         context.ui().sidebar.hover.cancel();
-        context.uninstall(hover);
+        context.uninstall(_hover);
         context.uninstall(edit);
 
         if (!context.inIntro() && !_usedTails[tail.text()]) {
@@ -240,15 +242,19 @@ export function behaviorDraw(context) {
             // note: keyup.space-block, click.draw-block should remain
 
         d3_select(document)
-            .call(keybinding.off);
+            .call(keybinding.unbind);
     };
 
 
-    draw.tail = function(_) {
+    behavior.tail = function(_) {
         tail.text(_);
-        return draw;
+        return behavior;
+    };
+
+    behavior.hover = function() {
+        return _hover;
     };
 
 
-    return utilRebind(draw, dispatch, 'on');
+    return utilRebind(behavior, dispatch, 'on');
 }

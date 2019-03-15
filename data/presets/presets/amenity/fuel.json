@@ -1,13 +1,21 @@
 {
-    "icon": "fuel",
+    "icon": "maki-fuel",
     "fields": [
         "name",
         "brand",
         "operator",
         "address",
-        "fuel_multi",
+        "fuel_multi"
+    ],
+    "moreFields": [
         "opening_hours",
-        "payment_multi"
+        "payment_multi",
+        "building",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

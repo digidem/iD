@@ -1,12 +1,5 @@
 {
-    "icon": "fire-station",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "temaki-window",
     "geometry": [
         "point",
         "area"

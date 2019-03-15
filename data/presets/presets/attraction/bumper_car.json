@@ -1,10 +1,5 @@
 {
-    "icon": "car",
-    "fields": [
-        "name",
-        "operator",
-        "opening_hours"
-    ],
+    "icon": "maki-car",
     "geometry": [
         "point",
         "area"

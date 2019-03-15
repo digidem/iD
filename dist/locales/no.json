@@ -1,5 +1,10 @@
 {
     "no": {
+        "icons": {
+            "information": "info",
+            "remove": "fjern",
+            "undo": "angre"
+        },
         "modes": {
             "add_area": {
                 "title": "Område",
@@ -34,7 +39,7 @@
             "add": {
                 "annotation": {
                     "point": "La til et punkt.",
-                    "vertex": "La til et punkt til veien.",
+                    "vertex": "La til et punkt til linjen.",
                     "relation": "La til en relasjon."
                 }
             },
@@ -110,7 +115,7 @@
                 },
                 "annotation": {
                     "point": "Slettet et punkt.",
-                    "vertex": "Slett en node fra en vei.",
+                    "vertex": "Slettet et punkt fra en linje.",
                     "line": "Slettet en linje.",
                     "area": "Slettet et område.",
                     "relation": "Slettet en relasjon.",
@@ -139,14 +144,6 @@
             "delete_member": {
                 "annotation": "Fjernet et medlem fra en relasjon"
             },
-            "connect": {
-                "annotation": {
-                    "point": "Koblet en vei til et punkt.",
-                    "vertex": "Koblet en vei til en annen.",
-                    "line": "Koblet en vei til en linje.",
-                    "area": "Koblet en vei til et område."
-                }
-            },
             "disconnect": {
                 "title": "Koble fra",
                 "description": "Koble disse linjene/areane fra hverandre",
@@ -163,7 +160,6 @@
                 "annotation": "{n} kartegenskaper er slått sammen.",
                 "not_eligible": "Disse kartegenskapene kan ikke bli slått sammen.",
                 "not_adjacent": "Disse objektene kan ikke bli slått sammen da endepunktene ikke er sammenkoblet.",
-                "restriction": "Disse kartegenskapene kan ikke bli slått sammen fordi minst en er et medlem av en \"{relation}\" relasjon.",
                 "incomplete_relation": "Disse kartegenskapene kan ikke bli slått sammen fordi minst én av dem er ikke ferdig nedlastet.",
                 "conflicting_tags": "Disse kartegenskapene kan ikke bli slått sammen fordi noen av deres merker har konfliktskapende verdier."
             },
@@ -176,7 +172,7 @@
                 "key": "M",
                 "annotation": {
                     "point": "Flyttet et punkt.",
-                    "vertex": "Flyttet en node i en vei.",
+                    "vertex": "Flyttet et punkt på en linje.",
                     "line": "Flyttet en linje.",
                     "area": "Flyttet et område.",
                     "multiple": "Flyttet flere kartegenskaper."
@@ -291,6 +287,20 @@
                 }
             }
         },
+        "restriction": {
+            "controls": {
+                "distance": "Distanse",
+                "via": "Via"
+            },
+            "help": {
+                "from": "FRA",
+                "via": "VIA",
+                "to": "TIL",
+                "from_name": "{from} {fromName}",
+                "from_name_to_name": "{from} {fromName} {to} {toName}",
+                "via_names": "{via} {viaNames}"
+            }
+        },
         "undo": {
             "tooltip": "Angre: {action}",
             "nothing": "Ingen ting å gjøre."
@@ -303,13 +313,10 @@
         "browser_notice": "Denne editor er støttet i Firefox, Chrome, Safari, Opera og Internet Explorer 11 og høyere. Vennligst oppgrader din nettleser eller bruk Potlatch 2 for å redigere kartet.",
         "translate": {
             "translate": "Oversett",
-            "localized_translation_label": "Flerspråklig navn",
             "localized_translation_language": "Velg språk",
             "localized_translation_name": "Navn"
         },
         "zoom_in_edit": "Zoom inn for å redigere",
-        "login": "logg inn",
-        "logout": "logg ut",
         "loading_auth": "Kobler til OpenStreetMap...",
         "report_a_bug": "Rapporter feil",
         "help_translate": "Hjelp til med oversettelse",
@@ -331,6 +338,7 @@
             "save": "Last opp",
             "cancel": "Avbryt",
             "changes": "{count} endringer",
+            "download_changes": "Last ned osmChange-fil",
             "warnings": "Advarsler",
             "modified": "Endret",
             "deleted": "Slettet",
@@ -361,6 +369,7 @@
                 "key": "H",
                 "title": "Historik",
                 "selected": "{n} valgt",
+                "no_history": "Ingen Historikk (Ny Egenskap)",
                 "version": "Versjon",
                 "last_edit": "Siste endring",
                 "edited_by": "Endret av",
@@ -378,6 +387,7 @@
                 "title": "Måling",
                 "selected": "{n} valgt",
                 "geometry": "Geometri",
+                "closed_line": "lukket linje",
                 "length": "Lengde",
                 "area": "Område",
                 "location": "Sted",
@@ -402,9 +412,6 @@
             "locating": "Finner sted, vennligst vent..."
         },
         "inspector": {
-            "no_documentation_combination": "Det finnes ingen dokumentasjon for denne tag-kombinasjonen",
-            "no_documentation_key": "Det finnes ingen dokumentasjon tilgjengelig for denne nøkkelen",
-            "documentation_redirect": "Denne dokumentasjonen peker nå til en ny side.",
             "show_more": "Vis mer",
             "view_on_osm": "Se på openstreetmap.org",
             "all_fields": "Alle felter",
@@ -415,7 +422,6 @@
             "role": "Rolle",
             "choose": "Velg egenskapstype",
             "results": "{n} resultater for {search}",
-            "reference": "Les mer på OpenStreetMap Wiki",
             "back_tooltip": "Endre kartegenskap",
             "remove": "Fjern",
             "search": "Søk",
@@ -439,7 +445,7 @@
             "add": "Legg til",
             "none": "Ingen",
             "node": "Node",
-            "way": "Vei",
+            "way": "Linje",
             "relation": "Relasjon",
             "location": "Sted",
             "add_fields": "Legg til felt:"
@@ -453,7 +459,6 @@
             "best_imagery": "Den beste ortofotokilden til denne plasseringen",
             "switch": "Bytt tilbake til denne bakgrunnen",
             "custom": "Egendefinert",
-            "custom_button": "Endre egendefinert bakgrunn",
             "overlays": "Overlegg",
             "reset": "tilbakestill",
             "brightness": "Lysstyrke",
@@ -520,7 +525,6 @@
                 "tooltip": "Kraftlinjer, kraftverk osv."
             },
             "others": {
-                "description": "Andre",
                 "tooltip": "Alt annet"
             }
         },
@@ -601,32 +605,12 @@
             "on_wiki": "{tag} på wiki.osm.org",
             "used_with": "brukes med {type}"
         },
-        "validations": {
-            "disconnected_highway": "Koblet fra vei",
-            "disconnected_highway_tooltip": "Veier burde være koblet til andre veier eller til inngangen til bygninger.",
-            "untagged_point": "Utagget punkt",
-            "untagged_point_tooltip": "Velg en kartegenskaptype som beskriver hva dette punktet er.",
-            "untagged_line": "Utagget linje",
-            "untagged_line_tooltip": "Velg en kartegenskaptype som beskriver hva denne linjen er.",
-            "untagged_area": "Utagget område",
-            "untagged_area_tooltip": "Velg en kartegenskaptype som beskriver hva dette område er.",
-            "untagged_relation": "Utagget relasjon",
-            "untagged_relation_tooltip": "Velg en kartegenskaptype som beskriver hva denne relasjonen er.",
-            "tag_suggests_area": "Taggen {tag} anbefaler at linje bør være et areal, men dette er ikke et areal",
-            "deprecated_tags": "Utgående tagger: {tags}"
-        },
         "zoom": {
             "in": "Zoom inn",
             "out": "Zoom ut"
         },
         "cannot_zoom": "Kan ikke zoome ut lenger i gjeldende modus.",
         "full_screen": "Skru av/på fullskjerm.",
-        "gpx": {
-            "local_layer": "Lokal fil",
-            "drag_drop": "Dra og slipp en .gpx, .geojson eller .kml-fil på siden, eller trykk knappen til høyre for å bla etter fil",
-            "zoom": "Zoom til lag",
-            "browse": "Bla etter en fil"
-        },
         "mapillary_images": {
             "tooltip": "Bilder på gate-nivå fra Mapillary",
             "title": "Bilde-overlegg (Mapillary)"
@@ -647,6 +631,57 @@
             "overview": {
                 "title": "Oversikt",
                 "navigation_h": "Navigasjon"
+            },
+            "editing": {
+                "save_h": "Lagre",
+                "upload_h": "Last opp",
+                "keyboard_h": "Tastatursnarveier"
+            },
+            "points": {
+                "title": "Punkter",
+                "add_point_h": "Legge til Punkter",
+                "move_point_h": "Flytte Punkter",
+                "delete_point_h": "Slette Punkter"
+            },
+            "lines": {
+                "title": "Linjer",
+                "add_line_h": "Legge til Linjer",
+                "modify_line_h": "Endre Linjer",
+                "connect_line_h": "Koble sammen Linjer",
+                "disconnect_line_h": "Koble Linjer fra Hverandre",
+                "move_line_h": "Flytte Linjer",
+                "delete_line_h": "Slette Linjer"
+            },
+            "areas": {
+                "title": "Områder",
+                "point_or_area_h": "Punkter eller Områder?",
+                "add_area_h": "Legge til Områder",
+                "square_area_h": "Rette ut Vinkler",
+                "modify_area_h": "Endre Områder",
+                "delete_area_h": "Slette Områder"
+            },
+            "relations": {
+                "title": "Relasjoner",
+                "edit_relation_h": "Endre Relasjoner",
+                "relation_types_h": "Typer Relasjoner",
+                "multipolygon_h": "Multipolygoner",
+                "turn_restriction_h": "Sving-begrensing",
+                "route_h": "Ruter",
+                "boundary_h": "Grenser"
+            },
+            "gps": {
+                "title": "GPS-spor",
+                "using_h": "Bruke GPS-spor"
+            },
+            "field": {
+                "restrictions": {
+                    "about": {
+                        "title": "Om"
+                    },
+                    "tips": {
+                        "title": "Tips"
+                    }
+                }
             }
         },
         "intro": {
@@ -907,11 +942,17 @@
                 "category-building": {
                     "name": "Bygingsrelatert"
                 },
-                "category-golf": {
-                    "name": "Golfrelatert"
-                },
                 "category-landuse": {
                     "name": "Arealbrukrelaterte egenskaper"
+                },
+                "category-natural-area": {
+                    "name": "Naturrelatert"
+                },
+                "category-natural-line": {
+                    "name": "Naturrelatert"
+                },
+                "category-natural-point": {
+                    "name": "Naturrelatert"
                 },
                 "category-path": {
                     "name": "Stirelaterte egenskaper"
@@ -940,27 +981,21 @@
                     "label": "Tillatt for",
                     "options": {
                         "designated": {
-                            "description": "Tilgang tillatt i henhold til skilt eller spesifike lokale lover",
                             "title": "Utpekt"
                         },
                         "destination": {
-                            "description": "Tilgang kun tillatt for å nå et mål",
                             "title": "Mål"
                         },
                         "no": {
-                            "description": "Tilgang ikke tillatt for allmennheten",
                             "title": "Forbudt"
                         },
                         "permissive": {
-                            "description": "Tilgang tillatt frem til eieren trekker tillatelsen tilbake",
                             "title": "Begrenset"
                         },
                         "private": {
-                            "description": "Tilgang tillatt kun ved tillatelse fra eieren på individuell basis",
                             "title": "Privat"
                         },
                         "yes": {
-                            "description": "Tilgang gitt av lov; fri tilgang",
                             "title": "Tillatt"
                         }
                     },
@@ -980,6 +1015,7 @@
                     "label": "Adresse",
                     "placeholders": {
                         "city": "By",
+                        "city!vn": "By/Tettsted",
                         "conscriptionnumber": "123",
                         "country": "Land",
                         "district": "Distrikt",
@@ -1038,8 +1074,20 @@
                 "aeroway": {
                     "label": "Type"
                 },
+                "agrarian": {
+                    "label": "Produkter"
+                },
                 "amenity": {
                     "label": "Type"
+                },
+                "animal_boarding": {
+                    "label": "For Dyr"
+                },
+                "animal_breeding": {
+                    "label": "For Dyr"
+                },
+                "animal_shelter": {
+                    "label": "For Dyr"
                 },
                 "area/highway": {
                     "label": "Type"
@@ -1068,9 +1116,6 @@
                         "foot_bath": "Fotbad"
                     }
                 },
-                "beauty": {
-                    "label": "Butikktype"
-                },
                 "bench": {
                     "label": "Benk"
                 },
@@ -1095,6 +1140,10 @@
                 "building_area": {
                     "label": "Bygning"
                 },
+                "cables": {
+                    "label": "Kabler",
+                    "placeholder": "1, 2, 3..."
+                },
                 "camera/direction": {
                     "label": "Retning (Grader med klokken)",
                     "placeholder": "45, 90, 180, 270"
@@ -1102,18 +1151,30 @@
                 "camera/type": {
                     "label": "Kameratype",
                     "options": {
-                        "fixed": "Fikset"
+                        "dome": "Kuppel",
+                        "fixed": "Fikset",
+                        "panning": "Panorerende"
                     }
                 },
                 "capacity": {
                     "label": "Kapasitet",
                     "placeholder": "50, 100, 200..."
                 },
+                "clothes": {
+                    "label": "Klær"
+                },
                 "collection_times": {
                     "label": "Hentetider"
                 },
+                "comment": {
+                    "label": "Kommentar til endringssettet"
+                },
                 "construction": {
                     "label": "Type"
+                },
+                "contact/webcam": {
+                    "label": "Webkamera-URL",
+                    "placeholder": "http://eksempel.no/"
                 },
                 "country": {
                     "label": "Land"
@@ -1123,6 +1184,9 @@
                 },
                 "crossing": {
                     "label": "Type"
+                },
+                "cycle_network": {
+                    "label": "Nettverk"
                 },
                 "cycleway": {
                     "label": "Sykkelfelter",
@@ -1151,11 +1215,57 @@
                 "description": {
                     "label": "Beskrivelse"
                 },
+                "devices": {
+                    "placeholder": "1, 2, 3..."
+                },
+                "direction": {
+                    "placeholder": "45, 90, 180, 270"
+                },
+                "direction_cardinal": {
+                    "label": "Retning",
+                    "options": {
+                        "E": "Øst",
+                        "ENE": "Øst-nordøst",
+                        "ESE": "Øst-sørøst",
+                        "N": "Nord",
+                        "NE": "Nordøst",
+                        "NNE": "Nord-nordøst",
+                        "NNW": "Nord-nordvest",
+                        "NW": "Nordvest",
+                        "S": "Sør",
+                        "SE": "Sørøst",
+                        "SSE": "Sør-sørøst",
+                        "SSW": "Sør-sørvest",
+                        "SW": "Sørvest",
+                        "W": "Vest",
+                        "WNW": "Vest-nordvest",
+                        "WSW": "Vest-sørvest"
+                    }
+                },
+                "direction_clock": {
+                    "label": "Retning",
+                    "options": {
+                        "anticlockwise": "Mot klokken",
+                        "clockwise": "Med klokken"
+                    }
+                },
+                "direction_vertex": {
+                    "label": "Retning",
+                    "options": {
+                        "backward": "Bakover",
+                        "both": "Begge / Alle",
+                        "forward": "Fremover"
+                    }
+                },
                 "dock": {
                     "label": "Type"
                 },
                 "drive_through": {
                     "label": "Gjennomkjøring"
+                },
+                "duration": {
+                    "label": "Varighet",
+                    "placeholder": "00:00"
                 },
                 "electrified": {
                     "label": "Elektrifisering",
@@ -1167,6 +1277,10 @@
                 },
                 "elevation": {
                     "label": "Høyde over havet"
+                },
+                "email": {
+                    "label": "E-post",
+                    "placeholder": "eksempel@eksempel.no"
                 },
                 "emergency": {
                     "label": "Nød"
@@ -1185,10 +1299,8 @@
                     "label": "Avgift"
                 },
                 "fire_hydrant/type": {
-                    "label": "Type",
                     "options": {
                         "pillar": "Over bakken",
-                        "pond": "Vanndam",
                         "underground": "Under overflaten",
                         "wall": "Vegg"
                     }
@@ -1227,6 +1339,9 @@
                 "handrail": {
                     "label": "Gelender"
                 },
+                "hashtags": {
+                    "placeholder": "#eksempel"
+                },
                 "height": {
                     "label": "Høyde (meter)"
                 },
@@ -1238,6 +1353,23 @@
                 },
                 "hoops": {
                     "placeholder": "1, 2, 4..."
+                },
+                "horse_dressage": {
+                    "options": {
+                        "equestrian": "Ja",
+                        "undefined": "Nei"
+                    }
+                },
+                "horse_riding": {
+                    "label": "Hesteridning",
+                    "options": {
+                        "horse_riding": "Ja"
+                    }
+                },
+                "horse_stables": {
+                    "options": {
+                        "stables": "Ja"
+                    }
                 },
                 "iata": {
                     "label": "IATA"
@@ -1465,15 +1597,10 @@
                     "label": "Betalingstyper"
                 },
                 "phone": {
-                    "label": "Telefon",
                     "placeholder": "+47 22 12 34 56"
                 },
                 "piste/difficulty": {
-                    "label": "Vanskelighet",
-                    "options": {
-                        "advanced": "Avansert (svart diamant)",
-                        "easy": "Enkel (grønn sirkel)"
-                    }
+                    "label": "Vanskelighet"
                 },
                 "piste/type": {
                     "label": "Type"
@@ -1501,6 +1628,11 @@
                 },
                 "route_master": {
                     "label": "Type"
+                },
+                "second_hand": {
+                    "options": {
+                        "yes": "Ja"
+                    }
                 },
                 "service": {
                     "label": "Type"
@@ -1558,8 +1690,7 @@
                     "label": "Type"
                 },
                 "website": {
-                    "label": "Nettside",
-                    "placeholder": "http://example.com/"
+                    "label": "Nettside"
                 },
                 "wetland": {
                     "label": "Type"
@@ -1681,32 +1812,17 @@
                 "amenity/nightclub": {
                     "name": "Nattklubb"
                 },
-                "amenity/parking": {
-                    "name": "Bilparkering"
-                },
                 "amenity/parking_entrance": {
                     "name": "Innkjøring/utkjøring parkeringsgarasje"
                 },
                 "amenity/parking_space": {
                     "name": "Parkeringsplass"
                 },
-                "amenity/pharmacy": {
-                    "name": "Apotek"
-                },
                 "amenity/place_of_worship": {
                     "name": "Bedested"
                 },
                 "amenity/place_of_worship/buddhist": {
                     "name": "Buddhisttempel"
-                },
-                "amenity/place_of_worship/christian": {
-                    "name": "Kirke"
-                },
-                "amenity/place_of_worship/jewish": {
-                    "name": "Synagoge"
-                },
-                "amenity/place_of_worship/muslim": {
-                    "name": "Moské"
                 },
                 "amenity/police": {
                     "name": "Politi"
@@ -1798,9 +1914,6 @@
                 "building": {
                     "name": "Bygning"
                 },
-                "building/apartments": {
-                    "name": "Leiligheter"
-                },
                 "building/barn": {
                     "name": "Låve"
                 },
@@ -1875,9 +1988,6 @@
                 },
                 "building/stable": {
                     "name": "Stall"
-                },
-                "building/train_station": {
-                    "name": "Togstasjon"
                 },
                 "building/university": {
                     "name": "Universitetsbygning"
@@ -2029,15 +2139,6 @@
                 "entrance": {
                     "name": "Inngang/utgang"
                 },
-                "footway/crossing": {
-                    "name": "Fotgjengerovergang"
-                },
-                "footway/crosswalk": {
-                    "name": "Fotgjengerovergang"
-                },
-                "footway/sidewalk": {
-                    "name": "Fortau"
-                },
                 "ford": {
                     "name": "Vadested"
                 },
@@ -2064,12 +2165,6 @@
                 },
                 "highway/bridleway": {
                     "name": "Ridevei"
-                },
-                "highway/crossing": {
-                    "name": "Fotgjengerovergang"
-                },
-                "highway/crosswalk": {
-                    "name": "Fotgjengerovergang"
                 },
                 "highway/cycleway": {
                     "name": "Sykkelvei"
@@ -2173,9 +2268,6 @@
                 "landuse/farmyard": {
                     "name": "Gårdsplass"
                 },
-                "landuse/forest": {
-                    "name": "Skog"
-                },
                 "landuse/grass": {
                     "name": "Gress"
                 },
@@ -2254,9 +2346,6 @@
                 "leisure/pitch/american_football": {
                     "name": "Amerikansk fotballbane"
                 },
-                "leisure/pitch/baseball": {
-                    "name": "Baseballbane"
-                },
                 "leisure/pitch/basketball": {
                     "name": "Basketballbane"
                 },
@@ -2328,9 +2417,6 @@
                 },
                 "man_made/lighthouse": {
                     "name": "Fyrtårn"
-                },
-                "man_made/observation": {
-                    "name": "Observasjonstårn"
                 },
                 "man_made/petroleum_well": {
                     "name": "Oljebrønn"
@@ -2415,9 +2501,6 @@
                 },
                 "natural/tree": {
                     "name": "Tre"
-                },
-                "natural/tree_row": {
-                    "name": "Trerekke"
                 },
                 "natural/volcano": {
                     "name": "Vulkan"
@@ -2704,9 +2787,6 @@
                 "shop/interior_decoration": {
                     "name": "Interiørbutikk"
                 },
-                "shop/jewelry": {
-                    "name": "Smykkeforhandler"
-                },
                 "shop/kitchen": {
                     "name": "Kjøkkenbutikk"
                 },
@@ -2988,6 +3068,123 @@
                 "attribution": {
                     "text": "Vilkår og tilbakemelding"
                 }
+            },
+            "osm-gps": {
+                "attribution": {
+                    "text": "© OpenStreetMap bidragsytere"
+                }
+            }
+        },
+        "community": {
+            "cape-coast-youthmappers": {
+                "description": "Følg oss på Twitter: {url}"
+            },
+            "osm-gh-twitter": {
+                "name": "OpenStreetMap Ghana på Twitter",
+                "description": "Følg oss på Twitter: {url}"
+            },
+            "OSM-BGD-facebook": {
+                "description": "Forbedre OpenStreetMap i Bangladesh"
+            },
+            "OSM-India-facebook": {
+                "description": "Forbedre OpenStreetMap i India"
+            },
+            "OSM-india-twitter": {
+                "name": "OpenStreetMap India Twitter"
+            },
+            "OSM-IDN-facebook": {
+                "description": "Forbedre OpenStreetMap i Indonesia"
+            },
+            "OSM-japan-twitter": {
+                "name": "OpenStreetMap Japan Twitter",
+                "description": "Hashtag på Twitter: {url}"
+            },
+            "OSM-MNG-facebook": {
+                "description": "Forbedre OpenStreetMap i Mongolia"
+            },
+            "OSM-MMR-facebook": {
+                "description": "Forbedre OpenStreetMap i Myanmar"
+            },
+            "OSM-Nepal-facebook": {
+                "description": "Forbedre OpenStreetMap i Nepal"
+            },
+            "at-twitter": {
+                "name": "OpenStreetMap Østerrike Twitter",
+                "description": "OpenStreetMap Østerrike på Twitter: {url}"
+            },
+            "osmgraz-twitter": {
+                "name": "OSM-samfunnet i Graz på Twitter",
+                "description": "OpenStreetMap-samfunnet i Graz på Twitter"
+            },
+            "osm-at": {
+                "name": "OpenStreetMap Østerrike"
+            },
+            "be-twitter": {
+                "name": "OpenStreetMap Belgia Twitter"
+            },
+            "fr-twitter": {
+                "name": "OpenStreetMap Frankrike på Twitter",
+                "description": "OpenStreetMap Frankrike på Twitter: {url}"
+            },
+            "de-berlin-twitter": {
+                "name": "OpenStreetMap Berlin Twitter",
+                "description": "Følg oss på Twitter: {url}"
+            },
+            "it-twitter": {
+                "name": "OpenStreetMap Italia Twitter",
+                "description": "Følg oss på Twitter på {url}"
+            },
+            "talk-it-lazio": {
+                "description": "Alle er velkomne! Registrer deg på {signupUrl}"
+            },
+            "no-forum": {
+                "name": "OpenStreetMap Norge Nettforum",
+                "description": "OpenStreetMap Norge Nettforum"
+            },
+            "no-irc": {
+                "name": "OpenStreetMap Norge på IRC",
+                "description": "Chatterom for kartleggere og OpenStreetMap-brukere, utviklere og entusiaster i Norge"
+            },
+            "no-mailinglist": {
+                "name": "OpenStreetMap Norge e-postliste",
+                "description": "E-postliste for kartleggere og OpenStreetMap-brukere, utviklere og entusiaster i Norge"
+            },
+            "se-twitter": {
+                "name": "OpenStreetMap Sverige på Twitter",
+                "description": "Følg oss på Twitter: {url}"
+            },
+            "OSM-CA-Slack": {
+                "description": "Alle er velkomne! Registrer deg på {signupUrl}."
+            },
+            "OSM-US-Slack": {
+                "description": "Alle er velkomne! Registrer deg på {signupUrl}"
+            },
+            "PHXGeo-twitter": {
+                "description": "Følg oss på Twitter på {url}"
+            },
+            "OSM-AR-twitter": {
+                "name": "OpenStreetMap Argentina Twitter",
+                "description": "Følg oss på Twitter på {url}"
+            },
+            "OSM-br-twitter": {
+                "name": "OpenStreetMap Brasil Twitter",
+                "description": "Følg oss på Twitter på {url}"
+            },
+            "OSM-CL-twitter": {
+                "name": "OpenStreetMap Chile Twitter",
+                "description": "Følg oss på Twitter på {url}"
+            },
+            "OSM-CO-twitter": {
+                "name": "OpenStreetMap Colombia Twitter",
+                "description": "Følg oss på Twitter på {url}"
+            },
+            "OSM-PE-twitter": {
+                "name": "OpenStreetMap Peru Twitter",
+                "description": "Følg oss på Twitter på {url}"
+            },
+            "OSM-Twitter": {
+                "name": "OpenStreetMap Twitter",
+                "description": "Følg oss på Twitter på {url}"
             }
         }
     }

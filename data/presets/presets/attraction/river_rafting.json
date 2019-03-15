@@ -1,10 +1,5 @@
 {
-    "icon": "ferry",
-    "fields": [
-        "name",
-        "operator",
-        "opening_hours"
-    ],
+    "icon": "maki-ferry",
     "geometry": [
         "point",
         "line"

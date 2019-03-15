@@ -1,11 +1,5 @@
 {
-    "icon": "place-of-worship",
-    "fields": [
-        "name",
-        "address",
-        "levels",
-        "height"
-    ],
+    "icon": "maki-place-of-worship",
     "geometry": [
         "area"
     ],

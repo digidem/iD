@@ -1,22 +1,19 @@
 {
-    "icon": "car",
+    "icon": "maki-car",
     "fields": [
         "name",
-        "operator",
-        "address",
-        "building_area",
         "brand",
+        "{shop}",
         "second_hand",
-        "service/vehicle",
-        "opening_hours",
-        "payment_multi"
+        "service/vehicle"
     ],
     "geometry": [
         "point",
         "area"
     ],
     "terms": [
-        "auto"
+        "automobile",
+        "automotive"
     ],
     "tags": {
         "shop": "car"

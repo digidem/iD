@@ -1,5 +1,10 @@
 {
     "ms": {
+        "icons": {
+            "download": "muat turun",
+            "information": "info",
+            "open_wikidata": "buka di wikidata.org"
+        },
         "modes": {
             "add_area": {
                 "title": "Kawasan",
@@ -15,6 +20,10 @@
                 "title": "Titik",
                 "description": "Tambah restoran-restoran, monumen-monumen, peti-peti surat atau titik-titik lain dalam peta.",
                 "tail": "Klik pada peta untuk menambah suatu titik."
+            },
+            "add_note": {
+                "title": "Nota",
+                "description": "Ada sebarang masalah? Maklumkan terhadap pemeta-pemeta lain."
             },
             "browse": {
                 "title": "Semak imbas",
@@ -136,14 +145,6 @@
             "delete_member": {
                 "annotation": "Suatu ahli telah dihapuskan dalam hubungan."
             },
-            "connect": {
-                "annotation": {
-                    "point": "Suatu jalan telah disambungkan pada suatu titik.",
-                    "vertex": "Suatu jalan telah disambungkan pada suatu jalan yang lain.",
-                    "line": "Suatu jalan telah disambungkan pada suatu garis.",
-                    "area": "Telah disambung cara kepada kawasan."
-                }
-            },
             "disconnect": {
                 "title": "Pisahkan",
                 "description": "Putuskan garis-garis atau kawasan-kawasan ini antara satu sama lain.",
@@ -160,7 +161,6 @@
                 "annotation": "{n} gambaran telah digabung.",
                 "not_eligible": "Gambaran-gambaran ini tidak dapat digabungkan.",
                 "not_adjacent": "Ciri-ciri ini tidak dapat digabungkan kerana titik hujung mereka tidak bersambung.",
-                "restriction": "Ciri-ciri ini tidak dapat digabungkan kerana sekurang-kurangnya satu adalah ahli hubungan \"{relation}\".",
                 "incomplete_relation": "Ciri-ciri ini tidak dapat digabungkan kerana sekurang-kurangnya satu belum sepenuhnya dimuat turun.",
                 "conflicting_tags": "Ciri-ciri ini tidak dapat digabungkan kerana beberapa penanda mereka mempunyai nilai yang bercanggah."
             },
@@ -286,6 +286,19 @@
                     "create": "Suatu larangan membelok telah ditambah",
                     "delete": "Suatu larangan membelok telah dihapuskan"
                 }
+            },
+            "detach_node": {
+                "key": "E"
+            }
+        },
+        "restriction": {
+            "help": {
+                "from": "DARI",
+                "via": "MELALUI",
+                "to": "KE",
+                "from_name": "{from} {fromName}",
+                "from_name_to_name": "{from} {fromName} {to} {toName}",
+                "via_names": "{via} {viaNames}"
             }
         },
         "undo": {
@@ -300,16 +313,16 @@
         "browser_notice": "Penyunting ini boleh digunakan dengan Firefox, Chrome, Safari, Opera, dan Internet Explorer 11 dan versi termaju. Sila tingkatkan pelayar anda, atau gunakan Potlatch 2 untuk menyunting peta.",
         "translate": {
             "translate": "Terjemah",
-            "localized_translation_label": "Nama berbilang bahasa",
             "localized_translation_language": "Pilih bahasa",
             "localized_translation_name": "Nama"
         },
         "zoom_in_edit": "Zum lebih dekat untuk menyunting",
-        "login": "log masuk",
-        "logout": "log keluar",
         "loading_auth": "Berhubung ke OpenStreetMap...",
         "report_a_bug": "Laporkan suatu pepijat",
         "help_translate": "Bantu penterjemahan",
+        "sidebar": {
+            "key": "`"
+        },
         "feature_info": {
             "hidden_warning": "{count} gambaran yang tersorok",
             "hidden_details": "Gambaran-gambaran ini ialah yang tersorok:  {details}"
@@ -324,9 +337,12 @@
             "title": "Muat naik ke OpenStreetMap",
             "upload_explanation": "Perubahan yang telah anda muat naik akan kelihatan pada semua peta yang menggunakan data OpenStreetMap.",
             "upload_explanation_with_user": "Perubahan yang telah anda muat naik sebagai {user} akan kelihatan pada semua peta yang menggunakan data OpenStreetMap.",
+            "request_review": "Saya mahukan seseorang yang boleh memeriksa suntingan saya.",
             "save": "Muat naik",
             "cancel": "Batal",
             "changes": "{count} Perubahan",
+            "download_changes": "Muat turun fail osmChange",
+            "errors": "Ralat-ralat",
             "warnings": "Amaran",
             "modified": "Diubah suai",
             "deleted": "Dipadam",
@@ -360,7 +376,8 @@
                 "edited_by": "Diedit Oleh",
                 "changeset": "Perubahan",
                 "unknown": "Tidak Diketahui",
-                "link_text": "Sejarah pada openstreetmap.org"
+                "link_text": "Sejarah pada openstreetmap.org",
+                "note_comments": "Komen-komen"
             },
             "location": {
                 "key": "L",
@@ -399,9 +416,6 @@
             "locating": "Menentukan tempat, sila tunggu..."
         },
         "inspector": {
-            "no_documentation_combination": "Tiada dokumentasi yang tersedia untuk kombinasi penanda ini",
-            "no_documentation_key": "Tiada dokumentasi yang tersedia untuk kunci ini",
-            "documentation_redirect": "Dokumentasi ini telah diarahkan semula ke halaman baru.",
             "show_more": "Tunjukkan Lagi",
             "view_on_osm": "Lihat pada openstreetmap.org",
             "all_fields": "Semua tempat kosong",
@@ -412,7 +426,6 @@
             "role": "Peranan",
             "choose": "Pilih jenis ciri",
             "results": "{n} keputusan untuk {search}",
-            "reference": "Lihat Wiki OpenStreetMap",
             "back_tooltip": "Tukar ciri",
             "remove": "Keluarkan",
             "search": "Gelintar",
@@ -449,7 +462,6 @@
             "best_imagery": "Sumber imejan terbaik yang diketahui bagi lokasi ini",
             "switch": "Tukar balik ke latar belakang ini",
             "custom": "Penyuai",
-            "custom_button": "Tukar latar belakang tersuai",
             "reset": "set semula",
             "minimap": {
                 "tooltip": "Tunjukkan peta yang dizum keluar untuk membantu mencari kawasan yang dipaparkan saat ini.",
@@ -515,11 +527,9 @@
                 "tooltip": "Talian-talian Elektrik, Loji-loji Kuasa, Pencawang-pencawang, dll."
             },
             "past_future": {
-                "description": "Garis Masa",
                 "tooltip": "Cadangan, Pembinaan, Terabai, Diruntuhkan, dll."
             },
             "others": {
-                "description": "Lain-lain",
                 "tooltip": "Yang Lain-lain"
             }
         },
@@ -579,7 +589,8 @@
         "success": {
             "just_edited": "Anda baru sahaja telah menyunting OpenStreetMap!",
             "help_link_text": "Butiran",
-            "help_link_url": "https://wiki.openstreetmap.org/wiki/FAQ#I_have_just_made_some_changes_to_the_map._How_do_I_get_to_see_my_changes.3F"
+            "help_link_url": "https://wiki.openstreetmap.org/wiki/FAQ#I_have_just_made_some_changes_to_the_map._How_do_I_get_to_see_my_changes.3F",
+            "like_osm": "Suka OpenStreetMap? Bertemu pemeta-pemeta lain:"
         },
         "confirm": {
             "okay": "OK",
@@ -604,34 +615,12 @@
             "on_wiki": "{tag} pada wiki.osm.org",
             "used_with": "digunakan dengan {type}"
         },
-        "validations": {
-            "disconnected_highway": "Jalan raya terputus",
-            "disconnected_highway_tooltip": "Jalan raya sepatutnya dihubungkan dengan jalan lain atau pintu masuk bangunan.",
-            "old_multipolygon": "Penanda multipoligon cara luaran",
-            "old_multipolygon_tooltip": "Gaya multipoligon ini tidak digunakan lagi. Sila berikan penanda pada multipoligon induk dan bukannya pada cara luaran.",
-            "untagged_point": "Titik tanpa tag",
-            "untagged_point_tooltip": "Pilih jenis ciri yang menggambarkan titik ini.",
-            "untagged_line": "Garis tanpa tag",
-            "untagged_line_tooltip": "Pilih jenis ciri yang menggambarkan garis ini.",
-            "untagged_area": "Kawasan tanpa tag",
-            "untagged_area_tooltip": "Pilih jenis ciri yang menggambarkan kawasan ini.",
-            "untagged_relation": "Hubungan tanpa tag",
-            "untagged_relation_tooltip": "Pilih jenis ciri yang menggambarkan hubungan ini.",
-            "tag_suggests_area": "Tanda {tag} mencadangkan garis sepatutnya menjadi kawasan, tetapi ianya bukan kawasan",
-            "deprecated_tags": "Tag-tag yang telah lapuk: {tags}"
-        },
         "zoom": {
             "in": "Zum dekat",
             "out": "Zum jauh"
         },
         "cannot_zoom": "Had zum jauh telah dicapai dalam mod yang sedang dipakai.",
         "full_screen": "Togol Skrin Penuh",
-        "gpx": {
-            "local_layer": "Fail tempatan",
-            "drag_drop": "Tarik dan lepaskan suatu fail .gpx, .geojson atau .kml masuk halaman ini, atau klik butang di sebelah kanan untuk mengimbas",
-            "zoom": "Zum ke lapisan",
-            "browse": "Semak imbas untuk fail"
-        },
         "mapillary_images": {
             "tooltip": "Gambar jalan dari Mapillary",
             "title": "Tindihan Gambar (Mapillary)"
@@ -668,6 +657,7 @@
             },
             "editing": {
                 "title": "Menyunting & Menyimpan",
+                "save_h": "Simpan",
                 "keyboard_h": "Jalan Pintas Papan Kekunci"
             },
             "feature_editor": {
@@ -868,6 +858,27 @@
                 }
             }
         },
+        "units": {
+            "feet": "{quantity} ka",
+            "miles": "{quantity} bt",
+            "square_feet": "{quantity} kp",
+            "square_miles": "{quantity} bp",
+            "meters": "{quantity} m",
+            "kilometers": "{quantity} km",
+            "square_meters": "{quantity} m²",
+            "square_kilometers": "{quantity} km²",
+            "hectares": "{quantity} ha",
+            "area_pair": "{area1} ({area2})",
+            "arcdegrees": "{quantity}°",
+            "arcminutes": "{quantity}′",
+            "arcseconds": "{quantity}″",
+            "north": "U",
+            "south": "S",
+            "east": "T",
+            "west": "B",
+            "coordinate": "{coordinate}{direction}",
+            "coordinate_pair": "{latitude}, {longitude}"
+        },
         "presets": {
             "categories": {
                 "category-barrier": {
@@ -875,9 +886,6 @@
                 },
                 "category-building": {
                     "name": "Ciri-ciri Bangunan"
-                },
-                "category-golf": {
-                    "name": "Ciri-ciri Golf"
                 },
                 "category-landuse": {
                     "name": "Ciri-ciri Guna Tanah"
@@ -918,19 +926,15 @@
                     "label": "Capaian Dibenarkan",
                     "options": {
                         "designated": {
-                            "description": "Capaian yang dibenarkan menurut papan tanda atau undang-undang tempatan yang khusus",
                             "title": "Bertanda"
                         },
                         "destination": {
-                            "description": "Capaian dibenarkan hanya untuk sampai ke destinasi sahaja",
                             "title": "Destinasi"
                         },
                         "dismount": {
-                            "description": "Capaian dibenarkan tetapi pengayuh basikal diwajibkan turun dari basikal",
                             "title": "Turun Dari Basikal"
                         },
                         "no": {
-                            "description": "Capaian tidak dibenarkan untuk orang awam",
                             "title": "Dilarang"
                         },
                         "private": {
@@ -1059,9 +1063,6 @@
                         "hot_spring": "Mata air panas",
                         "onsen": "Onsen Jepun"
                     }
-                },
-                "beauty": {
-                    "label": "Jenis Kedai"
                 },
                 "bench": {
                     "label": "Bangku"
@@ -1267,19 +1268,9 @@
                 "fence_type": {
                     "label": "Jenis"
                 },
-                "fire_hydrant/position": {
-                    "label": "Kedudukan",
-                    "options": {
-                        "green": "Hijau",
-                        "lane": "Lorong",
-                        "parking_lot": "Tempat Letak Kereta"
-                    }
-                },
                 "fire_hydrant/type": {
-                    "label": "Jenis",
                     "options": {
                         "pillar": "Tiang/Atas-tanah",
-                        "pond": "Kolam",
                         "underground": "Bawah tanah",
                         "wall": "Dinding"
                     }
@@ -1619,20 +1610,10 @@
                     "placeholder": "1, 2, 3..."
                 },
                 "phone": {
-                    "label": "Telefon",
                     "placeholder": "+31 42 123 4567"
                 },
                 "piste/difficulty": {
                     "label": "Kesukaran",
-                    "options": {
-                        "advanced": "Lanjutan (berlian hitam)",
-                        "easy": "Senang (bulatan hijau)",
-                        "expert": "Pakar (berlian hitam berganda)",
-                        "extreme": "Lasak (peralatan mendaki diperlukan)",
-                        "freeride": "Freeride (luar ski)",
-                        "intermediate": "Pertengahan (segi empat sama biru)",
-                        "novice": "Orang baru (berarahan)"
-                    },
                     "placeholder": "Senang, Pertengahan, Lanjutan..."
                 },
                 "piste/grooming": {
@@ -1954,9 +1935,6 @@
                 "tourism": {
                     "label": "Jenis"
                 },
-                "tourism_attraction": {
-                    "label": "Pelancongan"
-                },
                 "tower/construction": {
                     "label": "Pembinaan",
                     "placeholder": "Lelaki, Kekisi, Tersembunyi, ..."
@@ -2024,8 +2002,7 @@
                     "label": "Jenis"
                 },
                 "website": {
-                    "label": "Tapak Web",
-                    "placeholder": "http://contoh.com/"
+                    "label": "Tapak Web"
                 },
                 "wetland": {
                     "label": "Jenis"
@@ -2054,8 +2031,7 @@
                     "name": "Alamat"
                 },
                 "advertising/billboard": {
-                    "name": "Papan Iklan",
-                    "terms": "<translate with synonyms or related terms for 'Billboard', separated by commas>"
+                    "name": "Papan Iklan"
                 },
                 "aerialway": {
                     "name": "Jalan Udara"
@@ -2106,14 +2082,8 @@
                 "amenity/nightclub": {
                     "name": "Kelab Malam"
                 },
-                "amenity/parking": {
-                    "name": "Tempat Letak Kereta"
-                },
                 "amenity/parking_space": {
                     "name": "Ruang Letak Kenderaan"
-                },
-                "amenity/pharmacy": {
-                    "name": "Farmasi"
                 },
                 "amenity/place_of_worship": {
                     "name": "Tempat Ibadat"
@@ -2121,19 +2091,8 @@
                 "amenity/place_of_worship/buddhist": {
                     "name": "Tokong Buddha"
                 },
-                "amenity/place_of_worship/christian": {
-                    "name": "Gereja"
-                },
                 "amenity/place_of_worship/hindu": {
                     "name": "Kuil Hindu"
-                },
-                "amenity/place_of_worship/jewish": {
-                    "name": "Saumaah",
-                    "terms": "Sinagoga"
-                },
-                "amenity/place_of_worship/muslim": {
-                    "name": "Masjid",
-                    "terms": "Surau, Musolla, Solat"
                 },
                 "amenity/place_of_worship/shinto": {
                     "name": "Tokong Shinto"
@@ -2164,9 +2123,6 @@
                 },
                 "amenity/ranger_station": {
                     "name": "Stesen Renjer"
-                },
-                "amenity/recycling": {
-                    "name": "Bekas Kitar Semula"
                 },
                 "amenity/recycling_centre": {
                     "name": "Pusat Kitar Semula"
@@ -2215,8 +2171,7 @@
                     "name": "Kawasan"
                 },
                 "area/highway": {
-                    "name": "Permukaaan Jalan",
-                    "terms": "<translate with synonyms or related terms for 'Road Surface', separated by commas>"
+                    "name": "Permukaaan Jalan"
                 },
                 "barrier/gate": {
                     "name": "Pintu"
@@ -2232,38 +2187,28 @@
                     "name": "Sempadan Pentadbiran"
                 },
                 "building": {
-                    "name": "Bangunan",
-                    "terms": "<translate with synonyms or related terms for 'Building', separated by commas>"
-                },
-                "building/apartments": {
-                    "name": "Rumah-rumah Pangsa"
+                    "name": "Bangunan"
                 },
                 "building/cabin": {
                     "name": "Kabin"
                 },
                 "building/cathedral": {
-                    "name": "Bangunan Katedral",
-                    "terms": "<translate with synonyms or related terms for 'Cathedral Building', separated by commas>"
+                    "name": "Bangunan Katedral"
                 },
                 "building/chapel": {
-                    "name": "Bangunan Gereja Kecil",
-                    "terms": "<translate with synonyms or related terms for 'Chapel Building', separated by commas>"
+                    "name": "Bangunan Gereja Kecil"
                 },
                 "building/church": {
-                    "name": "Bangunan Gereja",
-                    "terms": "<translate with synonyms or related terms for 'Church Building', separated by commas>"
+                    "name": "Bangunan Gereja"
                 },
                 "building/college": {
-                    "name": "Bangunan Kolej",
-                    "terms": "<translate with synonyms or related terms for 'College Building', separated by commas>"
+                    "name": "Bangunan Kolej"
                 },
                 "building/commercial": {
-                    "name": "Bangunan Perniagaan",
-                    "terms": "<translate with synonyms or related terms for 'Commercial Building', separated by commas>"
+                    "name": "Bangunan Perniagaan"
                 },
                 "building/construction": {
-                    "name": "Bangunan Dalam Pembinaan",
-                    "terms": "<translate with synonyms or related terms for 'Building Under Construction', separated by commas>"
+                    "name": "Bangunan Dalam Pembinaan"
                 },
                 "building/garage": {
                     "name": "Garaj"
@@ -2275,12 +2220,10 @@
                     "name": "Rumah Tanaman"
                 },
                 "building/hospital": {
-                    "name": "Bangunan Hospital",
-                    "terms": "<translate with synonyms or related terms for 'Hospital Building', separated by commas>"
+                    "name": "Bangunan Hospital"
                 },
                 "building/hotel": {
-                    "name": "Bangunan Hotel",
-                    "terms": "<translate with synonyms or related terms for 'Hotel Building', separated by commas>"
+                    "name": "Bangunan Hotel"
                 },
                 "building/house": {
                     "name": "Rumah"
@@ -2290,46 +2233,36 @@
                     "terms": "Dangau"
                 },
                 "building/industrial": {
-                    "name": "Bangunan Perindustrian",
-                    "terms": "<translate with synonyms or related terms for 'Industrial Building', separated by commas>"
+                    "name": "Bangunan Perindustrian"
                 },
                 "building/kindergarten": {
-                    "name": "Bangunan Prasekolah/Tadika",
-                    "terms": "<translate with synonyms or related terms for 'Preschool/Kindergarten Building', separated by commas>"
+                    "name": "Bangunan Prasekolah/Tadika"
                 },
                 "building/mosque": {
                     "name": "Bangunan Masjid",
                     "terms": "Bangunan Surau, Musolla"
                 },
                 "building/public": {
-                    "name": "Bangunan Awam",
-                    "terms": "<translate with synonyms or related terms for 'Public Building', separated by commas>"
+                    "name": "Bangunan Awam"
                 },
                 "building/residential": {
-                    "name": "Bangunan Kediaman",
-                    "terms": "<translate with synonyms or related terms for 'Residential Building', separated by commas>"
+                    "name": "Bangunan Kediaman"
                 },
                 "building/retail": {
-                    "name": "Bangunan Kedai",
-                    "terms": "<translate with synonyms or related terms for 'Retail Building', separated by commas>"
+                    "name": "Bangunan Kedai"
                 },
                 "building/roof": {
                     "name": "Atap",
                     "terms": "Bumbung"
                 },
                 "building/school": {
-                    "name": "Bangunan Sekolah",
-                    "terms": "<translate with synonyms or related terms for 'School Building', separated by commas>"
+                    "name": "Bangunan Sekolah"
                 },
                 "building/stable": {
                     "name": "Kandang Kuda"
                 },
-                "building/train_station": {
-                    "name": "Stesen Kereta Api"
-                },
                 "building/university": {
-                    "name": "Bangunan Universiti",
-                    "terms": "<translate with synonyms or related terms for 'University Building', separated by commas>"
+                    "name": "Bangunan Universiti"
                 },
                 "building/warehouse": {
                     "name": "Gudang"
@@ -2338,40 +2271,31 @@
                     "name": "Kelab"
                 },
                 "highway/primary": {
-                    "name": "Jalan Utama",
-                    "terms": "<translate with synonyms or related terms for 'Primary Road', separated by commas>"
+                    "name": "Jalan Utama"
                 },
                 "highway/residential": {
-                    "name": "Jalan Kediaman",
-                    "terms": "<translate with synonyms or related terms for 'Residential Road', separated by commas>"
+                    "name": "Jalan Kediaman"
                 },
                 "highway/road": {
-                    "name": "Jalan Tidak Diketahui",
-                    "terms": "<translate with synonyms or related terms for 'Unknown Road', separated by commas>"
+                    "name": "Jalan Tidak Diketahui"
                 },
                 "highway/secondary": {
-                    "name": "Jalan Sekunder",
-                    "terms": "<translate with synonyms or related terms for 'Secondary Road', separated by commas>"
+                    "name": "Jalan Sekunder"
                 },
                 "highway/service": {
-                    "name": "Jalan Perkhidmatan",
-                    "terms": "<translate with synonyms or related terms for 'Service Road', separated by commas>"
+                    "name": "Jalan Perkhidmatan"
                 },
                 "highway/tertiary": {
-                    "name": "Jalan Tertiari",
-                    "terms": "<translate with synonyms or related terms for 'Tertiary Road', separated by commas>"
+                    "name": "Jalan Tertiari"
                 },
                 "highway/track": {
-                    "name": "Jalan Rintis Tidak Diselenggara",
-                    "terms": "<translate with synonyms or related terms for 'Unmaintained Track Road', separated by commas>"
+                    "name": "Jalan Rintis Tidak Diselenggara"
                 },
                 "highway/trunk": {
-                    "name": "Jalan Batang",
-                    "terms": "<translate with synonyms or related terms for 'Trunk Road', separated by commas>"
+                    "name": "Jalan Batang"
                 },
                 "highway/unclassified": {
-                    "name": "Jalan Kecil/Tidak Dikelaskan",
-                    "terms": "<translate with synonyms or related terms for 'Minor/Unclassified Road', separated by commas>"
+                    "name": "Jalan Kecil/Tidak Dikelaskan"
                 },
                 "leisure/pitch/cricket": {
                     "name": "Padang Kriket"
@@ -2493,9 +2417,6 @@
                 "office/water_utility": {
                     "name": "Pejabat Pembekal Air"
                 },
-                "piste": {
-                    "name": "Piste/Denai Ski"
-                },
                 "place": {
                     "name": "Tempat"
                 },
@@ -2544,12 +2465,6 @@
                 "power/generator": {
                     "name": "Penjana Tenaga Elektrik"
                 },
-                "power/generator/source_nuclear": {
-                    "name": "Reaktor Nuklear"
-                },
-                "power/generator/source_wind": {
-                    "name": "Turbin Angin"
-                },
                 "power/line": {
                     "name": "Talian Elektrik"
                 },
@@ -2567,30 +2482,6 @@
                 },
                 "power/transformer": {
                     "name": "Transformer"
-                },
-                "public_transport/linear_platform_bus": {
-                    "name": "Hentian Bas / Platform"
-                },
-                "public_transport/linear_platform_ferry": {
-                    "name": "Hentian Feri / Platform"
-                },
-                "public_transport/linear_platform_light_rail": {
-                    "name": "Hentian Rel Ringan / Platform"
-                },
-                "public_transport/linear_platform_monorail": {
-                    "name": "Hentian Monorel / Platform"
-                },
-                "public_transport/linear_platform_subway": {
-                    "name": "Hentian Laluan Bawah Tanah / Platform"
-                },
-                "public_transport/linear_platform_train": {
-                    "name": "Hentian Kereta Api / Platform"
-                },
-                "public_transport/linear_platform_tram": {
-                    "name": "Hentian Tram / Platform"
-                },
-                "public_transport/linear_platform_trolleybus": {
-                    "name": "Hentian Bas Troli / Platform"
                 },
                 "public_transport/platform": {
                     "name": "Hentian Transit"
@@ -2635,8 +2526,7 @@
                     "name": "Funikulus"
                 },
                 "railway/level_crossing": {
-                    "name": "Lintasan Kereta Api (Jalan)",
-                    "terms": "<translate with synonyms or related terms for 'Railway Crossing (Road)', separated by commas>"
+                    "name": "Lintasan Kereta Api (Jalan)"
                 },
                 "railway/light_rail": {
                     "name": "Rel Ringan"
@@ -2739,15 +2629,32 @@
                 "tourism": {
                     "name": "Pelancongan"
                 },
+                "tourism/aquarium": {
+                    "name": "Akuarium"
+                },
+                "tourism/hotel": {
+                    "name": "Hotel"
+                },
+                "tourism/picnic_site": {
+                    "name": "Tapak Perkelahan"
+                },
                 "type/route/road": {
-                    "name": "Laluan Jalan",
-                    "terms": "<translate with synonyms or related terms for 'Road Route', separated by commas>"
+                    "name": "Laluan Jalan"
+                },
+                "waterway": {
+                    "name": "Jalan Air"
+                },
+                "waterway/canal": {
+                    "name": "Terusan"
                 },
                 "waterway/river": {
                     "name": "Sungai"
                 },
                 "waterway/riverbank": {
                     "name": "Tebing sungai"
+                },
+                "waterway/waterfall": {
+                    "name": "Air Terjun"
                 }
             }
         },
@@ -2760,7 +2667,7 @@
                 "attribution": {
                     "text": "Terma & Maklum Balas"
                 },
-                "description": "Imejan satelit Premium DigitalGlobe.",
+                "description": "DigitalGlobe-Premium ialah jubin daripada peta dasar DigitalGlobe bagi rantau-rantau terpilih dengan +Vivid atau kawasan tertentu dengan imejan tersuai, beresolusi 50cm atau lebih baik, dan akan disegar semula dengan lebih kerap melalui kemas kini akan datang.",
                 "name": "Imejan DigitalGlobe Premium"
             },
             "DigitalGlobe-Premium-vintage": {
@@ -2773,7 +2680,7 @@
                 "attribution": {
                     "text": "Terma & Maklum Balas"
                 },
-                "description": "Imejan satelit Standard DigitalGlobe.",
+                "description": "DigitalGlobe-Standard ialah set imejan terpilih, meliputi 86% jisim bumi, dengan resolusi 30-60cm sekiranya ada, diisi oleh Landsat. Secara purata, imejan ini berusia 2.31 tahun, dengan kawasan-kawasan tertentu dikemas kini 2x setahun.",
                 "name": "Imejan DigitalGlobe Standard"
             },
             "DigitalGlobe-Standard-vintage": {
@@ -2788,6 +2695,11 @@
                 },
                 "description": "Imejan sejagat Esri.",
                 "name": "Esri World Imagery"
+            },
+            "EsriWorldImageryClarity": {
+                "attribution": {
+                    "text": "Terma & Maklum Balas"
+                }
             },
             "MAPNIK": {
                 "attribution": {
@@ -2845,9 +2757,6 @@
                 },
                 "name": "OSM Inspector: Penandaan"
             },
-            "US-TIGER-Roads-2012": {
-                "name": "TIGER Roads 2012"
-            },
             "US-TIGER-Roads-2014": {
                 "description": "Pada tahap zum 16+, data peta domain awam dari Banci AS. Pada tahap zum yang lebih rendah, hanya perubahan sejak 2006 tanpa perubahan yang telah dimasukkan ke dalam OpenStreetMap",
                 "name": "TIGER Roads 2014"
@@ -2883,12 +2792,6 @@
                 },
                 "description": "Lapisan Ortofoto disediakan oleh basemap.at. \"Pengganti\" imejan geoimage.at.",
                 "name": "Orthofoto basemap.at"
-            },
-            "hike_n_bike": {
-                "attribution": {
-                    "text": "© Penyumbang-penyumbang OpenStreetMap"
-                },
-                "name": "Hike & Bike"
             },
             "mapbox_locator_overlay": {
                 "attribution": {
@@ -2951,6 +2854,17 @@
             }
         },
         "community": {
+            "OSM-MY-facebook": {
+                "name": "OpenStreetMap Malaysia di Facebook",
+                "description": "Segala borak-borak OpenStreetMap!"
+            },
+            "OSM-MY-forum": {
+                "name": "Forum OpenStreetMap Malaysia",
+                "description": "Forum rasmi OpenStreetMap Malaysia"
+            },
+            "OSM-MY-matrix": {
+                "name": "Saluran Riot OpenStreetMap Malaysia"
+            },
             "Bay-Area-OpenStreetMappers": {
                 "name": "OpenStreetMappers Kawasan Teluk",
                 "description": "Perbaiki OpenStreetMap di Kawasan Teluk",

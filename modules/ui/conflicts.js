@@ -5,8 +5,6 @@ import {
     select as d3_select
 } from 'd3-selection';
 
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
-
 import { t } from '../util/locale';
 import { JXON } from '../util/jxon';
 import { geoExtent } from '../geo';
@@ -16,6 +14,7 @@ import { utilDetect } from '../util/detect';
 
 import {
     utilEntityOrMemberSelector,
+    utilKeybinding,
     utilRebind,
     utilWrap
 } from '../util';
@@ -23,7 +22,7 @@ import {
 
 export function uiConflicts(context) {
     var dispatch = d3_dispatch('cancel', 'save');
-    var keybinding = d3_keybinding('conflicts');
+    var keybinding = utilKeybinding('conflicts');
     var _origChanges;
     var _conflictList;
 
@@ -35,7 +34,7 @@ export function uiConflicts(context) {
 
     function keybindingOff() {
         d3_select(document)
-            .call(keybinding.off);
+            .call(keybinding.unbind);
     }
 
     function tryAgain() {
@@ -62,7 +61,7 @@ export function uiConflicts(context) {
             .append('button')
             .attr('class', 'fr')
             .on('click', cancel)
-            .call(svgIcon('#icon-close'));
+            .call(svgIcon('#iD-icon-close'));
 
         headerEnter
             .append('h3')
@@ -108,7 +107,7 @@ export function uiConflicts(context) {
         }
 
         linkEnter
-            .call(svgIcon('#icon-load', 'inline'))
+            .call(svgIcon('#iD-icon-load', 'inline'))
             .append('span')
             .text(t('save.conflict.download_changes'));
 
@@ -311,7 +310,7 @@ export function uiConflicts(context) {
             if (extent) {
                 context.map().trimmedExtent(extent);
             } else {
-                context.map().zoomTo(entity);
+                context.map().zoomToEase(entity);
             }
             context.surface().selectAll(utilEntityOrMemberSelector([entity.id], context.graph()))
                 .classed('hover', true);

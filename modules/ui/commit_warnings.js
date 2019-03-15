@@ -4,90 +4,94 @@ import { svgIcon } from '../svg';
 import { tooltip } from '../util/tooltip';
 import { utilEntityOrMemberSelector } from '../util';
 
-
 export function uiCommitWarnings(context) {
 
     function commitWarnings(selection) {
 
-        var changes = context.history().changes();
-        var warnings = context.history().validate(changes);
+        var issuesBySeverity = {
+            warning: context.validator().getWarnings(),
+            error: context.validator().getErrors()
+        };
 
-        var container = selection.selectAll('.warning-section')
-            .data(warnings.length ? [0] : []);
+        for (var severity in issuesBySeverity) {
+            var issues = issuesBySeverity[severity];
+            var section = severity + '-section';
+            var issueItem = severity + '-item';
 
-        container.exit()
-            .remove();
+            var container = selection.selectAll('.' + section)
+                .data(issues.length ? [0] : []);
 
-        var containerEnter = container.enter()
-            .append('div')
-            .attr('class', 'modal-section warning-section fillL2');
+            container.exit()
+                .remove();
 
-        containerEnter
-            .append('h3')
-            .text(t('commit.warnings'));
+            var containerEnter = container.enter()
+                .append('div')
+                .attr('class', 'modal-section ' + section + ' fillL2');
 
-        containerEnter
-            .append('ul')
-            .attr('class', 'changeset-list');
+            containerEnter
+                .append('h3')
+                .text(severity === 'warning' ? t('commit.warnings') : t('commit.errors'));
 
-        container = containerEnter
-            .merge(container);
+            containerEnter
+                .append('ul')
+                .attr('class', 'changeset-list');
 
-
-        var items = container.select('ul').selectAll('li')
-            .data(warnings);
-
-        items.exit()
-            .remove();
-
-        var itemsEnter = items.enter()
-            .append('li')
-            .attr('class', 'warning-item');
-
-        itemsEnter
-            .call(svgIcon('#icon-alert', 'pre-text'));
-
-        itemsEnter
-            .append('strong')
-            .text(function(d) { return d.message; });
-
-        itemsEnter.filter(function(d) { return d.tooltip; })
-            .call(tooltip()
-                .title(function(d) { return d.tooltip; })
-                .placement('top')
-            );
-
-        items = itemsEnter
-            .merge(items);
-
-        items
-            .on('mouseover', mouseover)
-            .on('mouseout', mouseout)
-            .on('click', warningClick);
+            container = containerEnter
+                .merge(container);
 
 
-        function mouseover(d) {
-            if (d.entity) {
-                context.surface().selectAll(
-                    utilEntityOrMemberSelector([d.entity.id], context.graph())
-                ).classed('hover', true);
-            }
+            var items = container.select('ul').selectAll('li')
+                .data(issues, function(d) { return d.id(); });
+
+            items.exit()
+                .remove();
+
+            var itemsEnter = items.enter()
+                .append('li')
+                .attr('class', issueItem);
+
+            itemsEnter
+                .call(svgIcon('#iD-icon-alert', 'pre-text'));
+
+            itemsEnter
+                .append('strong')
+                .text(function(d) { return d.message; });
+
+            itemsEnter.filter(function(d) { return d.tooltip; })
+                .call(tooltip()
+                    .title(function(d) { return d.tooltip; })
+                    .placement('top')
+                );
+
+            items = itemsEnter
+                .merge(items);
+
+
+            items
+                .on('mouseover', function(d) {
+                    if (d.entities) {
+                        context.surface().selectAll(
+                            utilEntityOrMemberSelector(
+                                d.entities.map(function(e) { return e.id; }),
+                                context.graph()
+                            )
+                        ).classed('hover', true);
+                    }
+                })
+                .on('mouseout', function() {
+                    context.surface().selectAll('.hover')
+                        .classed('hover', false);
+                })
+                .on('click', function(d) {
+                    if (d.entities && d.entities.length > 0) {
+                        context.map().zoomTo(d.entities[0]);
+                        context.enter(modeSelect(
+                            context,
+                            d.entities.map(function(e) { return e.id; })
+                        ));
+                    }
+                });
         }
-
-
-        function mouseout() {
-            context.surface().selectAll('.hover')
-                .classed('hover', false);
-        }
-
-
-        function warningClick(d) {
-            if (d.entity) {
-                context.map().zoomTo(d.entity);
-                context.enter(modeSelect(context, [d.entity.id]));
-            }
-        }
-
     }
 
 

@@ -1,15 +1,10 @@
 {
-    "icon": "highway-unclassified",
+    "icon": "iD-highway-unclassified",
     "fields": [
-        "name",
-        "oneway",
-        "maxspeed",
-        "lanes",
-        "surface",
-        "structure",
-        "maxheight",
-        "cycleway",
-        "access"
+        "{highway/residential}"
+    ],
+    "moreFields": [
+        "{highway/residential}"
     ],
     "geometry": [
         "line"
@@ -17,6 +12,9 @@
     "tags": {
         "highway": "unclassified"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Minor/Unclassified Road"
 }

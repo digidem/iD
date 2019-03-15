@@ -1,12 +1,17 @@
 {
-    "icon": "telephone",
+    "icon": "maki-telephone",
     "fields": [
         "operator",
         "phone",
         "fee",
         "payment_multi",
+        "booth"
+    ],
+    "moreFields": [
         "covered",
-        "indoor"
+        "indoor",
+        "lit",
+        "wheelchair"
     ],
     "geometry": [
         "point",

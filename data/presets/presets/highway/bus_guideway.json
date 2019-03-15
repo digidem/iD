@@ -1,9 +1,11 @@
 {
-    "icon": "highway-bus_guideway",
+    "icon": "maki-bus",
     "fields": [
         "name",
         "operator",
-        "oneway"
+        "oneway",
+        "structure",
+        "covered"
     ],
     "geometry": [
         "line"

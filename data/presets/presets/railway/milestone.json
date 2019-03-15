@@ -1,11 +1,12 @@
 {
-    "icon": "poi-milestone",
+    "icon": "temaki-milestone",
     "geometry": [
         "point",
         "vertex"
     ],
     "fields": [
-        "railway/position"
+        "railway/position",
+        "direction_vertex"
     ],
     "tags": {
         "railway": "milestone"

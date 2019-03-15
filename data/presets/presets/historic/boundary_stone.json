@@ -1,8 +1,11 @@
 {
-    "icon": "poi-milestone",
+    "icon": "temaki-milestone",
     "fields": [
         "name",
         "inscription"
+    ],
+    "moreFields": [
+        "material"
     ],
     "geometry": [
         "point",

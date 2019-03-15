@@ -1,5 +1,5 @@
 {
-    "icon": "park",
+    "icon": "maki-park",
     "fields": [
         "leaf_type",
         "leaf_cycle",
@@ -12,5 +12,5 @@
         "natural": "tree_row"
     },
     "terms": [],
-    "name": "Tree row"
+    "name": "Tree Row"
 }

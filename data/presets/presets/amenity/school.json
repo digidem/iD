@@ -1,11 +1,20 @@
 {
-    "icon": "school",
+    "icon": "maki-school",
     "fields": [
         "name",
         "operator",
         "address",
         "religion",
-        "denomination"
+        "denomination",
+        "website"
+    ],
+    "moreFields": [
+        "internet_access",
+        "internet_access/ssid",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

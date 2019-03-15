@@ -3,7 +3,6 @@ import _values from 'lodash-es/values';
 
 import { select as d3_select } from 'd3-selection';
 
-import { dataFeatureIcons } from '../../data';
 import { geoScaleToZoom } from '../geo';
 import { osmEntity } from '../osm';
 import { svgPassiveVertex, svgPointTransform } from './index';
@@ -47,14 +46,18 @@ export function svgVertices(projection, context) {
         var wireframe = context.surface().classed('fill-wireframe');
         var zoom = geoScaleToZoom(projection.scale());
         var z = (zoom < 17 ? 0 : zoom < 18 ? 1 : 2);
+        var activeID = context.activeID();
 
 
-        function getIcon(entity) {
+        function getIcon(d) {
+            // always check latest entity, as fastEntityKey avoids enter/exit now
+            var entity = graph.entity(d.id);
             if (entity.id in icons) return icons[entity.id];
 
             icons[entity.id] =
                 entity.hasInterestingTags() &&
                 context.presets().match(entity, graph).icon;
+
             return icons[entity.id];
         }
 
@@ -78,7 +81,7 @@ export function svgVertices(projection, context) {
                         var r = rads[i ? 3 : z];
 
                         // slightly increase the size of unconnected endpoints #3775
-                        if (entity.isEndpoint(graph) && !entity.isConnected(graph)) {
+                        if (entity.id !== activeID && entity.isEndpoint(graph) && !entity.isConnected(graph)) {
                             r += 1.5;
                         }
 
@@ -91,9 +94,6 @@ export function svgVertices(projection, context) {
                             .attr('visibility', (i && klass === 'fill') ? 'hidden' : null);
                     });
             });
-
-            selection.selectAll('use')
-                .attr('visibility', (z === 0 ? 'hidden' : null));
         }
 
         vertices.sort(sortY);
@@ -120,19 +120,6 @@ export function svgVertices(projection, context) {
             .append('circle')
             .attr('class', 'stroke');
 
-        // Vertices with icons get a `use`.
-        enter.filter(function(d) { return getIcon(d); })
-            .append('use')
-            .attr('class', 'icon')
-            .attr('width', '11px')
-            .attr('height', '11px')
-            .attr('transform', 'translate(-5.5, -5.5)')
-            .attr('xlink:href', function(d) {
-                var picon = getIcon(d);
-                var isMaki = dataFeatureIcons.indexOf(picon) !== -1;
-                return '#' + picon + (isMaki ? '-11' : '');
-            });
-
         // Vertices with tags get a fill.
         enter.filter(function(d) { return d.hasInterestingTags(); })
             .append('circle')
@@ -148,10 +135,33 @@ export function svgVertices(projection, context) {
             .call(updateAttributes);
 
 
-        // Directional vertices get viewfields
-        var dgroups = groups.filter(function(d) { return getDirections(d); })
+        // Vertices with icons get a `use`.
+        var iconUse = groups
+            .selectAll('.icon')
+            .data(function data(d) { return zoom >= 17 && getIcon(d) ? [d] : []; }, fastEntityKey);
+
+        // exit
+        iconUse.exit()
+            .remove();
+
+        // enter
+        iconUse.enter()
+            .append('use')
+            .attr('class', 'icon')
+            .attr('width', '11px')
+            .attr('height', '11px')
+            .attr('transform', 'translate(-5.5, -5.5)')
+            .attr('xlink:href', function(d) {
+                var picon = getIcon(d);
+                var isMaki = /^maki-/.test(picon);
+                return '#' + picon + (isMaki ? '-11' : '');
+            });
+
+
+        // Vertices with directions get viewfields
+        var dgroups = groups
             .selectAll('.viewfieldgroup')
-            .data(function data(d) { return zoom >= 18 ? [d] : []; }, osmEntity.key);
+            .data(function data(d) { return zoom >= 18 && getDirections(d) ? [d] : []; }, fastEntityKey);
 
         // exit
         dgroups.exit()
@@ -164,7 +174,7 @@ export function svgVertices(projection, context) {
             .merge(dgroups);
 
         var viewfields = dgroups.selectAll('.viewfield')
-            .data(getDirections, function key(d) { return d; });
+            .data(getDirections, function key(d) { return osmEntity.key(d); });
 
         // exit
         viewfields.exit()
@@ -318,6 +328,9 @@ export function svgVertices(projection, context) {
         var mode = context.mode();
         var isMoving = mode && /^(add|draw|drag|move|rotate)/.test(mode.id);
 
+        var drawLayer = selection.selectAll('.layer-osm.points .points-group.vertices');
+        var touchLayer = selection.selectAll('.layer-touch.points');
+
         if (fullRedraw) {
             _currPersistent = {};
             _radii = {};
@@ -363,7 +376,7 @@ export function svgVertices(projection, context) {
         var filterRendered = function(d) {
             return d.id in _currPersistent || d.id in _currSelected || d.id in _currHover || filter(d);
         };
-        selection.selectAll('.layer-points .layer-points-vertices')
+        drawLayer
             .call(draw, graph, currentVisible(all), sets, filterRendered);
 
         // Draw touch targets..
@@ -371,7 +384,7 @@ export function svgVertices(projection, context) {
         var filterTouch = function(d) {
             return isMoving ? true : filterRendered(d);
         };
-        selection.selectAll('.layer-points .layer-points-targets')
+        touchLayer
             .call(drawTargets, graph, currentVisible(all), filterTouch);
 
 

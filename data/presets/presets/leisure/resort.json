@@ -1,10 +1,17 @@
 {
-    "icon": "lodging",
+    "icon": "maki-lodging",
     "fields": [
         "name",
         "operator",
         "address",
         "opening_hours"
+    ],
+    "moreFields": [
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "geometry": [
         "point",

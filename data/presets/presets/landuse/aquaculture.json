@@ -1,9 +1,16 @@
 {
-    "icon": "aquarium",
+    "icon": "maki-aquarium",
     "fields": [
         "name",
         "operator",
         "produce"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "geometry": [
         "area"

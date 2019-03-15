@@ -1,10 +1,18 @@
 {
-    "icon": "amusement-park",
+    "icon": "maki-amusement-park",
     "fields": [
         "name",
         "operator",
         "address",
         "opening_hours"
+    ],
+    "moreFields": [
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

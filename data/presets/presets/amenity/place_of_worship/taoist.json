@@ -1,7 +1,8 @@
 {
-    "icon": "poi-taoist",
+    "icon": "temaki-taoism",
     "fields": [
         "name",
+        "religion",
         "denomination",
         "building_area",
         "address",

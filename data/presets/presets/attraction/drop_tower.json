@@ -1,10 +1,8 @@
 {
-    "icon": "poi-tower",
+    "icon": "temaki-tower",
     "fields": [
-        "name",
-        "operator",
-        "height",
-        "opening_hours"
+        "{attraction}",
+        "height"
     ],
     "geometry": [
         "point",

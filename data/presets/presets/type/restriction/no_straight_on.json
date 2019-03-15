@@ -1,8 +1,5 @@
 {
-    "icon": "restriction-no-straight-on",
-    "fields": [
-        "except"
-    ],
+    "icon": "iD-restriction-no-straight-on",
     "geometry": [
         "relation"
     ],

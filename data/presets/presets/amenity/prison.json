@@ -1,9 +1,16 @@
 {
-    "icon": "prison",
+    "icon": "maki-prison",
     "fields": [
         "name",
         "operator",
         "address"
+    ],
+    "moreFields": [
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

@@ -1,11 +1,19 @@
 {
-    "icon": "home",
+    "icon": "maki-home",
     "fields": [
         "name",
         "building",
         "levels",
         "height",
         "address"
+    ],
+    "moreFields": [
+        "architect",
+        "building/material",
+        "layer",
+        "roof/colour",
+        "smoking",
+        "wheelchair"
     ],
     "geometry": [
         "point",

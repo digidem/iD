@@ -1,8 +1,17 @@
 /* base styles */
-.layer-osm path:not(.oneway-marker-path) {                /* IE/Edge needs :not(.oneway) */
+.layer-osm path {
     fill: none;
 }
-.layer-osm path.viewfield-marker-path {                   /* IE/Edge rule for <use> marker style */
+
+/* IE/Edge needs these overrides for markers to show up */
+.layer-osm path.oneway-marker-path          { fill: #000; }
+.layer-osm path.sided-marker-natural-path   { fill: rgb(140, 208, 95); }
+.layer-osm path.sided-marker-coastline-path { fill: #77dede; }
+.layer-osm path.sided-marker-barrier-path   { fill: #ddd; }
+.layer-osm path.sided-marker-man_made-path  { fill: #fff; }
+
+/* IE/Edge rule for <use> marker style */
+.layer-osm path.viewfield-marker-path {
     fill: #333;
     fill-opacity: 0.75;
     stroke: #fff;
@@ -22,7 +31,10 @@
 
 
 /* No interactivity except what we specifically allow */
-.layer-osm * {
+.data-layer.osm *,
+.data-layer.notes *,
+.data-layer.keepRight *,
+.data-layer.improveOSM * {
     pointer-events: none;
 }
 
@@ -33,7 +45,10 @@
 
 /* `.target` objects are interactive */
 /* They can be picked up, clicked, hovered, or things can connect to them */
-.node.target {
+.qa_error.target,
+.note.target,
+.node.target,
+.turn .target {
     pointer-events: fill;
     fill-opacity: 0.8;
     fill: currentColor;
@@ -50,6 +65,7 @@
     stroke-linejoin: round;
 }
 
+
 /* `.target-nope` objects are explicitly forbidden to join to */
 .surface:not(.nope-disabled) .node.target.target-nope,
 .surface:not(.nope-disabled) .way.target.target-nope {
@@ -64,8 +80,24 @@
     pointer-events: none !important;
 }
 
+/* points, notes & QA */
 
-/* points */
+/* points, notes, markers */
+g.qa_error .stroke,
+g.note .stroke {
+    stroke: #222;
+    stroke-width: 1;
+    fill: #222;
+    opacity: 0.6;
+}
+
+g.qa_error.active .stroke,
+g.note.active .stroke {
+    stroke: #222;
+    stroke-width: 1;
+    fill: #222;
+    opacity: 0.8;
+}
 
 g.point .stroke {
     stroke: #444;
@@ -73,47 +105,50 @@ g.point .stroke {
     fill: #fff;
 }
 
-g.point .shadow {
+g.qa_error .shadow,
+g.point .shadow,
+g.note .shadow {
     fill: none;
     stroke: #f6634f;
     stroke-width: 16;
     stroke-opacity: 0;
 }
 
+g.qa_error.hover:not(.selected) .shadow,
+g.note.hover:not(.selected) .shadow,
 g.point.related:not(.selected) .shadow,
 g.point.hover:not(.selected) .shadow {
     stroke-opacity: 0.5;
 }
 
+g.qa_error.selected .shadow,
+g.note.selected .shadow,
 g.point.selected .shadow {
     stroke-opacity: 0.7;
 }
 
+/* g.note ellipse.stroke, */
 g.point ellipse.stroke {
     display: none;
 }
-
+.mode-drag-note g.note.active ellipse.stroke,
 .mode-drag-node g.point.active ellipse.stroke {
     display: block;
 }
 
 
 /* vertices and midpoints */
-
 g.vertex .fill {
     fill: #000;
 }
-
 g.vertex .stroke {
     stroke: #666;
     stroke-width: 1;
     fill: white;
 }
-
 g.vertex.shared .stroke {
     fill: #bbb;
 }
-
 g.midpoint .fill {
     fill: #eee;
     stroke: #444;
@@ -141,10 +176,11 @@ g.vertex.selected .shadow {
 
 
 /* lines */
-
-.preset-icon .icon.other-line {
-    color: #fff;
-    fill: #777;
+.preset-icon .icon.iD-other-line {
+    color: #989898;
+}
+.preset-icon-line path.casing {
+    stroke: #afafaf;
 }
 
 path.line {
@@ -179,7 +215,6 @@ path.line.stroke {
 
 
 /* Labels / Markers */
-
 text {
     font-size: 10px;
     color: #222;
@@ -191,7 +226,8 @@ text {
 }
 
 .onewaygroup path.oneway,
-.viewfieldgroup path.viewfield {
+.viewfieldgroup path.viewfield,
+.sidedgroup path.sided {
     stroke-width: 6px;
 }
 
@@ -219,7 +255,7 @@ text.pointlabel {
   dominant-baseline: auto;
 }
 
-.layer-labels-halo text {
+.labels-group.halo text {
     opacity: 0.7;
     stroke: #fff;
     stroke-width: 5px;
@@ -227,9 +263,8 @@ text.pointlabel {
 }
 
 text.nolabel {
-    opacity: 0;
+    opacity: 0 !important;
 }
-
 text.point {
     font-size: 10px;
 }
@@ -240,24 +275,27 @@ text.point {
     stroke-width: 2px;
     stroke-miterlimit: 1;
 }
-
 .icon.areaicon {
     fill: #222;
     opacity: 0.8;
 }
 
-
-/* Turn Restrictions */
-
-g.turn rect,
-g.turn circle {
-    fill: none;
-    pointer-events: all;
+/* Highlighting */
+g.point.highlighted .shadow,
+path.shadow.highlighted {
+    stroke-opacity: 0.95;
+    stroke: #7092ff;
+}
+g.vertex.highlighted .shadow {
+    stroke-width: 7;
+    stroke-opacity: 0.95;
+    stroke: #7092ff;
 }
 
-.form-field-restrictions .vertex {
-    cursor: auto !important;
-    pointer-events: none;
+/* Turn Restrictions */
+.points-group.turns g.turn rect,
+.points-group.turns g.turn circle {
+    fill: none;
 }
 
 /* Turn restriction paths and vertices */
@@ -286,35 +324,3 @@ g.turn circle {
 .surface.tr g.vertex.related.only .shadow {
     stroke: #68f;
 }
-
-
-/* GPX Paths */
-
-.layer-gpx {
-    pointer-events: none;
-}
-
-path.gpx {
-    stroke: #ff26d4;
-    stroke-width: 2;
-    fill: none;
-}
-
-text.gpxlabel-halo,
-text.gpxlabel {
-    font-size: 10px;
-    font-weight: bold;
-    dominant-baseline: middle;
-}
-
-text.gpxlabel {
-    fill: #ff26d4;
-}
-
-text.gpxlabel-halo {
-    opacity: 0.7;
-    stroke: #000;
-    stroke-width: 5px;
-    stroke-miterlimit: 1;
-}
-

@@ -1,17 +1,29 @@
 {
-    "icon": "highway-primary-link",
+    "icon": "iD-highway-primary-link",
     "fields": [
-        "name",
+        "destination_oneway",
+        "destination/ref_oneway",
         "oneway",
         "maxspeed",
-        "maxspeed/advisory",
         "lanes",
         "surface",
-        "maxheight",
-        "ref_road_number",
-        "cycleway",
         "structure",
         "access"
+    ],
+    "moreFields": [
+        "covered",
+        "cycleway",
+        "destination/symbol_oneway",
+        "junction/ref_oneway",
+        "junction_line",
+        "lit",
+        "maxheight",
+        "maxspeed/advisory",
+        "name",
+        "oneway/bicycle",
+        "ref_road_number",
+        "smoothness",
+        "toll"
     ],
     "geometry": [
         "line"
@@ -20,9 +32,11 @@
         "highway": "primary_link"
     },
     "terms": [
-        "ramp",
         "on ramp",
-        "off ramp"
+        "off ramp",
+        "ramp",
+        "road",
+        "street"
     ],
     "name": "Primary Link"
 }

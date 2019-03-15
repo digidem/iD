@@ -1,13 +1,5 @@
 {
-    "icon": "poi-tool",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours",
-        "payment_multi"
-    ],
+    "icon": "temaki-tools",
     "geometry": [
         "point",
         "area"

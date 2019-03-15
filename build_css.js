@@ -1,28 +1,22 @@
 /* eslint-disable no-console */
-
-const glob = require('glob');
-const fs = require('fs');
-const concat = require('concat-files');
 const colors = require('colors/safe');
-const postcss = require('postcss')
-const prepend = require('postcss-selector-prepend')
+const concat = require('concat-files');
+const glob = require('glob');
+
 
 module.exports = function buildCSS() {
-    var building = false;
+    var isBuilding = false;
     return function () {
-        if (building) return;
+        if (isBuilding) return;
+
         console.log('building css');
         console.time(colors.green('css built'));
-        building = true;
+        isBuilding = true;
+
         return concatFilesProm('css/**/*.css', 'dist/iD.css')
             .then(function () {
-                const css = fs.readFileSync('dist/iD.css', 'utf8')
-                return postcss([prepend({ selector: '.id-container ' })]).process(css)
-            })
-            .then(function (result) {
-                fs.writeFileSync('dist/iD.css', result.css);
                 console.timeEnd(colors.green('css built'));
-                building = false;
+                isBuilding = false;
             })
             .catch(function (err) {
                 console.error(err);
@@ -42,3 +36,4 @@ function concatFilesProm(globPath, output) {
         });
     });
 }
+

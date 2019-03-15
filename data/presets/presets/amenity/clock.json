@@ -1,5 +1,5 @@
 {
-    "icon": "poi-clock",
+    "icon": "temaki-clock",
     "fields": [
         "name",
         "support",
@@ -7,6 +7,9 @@
         "visibility",
         "date",
         "faces"
+    ],
+    "moreFields": [
+        "lit"
     ],
     "geometry": [
         "point",

@@ -1,10 +1,11 @@
 {
-    "icon": "landmark",
+    "icon": "maki-landmark",
     "fields": [
         "name",
         "religion",
         "denomination",
-        "inscription"
+        "inscription",
+        "access_simple"
     ],
     "geometry": [
         "point",

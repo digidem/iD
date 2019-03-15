@@ -1,10 +1,17 @@
 {
-    "icon": "karaoke",
+    "icon": "maki-karaoke",
     "fields": [
         "name",
         "studio",
         "address",
         "building_area"
+    ],
+    "moreFields": [
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

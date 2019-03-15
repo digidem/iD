@@ -1,12 +1,14 @@
 {
-    "icon": "route-horse",
+    "icon": "iD-route-horse",
     "fields": [
         "name",
         "ref_route",
         "operator",
         "network_horse",
         "description",
-        "distance"
+        "distance",
+        "to", 
+        "from"
     ],
     "geometry": [
         "relation"

@@ -1,15 +1,24 @@
 {
-    "icon": "library",
+    "icon": "maki-library",
     "fields": [
         "name",
         "operator",
         "building_area",
         "address",
+        "ref/isil",
+        "internet_access"
+    ],
+    "moreFields" : [
+        "access_simple",
         "opening_hours",
-        "internet_access",
         "internet_access/fee",
         "internet_access/ssid",
-        "ref/isil"
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair",
+        "payment_multi"
     ],
     "geometry": [
         "point",

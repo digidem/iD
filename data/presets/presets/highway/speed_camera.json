@@ -1,12 +1,13 @@
 {
-    "icon": "attraction",
+    "icon": "maki-attraction",
     "geometry": [
         "point",
         "vertex"
     ],
     "fields": [
         "direction",
-        "ref"
+        "ref",
+        "maxspeed"
      ],
     "tags": {
         "highway": "speed_camera"

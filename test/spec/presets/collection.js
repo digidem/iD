@@ -84,6 +84,15 @@ describe('iD.presetCollection', function() {
         });
     });
 
+    describe('#index', function() {
+        it('returns preset position in the collection', function() {
+            expect(c.index('point')).to.equal(0);
+        });
+        it('return -1 when given id for preset not in the collection', function() {
+            expect(c.index('foobar')).to.equal(-1);
+        });
+    });
+
     describe('#matchGeometry', function() {
         it('returns a new collection only containing presets matching a geometry', function() {
             expect(c.matchGeometry('area').collection).to.include.members(
@@ -140,12 +149,12 @@ describe('iD.presetCollection', function() {
 
         it('excludes presets with searchable: false', function() {
             var excluded = iD.presetPreset('__test/excluded', {
-                    name: 'excluded',
-                    tags: { amenity: 'excluded' },
-                    geometry: ['point'],
-                    searchable: false
-                }),
-                collection = iD.presetCollection([excluded, p.point]);
+                name: 'excluded',
+                tags: { amenity: 'excluded' },
+                geometry: ['point'],
+                searchable: false
+            });
+            var collection = iD.presetCollection([excluded, p.point]);
             expect(collection.search('excluded', 'point').collection).not.to.include(excluded);
         });
     });

@@ -1,18 +1,17 @@
 import _uniqBy from 'lodash-es/uniqBy';
 
 import { dispatch as d3_dispatch } from 'd3-dispatch';
-import { d3combobox as d3_combobox } from '../lib/d3.combobox.js';
 
 import { t } from '../util/locale';
 import { svgIcon } from '../svg';
-import { uiField } from './field';
-import { uiFormFields } from './form_fields';
+import { uiCombobox, uiField, uiFormFields } from './index';
 import { utilRebind, utilTriggerEvent } from '../util';
 
 
 export function uiChangesetEditor(context) {
     var dispatch = d3_dispatch('change');
     var formFields = uiFormFields(context);
+    var commentCombo = uiCombobox(context, 'comment').caseSensitive(true);
     var _fieldsArr;
     var _tags;
     var _changesetID;
@@ -80,9 +79,7 @@ export function uiChangesetEditor(context) {
                     });
 
                     commentField
-                        .call(d3_combobox()
-                            .container(context.container())
-                            .caseSensitive(true)
+                        .call(commentCombo
                             .data(_uniqBy(comments, 'title'))
                         );
                 });
@@ -109,7 +106,7 @@ export function uiChangesetEditor(context) {
             .append('a')
             .attr('target', '_blank')
             .attr('tabindex', -1)
-            .call(svgIcon('#icon-alert', 'inline'))
+            .call(svgIcon('#iD-icon-alert', 'inline'))
             .attr('href', t('commit.google_warning_link'))
             .append('span')
             .text(t('commit.google_warning'));

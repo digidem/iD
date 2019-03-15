@@ -1,11 +1,15 @@
 {
-    "icon": "bicycle",
+    "icon": "maki-bicycle",
     "fields": [
         "operator",
         "brand",
         "opening_hours",
         "fee",
         "service/bicycle"
+    ],
+    "moreFields": [
+        "payment_multi",
+        "covered"
     ],
     "geometry": [
         "point",

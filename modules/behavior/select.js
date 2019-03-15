@@ -10,10 +10,17 @@ import { geoVecLength } from '../geo';
 
 import {
     modeBrowse,
-    modeSelect
+    modeSelect,
+    modeSelectData,
+    modeSelectNote,
+    modeSelectError
 } from '../modes';
 
-import { osmEntity } from '../osm';
+import {
+    osmEntity,
+    osmNote,
+    qaError
+} from '../osm';
 
 
 export function behaviorSelect(context) {
@@ -122,15 +129,10 @@ export function behaviorSelect(context) {
             datum = datum.parents[0];
         }
 
-        if (!(datum instanceof osmEntity)) {
-            // clicked nothing..
-            if (!isMultiselect && mode.id !== 'browse') {
-                context.enter(modeBrowse(context));
-            }
-
-        } else {
-            // clicked an entity..
+        if (datum instanceof osmEntity) {    // clicked an entity..
             var selectedIDs = context.selectedIDs();
+            context.selectedNoteID(null);
+            context.selectedErrorID(null);
 
             if (!isMultiselect) {
                 if (selectedIDs.length > 1 && (!suppressMenu && !isShowAlways)) {
@@ -158,6 +160,26 @@ export function behaviorSelect(context) {
                     context.enter(modeSelect(context, selectedIDs).suppressMenu(suppressMenu));
                 }
             }
+
+        } else if (datum && datum.__featurehash__ && !isMultiselect) {    // clicked Data..
+            context
+                .selectedNoteID(null)
+                .enter(modeSelectData(context, datum));
+
+        } else if (datum instanceof osmNote && !isMultiselect) {    // clicked a Note..
+            context
+                .selectedNoteID(datum.id)
+                .enter(modeSelectNote(context, datum.id));
+        } else if (datum instanceof qaError & !isMultiselect) {  // clicked an external QA error
+            context
+                .selectedErrorID(datum.id)
+                .enter(modeSelectError(context, datum.id, datum.service));
+        } else {    // clicked nothing..
+            context.selectedNoteID(null);
+            context.selectedErrorID(null);
+            if (!isMultiselect && mode.id !== 'browse') {
+                context.enter(modeBrowse(context));
+            }
         }
 
         // reset for next time..
@@ -165,7 +187,7 @@ export function behaviorSelect(context) {
     }
 
 
-    var behavior = function(selection) {
+    function behavior(selection) {
         lastMouse = null;
         suppressMenu = true;
         p1 = null;
@@ -193,7 +215,7 @@ export function behaviorSelect(context) {
             context.surface()
                 .classed('behavior-multiselect', true);
         }
-    };
+    }
 
 
     behavior.off = function(selection) {

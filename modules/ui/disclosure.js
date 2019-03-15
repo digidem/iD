@@ -8,12 +8,12 @@ import { textDirection } from '../util/locale';
 
 
 export function uiDisclosure(context, key, expandedDefault) {
-    var dispatch = d3_dispatch('toggled'),
-        _preference = (context.storage('disclosure.' + key + '.expanded')),
-        _expanded = (_preference === null ? !!expandedDefault : (_preference === 'true')),
-        _title,
-        _updatePreference = true,
-        _content = function () {};
+    var dispatch = d3_dispatch('toggled');
+    var _preference = (context.storage('disclosure.' + key + '.expanded'));
+    var _expanded = (_preference === null ? !!expandedDefault : (_preference === 'true'));
+    var _title;
+    var _updatePreference = true;
+    var _content = function () {};
 
 
     var disclosure = function(selection) {
@@ -43,22 +43,25 @@ export function uiDisclosure(context, key, expandedDefault) {
             .text(_title);
 
         hideToggle.selectAll('.hide-toggle-icon')
-            .attr('xlink:href', _expanded ? '#icon-down'
-                : (textDirection === 'rtl') ? '#icon-backward' : '#icon-forward'
+            .attr('xlink:href', _expanded ? '#iD-icon-down'
+                : (textDirection === 'rtl') ? '#iD-icon-backward' : '#iD-icon-forward'
             );
 
 
         var wrap = selection.selectAll('.disclosure-wrap')
             .data([0]);
 
+        // enter/update
         wrap = wrap.enter()
             .append('div')
             .attr('class', 'disclosure-wrap disclosure-wrap-' + key)
-            .merge(wrap);
+            .merge(wrap)
+            .classed('hide', !_expanded);
 
-        wrap
-            .classed('hide', !_expanded)
-            .call(_content);
+        if (_expanded) {
+            wrap
+                .call(_content);
+        }
 
 
         function toggle() {
@@ -74,9 +77,14 @@ export function uiDisclosure(context, key, expandedDefault) {
                 .classed('expanded', _expanded);
 
             hideToggle.selectAll('.hide-toggle-icon')
-                .attr('xlink:href', _expanded ? '#icon-down'
-                    : (textDirection === 'rtl') ? '#icon-backward' : '#icon-forward'
+                .attr('xlink:href', _expanded ? '#iD-icon-down'
+                    : (textDirection === 'rtl') ? '#iD-icon-backward' : '#iD-icon-forward'
                 );
+
+            if (_expanded) {
+                wrap
+                    .call(_content);
+            }
 
             wrap
                 .call(uiToggle(_expanded));
@@ -86,30 +94,30 @@ export function uiDisclosure(context, key, expandedDefault) {
     };
 
 
-    disclosure.title = function(_) {
+    disclosure.title = function(val) {
         if (!arguments.length) return _title;
-        _title = _;
+        _title = val;
         return disclosure;
     };
 
 
-    disclosure.expanded = function(_) {
+    disclosure.expanded = function(val) {
         if (!arguments.length) return _expanded;
-        _expanded = _;
+        _expanded = val;
         return disclosure;
     };
 
 
-    disclosure.updatePreference = function(_) {
+    disclosure.updatePreference = function(val) {
         if (!arguments.length) return _updatePreference;
-        _updatePreference = _;
+        _updatePreference = val;
         return disclosure;
     };
 
 
-    disclosure.content = function(_) {
+    disclosure.content = function(val) {
         if (!arguments.length) return _content;
-        _content = _;
+        _content = val;
         return disclosure;
     };
 

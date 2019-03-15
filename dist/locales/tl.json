@@ -135,14 +135,6 @@
             "delete_member": {
                 "annotation": "Inalis ang kasapi o miyembro ng relation."
             },
-            "connect": {
-                "annotation": {
-                    "point": "Dinugtong ang isang \"way\" sa isang punto o tuldok.",
-                    "vertex": "Dinugtong ang isang \"way\" sa isa pang \"way\".",
-                    "line": "Dinugtong ang isang \"way\" sa isang linya.",
-                    "area": "Dinugtong ang isang \"way\" sa isang area o poligon."
-                }
-            },
             "disconnect": {
                 "title": "Alisin ang pagkakadugtong",
                 "description": "Alisin sa pagkakadugtong ang mga linya / poligon.",
@@ -158,7 +150,6 @@
                 "key": "C",
                 "annotation": "Pinagsama ang {n} features.",
                 "not_eligible": "Ang mga bagay na ito ay hindi maaaring pagsamahin.",
-                "restriction": "Hindi maaring pagsamahin dahil may isang o higit pang feature na bahagi ng \"{relation}\" relation.",
                 "incomplete_relation": "Hindi maaaring ipagsama o i-merge dahil ang isa sa mga ito ay hindi pa ganap na nai-download.",
                 "conflicting_tags": "Hindi maaring pagsamahin dahil may magkakaibang mga tags ang bawat isa."
             },
@@ -287,12 +278,9 @@
         "browser_notice": "Ang editor na ito compatible lamang sa bagong version Firefox, Chrome, Safari, Opera, and Internet Explorer 11. Magupgrade ng browser o gamitin ang Potlatch 2 para makapag-edit.",
         "translate": {
             "translate": "I-salin",
-            "localized_translation_label": "Multilingual name",
             "localized_translation_language": "Pumili ng wika",
             "localized_translation_name": "Pangalan"
         },
-        "login": "mag-login",
-        "logout": "Mag-logout",
         "loading_auth": "Kumokonekta sa OpenStreetMap ...",
         "report_a_bug": "Magulat ng bug.",
         "help_translate": "Tumulong sa pagasasalin.",
@@ -359,8 +347,6 @@
             "locating": "Hinahanap ang lokasyon, mangyaring maghintay..."
         },
         "inspector": {
-            "no_documentation_combination": "Walang documentation para sa kumbinasyon ng mga tag na ginamit",
-            "no_documentation_key": "Walang \"documentation\" na magagamit para sa \"key\" na ito.",
             "show_more": "Higit pang detalye",
             "view_on_osm": "Tingnan sa openstreetmap.org",
             "all_tags": "Lahat ng tags",
@@ -370,7 +356,6 @@
             "role": "Kasapi",
             "choose": "Pumili ng uri ng \"features\"",
             "results": "{n} mga resulta para sa {search}",
-            "reference": "Tingnan sa OpenStreetMap Wiki",
             "back_tooltip": "Baguhin ang \"feature\"",
             "remove": "Alisin",
             "search": "Mag-search",
@@ -396,7 +381,6 @@
             "none": "Wala",
             "best_imagery": "Pinakakilalang pinagmulan ng imaheng ito para sa lokasyon na ito",
             "custom": "Custom",
-            "custom_button": "I-edit ang custom na background",
             "reset": "I-reset",
             "minimap": {
                 "tooltip": "Ipakita ang naka-zoom out na mapa upang makatulong na mahanap ang mga lugar na kasalukuyang ipinapakita."
@@ -441,11 +425,7 @@
                 "description": "Mga tampok na pang enerhiya",
                 "tooltip": "Mga linya ng kuryente, Mga planta ng kuryente, Mga substasyono, etc."
             },
-            "past_future": {
-                "description": "Nakaraan/Kinabukasan"
-            },
             "others": {
-                "description": "Iba pa",
                 "tooltip": "Lahat ng iba pa"
             }
         },
@@ -502,17 +482,6 @@
             "on_wiki": "{tag} sa wiki.osm.org",
             "used_with": "Kabilang sa gingamait ang {type}"
         },
-        "validations": {
-            "disconnected_highway": "Hindi nakakabit na highway",
-            "untagged_point": "Walang tag na punto o tuldok",
-            "untagged_point_tooltip": "Pumili ng uri ng tampok na naglalarawan kung ano ang puntong ito.",
-            "untagged_line": "Walang tag na linya",
-            "untagged_line_tooltip": "Pumili ng uri ng tampok na naglalarawan kung ano ang linyang ito.",
-            "untagged_area": "Walang tag na area o poligon",
-            "untagged_area_tooltip": "Pumili ng uri ng tampok na naglalarawan kung ano ang poligong ito.",
-            "tag_suggests_area": "Ang tag na {tag} ay kalimitang para sa mga area o poligon sublait ito ay nasa linya lamang.",
-            "deprecated_tags": "Hindi na ginagamit na \"tag\": {tags}"
-        },
         "cannot_zoom": "Hindi na pwedeng mag-zoom out sa kasalukuyang \"mode\".",
         "full_screen": "I-fullscreen",
         "help": {
@@ -559,9 +528,6 @@
                 "category-building": {
                     "name": "Tampok ng gusali"
                 },
-                "category-golf": {
-                    "name": "Mga tampok para sa Golf"
-                },
                 "category-landuse": {
                     "name": "Mga tampok para sa gagamiting lupa"
                 },
@@ -601,31 +567,24 @@
                     "label": "Pinapayagan ng access",
                     "options": {
                         "designated": {
-                            "description": "Access na pinahihintulutan alinsunod sa mga palatandaan o mga tiyak na lokal na batas",
                             "title": "Itinalagang"
                         },
                         "destination": {
-                            "description": "Access na pinahihintulutan para maabot ang destinasyon lamang",
                             "title": "Destinasyon"
                         },
                         "dismount": {
-                            "description": "Access na pinahihintulutan pero ang sumakay ay kailangan bumaba",
                             "title": "Bumaba"
                         },
                         "no": {
-                            "description": "Access na hindi pinahihintulutan sa publiko.",
                             "title": "Bawal"
                         },
                         "permissive": {
-                            "description": "Access na pinahihintulutan hanggang sa panahon na bawiin ng may-ari ang permiso.",
                             "title": "mapagpahintulot"
                         },
                         "private": {
-                            "description": "Access na pinahihintulutan kapag may pahintulot ng may-ari o ang isang indibidwal na batayan lamang.",
                             "title": "Pribado"
                         },
                         "yes": {
-                            "description": "Access na pinahihintulutan sa pamamagitan ng batas; isang karapatan ng paraan",
                             "title": "Pinapayagan"
                         }
                     },
@@ -762,9 +721,6 @@
                         "hot_spring": "mainit na batis",
                         "onsen": "Hapones na mainit na batis"
                     }
-                },
-                "beauty": {
-                    "label": "uri ng tindahan"
                 },
                 "bench": {
                     "label": "bangko"
@@ -993,15 +949,7 @@
                 "fence_type": {
                     "label": "Uri"
                 },
-                "fire_hydrant/position": {
-                    "label": "posisyon",
-                    "options": {
-                        "green": "berde",
-                        "lane": "linya"
-                    }
-                },
                 "fire_hydrant/type": {
-                    "label": "Uri",
                     "options": {
                         "wall": "Pader"
                     }

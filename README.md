@@ -50,7 +50,7 @@ To run the current development version of iD on your own computer:
 
 #### Cloning the repository
 
-The repository is reasonably large, and it's unlikely that you need the full history. If you are happy to wait for it all to download, run:
+The repository is reasonably large, and it's unlikely that you need the full history (~200 MB). If you are happy to wait for it all to download, run:
 
 ```
 git clone https://github.com/openstreetmap/iD.git
@@ -75,10 +75,21 @@ If you want to add in the full history later on, perhaps to run `git blame` or `
 For guidance on building a packaged version, running tests, and contributing to
 development, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
+
 ## License
 
 iD is available under the [ISC License](https://opensource.org/licenses/ISC).
 See the [LICENSE.md](LICENSE.md) file for more details.
+
+iD also bundles portions of the following open source software.
+* [D3.js (BSD-3-Clause)](https://github.com/d3/d3)
+* [editor-layer-index (CC-BY-SA 3.0)](https://github.com/osmlab/editor-layer-index)
+* [Font Awesome (CC-BY 4.0)](https://fontawesome.com/license)
+* [Maki (CC0 1.0)](https://github.com/mapbox/maki)
+* [Mapillary JS (MIT)](https://github.com/mapillary/mapillary-js)
+* [name-suggestion-index (BSD-3-Clause)](https://github.com/osmlab/name-suggestion-index)
+* [osm-community-index (ISC)](https://github.com/osmlab/osm-community-index)
+
 
 ## Thank you
 

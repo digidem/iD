@@ -1,4 +1,3 @@
-import { dataFeatureIcons } from '../../data';
 import { geoScaleToZoom } from '../geo';
 import { osmEntity } from '../osm';
 import { svgPointTransform, svgTagClasses } from './index';
@@ -72,21 +71,22 @@ export function svgPoints(projection, context) {
         var wireframe = context.surface().classed('fill-wireframe');
         var zoom = geoScaleToZoom(projection.scale());
 
-        // points with a direction will render as vertices at higher zooms
+        // Points with a direction will render as vertices at higher zooms..
         function renderAsPoint(entity) {
             return entity.geometry(graph) === 'point' &&
                 !(zoom >= 18 && entity.directions(graph, projection).length);
         }
 
-        // all points will render as vertices in wireframe mode too
+        // All points will render as vertices in wireframe mode too..
         var points = wireframe ? [] : entities.filter(renderAsPoint);
-
         points.sort(sortY);
 
 
-        var layer = selection.selectAll('.layer-points .layer-points-points');
+        var drawLayer = selection.selectAll('.layer-osm.points .points-group.points');
+        var touchLayer = selection.selectAll('.layer-touch.points');
 
-        var groups = layer.selectAll('g.point')
+        // Draw points..
+        var groups = drawLayer.selectAll('g.point')
             .filter(filter)
             .data(points, fastEntityKey);
 
@@ -135,17 +135,17 @@ export function svgPoints(projection, context) {
                 var preset = context.presets().match(entity, graph);
                 var picon = preset && preset.icon;
 
-                if (!picon)
+                if (!picon) {
                     return '';
-                else {
-                    var isMaki = dataFeatureIcons.indexOf(picon) !== -1;
+                } else {
+                    var isMaki = /^maki-/.test(picon);
                     return '#' + picon + (isMaki ? '-11' : '');
                 }
             });
 
 
-        // touch targets
-        selection.selectAll('.layer-points .layer-points-targets')
+        // Draw touch targets..
+        touchLayer
             .call(drawTargets, graph, points, filter);
     }
 

@@ -1,18 +1,14 @@
 {
-    "icon": "pitch",
-    "fields": [
-        "name",
-        "sport",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "maki-pitch",
     "geometry": [
         "point",
         "area"
     ],
     "terms": [
-        "studio"
+        "studio",
+        "asanas",
+        "modern yoga",
+        "meditation"
     ],
     "tags": {
         "leisure": "fitness_centre",

@@ -20,11 +20,12 @@ export function modeAddArea(context) {
     };
 
     var behavior = behaviorAddWay(context)
-            .tail(t('modes.add_area.tail'))
-            .on('start', start)
-            .on('startFromWay', startFromWay)
-            .on('startFromNode', startFromNode),
-        defaultTags = { area: 'yes' };
+        .tail(t('modes.add_area.tail'))
+        .on('start', start)
+        .on('startFromWay', startFromWay)
+        .on('startFromNode', startFromNode);
+
+    var defaultTags = { area: 'yes' };
 
 
     function actionClose(wayId) {
@@ -35,9 +36,9 @@ export function modeAddArea(context) {
 
 
     function start(loc) {
-        var startGraph = context.graph(),
-            node = osmNode({ loc: loc }),
-            way = osmWay({ tags: defaultTags });
+        var startGraph = context.graph();
+        var node = osmNode({ loc: loc });
+        var way = osmWay({ tags: defaultTags });
 
         context.perform(
             actionAddEntity(node),
@@ -46,14 +47,14 @@ export function modeAddArea(context) {
             actionClose(way.id)
         );
 
-        context.enter(modeDrawArea(context, way.id, startGraph));
+        context.enter(modeDrawArea(context, way.id, startGraph, context.graph()));
     }
 
 
     function startFromWay(loc, edge) {
-        var startGraph = context.graph(),
-            node = osmNode({ loc: loc }),
-            way = osmWay({ tags: defaultTags });
+        var startGraph = context.graph();
+        var node = osmNode({ loc: loc });
+        var way = osmWay({ tags: defaultTags });
 
         context.perform(
             actionAddEntity(node),
@@ -63,13 +64,13 @@ export function modeAddArea(context) {
             actionAddMidpoint({ loc: loc, edge: edge }, node)
         );
 
-        context.enter(modeDrawArea(context, way.id, startGraph));
+        context.enter(modeDrawArea(context, way.id, startGraph, context.graph()));
     }
 
 
     function startFromNode(node) {
-        var startGraph = context.graph(),
-            way = osmWay({ tags: defaultTags });
+        var startGraph = context.graph();
+        var way = osmWay({ tags: defaultTags });
 
         context.perform(
             actionAddEntity(way),
@@ -77,7 +78,7 @@ export function modeAddArea(context) {
             actionClose(way.id)
         );
 
-        context.enter(modeDrawArea(context, way.id, startGraph));
+        context.enter(modeDrawArea(context, way.id, startGraph, context.graph()));
     }
 
 

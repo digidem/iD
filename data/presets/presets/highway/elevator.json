@@ -1,10 +1,14 @@
 {
-    "icon": "poi-elevator",
+    "icon": "temaki-elevator",
     "fields": [
         "access_simple",
         "opening_hours",
         "maxweight",
-        "ref"
+        "ref",
+        "wheelchair"
+    ],
+    "moreFields": [
+        "maxheight"
     ],
     "geometry": [
         "vertex"

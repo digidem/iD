@@ -1,16 +1,10 @@
 {
-    "icon": "highway-trunk-link",
+    "icon": "iD-highway-trunk-link",
     "fields": [
-        "name",
-        "ref_road_number",
-        "oneway",
-        "maxspeed",
-        "maxspeed/advisory",
-        "lanes",
-        "surface",
-        "structure",
-        "maxheight",
-        "access"
+        "{highway/motorway_link}"
+    ],
+    "moreFields": [
+        "{highway/motorway_link}"
     ],
     "geometry": [
         "line"
@@ -19,9 +13,11 @@
         "highway": "trunk_link"
     },
     "terms": [
-        "ramp",
         "on ramp",
-        "off ramp"
+        "off ramp",
+        "ramp",
+        "road",
+        "street"
     ],
     "name": "Trunk Link"
 }

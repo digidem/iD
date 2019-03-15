@@ -1,5 +1,5 @@
 {
-    "icon": "bus",
+    "icon": "iD-relation",
     "fields": [
         "name",
         "ref",

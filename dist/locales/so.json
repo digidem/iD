@@ -111,7 +111,6 @@
         "tooltip_keyhint": "Af-goys:",
         "translate": {
             "translate": "Turjum",
-            "localized_translation_label": "Magaca luqadaha badan",
             "localized_translation_language": "Dooro luuqada",
             "localized_translation_name": "Magaca"
         },
@@ -149,7 +148,6 @@
             "all_tags": "Dhammaan taxanbayaasha",
             "all_relations": "Dhammaan xiriirada",
             "choose": "Dooro nooca tilmaamaha",
-            "reference": "Ka eeg Wiki OpenStreetMap",
             "search": "Raadi",
             "feature_list": "Tilmaamaha Waydiimaha",
             "edit": "Tifaftir tilmaamaha",
@@ -411,12 +409,6 @@
                 },
                 "fence_type": {
                     "label": "Nooca"
-                },
-                "fire_hydrant/type": {
-                    "label": "Nooca",
-                    "options": {
-                        "pond": "Balli"
-                    }
                 },
                 "ford": {
                     "label": "Nooca"
@@ -699,14 +691,8 @@
                 "amenity/library": {
                     "name": "Maktabad"
                 },
-                "amenity/parking": {
-                    "name": "Baakinka Baabuurta"
-                },
                 "amenity/place_of_worship": {
                     "name": "Goobta Cibaadada"
-                },
-                "amenity/place_of_worship/muslim": {
-                    "name": "Masaajid"
                 },
                 "amenity/restaurant": {
                     "name": "Maqaayad"
@@ -753,9 +739,6 @@
                 "building/stadium": {
                     "name": "Dhismo Garoon"
                 },
-                "footway/crosswalk": {
-                    "name": "Isgoyska Socotada"
-                },
                 "ford": {
                     "name": "Tog"
                 },
@@ -764,9 +747,6 @@
                 },
                 "highway/bus_stop": {
                     "name": "Boostaajo"
-                },
-                "highway/crosswalk": {
-                    "name": "Isgoyska Socotada"
                 },
                 "highway/path": {
                     "name": "Waddo"
@@ -806,9 +786,6 @@
                 },
                 "landuse/farmland": {
                     "name": "Dhul beereed"
-                },
-                "landuse/forest": {
-                    "name": "Duur"
                 },
                 "landuse/grass": {
                     "name": "Aag cagaaran"
@@ -905,9 +882,6 @@
                 },
                 "power/line": {
                     "name": "Khadka Korantada"
-                },
-                "public_transport/linear_platform_bus": {
-                    "name": "Boostaajo"
                 },
                 "public_transport/platform_bus": {
                     "name": "Boostaajo"

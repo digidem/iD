@@ -1,17 +1,30 @@
 {
-    "icon": "fast-food",
+    "icon": "maki-fast-food",
     "fields": [
         "name",
         "cuisine",
         "operator",
         "address",
         "building_area",
+        "drive_through"
+    ],
+    "moreFields": [
         "opening_hours",
+        "diet_multi",
         "takeaway",
         "delivery",
-        "drive_through",
         "smoking",
-        "outdoor_seating"
+        "capacity",
+        "outdoor_seating",
+        "internet_access",
+        "internet_access/fee",
+        "internet_access/ssid",
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

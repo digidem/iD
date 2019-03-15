@@ -1,5 +1,5 @@
 {
-    "icon": "farm",
+    "icon": "maki-farm",
     "fields": [
         "name",
         "operator",
@@ -12,7 +12,6 @@
     "tags": {
         "landuse": "farm"
     },
-    "terms": [],
     "name": "Farmland",
     "searchable": false
 }

@@ -1,6 +1,7 @@
 {
-    "icon": "waste-basket",
+    "icon": "maki-waste-basket",
     "fields": [
+        "operator",
         "collection_times"
     ],
     "geometry": [

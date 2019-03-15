@@ -1,17 +1,10 @@
 {
-    "icon": "highway-secondary-link",
+    "icon": "iD-highway-secondary-link",
     "fields": [
-        "name",
-        "oneway",
-        "maxspeed",
-        "maxspeed/advisory",
-        "lanes",
-        "surface",
-        "structure",
-        "maxheight",
-        "ref_road_number",
-        "cycleway",
-        "access"
+        "{highway/primary_link}"
+    ],
+    "moreFields": [
+        "{highway/primary_link}"
     ],
     "geometry": [
         "line"
@@ -20,9 +13,11 @@
         "highway": "secondary_link"
     },
     "terms": [
-        "ramp",
         "on ramp",
-        "off ramp"
+        "off ramp",
+        "ramp",
+        "road",
+        "street"
     ],
     "name": "Secondary Link"
 }

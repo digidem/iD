@@ -1,12 +1,5 @@
 {
-    "icon": "farm",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "maki-farm",
     "geometry": [
         "point",
         "area"

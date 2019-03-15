@@ -4,6 +4,8 @@ import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { interpolateNumber as d3_interpolateNumber } from 'd3-interpolate';
 import { select as d3_select } from 'd3-selection';
 
+import whichPolygon from 'which-polygon';
+
 import { data } from '../../data';
 import { geoExtent, geoMetersToOffset, geoOffsetToMeters} from '../geo';
 import { rendererBackgroundSource } from './background_source';
@@ -17,6 +19,7 @@ export function rendererBackground(context) {
     var dispatch = d3_dispatch('change');
     var detected = utilDetect();
     var baseLayer = rendererTileLayer(context).projection(context.projection);
+    var _isValid = true;
     var _overlayLayers = [];
     var _backgroundSources = [];
     var _brightness = 1;
@@ -26,6 +29,26 @@ export function rendererBackground(context) {
 
 
     function background(selection) {
+        // If we are displaying an Esri basemap at high zoom,
+        // check its tilemap to see how high the zoom can go
+        if (context.map().zoom() > 18) {
+            var basemap = baseLayer.source();
+            if (basemap && /^EsriWorldImagery/.test(basemap.id)) {
+                var center = context.map().center();
+                basemap.fetchTilemap(center);
+            }
+        }
+
+        // Is the imagery valid here? - #4827
+        var sources = background.sources(context.map().extent());
+        var wasValid = _isValid;
+        _isValid = !!sources
+            .filter(function(d) { return d === baseLayer.source(); }).length;
+
+        if (wasValid !== _isValid) {      // change in valid status
+            background.updateImagery();
+        }
+
 
         var baseFilter = '';
         if (detected.cssfilters) {
@@ -112,18 +135,19 @@ export function rendererBackground(context) {
 
 
     background.updateImagery = function() {
-        if (context.inIntro()) return;
+        var b = baseLayer.source();
+        if (context.inIntro() || !b) return;
 
-        var b = background.baseLayerSource(),
-            o = _overlayLayers
-                .filter(function (d) { return !d.source().isLocatorOverlay() && !d.source().isHidden(); })
-                .map(function (d) { return d.source().id; })
-                .join(','),
-            meters = geoOffsetToMeters(b.offset()),
-            epsilon = 0.01,
-            x = +meters[0].toFixed(2),
-            y = +meters[1].toFixed(2),
-            q = utilStringQs(window.location.hash.substring(1));
+        var o = _overlayLayers
+            .filter(function (d) { return !d.source().isLocatorOverlay() && !d.source().isHidden(); })
+            .map(function (d) { return d.source().id; })
+            .join(',');
+
+        var meters = geoOffsetToMeters(b.offset());
+        var epsilon = 0.01;
+        var x = +meters[0].toFixed(2);
+        var y = +meters[1].toFixed(2);
+        var q = utilStringQs(window.location.hash.substring(1));
 
         var id = b.id;
         if (id === 'custom') {
@@ -152,18 +176,25 @@ export function rendererBackground(context) {
             window.location.replace('#' + utilQsString(q, true));
         }
 
-        var imageryUsed = [b.imageryUsed()];
+        var imageryUsed = [];
+
+        var current = b.imageryUsed();
+        if (current && _isValid) {
+            imageryUsed.push(current);
+        }
 
         _overlayLayers
             .filter(function (d) { return !d.source().isLocatorOverlay() && !d.source().isHidden(); })
             .forEach(function (d) { imageryUsed.push(d.source().imageryUsed()); });
 
-        var gpx = context.layers().layer('gpx');
-        if (gpx && gpx.enabled() && gpx.hasGpx()) {
-            // Include a string like '.gpx data file' or '.geojson data file'
-            var match = gpx.getSrc().match(/(kml|gpx|(?:geo)?json)$/i);
-            var extension = match ? ('.' + match[0].toLowerCase() + ' ') : '';
-            imageryUsed.push(extension + 'data file');
+        var data = context.layers().layer('data');
+        if (data && data.enabled() && data.hasData()) {
+            imageryUsed.push(data.getSrc());
+        }
+
+        var streetside = context.layers().layer('streetside');
+        if (streetside && streetside.enabled()) {
+            imageryUsed.push('Bing Streetside');
         }
 
         var mapillary_images = context.layers().layer('mapillary-images');
@@ -186,18 +217,24 @@ export function rendererBackground(context) {
 
 
     background.sources = function(extent) {
+        if (!data.imagery || !data.imagery.query) return [];   // called before init()?
+
+        var matchIDs = {};
+        var matchImagery = data.imagery.query.bbox(extent.rectangle(), true) || [];
+        matchImagery.forEach(function(d) { matchIDs[d.id] = true; });
+
         return _backgroundSources.filter(function(source) {
-            return source.intersects(extent);
+            return matchIDs[source.id] || !source.polygon;   // no polygon = worldwide
         });
     };
 
 
-    background.dimensions = function(_) {
-        if (!_) return;
-        baseLayer.dimensions(_);
+    background.dimensions = function(d) {
+        if (!d) return;
+        baseLayer.dimensions(d);
 
         _overlayLayers.forEach(function(layer) {
-            layer.dimensions(_);
+            layer.dimensions(d);
         });
     };
 
@@ -210,13 +247,12 @@ export function rendererBackground(context) {
         if (!osm) return background;
 
         var blacklists = context.connection().imageryBlacklists();
+        var template = d.template();
+        var fail = false;
+        var tested = 0;
+        var regex;
 
-        var template = d.template(),
-            fail = false,
-            tested = 0,
-            regex, i;
-
-        for (i = 0; i < blacklists.length; i++) {
+        for (var i = 0; i < blacklists.length; i++) {
             try {
                 regex = new RegExp(blacklists[i]);
                 fail = regex.test(template);
@@ -265,7 +301,6 @@ export function rendererBackground(context) {
 
     background.toggleOverlayLayer = function(d) {
         var layer;
-
         for (var i = 0; i < _overlayLayers.length; i++) {
             layer = _overlayLayers[i];
             if (layer.source() === d) {
@@ -345,15 +380,45 @@ export function rendererBackground(context) {
             return geoExtent([args[2], args[1]]);
         }
 
-        var dataImagery = data.imagery || [],
-            q = utilStringQs(window.location.hash.substring(1)),
-            requested = q.background || q.layer,
-            extent = parseMap(q.map),
-            first,
-            best;
+        var q = utilStringQs(window.location.hash.substring(1));
+        var requested = q.background || q.layer;
+        var extent = parseMap(q.map);
+        var first;
+        var best;
+
+
+        data.imagery = data.imagery || [];
+        data.imagery.features = {};
+
+        // build efficient index and querying for data.imagery
+        var features = data.imagery.map(function(source) {
+            if (!source.polygon) return null;
+
+            // Add an extra array nest to each element in `source.polygon`
+            // so the rings are not treated as a bunch of holes:
+            // what we have: [ [[outer],[hole],[hole]] ]
+            // what we want: [ [[outer]],[[outer]],[[outer]] ]
+            var rings = source.polygon.map(function(ring) { return [ring]; });
+
+            var feature = {
+                type: 'Feature',
+                properties: { id: source.id },
+                geometry: { type: 'MultiPolygon', coordinates: rings }
+            };
+
+            data.imagery.features[source.id] = feature;
+            return feature;
+
+        }).filter(Boolean);
+
+        data.imagery.query = whichPolygon({
+            type: 'FeatureCollection',
+            features: features
+        });
+
 
         // Add all the available imagery sources
-        _backgroundSources = dataImagery.map(function(source) {
+        _backgroundSources = data.imagery.map(function(source) {
             if (source.type === 'bing') {
                 return rendererBackgroundSource.Bing(source, dispatch);
             } else if (/^EsriWorldImagery/.test(source.id)) {
@@ -410,9 +475,9 @@ export function rendererBackground(context) {
         });
 
         if (q.gpx) {
-            var gpx = context.layers().layer('gpx');
+            var gpx = context.layers().layer('data');
             if (gpx) {
-                gpx.url(q.gpx);
+                gpx.url(q.gpx, '.gpx');
             }
         }
 

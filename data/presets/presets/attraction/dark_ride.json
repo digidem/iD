@@ -1,9 +1,8 @@
 {
-    "icon": "rail-metro",
+    "icon": "maki-rail-metro",
     "fields": [
-        "name",
-        "operator",
-        "opening_hours"
+        "{attraction}",
+        "building_area"
     ],
     "geometry": [
         "point",

@@ -33,17 +33,29 @@ export function uiField(context, presetField, entity, options) {
     var _state = '';
     var _tags = {};
 
+    field.keys = field.keys || [field.key];
 
-    field.impl = uiFields[field.type](field, context)
-        .on('change', function(t, onInput) {
-            dispatch.call('change', field, t, onInput);
-        });
-
-    if (entity && field.impl.entity) {
-        field.impl.entity(entity);
+    // only create the fields that are actually being shown
+    if (_show && !field.impl) {
+        createField();
     }
 
-    field.keys = field.keys || [field.key];
+    // Creates the field.. This is done lazily,
+    // once we know that the field will be shown.
+    function createField() {
+        field.impl = uiFields[field.type](field, context)
+            .on('change', function(t, onInput) {
+                dispatch.call('change', field, t, onInput);
+            });
+
+        if (entity) {
+            field.entityID = entity.id;
+            // if this field cares about the entity, pass it along
+            if (field.impl.entity) {
+                field.impl.entity(entity);
+            }
+        }
+    }
 
 
     function isModified() {
@@ -57,7 +69,15 @@ export function uiField(context, presetField, entity, options) {
 
     function isPresent() {
         return _some(field.keys, function(key) {
-            return _tags[key];
+            if (field.type === 'multiCombo') {
+                for (var tagKey in _tags) {
+                    if (tagKey.indexOf(key) === 0) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return _tags[key] !== undefined;
         });
     }
 
@@ -103,32 +123,30 @@ export function uiField(context, presetField, entity, options) {
         if (options.wrap) {
             var label = enter
                 .append('label')
-                .attr('class', 'form-label')
-                .attr('for', function(d) { return 'preset-input-' + d.safeid; })
+                .attr('class', 'form-field-label')
+                .attr('for', function(d) { return 'preset-input-' + d.safeid; });
+
+            label
+                .append('span')
+                .attr('class', 'label-text')
                 .text(function(d) { return d.label(); });
 
-            var wrap = label
-                .append('div')
-                .attr('class', 'form-label-button-wrap');
-
             if (options.remove) {
-                wrap
+                label
                     .append('button')
                     .attr('class', 'remove-icon')
                     .attr('title', t('icons.remove'))
                     .attr('tabindex', -1)
-                    .call(svgIcon('#operation-delete'));
+                    .call(svgIcon('#iD-operation-delete'));
             }
 
             if (options.revert) {
-                wrap
+                label
                     .append('button')
                     .attr('class', 'modified-icon')
                     .attr('title', t('icons.undo'))
                     .attr('tabindex', -1)
-                    .call(
-                        (textDirection === 'rtl') ? svgIcon('#icon-redo') : svgIcon('#icon-undo')
-                    );
+                    .call(svgIcon((textDirection === 'rtl') ? '#iD-icon-redo' : '#iD-icon-undo'));
             }
         }
 
@@ -137,16 +155,20 @@ export function uiField(context, presetField, entity, options) {
         container = container
             .merge(enter);
 
-        container.selectAll('.form-label-button-wrap .remove-icon')
+        container.select('.form-field-label > .remove-icon')  // propagate bound data
             .on('click', remove);
 
-        container.selectAll('.form-label-button-wrap .modified-icon')
+        container.select('.form-field-label > .modified-icon')  // propagate bound data
             .on('click', revert);
 
         container
             .classed('modified', isModified())
             .classed('present', isPresent())
             .each(function(d) {
+                if (!d.impl) {
+                    createField();
+                }
+
                 var reference, help;
 
                 // instantiate field help
@@ -174,7 +196,7 @@ export function uiField(context, presetField, entity, options) {
                 if (help) {
                     d3_select(this)
                         .call(help.body)
-                        .select('.form-label-button-wrap')
+                        .select('.form-field-label')
                         .call(help.button);
                 }
 
@@ -182,7 +204,7 @@ export function uiField(context, presetField, entity, options) {
                 if (reference) {
                     d3_select(this)
                         .call(reference.body)
-                        .select('.form-label-button-wrap')
+                        .select('.form-field-label')
                         .call(reference.button);
                 }
 
@@ -191,22 +213,25 @@ export function uiField(context, presetField, entity, options) {
     };
 
 
-    field.state = function(_) {
+    field.state = function(val) {
         if (!arguments.length) return _state;
-        _state = _;
+        _state = val;
         return field;
     };
 
 
-    field.tags = function(_) {
+    field.tags = function(val) {
         if (!arguments.length) return _tags;
-        _tags = _;
+        _tags = val;
         return field;
     };
 
 
     field.show = function() {
         _show = true;
+        if (!field.impl) {
+            createField();
+        }
         if (field.default && field.key && _tags[field.key] !== field.default) {
             var t = {};
             t[field.key] = field.default;
@@ -215,16 +240,43 @@ export function uiField(context, presetField, entity, options) {
     };
 
 
+    // A shown field has a visible UI, a non-shown field is in the 'Add field' dropdown
     field.isShown = function() {
-        return _show || _some(field.keys, function(key) { return !!_tags[key]; });
+        return _show || isPresent();
+    };
+
+
+    // An allowed field can appear in the UI or in the 'Add field' dropdown.
+    // A non-allowed field is hidden from the user altogether
+    field.isAllowed = function() {
+        if (!entity || isPresent()) return true;   // a field with a value should always display
+
+        var latest = context.hasEntity(entity.id);   // check the most current copy of the entity
+        if (!latest) return true;
+
+        var require = field.prerequisiteTag;
+        if (require && require.key) {
+            var value = latest.tags[require.key];
+            if (!value) return false;
+
+            if (require.valueNot) {
+                return require.valueNot !== value;
+            }
+            if (require.value) {
+                return require.value === value;
+            }
+            return true;
+        }
+        return true;
     };
 
 
     field.focus = function() {
-        field.impl.focus();
+        if (field.impl) {
+            field.impl.focus();
+        }
     };
 
 
     return utilRebind(field, dispatch, 'on');
 }
-

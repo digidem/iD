@@ -1,10 +1,13 @@
 {
-    "icon": "dam",
+    "icon": "maki-dam",
     "geometry": [
         "point",
         "vertex",
         "line",
         "area"
+    ],
+    "moreFields": [
+        "website"
     ],
     "fields": [
         "name"

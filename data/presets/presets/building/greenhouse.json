@@ -1,11 +1,5 @@
 {
-    "icon": "garden-center",
-    "fields": [
-        "name",
-        "address",
-        "levels",
-        "height"
-    ],
+    "icon": "maki-garden-centre",
     "geometry": [
         "area"
     ],

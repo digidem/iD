@@ -1,8 +1,17 @@
 {
-    "icon": "garden",
+    "icon": "maki-garden",
     "fields": [
         "name",
+        "operator",
         "access_simple"
+    ],
+    "moreFields": [
+        "fee",
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "geometry": [
         "point",

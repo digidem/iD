@@ -1,10 +1,18 @@
 {
-    "icon": "picnic-site",
+    "icon": "maki-picnic-site",
     "fields": [
         "name",
         "operator",
         "address",
-        "smoking"
+        "access_simple",
+        "capacity"
+    ],
+    "moreFields": [
+        "smoking",
+        "fee",
+        "payment_multi",
+        "website",
+        "wheelchair"
     ],
     "geometry": [
         "point",

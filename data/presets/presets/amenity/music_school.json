@@ -1,9 +1,19 @@
 {
-    "icon": "school",
+    "icon": "maki-school",
     "fields": [
         "name",
         "operator",
-        "address"
+        "address",
+        "building_area",
+        "opening_hours"
+    ],
+    "moreFields": [
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

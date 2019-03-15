@@ -1,8 +1,12 @@
 en:
   icons:
+    download: download
     information: info
     remove: remove
     undo: undo
+    zoom_to: zoom to
+    copy: copy
+    open_wikidata: open on wikidata.org
   modes:
     add_area:
       title: Area
@@ -18,6 +22,10 @@ en:
       title: Point
       description: 'Add waterfalls, villages, or other points to the map.'
       tail: Click on the map to add a point.
+    add_note:
+      title: Note
+      description: Spotted an issue? Let other mappers know.
+      tail: Click on the map to add a note.
     browse:
       title: Browse
       description: Pan and zoom the map.
@@ -37,6 +45,7 @@ en:
         point: Added a point.
         vertex: Added a node to a way.
         relation: Added a relation.
+        note: Added a note.
     start:
       annotation:
         line: Started a line.
@@ -137,10 +146,18 @@ en:
       annotation: Removed a member from a relation.
     connect:
       annotation:
-        point: Connected a way to a point.
-        vertex: Connected a way to another.
-        line: Connected a way to a line.
-        area: Connected a way to an area.
+        from_vertex:
+          to_point: Connected a way to a point.
+          to_vertex: Connected a way to another.
+          to_line: Connected a way to a line.
+          to_area: Connected a way to an area.
+          to_adjacent_vertex: Merged adjacent points in a way.
+          to_sibling_vertex: Connected a way to itself.
+        from_point:
+          to_point: Merged a point with another.
+          to_vertex: Merged a point with a point in a way.
+          to_line: Moved a point to a line.
+          to_area: Moved a point to an area.
       relation: >-
         These features can't be connected because they have conflicting relation
         roles.
@@ -163,14 +180,20 @@ en:
       not_eligible: These features can't be merged.
       not_adjacent: These features can't be merged because their endpoints aren't connected.
       restriction: >-
-        These features can't be merged because at least one is a member of a
-        "{relation}" relation.
+        These features can't be merged because it would damage a "{relation}"
+        relation.
+      relation: >-
+        These features can't be merged because they have conflicting relation
+        roles.
       incomplete_relation: >-
         These features can't be merged because at least one hasn't been fully
         downloaded.
       conflicting_tags: >-
         These features can't be merged because some of their tags have
         conflicting values.
+      paths_intersect: >-
+        These features can't be merged because the resulting path would
+        intersect itself.
     move:
       title: Move
       description:
@@ -296,6 +319,15 @@ en:
       annotation:
         create: Added a turn restriction
         delete: Deleted a turn restriction
+    detach_node:
+      title: Detach
+      key: E
+      description: Detach this node from these lines/areas.
+      annotation: Detached a node from parent lines/areas.
+      restriction: >-
+        This node can't be detached because it would damage a "{relation}"
+        relation.
+      connected_to_hidden: This node can't be detached because it is connected to a hidden feature.
   restriction:
     controls:
       distance: Distance
@@ -341,15 +373,18 @@ en:
     the map.
   translate:
     translate: Translate
-    localized_translation_label: Multilingual name
+    localized_translation_label: Multilingual Name
     localized_translation_language: Choose language
     localized_translation_name: Name
   zoom_in_edit: Zoom in to edit
-  login: login
-  logout: logout
+  login: Log In
+  logout: Log Out
   loading_auth: Connecting to OpenStreetMap...
   report_a_bug: Report a bug
   help_translate: Help translate
+  sidebar:
+    key: '`'
+    tooltip: Toggle the sidebar.
   feature_info:
     hidden_warning: '{count} hidden features'
     hidden_details: 'These features are currently hidden: {details}'
@@ -373,10 +408,13 @@ en:
     cancel: Cancel
     changes: '{count} Changes'
     download_changes: Download osmChange file
+    errors: Errors
     warnings: Warnings
     modified: Modified
     deleted: Deleted
     created: Created
+    outstanding_errors_message: 'Please resolve all errors first. {count} remaining.'
+    comment_needed_message: Please add a changeset comment first.
     about_changeset_comments: About changeset comments
     about_changeset_comments_link: //wiki.openstreetmap.org/wiki/Good_changeset_comments
     google_warning: >-
@@ -413,6 +451,11 @@ en:
       changeset: Changeset
       unknown: Unknown
       link_text: History on openstreetmap.org
+      note_no_history: No History (New Note)
+      note_comments: Comments
+      note_created_date: Created Date
+      note_created_user: Created By
+      note_link_text: Note on openstreetmap.org
     location:
       key: L
       title: Location
@@ -439,6 +482,7 @@ en:
     line: line
     area: area
     relation: relation
+    note: note
   geocoder:
     search: Search worldwide...
     no_results_visible: No results in visible map area
@@ -447,9 +491,13 @@ en:
     title: Show My Location
     locating: 'Locating, please wait...'
   inspector:
-    no_documentation_combination: There is no documentation available for this tag combination
-    no_documentation_key: There is no documentation available for this key
-    documentation_redirect: This documentation has been redirected to a new page
+    zoom_to:
+      key: Z
+      title: Zoom to this
+      tooltip_feature: Center and zoom the map to focus on this feature.
+      tooltip_note: Center and zoom the map to focus on this note.
+      tooltip_data: Center and zoom the map to focus on this data.
+      tooltip_issue: Center and zoom the map to focus on this issue.
     show_more: Show More
     view_on_osm: View element source XML
     all_fields: All fields
@@ -457,10 +505,17 @@ en:
     all_members: All members
     all_relations: All relations
     new_relation: New relation...
+    choose_relation: Choose a parent relation
     role: Role
     choose: Select feature type
     results: '{n} results for {search}'
-    reference: View on OpenStreetMap Wiki
+    no_documentation_key: There is no documentation available.
+    edit_reference: edit/translate
+    wiki_reference: View documentation
+    wiki_en_reference: View documentation in English
+    hidden_preset:
+      manual: '{features} are hidden. Enable them in the Map Data pane.'
+      zoom: '{features} are hidden. Zoom in to enable them.'
     back_tooltip: Change feature
     remove: Remove
     search: Search
@@ -485,6 +540,10 @@ en:
     relation: Relation
     location: Location
     add_fields: 'Add field:'
+    lock:
+      suggestion: >-
+        The "{label}" field is locked because there is a Wikidata tag. You can
+        delete it or edit the tags in the "All tags" section.
   background:
     title: Background
     description: Background settings
@@ -494,16 +553,6 @@ en:
     best_imagery: Best known imagery source for this location
     switch: Switch back to this background
     custom: Custom
-    custom_button: Edit custom background
-    custom_prompt: |-
-      Enter a tile URL template. Valid tokens are:
-         - {zoom} or {z}, {x}, {y} for Z/X/Y tile scheme
-         - {-y} or {ty} for flipped TMS-style Y coordinates
-         - {u} for quadtile scheme
-         - {switch:a,b,c} for DNS server multiplexing
-
-      Example:
-      {example}
     overlays: Overlays
     imagery_source_faq: Imagery Info / Report a Problem
     reset: reset
@@ -529,6 +578,19 @@ en:
       osm:
         tooltip: Map data from OpenStreetMap
         title: OpenStreetMap data
+      notes:
+        tooltip: Note data from OpenStreetMap
+        title: OpenStreetMap notes
+      keepRight:
+        tooltip: Automatically detected map issues from keepright.at
+        title: KeepRight Issues
+      improveOSM:
+        tooltip: Missing data automatically detected by improveosm.org
+        title: ImproveOSM Issues
+      custom:
+        tooltip: 'Drag and drop a data file onto the page, or click the button to setup'
+        title: Custom Map Data
+        zoom: Zoom to data
     fill_area: Fill Areas
     map_features: Map Features
     autohidden: >-
@@ -569,10 +631,10 @@ en:
       description: Power Features
       tooltip: 'Power Lines, Power Plants, Substations, etc.'
     past_future:
-      description: Past/Future
+      description: Past/Future Features
       tooltip: 'Proposed, Construction, Abandoned, Demolished, etc.'
     others:
-      description: Others
+      description: Other Features
       tooltip: Everything Else
   area_fill:
     wireframe:
@@ -587,6 +649,35 @@ en:
     full:
       description: Full Fill
       tooltip: Areas are drawn fully filled.
+  settings:
+    custom_background:
+      tooltip: Edit custom background
+      header: Custom Background Settings
+      instructions: |-
+        Enter a tile URL template. Valid tokens are:
+           {zoom} or {z}, {x}, {y} for Z/X/Y tile scheme
+           {-y} or {ty} for flipped TMS-style Y coordinates
+           {u} for quadtile scheme
+           {switch:a,b,c} for DNS server multiplexing
+
+        Example:
+        {example}
+      template:
+        placeholder: Enter a url template
+    custom_data:
+      tooltip: Edit custom data layer
+      header: Custom Map Data Settings
+      file:
+        instructions: |-
+          Choose a local data file. Supported types are:
+             .gpx, .kml, .geojson, .json
+        label: Browse files
+      or: Or
+      url:
+        instructions: |-
+          Enter a data file URL or vector tile URL template. Valid tokens are:
+             {zoom} or {z}, {x}, {y} for Z/X/Y tile scheme
+        placeholder: Enter a url
   restore:
     heading: You have unsaved changes
     description: Do you wish to restore unsaved changes from a previous editing session?
@@ -671,39 +762,363 @@ en:
     description: Description
     on_wiki: '{tag} on wiki.osm.org'
     used_with: 'used with {type}'
-  validations:
-    disconnected_highway: Disconnected highway
-    disconnected_highway_tooltip: Roads should be connected to other roads or building entrances.
-    old_multipolygon: Multipolygon tags on outer way
-    old_multipolygon_tooltip: >-
-      This style of multipolygon is deprecated. Please assign the tags to the
-      parent multipolygon instead of the outer way.
-    untagged_point: Untagged point
-    untagged_point_tooltip: Select a feature type that describes what this point is.
-    untagged_line: Untagged line
-    untagged_line_tooltip: Select a feature type that describes what this line is.
-    untagged_area: Untagged area
-    untagged_area_tooltip: Select a feature type that describes what this area is.
-    untagged_relation: Untagged relation
-    untagged_relation_tooltip: Select a feature type that describes what this relation is.
-    many_deletions: >-
-      You're deleting {n} features: {p} nodes, {l} lines, {a} areas, {r}
-      relations. Are you sure you want to do this? This will delete them from
-      the map.
-    tag_suggests_area: 'The tag {tag} suggests line should be area, but it is not an area'
-    deprecated_tags: 'Deprecated tags: {tags}'
   zoom:
     in: Zoom in
     out: Zoom out
   cannot_zoom: Cannot zoom out further in current mode.
   full_screen: Toggle Full Screen
-  gpx:
-    local_layer: Local file
-    drag_drop: >-
-      Drag and drop a .gpx, .geojson or .kml file on the page, or click the
-      button to the right to browse
-    zoom: Zoom to layer
-    browse: Browse for a file
+  QA:
+    improveOSM:
+      title: ImproveOSM Detection
+      geometry_types:
+        path: paths
+        parking: parking
+        road: roads
+        both: roads and parking
+      directions:
+        east: east
+        north: north
+        northeast: northeast
+        northwest: northwest
+        south: south
+        southeast: southeast
+        southwest: southwest
+        west: west
+      error_types:
+        ow:
+          title: Missing One-way
+          description: >-
+            Along this section of {highway}, {percentage}% of {num_trips}
+            recorded trips travel from {from_node} to {to_node}. There may be
+            missing a "oneway" tag.
+        mr:
+          title: Missing Geometry
+          description: >-
+            {num_trips} recorded trips in this area suggest there may be
+            unmapped {geometry_type} here.
+          description_alt: >-
+            Data from a 3rd party suggests there may be unmapped {geometry_type}
+            here.
+        tr:
+          title: Missing Turn Restriction
+          description: >-
+            {num_passed} of {num_trips} recorded trips (travelling
+            {travel_direction}) make a turn from {from_way} to {to_way} at
+            {junction}. There may be a missing "{turn_restriction}" restriction.
+    keepRight:
+      title: KeepRight Error
+      detail_title: Error
+      detail_description: Description
+      comment: Comment
+      comment_placeholder: Enter a comment to share with other users.
+      close: Close (Error Fixed)
+      ignore: Ignore (Not an Error)
+      save_comment: Save Comment
+      close_comment: Close and Comment
+      ignore_comment: Ignore and Comment
+      error_parts:
+        this_node: this node
+        this_way: this way
+        this_relation: this relation
+        this_oneway: this oneway
+        this_highway: this highway
+        this_railway: this railway
+        this_waterway: this waterway
+        this_cycleway: this cycleway
+        this_cycleway_footpath: this cycleway/footpath
+        this_riverbank: this riverbank
+        this_crossing: this crossing
+        this_railway_crossing: this railway crossing
+        this_bridge: this bridge
+        this_tunnel: this tunnel
+        this_boundary: this boundary
+        this_turn_restriction: this turn restriction
+        this_roundabout: this roundabout
+        this_mini_roundabout: this mini-roundabout
+        this_track: this track
+        this_feature: this feature
+        highway: highway
+        railway: railway
+        waterway: waterway
+        cycleway: cycleway
+        cycleway_footpath: cycleway/footpath
+        riverbank: riverbank
+        place_of_worship: place of worship
+        pub: pub
+        restaurant: restaurant
+        school: school
+        university: university
+        hospital: hospital
+        library: library
+        theatre: theatre
+        courthouse: courthouse
+        bank: bank
+        cinema: cinema
+        pharmacy: pharmacy
+        cafe: cafe
+        fast_food: fast food
+        fuel: fuel
+        from: from
+        to: to
+        left_hand: left-hand
+        right_hand: right-hand
+      errorTypes:
+        '20':
+          title: Multiple nodes on the same spot
+          description: 'There is more than one node in this spot. Node IDs: {var1}.'
+        '30':
+          title: Non-closed area
+          description: '{var1} is tagged with "{var2}" and should be a closed loop.'
+        '40':
+          title: Impossible oneway
+          description: 'The first node {var1} of {var2} is not connected to any other way.'
+        '41':
+          description: 'The last node {var1} of {var2} is not connected to any other way.'
+        '42':
+          description: 'You cannot reach {var1} because all ways leading from it are oneway.'
+        '43':
+          description: >-
+            You cannot escape from {var1} because all ways leading to it are
+            oneway.
+        '50':
+          title: Almost junction
+          description: '{var1} is very close but not connected to way {var2}.'
+        '60':
+          title: Deprecated tag
+          description: '{var1} uses deprecated tag "{var2}". Please use "{var3}" instead.'
+        '70':
+          title: Missing tag
+          description: '{var1} has an empty tag: "{var2}".'
+        '71':
+          description: '{var1} has no tags.'
+        '72':
+          description: '{var1} is not member of any way and doesn''t have any tags.'
+        '73':
+          description: '{var1} has a "{var2}" tag but no "highway" tag.'
+        '74':
+          description: '{var1} has an empty tag: "{var2}".'
+        '75':
+          description: '{var1} has a name "{var2}" but no other tags.'
+        '90':
+          title: Motorway without ref tag
+          description: >-
+            {var1} is tagged as a motorway and therefore needs a "ref",
+            "nat_ref", or "int_ref" tag.
+        '100':
+          title: Place of worship without religion
+          description: >-
+            {var1} is tagged as a place of worship and therefore needs a
+            religion tag.
+        '110':
+          title: Point of interest without name
+          description: '{var1} is tagged as a "{var2}" and therefore needs a name tag.'
+        '120':
+          title: Way without nodes
+          description: '{var1} has just one single node.'
+        '130':
+          title: Disconnected way
+          description: '{var1} is not connected to the rest of the map.'
+        '150':
+          title: Railway crossing without tag
+          description: >-
+            {var1} of a highway and a railway needs to be tagged as
+            "railway=crossing" or "railway=level_crossing".
+        '160':
+          title: Railway layer conflict
+          description: >-
+            There are ways in different layers (e.g. tunnel or bridge) meeting
+            at {var1}.
+        '170':
+          title: FIXME tagged item
+          description: '{var1} has a FIXME tag: {var2}'
+        '180':
+          title: Relation without type
+          description: '{var1} is missing a "type" tag.'
+        '190':
+          title: Intersection without junction
+          description: >-
+            {var1} intersects the {var2} {var3} but there is no junction node,
+            bridge, or tunnel.
+        '200':
+          title: Overlapping ways
+          description: '{var1} overlaps the {var2} {var3}.'
+        '210':
+          title: Self-intersecting way
+          description: There is an unspecified issue with self intersecting ways.
+        '211':
+          description: >-
+            {var1} contains more than one node multiple times. Nodes are {var2}.
+            This may or may not be an error.
+        '212':
+          description: >-
+            {var1} has only two different nodes and contains one of them more
+            than once.
+        '220':
+          title: Misspelled tag
+          description: '{var1} is tagged "{var2}" where "{var3}" looks like "{var4}".'
+        '221':
+          description: '{var1} has a suspicious tag "{var2}".'
+        '230':
+          title: Layer conflict
+          description: '{var1} is a junction of ways on different layers.'
+        '231':
+          description: '{var1} is a junction of ways on different layers: {var2}.'
+          layer: '(layer: {layer})'
+        '232':
+          description: >-
+            {var1} is tagged with "layer={var2}". This need not be an error but
+            it looks strange.
+        '270':
+          title: Unusual motorway connection
+          description: >-
+            {var1} is a junction of a motorway and a highway other than
+            "motorway", "motorway_link", "trunk", "rest_area", or
+            "construction". Connection to "service" or "unclassified" is only
+            valid if it has "access=no/private", or it leads to a motorway
+            service area, or if it is a "service=parking_aisle".
+        '280':
+          title: Boundary issue
+          description: There is an unspecified issue with this boundary.
+        '281':
+          title: Boundary missing name
+          description: '{var1} has no name.'
+        '282':
+          title: Boundary missing admin level
+          description: >-
+            The boundary of {var1} has no valid numeric admin_level. Please do
+            not mix admin levels (e.g. "6;7"). Always tag the lowest admin_level
+            of all boundaries.
+        '283':
+          title: Boundary not a closed loop
+          description: 'The boundary of {var1} is not a closed loop.'
+        '284':
+          title: Boundary is split
+          description: 'The boundary of {var1} splits here.'
+        '285':
+          title: Boundary admin_level too high
+          description: >-
+            {var1} has "admin_level={var2}" but belongs to a relation with lower
+            "admin_level" (e.g. higher priority); it should have the lowest
+            "admin_level" of all relations.
+        '290':
+          title: Restriction issue
+          description: There is an unspecified issue with this restriction.
+        '291':
+          title: Restriction missing type
+          description: '{var1} has an unrecognized restriction type.'
+        '292':
+          title: Restriction missing "from" way
+          description: '{var1} has {var2} "from" members, but it should have 1.'
+        '293':
+          title: Restriction missing "to" way
+          description: '{var1} has {var2} "to" members, but it should have 1.'
+        '294':
+          title: Restriction "from" or "to" is not a way
+          description: '{var1} has "from" or "to" members which should be ways. {var2}.'
+        '295':
+          title: Restriction "via" is not an endpoint
+          description: >-
+            {var1} has a "via" (node {var2}) which is not the first or the last
+            member of "{var3}" (way {var4}).
+        '296':
+          title: Unusual restriction angle
+          description: >-
+            {var1} has a restriction type "{var2}" but the angle is {var3}
+            degrees. Maybe the restriction type is not appropriate?
+        '297':
+          title: Wrong direction of "to" way
+          description: '{var1} does not match the direction of "to" way {var2}.'
+        '298':
+          title: Redundant restriction - oneway
+          description: >-
+            {var1} may be redundant. Entry already prohibited by "oneway" tag on
+            {var2}.
+        '300':
+          title: Missing maxspeed
+          description: >-
+            {var1} is missing a "maxspeed" tag and is tagged as motorway, trunk,
+            primary, or secondary.
+        '310':
+          title: Roundabout issue
+          description: There is an unspecified issue with this roundabout.
+        '311':
+          title: Roundabout not closed loop
+          description: >-
+            {var1} is part of a roundabout but is not closed-loop. (Split
+            carriageways approaching a roundabout should not be tagged as
+            roundabout).
+        '312':
+          title: Roundabout wrong direction
+          description: >-
+            If {var1} is in a country with {var2} traffic then its orientation
+            goes the wrong way around.
+        '313':
+          title: Roundabout weakly connected
+          description: >-
+            {var1} has only {var2} other road(s) connected. Roundabouts
+            typically have 3 or more.
+        '320':
+          title: Improper link connection
+          description: >-
+            {var1} is tagged as "{var2}" but doesn't have a connection to any
+            other "{var3}" or "{var4}".
+        '350':
+          title: Improper bridge tag
+          description: >-
+            {var1} doesn't have a tag in common with its surrounding ways that
+            shows the purpose of this bridge. There should be one of these tags:
+            {var2}.
+        '360':
+          title: Missing local name tag
+          description: >-
+            It would be nice if {var1} had a local name tag "name:XX={var2}"
+            where XX shows the language of its common name "{var2}".
+        '370':
+          title: Doubled places
+          description: >-
+            {var1} has tags in common with the surrounding way {var2} {var3} and
+            seems to be redundant.
+          including_the_name: '(including the name {name})'
+        '380':
+          title: Non-physical use of sport tag
+          description: >-
+            {var1} is tagged "{var2}" but has no physical tag (e.g. "leisure",
+            "building", "amenity", or "highway").
+        '390':
+          title: Missing tracktype
+          description: '{var1} doesn''t have a "tracktype" tag.'
+        '400':
+          title: Geometry issue
+          description: There is an unspecified issue with the geometry here.
+        '401':
+          title: Missing turn restriction
+          description: >-
+            Ways {var1} and {var2} join in a very sharp angle here and there is
+            no oneway tag or turn restriction that prevents turning.
+        '402':
+          title: Impossible angle
+          description: '{var1} bends in a very sharp angle here.'
+        '410':
+          title: Website issue
+          description: There is an unspecified issue with a contact website or URL.
+        '411':
+          description: >-
+            {var1} may have an outdated URL: {var2} returned HTTP status code
+            {var3}.
+        '412':
+          description: >-
+            {var1} may have an outdated URL: {var2} contained suspicious text
+            "{var3}".
+        '413':
+          description: >-
+            {var1} may have an outdated URL: {var2} did not contain keywords
+            "{var3}".
+  streetside:
+    tooltip: Streetside photos from Microsoft
+    title: Photo Overlay (Bing Streetside)
+    report: Report a privacy concern with this image
+    view_on_bing: View on Bing Maps
+    hires: High resolution
   mapillary_images:
     tooltip: Street-level photos from Mapillary
     title: Photo Overlay (Mapillary)
@@ -717,6 +1132,33 @@ en:
     title: Photo Overlay (OpenStreetCam)
   openstreetcam:
     view_on_openstreetcam: View this image on OpenStreetCam
+  note:
+    note: Note
+    title: Edit note
+    anonymous: anonymous
+    closed: (Closed)
+    commentTitle: Comments
+    status:
+      opened: 'opened {when}'
+      reopened: 'reopened {when}'
+      commented: 'commented {when}'
+      closed: 'closed {when}'
+    newComment: New Comment
+    inputPlaceholder: Enter a comment to share with other users.
+    close: Close Note
+    open: Reopen Note
+    comment: Comment
+    close_comment: Close and Comment
+    open_comment: Reopen and Comment
+    report: Report
+    new: New Note
+    newDescription: Describe the issue.
+    save: Save Note
+    login: You must log in to change or comment on this note.
+    upload_explanation: Your comments will be publicly visible to all OpenStreetMap users.
+    upload_explanation_with_user: >-
+      Your comments as {user} will be publicly visible to all OpenStreetMap
+      users.
   help:
     title: Help
     key: H
@@ -783,7 +1225,7 @@ en:
         world can be mapped as a feature on OpenStreetMap. Map features are
         represented on the map using *points*, *lines*, or *areas*.
       nodes_ways: >-
-        In OpenStreetmap, points are sometimes called *nodes*, and lines and
+        In OpenStreetMap, points are sometimes called *nodes*, and lines and
         areas are sometimes called *ways*.
     editing:
       title: Editing & Saving
@@ -1093,6 +1535,35 @@ en:
         down to the "All relations" section of the feature editor, then click
         the {plus} add button to add this feature to a nearby existing relation
         or a new relation.
+    notes:
+      title: Notes
+      intro: >-
+        *Notes* are used to alert other users that a feature requires fixing or
+        attention. Notes mark a specific location on the map. To view existing
+        notes or add new ones, click the {data} **Map data** panel to enable the
+        OpenStreetMap notes layer.
+      add_note_h: Adding Notes
+      add_note: >-
+        To add a new note, click the {note} **Note** button on the toolbar above
+        the map, or press the shortcut key `4`. This will change the mouse
+        cursor to a cross symbol. To place the new note on the map, position the
+        mouse cursor where the note should go, then {leftclick} left-click or
+        press `Space`.
+      move_note: >-
+        Only new notes can be moved. To move a note, place the mouse cursor over
+        the new note, then press and hold the {leftclick} left mouse button
+        while dragging the note to its new location.
+      update_note_h: 'Closing, Reopening, and Commenting'
+      update_note: >-
+        An existing note can be updated by closing it, reopening it, or adding a
+        comment to it. Closing a note indicates that the problem has been
+        resolved. Reopening a note indicates that the original issue is not
+        resolved.
+      save_note_h: Saving Notes
+      save_note: >-
+        You must save any note edits individually by clicking the buttons below
+        the note comments. Note edits are **not** included in changesets that
+        you upload to OpenStreetMap.
     imagery:
       title: Background Imagery
       intro: >-
@@ -1120,15 +1591,16 @@ en:
         the bottom of the Background Settings pane.
       offset_change: >-
         Click on the small triangles to adjust the imagery offset in small
-        steps, or hold the left mouse button and drag within the gray square to
-        slide the imagery into alignment.
+        steps, or hold the {leftclick} left mouse button and drag within the
+        gray square to slide the imagery into alignment.
     streetlevel:
       title: Street Level Photos
       intro: >-
         Street level photos are useful for mapping traffic signs, businesses,
         and other details that you can't see from satellite and aerial images.
-        The iD editor supports street level photos from
-        [Mapillary](https://www.mapillary.com) and
+        The iD editor supports street level photos from [Bing
+        Streetside](https://www.microsoft.com/en-us/maps/streetside),
+        [Mapillary](https://www.mapillary.com), and
         [OpenStreetCam](https://www.openstreetcam.org).
       using_h: Using Street Level Photos
       using: >-
@@ -1169,6 +1641,25 @@ en:
         You can also [upload your GPS data to
         OpenStreetMap](https://www.openstreetmap.org/trace/create) for other
         users to use.
+    qa:
+      title: Quality Assurance
+      intro: >-
+        *Quality Assurance* (Q/A) tools can find improper tags, disconnected
+        roads, and other issues with OpenStreetMap, which mappers can then fix.
+        To view existing Q/A issues, click the {data} **Map data** panel to
+        enable a specific Q/A layer.
+      tools_h: Tools
+      tools: >-
+        The following tools are currently supported:
+        [KeepRight](https://www.keepright.at/) and
+        [ImproveOSM](https://improveosm.org/en/). Expect iD to support
+        [Osmose](https://osmose.openstreetmap.fr/) and more Q/A tools in the
+        future.
+      issues_h: Handling Issues
+      issues: >-
+        Handling Q/A issues is similar to handling notes. Click on a marker to
+        view the issue details in the sidebar. Each tool has its own
+        capabilities, but generally you can comment and/or close an issue.
     field:
       restrictions:
         title: Turn Restrictions Help
@@ -1233,6 +1724,171 @@ en:
             direct restriction.
     welcome:
       welcome: Welcome! This walkthrough will teach you the basics of editing on Mapeo.
+  issues:
+    title: Issues
+    key: I
+    list_title: 'Issues ({count})'
+    errors:
+      list_title: 'Errors ({count})'
+    warnings:
+      list_title: 'Warnings ({count})'
+    rules:
+      title: Rules
+    no_issues:
+      message: Everything looks fine
+      info: Any issues will show up here as you edit
+    almost_junction:
+      title: Almost Junctions
+      message: '{feature} is very close but not connected to {feature2}'
+      highway-highway:
+        tip: Intersecting highways should share a junction vertex.
+    crossing_ways:
+      title: Crossings Ways
+      message: '{feature} crosses {feature2}'
+      tip: >-
+        Highways, railways, waterways, and buildings should not cross
+        ambiguously.
+      building-building:
+        tip: Buildings should not intersect except on different layers.
+      building-highway:
+        tip: >-
+          Highways crossing buildings should use bridges, tunnels, coverings, or
+          entrances.
+      building-railway:
+        tip: Railways crossing buildings should use bridges or tunnels.
+      building-waterway:
+        tip: Waterways crossing buildings should use tunnels or different layers.
+      highway-highway:
+        tip: 'Crossing highways should use bridges, tunnels, or intersections.'
+      highway-railway:
+        tip: >-
+          Highways crossing railways should use bridges, tunnels, or level
+          crossings.
+      highway-waterway:
+        tip: 'Highways crossing waterways should use bridges, tunnels, or fords.'
+      railway-railway:
+        tip: Crossing railways should be connected or use bridges or tunnels.
+      railway-waterway:
+        tip: Railways crossing waterways should use bridges or tunnels.
+      waterway-waterway:
+        tip: Crossing waterways should be connected or use tunnels.
+      tunnel-tunnel:
+        tip: Crossing tunnels should use different layers.
+      tunnel-tunnel_connectable:
+        tip: Crossing tunnels should be connected or use different layers.
+      bridge-bridge:
+        tip: Crossing bridges should use different layers.
+      bridge-bridge_connectable:
+        tip: Crossing bridges should be connected or use different layers.
+      indoor-indoor:
+        tip: Crossing indoor features should use different levels.
+      indoor-indoor_connectable:
+        tip: Crossing indoor features should be connected or use different levels.
+    deprecated_tag:
+      title: Deprecated Tags
+      single:
+        message: '{feature} has the outdated tag "{tag}"'
+      combination:
+        message: '{feature} has an outdated tag combination: {tags}'
+      tip: Some tags become deprecated over time and should be replaced.
+    disconnected_way:
+      title: Disconnected Ways
+      highway:
+        message: '{highway} is disconnected from other roads and paths'
+        tip: Highways should connect to other highways or building entrances.
+    generic_name:
+      title: Generic Names
+      message: '{feature} has the generic name "{name}"'
+      tip: 'Names should be the actual, on-the-ground names of features.'
+    many_deletions:
+      title: Many Deletions
+      points-lines-areas:
+        message: 'Deleting {n} features: {p} points, {l} lines, and {a} areas'
+      points-lines-areas-relations:
+        message: >-
+          Deleting {n} features: {p} points, {l} lines, {a} areas, and {r}
+          relations
+      tip: Only redundant or nonexistent features should be deleted.
+    missing_role:
+      title: Missing Roles
+      message: '{member} has no role within {relation}'
+      multipolygon:
+        tip: Multipolygon members must have an inner or outer role.
+    missing_tag:
+      title: Missing Tags
+      any:
+        message: '{feature} has no tags'
+      descriptive:
+        message: '{feature} has no descriptive tags'
+      specific:
+        message: '{feature} has no "{tag}" tag'
+      tip: Features must have tags that define what they are.
+    old_multipolygon:
+      title: Misplaced Multipolygon Tags
+      message: '{multipolygon} has misplaced tags'
+      tip: 'Multipolygons should be tagged on their relation, not their outer way.'
+    tag_suggests_area:
+      title: Lines Tagged as Areas
+      message: '{feature} should be a closed area based on the tag "{tag}"'
+      tip: Areas must have connected endpoints.
+    fix:
+      connect_almost_junction:
+        annotation: Connected very close features.
+      connect_crossing_features:
+        annotation: Connected crossing features.
+      connect_endpoints:
+        title: Connect the ends
+        annotation: Connected the endpoints of a way.
+      connect_features:
+        title: Connect the features
+      continue_from_start:
+        title: Continue drawing from start
+      continue_from_end:
+        title: Continue drawing from end
+      delete_feature:
+        title: Delete this feature
+      move_tags:
+        title: Move the tags
+        annotation: Moved tags.
+      remove_deprecated_tag:
+        annotation: Removed an old tag.
+      remove_deprecated_tag_combo:
+        annotation: Removed an old tag combination.
+      remove_from_relation:
+        title: Remove from relation
+      remove_generic_name:
+        title: Remove the name
+        annotation: Removed a generic name.
+      remove_tag:
+        title: Remove the tag
+        annotation: Removed tag.
+      remove_tags:
+        title: Remove the tags
+      reposition_features:
+        title: Reposition the features
+      select_preset:
+        title: Select a feature type
+      set_as_inner:
+        title: Set as inner
+      set_as_outer:
+        title: Set as outer
+      tag_as_disconnected:
+        title: Tag as disconnected
+        annotation: Tagged very close features as disconnected.
+      upgrade_tag:
+        title: Upgrade the tag
+        annotation: Upgraded an old tag.
+      upgrade_tag_combo:
+        title: Upgrade the tags
+        annotation: Upgraded an old tag combination.
+      use_bridge_or_tunnel:
+        title: Use a bridge or tunnel
+      use_different_layers:
+        title: Use different layers
+      use_different_levels:
+        title: Use different levels
+      use_tunnel:
+        title: Use a tunnel
   intro:
     done: done
     ok: OK
@@ -1719,6 +2375,7 @@ en:
         background_switch: Switch back to last background
         map_data: Show map data options
         fullscreen: Enter full screen mode
+        sidebar: Toggle sidebar
         wireframe: Toggle wireframe mode
         minimap: Toggle minimap
       selecting:
@@ -1730,6 +2387,7 @@ en:
       with_selected:
         title: With feature selected
         edit_menu: Toggle edit menu
+        zoom_to: Zoom to selected feature
       vertex_selected:
         title: With node selected
         previous: Jump to previous node
@@ -1744,7 +2402,8 @@ en:
         add_point: '''Add point'' mode'
         add_line: '''Add line'' mode'
         add_area: '''Add area'' mode'
-        place_point: Place a point
+        add_note: '''Add note'' mode'
+        place_point: Place a point or note
         disable_snap: Hold to disable point snapping
         stop_line: Finish drawing a line or area
       operations:
@@ -1752,6 +2411,7 @@ en:
         continue_line: Continue a line at the selected node
         merge: Combine (merge) selected features
         disconnect: Disconnect features at the selected node
+        detach_node: Detach selected node from parent lines/areas
         split: Split a line into two at the selected node
         reverse: Reverse a line
         move: Move selected features
@@ -1798,13 +2458,19 @@ en:
     west: W
     coordinate: '{coordinate}{direction}'
     coordinate_pair: '{latitude}, {longitude}'
+  wikidata:
+    identifier: Identifier
+    label: Label
+    description: Description
   presets:
     categories:
       category-barrier:
         name: Barrier Features
       category-building:
         name: Building Features
-      category-golf:
+      category-golf-area:
+        name: Golf Features
+      category-golf-line:
         name: Golf Features
       category-landuse:
         name: Land Use Features
@@ -1824,6 +2490,8 @@ en:
         name: Road Features
       category-route:
         name: Route Features
+      category-utility:
+        name: Utility Features
       category-water-area:
         name: Water Features
       category-water-line:
@@ -1843,29 +2511,30 @@ en:
         options:
           'yes':
             title: Allowed
-            description: Access permitted by law; a right of way
+            description: Access allowed by law; a right of way
           'no':
             title: Prohibited
-            description: Access not permitted to the general public
+            description: Access not allowed to the general public
           permissive:
             title: Permissive
-            description: >-
-              Access permitted until such time as the owner revokes the
-              permission
+            description: Access allowed until such time as the owner revokes the permission
           private:
             title: Private
             description: >-
-              Access permitted only with permission of the owner on an
-              individual basis
+              Access allowed only with permission of the owner on an individual
+              basis
           designated:
             title: Designated
-            description: Access permitted according to signs or specific local laws
+            description: Access allowed according to signs or specific local laws
           destination:
             title: Destination
-            description: Access permitted only to reach a destination
+            description: Access allowed only to reach a destination
           dismount:
             title: Dismount
-            description: Access permitted but rider must dismount
+            description: Access allowed but rider must dismount
+          permit:
+            title: Permit
+            description: Access allowed only with a valid permit or license
       address:
         label: Address
         placeholders:
@@ -1941,6 +2610,8 @@ en:
         label: For Animals
       animal_shelter:
         label: For Animals
+      architect:
+        label: Architect
       area/highway:
         label: Type
       artist:
@@ -1949,9 +2620,15 @@ en:
         label: Type
       atm:
         label: ATM
+      attraction:
+        label: Type
       backrest:
         label: Backrest
+      bar:
+        label: Bar
       barrier:
+        label: Type
+      basin:
         label: Type
       bath/open_air:
         label: Open Air
@@ -1964,7 +2641,7 @@ en:
           foot_bath: Foot Bath
           hot_spring: Hot Spring
       beauty:
-        label: Shop Type
+        label: Beauty Specialty
       bench:
         label: Bench
       bicycle_parking:
@@ -1980,6 +2657,8 @@ en:
           stemcells: stem cell samples
       board_type:
         label: Type
+      booth:
+        label: Booth
       boules:
         label: Type
       boundary:
@@ -1991,10 +2670,14 @@ en:
       bridge:
         label: Type
         placeholder: Default
+      bridge/support:
+        label: Type
       building_area:
         label: Building
       building:
         label: Building
+      building/material:
+        label: Material
       bunker_type:
         label: Type
       cables:
@@ -2014,14 +2697,20 @@ en:
       capacity:
         label: Capacity
         placeholder: '50, 100, 200...'
+      cash_in:
+        label: Cash In
       castle_type:
         label: Type
+      check_date:
+        label: Last Checked Date
       clothes:
         label: Clothes
       club:
         label: Type
       collection_times:
         label: Collection Times
+      colour:
+        label: Color
       comment:
         label: Changeset Comment
         placeholder: Brief description of your contributions (required)
@@ -2034,8 +2723,17 @@ en:
         placeholder: 'http://example.com/'
       content:
         label: Content
+      conveying:
+        label: Movement Direction
+        options:
+          forward: Forward
+          backward: Backward
+          reversible: Reversible
       country:
         label: Country
+      couplings:
+        label: Couplings
+        placeholder: '1, 2, 3...'
       covered:
         label: Covered
       craft:
@@ -2097,13 +2795,30 @@ en:
         label: Denomination
       denotation:
         label: Denotation
+      departures_board:
+        label: Departures Board
+        options:
+          'yes': 'Yes'
+          timetable: Timetable
+          realtime: Realtime
+          'no': None
       description:
         label: Description
+      design:
+        label: Design
+      destination_oneway:
+        label: Destinations
+      destination/ref_oneway:
+        label: Destination Road Numbers
+      destination/symbol_oneway:
+        label: Destination Symbols
       devices:
         label: Devices
         placeholder: '1, 2, 3...'
       diaper:
         label: Diaper Changing Available
+      diet_multi:
+        label: Diet Types
       direction_cardinal:
         label: Direction
         options:
@@ -2142,9 +2857,15 @@ en:
       display:
         label: Display
       distance:
-        label: Total Distance
+        label: Distance
       dock:
         label: Type
+      dog:
+        label: Dogs
+        options:
+          'yes': Allowed
+          leashed: Leashed Only
+          'no': Not Allowed
       drive_through:
         label: Drive-Through
       duration:
@@ -2168,6 +2889,8 @@ en:
         placeholder: Default
       emergency:
         label: Emergency
+      enforcement:
+        label: Type
       entrance:
         label: Type
       except:
@@ -2181,29 +2904,34 @@ en:
         label: Fee
       fence_type:
         label: Type
-      fire_hydrant/position:
-        label: Position
-        options:
-          lane: Lane
-          parking_lot: Parking Lot
-          sidewalk: Sidewalk
-          green: Green
+      fire_hydrant/diameter:
+        label: 'Diameter (mm, in, or letters)'
+      fire_hydrant/pressure:
+        label: Pressure (bar)
       fire_hydrant/type:
-        label: Type
+        label: Shape
         options:
           pillar: Pillar/Aboveground
           underground: Underground
           wall: Wall
-          pond: Pond
+          pipe: Capped Pipe
+      fireplace:
+        label: Fireplace
       fitness_station:
         label: Equipment Type
       fixme:
         label: Fix Me
+      flag/type:
+        label: Flag Type
       ford:
         label: Type
         placeholder: Default
+      frequency_electrified:
+        label: Operating Frequency
       frequency:
         label: Operating Frequency
+      from:
+        label: From
       fuel_multi:
         label: Fuel Types
       fuel:
@@ -2250,6 +2978,12 @@ en:
         label: Type
       historic/civilization:
         label: Historic Civilization
+      historic/wreck/date_sunk:
+        label: Date Sunk
+      historic/wreck/visible_at_high_tide:
+        label: Visible At High Tide
+      historic/wreck/visible_at_low_tide:
+        label: Visible At Low Tide
       hoops:
         label: Hoops
         placeholder: '1, 2, 4...'
@@ -2305,6 +3039,8 @@ en:
         label: Type
       inscription:
         label: Inscription
+      intermittent_yes:
+        label: Intermittent
       intermittent:
         label: Intermittent
       internet_access:
@@ -2319,6 +3055,14 @@ en:
         label: Internet Access Fee
       internet_access/ssid:
         label: SSID (Network Name)
+      junction_line:
+        label: Junction
+        options:
+          roundabout: Roundabout
+          circular: Traffic Circle
+          jughandle: Jughandle
+      junction/ref_oneway:
+        label: Junction Number
       kerb:
         label: Curb
       label:
@@ -2330,6 +3074,8 @@ en:
       lanes:
         label: Lanes
         placeholder: '1, 2, 3...'
+      language_multi:
+        label: Languages
       layer:
         label: Layer
         placeholder: '0'
@@ -2372,6 +3118,12 @@ en:
         placeholder: '2, 4, 6...'
       lit:
         label: Lit
+      location_pool:
+        label: Location
+        options:
+          outdoor: Outdoor
+          indoor: Indoor
+          roof: Rooftop
       location:
         label: Location
       man_made:
@@ -2382,6 +3134,8 @@ en:
         label: Coverage
       map_type:
         label: Type
+      material:
+        label: Material
       maxheight:
         label: Max Height
         placeholder: '4, 4.5, 5, 14''0", 14''6", 15''0"'
@@ -2397,6 +3151,9 @@ en:
         label: Max Weight
       memorial:
         label: Type
+      minspeed:
+        label: Minimum Speed Limit
+        placeholder: '20, 30, 40...'
       monitoring_multi:
         label: Monitoring
       mtb/scale:
@@ -2482,6 +3239,10 @@ en:
           'no': 'No'
           reversible: Reversible
           alternating: Alternating
+      oneway/bicycle:
+        label: One Way (Bicycles)
+      opening_date:
+        label: Expected Opening Date
       opening_hours:
         label: Hours
       operator:
@@ -2509,9 +3270,9 @@ en:
         label: Phases
         placeholder: '1, 2, 3...'
       phone:
-        label: Phone
+        label: Telephone
         placeholder: +31 42 123 4567
-      piste/difficulty:
+      piste/difficulty_downhill:
         label: Difficulty
         placeholder: 'Easy, Intermediate, Advanced...'
         options:
@@ -2522,6 +3283,56 @@ en:
           expert: Expert (double black diamond)
           freeride: Freeride (off-piste)
           extreme: Extreme (climbing equipment required)
+      piste/difficulty_nordic:
+        label: Difficulty
+        placeholder: 'Easy, Intermediate, Advanced...'
+        options:
+          novice: 'Novice - Flat, no effort needed'
+          easy: 'Easy - Soft hills, short steep section'
+          intermediate: Intermediate - Steep section
+          advanced: 'Advanced - Narrow, steep or icy section, sharp turn'
+          expert: Expert - Dangerous terrain around
+      piste/difficulty_skitour:
+        label: Difficulty
+        placeholder: 'Easy, Intermediate, Advanced...'
+        options:
+          novice: 'Novice - L: <30° incline'
+          easy: 'Easy - WS: 30-35° incline'
+          intermediate: 'Intermediate - ZS: 35-40° incline'
+          advanced: 'Advanced - S: 40-45° incline'
+          expert: 'Expert - SS: 45–50° incline'
+          freeride: 'Freeride - AS: 50–55° incline'
+          extreme: 'Extreme - EX: >55° incline'
+      piste/difficulty:
+        label: Difficulty
+        placeholder: 'Easy, Intermediate, Advanced...'
+        options:
+          novice: Novice
+          easy: Easy
+          intermediate: Intermediate
+          advanced: Advanced
+          expert: Expert
+          freeride: Freeride
+          extreme: Extreme
+      piste/grooming_downhill:
+        label: Grooming
+        options:
+          classic: Classic
+          mogul: Mogul
+          backcountry: Backcountry - no grooming
+      piste/grooming_hike:
+        label: Grooming
+        options:
+          classic: Classic - Winter Hiking
+          backcountry: Backcountry - Snowshoeing
+      piste/grooming_nordic:
+        label: Grooming
+        options:
+          classic: Classic
+          backcountry: 'Backcountry, no grooming'
+          classic+skating: Classic and Skating
+          scooter: Scooter/Snowmobile
+          skating: Skating
       piste/grooming:
         label: Grooming
         options:
@@ -2543,6 +3354,7 @@ en:
           ice_skate: Ice Skate
           snow_park: Snow Park
           playground: Playground
+          connection: Connection
       place:
         label: Type
       plant:
@@ -2581,6 +3393,12 @@ en:
         label: Power Rating
       recycling_accepts:
         label: Accepts
+      recycling_type:
+        label: Type
+        placeholder: 'Container, Center'
+        options:
+          container: Container
+          centre: Center
       ref_aeroway_gate:
         label: Gate Number
       ref_golf_hole:
@@ -2614,6 +3432,8 @@ en:
         label: Type
       restrictions:
         label: Turn Restrictions
+      roof/colour:
+        label: Roof Color
       rooms:
         label: Rooms
       route_master:
@@ -2630,10 +3450,82 @@ en:
           alpine_hiking: 'T4: Alpine Hiking'
           demanding_alpine_hiking: 'T5: Demanding Alpine Hiking'
           difficult_alpine_hiking: 'T6: Difficult Alpine Hiking'
+      salt:
+        label: Salt
       sanitary_dump_station:
         label: Toilet Disposal
+      scuba_diving:
+        label: Services
+      seamark/beacon_isolated_danger/shape:
+        label: Shape
+      seamark/beacon_lateral/category:
+        label: Category
+        options:
+          port: Port
+          starboard: Starboard
+          waterway_left: Waterway Left
+          waterway_right: Waterway Right
+          danger_left: Danger Left
+          danger_right: Danger Right
+      seamark/beacon_lateral/colour:
+        label: Color
+        options:
+          red: Red
+          green: Green
+          grey: Grey
+      seamark/beacon_lateral/shape:
+        label: Shape
+      seamark/beacon_lateral/system:
+        label: System
+        options:
+          iala-a: IALA A
+          iala-b: IALA B
+          cevni: CEVNI
+          other: Other
+      seamark/buoy_lateral/category:
+        label: Category
+        options:
+          port: Port
+          starboard: Starboard
+          channel_left: Channel Left
+          channel_right: Channel Right
+          waterway_left: Waterway Left
+          waterway_right: Waterway Right
+          danger_left: Danger Left
+          danger_right: Danger Right
+          preferred_channel_port: Preferred Channel Port
+          preferred_channel_starboard: Preferred Channel Starboard
+      seamark/buoy_lateral/colour:
+        label: Color
+        options:
+          red: Red
+          green: Green
+          red;white;red;white: Red-White-Red-White
+          green;white;green;white: Green-White-Green-White
+          red;green;red: Red-Green-Red
+          green;red;green: Green-Red-Green
+          white: White
+          yellow: Yellow
+      seamark/buoy_lateral/shape:
+        label: Shape
+      seamark/buoy_lateral/system:
+        label: System
+        options:
+          iala-a: IALA A
+          iala-b: IALA B
+          cevni: CEVNI
+          other: Other
+      seamark/mooring/category:
+        label: Category
+      seamark/type:
+        label: Seamark
+      seamark/wreck/category:
+        label: Category
       seasonal:
         label: Seasonal
+      seats:
+        label: Seats
+        placeholder: '2, 4, 6...'
       second_hand:
         label: Sells Used
         placeholder: 'Yes, No, Only'
@@ -2662,6 +3554,16 @@ en:
         label: Shelter
       shop:
         label: Type
+      siren/purpose:
+        label: Purpose
+      siren/type:
+        label: Type
+        options:
+          pneumatic: Pneumatic
+          electronic: Electronic
+          other: Other
+      site_type:
+        label: Site Type
       site:
         label: Type
       smoking:
@@ -2747,6 +3649,10 @@ en:
           ALPR: Automatic License Plate Reader
       surveillance/zone:
         label: Surveillance Zone
+      survey/date:
+        label: Last Survey Date
+      swimming_pool:
+        label: Type
       switch:
         label: Type
         options:
@@ -2763,6 +3669,10 @@ en:
           'yes': 'Yes'
           'no': 'No'
           only: Takeaway Only
+      tidal:
+        label: Tidal
+      to:
+        label: To
       toilets/disposal:
         label: Disposal
         options:
@@ -2774,8 +3684,6 @@ en:
         label: Toll
       tomb:
         label: Type
-      tourism_attraction:
-        label: Tourism
       tourism:
         label: Type
       tower/construction:
@@ -2796,6 +3704,14 @@ en:
         label: Type
       traffic_calming:
         label: Type
+      traffic_sign:
+        label: Traffic Sign
+      traffic_sign/direction:
+        label: Direction
+        options:
+          forward: Forward
+          backward: Backward
+          both: Both / All
       traffic_signals:
         label: Type
       traffic_signals/direction:
@@ -2859,6 +3775,8 @@ en:
           stratovolcano: Stratovolcano
           shield: Shield
           scoria: Scoria
+      voltage_electrified:
+        label: Voltage
       voltage:
         label: Voltage
       voltage/primary:
@@ -2871,13 +3789,17 @@ en:
         label: Type
       water_point:
         label: Water Point
+      water_source:
+        label: Water Source
+      water_volume:
+        label: Water Reserve Volume (m³)
       water:
         label: Type
       waterway:
         label: Type
       website:
         label: Website
-        placeholder: 'http://example.com/'
+        placeholder: 'https://example.com'
       wetland:
         label: Type
       wheelchair:
@@ -2886,6 +3808,8 @@ en:
         label: Wholesale
       width:
         label: Width (Meters)
+      wikidata:
+        label: Wikidata
       wikipedia:
         label: Wikipedia
       windings:
@@ -2904,18 +3828,39 @@ en:
     presets:
       aerialway:
         name: Aerialway
-        terms: 'ski lift,funifor,funitel'
+        terms: ''
       aeroway:
         name: Aeroway
         terms: ''
       amenity:
         name: Amenity
         terms: ''
+      attraction:
+        name: Attraction
+        terms: ''
+      boundary:
+        name: Boundary
+        terms: ''
       circular:
         name: Traffic Circle
         terms: ''
+      embankment:
+        name: Embankment
+        terms: ''
       highway:
         name: Highway
+        terms: ''
+      landuse:
+        name: Land Use
+        terms: ''
+      leisure:
+        name: Leisure
+        terms: ''
+      man_made:
+        name: Man Made
+        terms: ''
+      natural:
+        name: Natural
         terms: ''
       place:
         name: Place
@@ -2928,6 +3873,12 @@ en:
         terms: ''
       roundabout:
         name: Roundabout
+        terms: ''
+      seamark:
+        name: Seamark
+        terms: ''
+      tourism:
+        name: Tourism
         terms: ''
       waterway:
         name: Waterway
@@ -2979,7 +3930,7 @@ en:
         terms: tbar
       aeroway/aerodrome:
         name: Airport
-        terms: 'airplane,airport,aerodrome'
+        terms: 'aerodrome,aeroway,airplane,airport,jet,plane'
       aeroway/apron:
         name: Apron
         terms: ramp
@@ -3016,6 +3967,9 @@ en:
       amenity/nursing_home:
         name: Nursing Home
         terms: ''
+      amenity/recycling:
+        name: Recycling
+        terms: 'bin,can,bottle,glass,garbage,rubbish,scrap,trash'
       amenity/register_office:
         name: Register Office
         terms: ''
@@ -3070,7 +4024,7 @@ en:
         name: Bicycle Repair Tool Stand
         terms: 'bike,repair,chain,pump'
       amenity/biergarten:
-        name: Beer Garden
+        name: Biergarten
         terms: 'beer,bier,booze'
       amenity/boat_rental:
         name: Boat Rental
@@ -3117,9 +4071,12 @@ en:
       amenity/clock:
         name: Clock
         terms: ''
+      amenity/clock/sundial:
+        name: Sundial
+        terms: 'gnomon,shadow'
       amenity/college:
         name: College Grounds
-        terms: university
+        terms: 'university,undergraduate school'
       amenity/community_centre:
         name: Community Center
         terms: 'event,hall'
@@ -3135,6 +4092,9 @@ en:
       amenity/dentist:
         name: Dentist
         terms: 'tooth,teeth'
+      amenity/dive_centre:
+        name: Dive Center
+        terms: 'diving,scuba'
       amenity/doctors:
         name: Doctor
         terms: 'medic*,physician'
@@ -3143,7 +4103,9 @@ en:
         terms: 'martial arts,dojang'
       amenity/drinking_water:
         name: Drinking Water
-        terms: 'fountain,potable'
+        terms: >-
+          potable water source,water fountain,drinking fountain,bubbler,water
+          tap
       amenity/driving_school:
         name: Driving School
         terms: ''
@@ -3153,6 +4115,31 @@ en:
       amenity/fast_food:
         name: Fast Food
         terms: 'restaurant,takeaway'
+      amenity/fast_food/burger:
+        name: Burger Fast Food
+        terms: 'breakfast,dine,dining,dinner,drive-in,eat,grill,lunch,table'
+      amenity/fast_food/chicken:
+        name: Chicken Fast Food
+        terms: 'breakfast,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table'
+      amenity/fast_food/fish_and_chips:
+        name: Fish & Chips Fast Food
+        terms: >-
+          breakfast,cafe,café,dine,dining,dinner,drive-in,eat,grill,lunch,table,french
+          fries
+      amenity/fast_food/kebab:
+        name: Kebab Fast Food
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/fast_food/mexican:
+        name: Mexican Fast Food
+        terms: >-
+          breakfast,dine,dining,dinner,drive-in,eat,grill,lunch,table,tacos,burritos,enchiladas,fajitas,nachos,tortillas,salsa,tamales,quesadillas
+      amenity/fast_food/pizza:
+        name: Pizza Fast Food
+        terms: 'dine,dining,dinner,drive-in,eat,lunch,table,deep dish,thin crust,slice'
+      amenity/fast_food/sandwich:
+        name: Sandwich Fast Food
+        terms: 'breakfast,cafe,café,dine,dining,dinner,drive-in,eat,grill,lunch,table'
       amenity/fire_station:
         name: Fire Station
         terms: ''
@@ -3188,6 +4175,9 @@ en:
       amenity/kindergarten:
         name: Preschool/Kindergarten Grounds
         terms: 'kindergarden,pre-school'
+      amenity/language_school:
+        name: Language School
+        terms: esl
       amenity/library:
         name: Library
         terms: book
@@ -3203,6 +4193,11 @@ en:
           abbey,basilica,bethel,cathedral,chancel,chantry,chapel,church,fold,house
           of God,house of prayer,house of
           worship,minster,mission,monastery,mosque,oratory,parish,sacellum,sanctuary,shrine,synagogue,tabernacle,temple
+      amenity/money_transfer:
+        name: Money Transfer Station
+        terms: >-
+          money order,check,bill,currency,finance,wire transfer,cable,person to
+          person,cash to cash,exchange
       amenity/motorcycle_parking:
         name: Motorcycle Parking
         terms: ''
@@ -3219,14 +4214,29 @@ en:
         name: Parking Space
         terms: ''
       amenity/parking:
-        name: Car Parking
-        terms: ''
-      amenity/pavilion:
-        name: Pavilion
-        terms: ''
+        name: Parking Lot
+        terms: >-
+          automobile parking,car lot,car parking,rv parking,truck
+          parking,vehicle parking
+      amenity/parking/multi-storey:
+        name: Multilevel Parking Garage
+        terms: >-
+          car,indoor parking,multistorey car park,parkade,parking
+          building,parking deck,parking garage,parking ramp,parking structure
+      amenity/payment_centre:
+        name: Payment Center
+        terms: 'check,tax pay,bill pay,currency,finance,cash,money'
+      amenity/payment_terminal:
+        name: Payment Terminal
+        terms: >-
+          interactive kiosk,ekiosk,atm,bill pay,tax pay,phone
+          pay,finance,cash,money transfer,card
       amenity/pharmacy:
-        name: Pharmacy
-        terms: 'drug*,med*,prescription'
+        name: Pharmacy Counter
+        terms: 'apothecary,drug store,drugstore,med*,prescription'
+      amenity/photo_booth:
+        name: Photo Booth
+        terms: 'photobooth,photo,booth,kiosk,camera'
       amenity/place_of_worship:
         name: Place of Worship
         terms: >-
@@ -3237,7 +4247,7 @@ en:
         name: Buddhist Temple
         terms: 'stupa,vihara,monastery,temple,pagoda,zendo,dojo'
       amenity/place_of_worship/christian:
-        name: Church
+        name: Christian Church
         terms: >-
           christian,abbey,basilica,bethel,cathedral,chancel,chantry,chapel,fold,house
           of God,house of prayer,house of
@@ -3246,10 +4256,10 @@ en:
         name: Hindu Temple
         terms: 'kovil,devasthana,mandir,kshetram,alayam,shrine,temple'
       amenity/place_of_worship/jewish:
-        name: Synagogue
+        name: Jewish Synagogue
         terms: jewish
       amenity/place_of_worship/muslim:
-        name: Mosque
+        name: Muslim Mosque
         terms: muslim
       amenity/place_of_worship/shinto:
         name: Shinto Shrine
@@ -3293,13 +4303,87 @@ en:
       amenity/recycling_centre:
         name: Recycling Center
         terms: 'bottle,can,dump,glass,garbage,rubbish,scrap,trash'
-      amenity/recycling:
+      amenity/recycling_container:
         name: Recycling Container
         terms: 'bin,can,bottle,glass,garbage,rubbish,scrap,trash'
       amenity/restaurant:
         name: Restaurant
         terms: >-
           bar,breakfast,cafe,café,canteen,coffee,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/american:
+        name: American Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,coffee,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/asian:
+        name: Asian Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/chinese:
+        name: Chinese Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/french:
+        name: French Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/german:
+        name: German Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/greek:
+        name: Greek Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table,gyros,pitas,olives
+      amenity/restaurant/indian:
+        name: Indian Restaurant
+        terms: 'bar,breakfast,dine,dining,dinner,drive-in,eat,grill,lunch,table,curry'
+      amenity/restaurant/italian:
+        name: Italian Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table,pasta,pizza
+      amenity/restaurant/japanese:
+        name: Japanese Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/mexican:
+        name: Mexican Restaurant
+        terms: >-
+          bar,breakfast,dine,dining,dinner,drive-in,eat,grill,lunch,table,tacos,burritos,enchiladas,fajitas,nachos,tortillas,salsa,tamales,quesadillas
+      amenity/restaurant/noodle:
+        name: Noodle Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table,ramen
+          noodles,soup,soba noodles,cellophane noodles,rice noodles
+      amenity/restaurant/pizza:
+        name: Pizza Restaurant
+        terms: >-
+          bar,dine,dining,dinner,drive-in,eat,lunch,table,deep dish,thin
+          crust,slice
+      amenity/restaurant/seafood:
+        name: Seafood Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,dine,dining,dinner,drive-in,eat,grill,lunch,table,fish,shellfish,molluscs,crustaceans,clams,oysters,lobsters,crab,shrimp,squid,octopus
+      amenity/restaurant/steakhouse:
+        name: Steakhouse
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table,steak
+          house,chop house,beef
+      amenity/restaurant/sushi:
+        name: Sushi Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/thai:
+        name: Thai Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/turkish:
+        name: Turkish Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
+      amenity/restaurant/vietnamese:
+        name: Vietnamese Restaurant
+        terms: >-
+          bar,breakfast,cafe,café,canteen,dine,dining,dinner,drive-in,eat,grill,lunch,table
       amenity/sanitary_dump_station:
         name: RV Toilet Disposal
         terms: 'Motor Home,Camper,Sanitary,Dump Station,Elsan,CDP,CTDP,Chemical Toilet'
@@ -3309,6 +4393,18 @@ en:
       amenity/shelter:
         name: Shelter
         terms: 'lean-to,gazebo,picnic'
+      amenity/shelter/gazebo:
+        name: Gazebo
+        terms: ''
+      amenity/shelter/lean_to:
+        name: Lean-To
+        terms: ''
+      amenity/shelter/picnic_shelter:
+        name: Picnic Shelter
+        terms: pavilion
+      amenity/shelter/public_transport:
+        name: Transit Shelter
+        terms: 'bus stop,metro stop,waiting'
       amenity/shower:
         name: Shower
         terms: rain closet
@@ -3342,6 +4438,9 @@ en:
       amenity/theatre:
         name: Theater
         terms: 'theatre,performance,play,musical'
+      amenity/theatre/type/amphi:
+        name: Amphitheatre
+        terms: 'open air,outdoor,greek,ampi'
       amenity/toilets:
         name: Toilets
         terms: >-
@@ -3352,7 +4451,10 @@ en:
         terms: 'village,city,government,courthouse,municipal'
       amenity/university:
         name: University Grounds
-        terms: college
+        terms: 'college,graduate school,PhD program,master''s degree program'
+      amenity/vehicle_inspection:
+        name: Vehicle Inspection
+        terms: car inspection
       amenity/vending_machine:
         name: Vending Machine
         terms: ''
@@ -3378,8 +4480,8 @@ en:
         name: Flat Coin Vending Machine
         terms: 'coin,crush,elongated,flatten,penny,souvenir'
       amenity/vending_machine/excrement_bags:
-        name: Excrement Bag Vending Machine
-        terms: 'excrement bags,poop,dog,animal'
+        name: Excrement Bag Dispenser
+        terms: 'excrement bags,poop,waste,dog,animal'
       amenity/vending_machine/feminine_hygiene:
         name: Feminine Hygiene Vending Machine
         terms: 'condom,tampon,pad,woman,women,menstrual hygiene products,personal care'
@@ -3396,8 +4498,11 @@ en:
         name: Newspaper Vending Machine
         terms: newspaper
       amenity/vending_machine/parcel_pickup_dropoff:
-        name: Parcel Pickup/Dropoff Vending Machine
-        terms: 'parcel,mail,pickup'
+        name: Parcel Pickup/Dropoff Locker
+        terms: 'mail,parcel,pickup'
+      amenity/vending_machine/parcel_pickup:
+        name: Parcel Pickup Locker
+        terms: 'amazon,locker,mail,parcel,pickup'
       amenity/vending_machine/parking_tickets:
         name: Parking Ticket Vending Machine
         terms: 'parking,ticket'
@@ -3477,6 +4582,9 @@ en:
       attraction/roller_coaster:
         name: Roller Coaster
         terms: 'theme park,amusement ride'
+      attraction/summer_toboggan:
+        name: Summer Toboggan
+        terms: 'alpine slide,mountain coaster'
       attraction/train:
         name: Tourist Train
         terms: >-
@@ -3515,15 +4623,29 @@ en:
       barrier/fence:
         name: Fence
         terms: ''
+      barrier/fence/railing:
+        name: Railing
+        terms: 'railing,handrail,guard rail'
       barrier/gate:
         name: Gate
         terms: ''
+      barrier/guard_rail:
+        name: Guard Rail
+        terms: >-
+          guardrail,traffic barrier,crash barrier,median barrier,roadside
+          barrier,Armco barrier
       barrier/hedge:
         name: Hedge
         terms: ''
       barrier/kerb:
-        name: Kerb
+        name: Curb
         terms: ''
+      barrier/kerb/flush:
+        name: Flush Curb
+        terms: 'even curb,level curb,tactile curb'
+      barrier/kerb/lowered:
+        name: Lowered Curb
+        terms: 'curb cut,curb ramp,kerb ramp,dropped kerb,pram ramp'
       barrier/kissing_gate:
         name: Kissing Gate
         terms: ''
@@ -3545,6 +4667,12 @@ en:
       boundary/administrative:
         name: Administrative Boundary
         terms: ''
+      bridge/support:
+        name: Bridge Support
+        terms: ''
+      bridge/support/pier:
+        name: Bridge Pier
+        terms: ''
       building:
         name: Building
         terms: ''
@@ -3555,10 +4683,10 @@ en:
         name: Entrance/Exit
         terms: ''
       building/train_station:
-        name: Train Station
+        name: Train Station Building
         terms: ''
       building/apartments:
-        name: Apartments
+        name: Apartment Building
         terms: ''
       building/barn:
         name: Barn
@@ -3572,6 +4700,9 @@ en:
       building/cabin:
         name: Cabin
         terms: ''
+      building/carport:
+        name: Carport
+        terms: 'covered parking space,garage,car,porch'
       building/cathedral:
         name: Cathedral Building
         terms: ''
@@ -3611,6 +4742,9 @@ en:
       building/garages:
         name: Garages
         terms: ''
+      building/grandstand:
+        name: Grandstand
+        terms: 'tribune,stand,stands,bleachers'
       building/greenhouse:
         name: Greenhouse
         terms: ''
@@ -3635,6 +4769,9 @@ en:
       building/mosque:
         name: Mosque Building
         terms: ''
+      building/pavilion:
+        name: Pavilion Building
+        terms: sports
       building/public:
         name: Public Building
         terms: ''
@@ -3692,6 +4829,9 @@ en:
       club:
         name: Club
         terms: social
+      club/sport:
+        name: Sports Club
+        terms: 'athletics club,sporting club,sports association,sports society'
       craft:
         name: Craft
         terms: ''
@@ -3840,9 +4980,6 @@ en:
       craft/winery:
         name: Winery
         terms: ''
-      embankment:
-        name: Embankment
-        terms: ''
       emergency/designated:
         name: Emergency Access Designated
         terms: ''
@@ -3867,42 +5004,51 @@ en:
       emergency/defibrillator:
         name: Defibrillator
         terms: AED
+      emergency/fire_alarm:
+        name: Fire Alarm Call Box
+        terms: ''
+      emergency/fire_extinguisher:
+        name: Fire Extinguisher
+        terms: ''
       emergency/fire_hydrant:
         name: Fire Hydrant
-        terms: fire plug
+        terms: 'fire plug,fire water well,hydrant'
+      emergency/first_aid_kit:
+        name: First Aid Kit
+        terms: 'bandage,first aid,med,med kit,medic*,medkit'
       emergency/life_ring:
         name: Life Ring
         terms: 'life buoy,kisby ring,kisbie ring,perry buoy'
+      emergency/lifeguard:
+        name: Lifeguard
+        terms: 'CPR,rescue'
       emergency/phone:
         name: Emergency Phone
         terms: ''
+      emergency/siren:
+        name: Siren
+        terms: 'air raid,loud,noise,storm,tornado,warning'
       emergency/water_tank:
         name: Emergency Water Tank
         terms: 'water tank,cistern,reservoir'
       entrance:
         name: Entrance/Exit
-        terms: ''
-      footway/crossing-raised:
-        name: Raised Street Crossing
-        terms: 'flat top,hump,speed,slow'
-      footway/crossing:
-        name: Street Crossing
-        terms: ''
-      footway/crosswalk-raised:
-        name: Raised Pedestrian Crosswalk
-        terms: 'zebra crossing,flat top,hump,speed,slow'
-      footway/crosswalk:
-        name: Pedestrian Crosswalk
-        terms: zebra crossing
-      footway/sidewalk:
-        name: Sidewalk
-        terms: ''
+        terms: 'entrance,exit,door'
       ford:
         name: Ford
         terms: ''
       golf/bunker:
         name: Sand Trap
         terms: 'hazard,bunker'
+      golf/cartpath_service:
+        name: Golf Cartpath / Service Road
+        terms: ''
+      golf/cartpath:
+        name: Golf Cartpath
+        terms: ''
+      golf/driving_range:
+        name: Driving Range
+        terms: ''
       golf/fairway:
         name: Fairway
         terms: ''
@@ -3912,11 +5058,11 @@ en:
       golf/hole:
         name: Golf Hole
         terms: ''
-      golf/lateral_water_hazard_area:
+      golf/lateral_water_hazard:
         name: Lateral Water Hazard
         terms: ''
-      golf/lateral_water_hazard_line:
-        name: Lateral Water Hazard
+      golf/path:
+        name: Golf Walking Path
         terms: ''
       golf/rough:
         name: Rough
@@ -3924,10 +5070,7 @@ en:
       golf/tee:
         name: Tee Box
         terms: teeing ground
-      golf/water_hazard_area:
-        name: Water Hazard
-        terms: ''
-      golf/water_hazard_line:
+      golf/water_hazard:
         name: Water Hazard
         terms: ''
       healthcare:
@@ -3990,25 +5133,34 @@ en:
         terms: ''
       highway/bridleway:
         name: Bridle Path
-        terms: 'bridleway,equestrian,horse'
+        terms: 'bridleway,equestrian,horse,trail'
       highway/bus_guideway:
         name: Bus Guideway
         terms: ''
+      highway/construction:
+        name: Road Closed
+        terms: 'closed,closure,construction'
       highway/corridor:
         name: Indoor Corridor
         terms: 'gallery,hall,hallway,indoor,passage,passageway'
-      highway/crossing-raised:
-        name: Raised Street Crossing
+      highway/crossing/zebra-raised:
+        name: Marked Crosswalk (Raised)
+        terms: 'zebra crossing,marked crossing,crosswalk,flat top,hump,speed,slow'
+      highway/crossing/zebra:
+        name: Marked Crosswalk
+        terms: 'zebra crossing,marked crossing,crosswalk'
+      highway/crossing/marked-raised:
+        name: Marked Crosswalk (Raised)
+        terms: 'zebra crossing,marked crossing,crosswalk,flat top,hump,speed,slow'
+      highway/crossing/marked:
+        name: Marked Crosswalk
+        terms: 'zebra crossing,marked crossing,crosswalk'
+      highway/crossing/unmarked-raised:
+        name: Unmarked Crossing (Raised)
         terms: 'flat top,hump,speed,slow'
-      highway/crossing:
-        name: Street Crossing
+      highway/crossing/unmarked:
+        name: Unmarked Crossing
         terms: ''
-      highway/crosswalk-raised:
-        name: Raised Pedestrian Crosswalk
-        terms: 'zebra crossing,flat top,hump,speed,slow'
-      highway/crosswalk:
-        name: Pedestrian Crosswalk
-        terms: zebra crossing
       highway/cycleway:
         name: Cycle Path
         terms: bike
@@ -4018,25 +5170,54 @@ en:
       highway/footway:
         name: Foot Path
         terms: 'hike,hiking,trackway,trail,walk'
+      highway/footway/zebra-raised:
+        name: Marked Crosswalk (Raised)
+        terms: 'zebra crossing,marked crossing,crosswalk,flat top,hump,speed,slow'
+      highway/footway/zebra:
+        name: Marked Crosswalk
+        terms: 'zebra crossing,marked crossing,crosswalk'
+      highway/footway/conveying:
+        name: Moving Walkway
+        terms: >-
+          moving
+          sidewalk,autwalk,skywalk,travolator,travelator,travellator,conveyor
+      highway/footway/marked-raised:
+        name: Marked Crosswalk (Raised)
+        terms: 'zebra crossing,marked crossing,crosswalk,flat top,hump,speed,slow'
+      highway/footway/marked:
+        name: Marked Crosswalk
+        terms: 'zebra crossing,marked crossing,crosswalk'
+      highway/footway/sidewalk:
+        name: Sidewalk
+        terms: 'pavement,sidepath'
+      highway/footway/unmarked-raised:
+        name: Unmarked Crossing (Raised)
+        terms: 'flat top,hump,speed,slow'
+      highway/footway/unmarked:
+        name: Unmarked Crossing
+        terms: ''
       highway/give_way:
         name: Yield Sign
         terms: 'give way,yield,sign'
       highway/living_street:
         name: Living Street
         terms: ''
+      highway/milestone:
+        name: Highway Milestone
+        terms: 'milestone,marker'
       highway/mini_roundabout:
         name: Mini-Roundabout
         terms: ''
       highway/motorway_junction:
         name: Motorway Junction / Exit
-        terms: ''
+        terms: exit
       highway/motorway_link:
         name: Motorway Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'exit,ramp,road,street,on ramp,off ramp'
       highway/motorway:
         name: Motorway
         terms: >-
-          autobahn,expressway,freeway,highway,interstate,parkway,thruway,turnpike
+          autobahn,expressway,freeway,highway,interstate,parkway,road,street,thruway,turnpike
       highway/passing_place:
         name: Passing Place
         terms: 'turnout, pullout'
@@ -4051,31 +5232,31 @@ en:
         terms: 'center,centre,plaza,quad,square,walkway'
       highway/primary_link:
         name: Primary Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'on ramp,off ramp,ramp,road,street'
       highway/primary:
         name: Primary Road
-        terms: ''
+        terms: 'road,street'
       highway/raceway:
         name: Racetrack (Motorsport)
         terms: 'auto*,formula one,kart,motocross,nascar,race*,track'
       highway/residential:
         name: Residential Road
-        terms: ''
+        terms: 'road,street'
       highway/rest_area:
         name: Rest Area
         terms: rest stop
       highway/road:
         name: Unknown Road
-        terms: ''
+        terms: 'road,street'
       highway/secondary_link:
         name: Secondary Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'on ramp,off ramp,ramp,road,street'
       highway/secondary:
         name: Secondary Road
-        terms: ''
+        terms: 'road,street'
       highway/service:
         name: Service Road
-        terms: ''
+        terms: 'road,street'
       highway/service/alley:
         name: Alley
         terms: ''
@@ -4100,6 +5281,9 @@ en:
       highway/steps:
         name: Steps
         terms: 'stairs,staircase'
+      highway/steps/conveying:
+        name: Escalator
+        terms: 'moving staircase,moving stairway,people mover'
       highway/stop:
         name: Stop Sign
         terms: 'stop,halt,sign'
@@ -4108,10 +5292,10 @@ en:
         terms: 'streetlight,street light,lamp,light,gaslight'
       highway/tertiary_link:
         name: Tertiary Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'on ramp,off ramp,ramp,road,street'
       highway/tertiary:
         name: Tertiary Road
-        terms: ''
+        terms: 'road,street'
       highway/track:
         name: Unmaintained Track Road
         terms: >-
@@ -4129,10 +5313,10 @@ en:
         terms: 'light,stoplight,traffic light'
       highway/trunk_link:
         name: Trunk Link
-        terms: 'ramp,on ramp,off ramp'
+        terms: 'on ramp,off ramp,ramp,road,street'
       highway/trunk:
         name: Trunk Road
-        terms: ''
+        terms: 'road,street'
       highway/turning_circle:
         name: Turning Circle
         terms: cul-de-sac
@@ -4141,7 +5325,7 @@ en:
         terms: cul-de-sac
       highway/unclassified:
         name: Minor/Unclassified Road
-        terms: ''
+        terms: 'road,street'
       historic:
         name: Historic Site
         terms: ''
@@ -4172,14 +5356,26 @@ en:
       historic/wayside_shrine:
         name: Wayside Shrine
         terms: ''
+      historic/wreck:
+        name: Shipwreck
+        terms: 'hull,mast,maritime,remains,ship,boat'
+      internet_access/wlan:
+        name: Wi-Fi Hotspot
+        terms: 'wi-fi,wifi,hotspot'
       junction:
         name: Junction
         terms: ''
-      landuse:
-        name: Land Use
+      landuse/basin:
+        name: Basin
         terms: ''
       landuse/farm:
         name: Farmland
+        terms: ''
+      landuse/pond:
+        name: Pond
+        terms: ''
+      landuse/reservoir:
+        name: Reservoir
         terms: ''
       landuse/allotments:
         name: Community Garden
@@ -4189,9 +5385,6 @@ en:
         terms: >-
           fish farm,crustacean,algae,aquafarming,shrimp farm,oyster
           farm,mariculture,algaculture
-      landuse/basin:
-        name: Basin
-        terms: ''
       landuse/brownfield:
         name: Brownfield
         terms: ''
@@ -4214,8 +5407,8 @@ en:
         name: Farmyard
         terms: 'crop,grow,plant'
       landuse/forest:
-        name: Forest
-        terms: tree
+        name: Managed Forest
+        terms: 'cut,forest,forestry,lumber,silviculture,tree'
       landuse/garages:
         name: Garage Landuse
         terms: ''
@@ -4254,8 +5447,8 @@ en:
       landuse/military/airfield:
         name: Military Airfield
         terms: >-
-          air
-          force,army,base,bomb,fight,force,guard,heli*,jet,marine,navy,plane,troop,war
+          aerodrome,aeroway,air
+          force,airplane,airport,army,base,bomb,fight,force,guard,heli*,jet,marine,navy,plane,troop,war
       landuse/military/barracks:
         name: Barracks
         terms: 'air force,army,base,fight,force,guard,marine,navy,troop,war'
@@ -4315,27 +5508,33 @@ en:
       landuse/residential:
         name: Residential Area
         terms: ''
+      landuse/residential/apartments:
+        name: Apartment Complex
+        terms: 'flat,residence,tenement'
       landuse/retail:
         name: Retail Area
         terms: ''
       landuse/vineyard:
         name: Vineyard
         terms: 'grape,wine'
-      leisure:
-        name: Leisure
-        terms: ''
       leisure/adult_gaming_centre:
         name: Adult Gaming Center
         terms: 'gambling,slot machine'
       leisure/amusement_arcade:
         name: Amusement Arcade
         terms: 'pay-to-play games,video games,driving simulators,pinball machines'
+      leisure/bandstand:
+        name: Bandstand
+        terms: ''
       leisure/beach_resort:
         name: Beach Resort
         terms: ''
       leisure/bird_hide:
         name: Bird Hide
         terms: 'machan,ornithology'
+      leisure/bleachers:
+        name: Bleachers
+        terms: 'crowd,bench,sports,stand,stands,seat,seating'
       leisure/bowling_alley:
         name: Bowling Alley
         terms: bowling center
@@ -4354,12 +5553,15 @@ en:
       leisure/firepit:
         name: Firepit
         terms: 'fireplace,campfire'
+      leisure/fishing:
+        name: Fishing Spot
+        terms: angler
       leisure/fitness_centre:
         name: Gym / Fitness Center
         terms: 'health,gym,leisure,studio'
       leisure/fitness_centre/yoga:
         name: Yoga Studio
-        terms: studio
+        terms: 'studio,asanas,modern yoga,meditation'
       leisure/fitness_station:
         name: Outdoor Fitness Station
         terms: 'exercise,fitness,gym,trim trail'
@@ -4433,14 +5635,23 @@ en:
       leisure/picnic_table:
         name: Picnic Table
         terms: bench
+      leisure/picnic_table/chess:
+        name: Chess Table
+        terms: 'bench,chess board,checkerboard,checkers,chequerboard,game table'
       leisure/pitch:
         name: Sport Pitch
         terms: field
       leisure/pitch/american_football:
         name: American Football Field
+        terms: 'football,gridiron'
+      leisure/pitch/australian_football:
+        name: Australian Football Field
+        terms: 'Aussie,AFL,football'
+      leisure/pitch/badminton:
+        name: Badminton Court
         terms: ''
       leisure/pitch/baseball:
-        name: Baseball Diamond
+        name: Baseball Field
         terms: ''
       leisure/pitch/basketball:
         name: Basketball Court
@@ -4460,6 +5671,9 @@ en:
       leisure/pitch/equestrian:
         name: Riding Arena
         terms: 'dressage,equestrian,horse,horseback,riding'
+      leisure/pitch/netball:
+        name: Netball Court
+        terms: ''
       leisure/pitch/rugby_league:
         name: Rugby League Field
         terms: ''
@@ -4472,6 +5686,9 @@ en:
       leisure/pitch/soccer:
         name: Soccer Field
         terms: football
+      leisure/pitch/softball:
+        name: Softball Field
+        terms: 'softball,diamond'
       leisure/pitch/table_tennis:
         name: Ping Pong Table
         terms: 'table tennis,ping pong'
@@ -4487,18 +5704,20 @@ en:
       leisure/resort:
         name: Resort
         terms: ''
-      leisure/running_track:
-        name: Racetrack (Running)
-        terms: 'race*,running,sprint,track'
       leisure/sauna:
         name: Sauna
         terms: ''
       leisure/slipway:
         name: Slipway
-        terms: 'boat launch,boat ramp'
+        terms: 'boat launch,boat ramp,boat landing'
       leisure/sports_centre:
         name: Sports Center / Complex
         terms: ''
+      leisure/sports_centre/climbing:
+        name: Climbing Gym
+        terms: >-
+          abseiling,artificial climbing wall,belaying,bouldering,rock climbing
+          facility,indoor rock wall,rappeling,rock gym,ropes
       leisure/sports_centre/swimming:
         name: Swimming Pool Facility
         terms: 'dive,water'
@@ -4507,21 +5726,21 @@ en:
         terms: ''
       leisure/swimming_pool:
         name: Swimming Pool
-        terms: 'dive,water'
+        terms: 'dive,water,aquatics'
       leisure/track:
         name: Racetrack (Non-Motorsport)
         terms: 'cycle,dog,greyhound,horse,race*,track'
+      leisure/track/horse_racing:
+        name: Racetrack (Horse Racing)
+        terms: 'race*,horse,track'
+      leisure/track/running:
+        name: Racetrack (Running)
+        terms: 'race*,running,sprint,track'
       leisure/water_park:
         name: Water Park
         terms: 'swim,pool,dive'
       line:
         name: Line
-        terms: ''
-      man_made:
-        name: Man Made
-        terms: ''
-      man_made/embankment:
-        name: Embankment
         terms: ''
       man_made/adit:
         name: Adit
@@ -4537,14 +5756,23 @@ en:
       man_made/bridge:
         name: Bridge
         terms: ''
+      man_made/bunker_silo:
+        name: Bunker Silo
+        terms: 'Silage,Storage'
       man_made/chimney:
         name: Chimney
         terms: ''
+      man_made/clearcut:
+        name: Clearcut Forest
+        terms: 'cut,forest,lumber,tree,wood'
       man_made/crane:
         name: Crane
         terms: ''
       man_made/cutline:
         name: Cut line
+        terms: ''
+      man_made/embankment:
+        name: Embankment
         terms: ''
       man_made/flagpole:
         name: Flagpole
@@ -4565,12 +5793,33 @@ en:
           mast,communication tower,guyed tower,mobile phone tower,radio
           mast,radio tower,television tower,transmission mast,transmission
           tower,tv tower
+      man_made/mast/communication:
+        name: Communication Mast
+        terms: >-
+          antenna,broadcast tower,cell phone tower,cell tower,communication
+          mast,communication tower,guyed tower,mobile phone tower,radio
+          mast,radio tower,television tower,transmission mast,transmission
+          tower,tv tower
+      man_made/mast/communication/mobile_phone:
+        name: Mobile Phone Mast
+        terms: >-
+          antenna,cell mast,cell phone mast,cell phone tower,cell
+          tower,communication mast,communication tower,guyed tower,mobile phone
+          tower,transmission mast,transmission tower
+      man_made/mast/communication/radio:
+        name: Radio Broadcast Mast
+        terms: >-
+          antenna,broadcast tower,communication mast,communication tower,guyed
+          tower,radio mast,radio tower,transmission mast,transmission tower
+      man_made/mast/communication/television:
+        name: Television Broadcast Mast
+        terms: >-
+          antenna,broadcast tower,communication mast,communication tower,guyed
+          tower,television mast,television tower,transmission mast,transmission
+          tower,tv mast,tv tower
       man_made/monitoring_station:
         name: Monitoring Station
         terms: 'weather,earthquake,seismology,air,gps'
-      man_made/observation:
-        name: Observation Tower
-        terms: 'lookout tower,fire tower'
       man_made/observatory:
         name: Observatory
         terms: 'astronomical,meteorological'
@@ -4584,7 +5833,7 @@ en:
         terms: 'dock,jetty'
       man_made/pipeline:
         name: Pipeline
-        terms: ''
+        terms: 'oil,natural gas,water,sewer,sewage'
       man_made/pumping_station:
         name: Pumping Station
         terms: ''
@@ -4594,13 +5843,13 @@ en:
       man_made/storage_tank:
         name: Storage Tank
         terms: 'water,oil,gas,petrol'
-      man_made/surveillance_camera:
-        name: Surveillance Camera
+      man_made/surveillance:
+        name: Surveillance
         terms: >-
           anpr,alpr,camera,car plate recognition,cctv,guard,license plate
           recognition,monitoring,number plate recognition,security,video,webcam
-      man_made/surveillance:
-        name: Surveillance
+      man_made/surveillance/camera:
+        name: Surveillance Camera
         terms: >-
           anpr,alpr,camera,car plate recognition,cctv,guard,license plate
           recognition,monitoring,number plate recognition,security,video,webcam
@@ -4610,6 +5859,22 @@ en:
       man_made/tower:
         name: Tower
         terms: ''
+      man_made/tower/bell_tower:
+        name: Bell Tower
+        terms: 'belfry,bell gable,campanile,church tower,klockstapel'
+      man_made/tower/communication:
+        name: Communication Tower
+        terms: >-
+          antenna,broadcast tower,cell phone tower,cell tower,communication
+          mast,communication tower,guyed tower,mobile phone tower,radio
+          mast,radio tower,television tower,transmission mast,transmission
+          tower,tv tower
+      man_made/tower/minaret:
+        name: Minaret
+        terms: 'Islam,mosque,Muezzin,Muslim'
+      man_made/tower/observation:
+        name: Observation Tower
+        terms: 'lookout tower,fire tower'
       man_made/wastewater_plant:
         name: Wastewater Plant
         terms: 'sewage*,water treatment plant,reclamation plant'
@@ -4641,9 +5906,6 @@ en:
       manhole/telecom:
         name: Telecom Manhole
         terms: 'cover,phone,hole,telecom,telephone,bt'
-      natural:
-        name: Natural
-        terms: ''
       natural/bare_rock:
         name: Bare Rock
         terms: rock
@@ -4658,7 +5920,7 @@ en:
         terms: 'cavern,hollow,grotto,shelter,cavity'
       natural/cliff:
         name: Cliff
-        terms: escarpment
+        terms: 'crag,escarpment,rock face,scarp'
       natural/coastline:
         name: Coastline
         terms: shore
@@ -4681,6 +5943,9 @@ en:
         name: Peak
         terms: >-
           acme,aiguille,alp,climax,crest,crown,hill,mount,mountain,pinnacle,summit,tip,top
+      natural/reef:
+        name: Reef
+        terms: 'barrier,coral,ocean,sand,shoal'
       natural/ridge:
         name: Ridge
         terms: crest
@@ -4700,7 +5965,7 @@ en:
         name: Spring
         terms: ''
       natural/tree_row:
-        name: Tree row
+        name: Tree Row
         terms: ''
       natural/tree:
         name: Tree
@@ -4711,6 +5976,12 @@ en:
       natural/water:
         name: Water
         terms: ''
+      natural/water/basin:
+        name: Basin
+        terms: 'detention,drain,overflow,rain,retention'
+      natural/water/canal:
+        name: Canal
+        terms: ''
       natural/water/lake:
         name: Lake
         terms: 'lakelet,loch,mere'
@@ -4720,6 +5991,14 @@ en:
       natural/water/reservoir:
         name: Reservoir
         terms: ''
+      natural/water/river:
+        name: River
+        terms: >-
+          beck,branch,brook,course,creek,estuary,rill,riverbank,rivulet,run,runnel,stream,tributary,watercourse
+      natural/water/stream:
+        name: Stream
+        terms: >-
+          beck,branch,brook,burn,course,creek,current,drift,flood,flow,freshet,race,rill,rindle,rivulet,run,runnel,rush,spate,spritz,surge,tide,torrent,tributary,watercourse
       natural/wetland:
         name: Wetland
         terms: 'bog,marsh,reedbed,swamp,tidalflat'
@@ -4776,7 +6055,7 @@ en:
         terms: 'electricity,energy company,energy utility,gas utility'
       office/estate_agent:
         name: Real Estate Office
-        terms: ''
+        terms: real estate
       office/financial:
         name: Financial Office
         terms: ''
@@ -4833,6 +6112,9 @@ en:
         terms: >-
           ngo,non government,non-government,organization,organisation,quasi
           autonomous,quasi-autonomous
+      office/religion:
+        name: Religious Office
+        terms: ''
       office/research:
         name: Research Office
         terms: ''
@@ -4851,11 +6133,41 @@ en:
       office/water_utility:
         name: Water Utility Office
         terms: 'water board,utility'
-      piste:
-        name: Piste/Ski Trail
-        terms: 'ski,sled,sleigh,snowboard,nordic,downhill,snowmobile'
+      piste/downhill:
+        name: Downhill Piste/Ski Run
+        terms: 'ski,alpine,snowboard,downhill,piste'
+      piste/downhill/halfpipe:
+        name: Halfpipe
+        terms: 'ski,alpine,halfpipe,half pipe,snowboard,downhill,piste'
+      piste/hike:
+        name: Snowshoeing or Winter Hiking Trail
+        terms: 'hike,winter hiking,snowshoe,snowshoeing,piste,ski'
+      piste/ice_skate:
+        name: Ice Skating Piste
+        terms: 'ice,skating,ski,piste'
+      piste/nordic:
+        name: Nordic or Crosscountry Piste/Ski Trail
+        terms: 'ski,nordic,crosscountry,skating,piste'
+      piste/piste:
+        name: Winter Sport Trails
+        terms: >-
+          ski,nordic,crosscountry,downhill,alpine,snowboard,skitour,ski
+          touring,sled,luge,sleigh,sledge,ski-joring,husky,horse,winter
+          hiking,snowshoe,snowshoeing,ice,skating
+      piste/skitour:
+        name: Ski Touring Trail
+        terms: 'ski,skitour,crosscountry,ski touring,piste'
+      piste/sled:
+        name: Sled Piste
+        terms: 'ski,sled,luge,sleigh,sledge,piste'
+      piste/sleigh:
+        name: Sleigh Piste
+        terms: 'ski,piste,sled,luge,sleigh,sledge,ski-joring,husky,horse'
       place/farm:
         name: Farm
+        terms: ''
+      place/city_block:
+        name: City Block
         terms: ''
       place/city:
         name: City
@@ -4944,13 +6256,19 @@ en:
       power/sub_station:
         name: Substation
         terms: ''
+      power/cable/underground:
+        name: Underground Power Cable
+        terms: ''
       power/generator:
         name: Power Generator
         terms: 'hydro,solar,turbine,wind'
-      power/generator/source_nuclear:
+      power/generator/method/photovoltaic:
+        name: Solar Panel
+        terms: 'photovoltaic module,PV module,sunlight'
+      power/generator/source/nuclear:
         name: Nuclear Reactor
         terms: 'fission,generator,nuclear,nuke,reactor'
-      power/generator/source_wind:
+      power/generator/source/wind:
         name: Wind Turbine
         terms: 'generator,turbine,windmill,wind'
       power/line:
@@ -4973,58 +6291,10 @@ en:
         terms: ''
       power/tower:
         name: High-Voltage Tower
-        terms: ''
+        terms: power
       power/transformer:
         name: Transformer
         terms: ''
-      public_transport/linear_platform_aerialway:
-        name: Aerialway Stop / Platform
-        terms: >-
-          aerialway,cable car,platform,public transit,public
-          transportation,transit,transportation
-      public_transport/linear_platform_bus:
-        name: Bus Stop / Platform
-        terms: >-
-          bus,platform,public transit,public
-          transportation,transit,transportation
-      public_transport/linear_platform_ferry:
-        name: Ferry Stop / Platform
-        terms: >-
-          boat,dock,ferry,pier,platform,public transit,public
-          transportation,transit,transportation
-      public_transport/linear_platform_light_rail:
-        name: Light Rail Stop / Platform
-        terms: >-
-          electric,light rail,platform,public transit,public
-          transportation,rail,track,tram,trolley,transit,transportation
-      public_transport/linear_platform_monorail:
-        name: Monorail Stop / Platform
-        terms: >-
-          monorail,platform,public transit,public
-          transportation,rail,transit,transportation
-      public_transport/linear_platform_subway:
-        name: Subway Stop / Platform
-        terms: >-
-          metro,platform,public transit,public
-          transportation,rail,subway,track,transit,transportation,underground
-      public_transport/linear_platform_train:
-        name: Train Stop / Platform
-        terms: >-
-          platform,public transit,public
-          transportation,rail,track,train,transit,transportation
-      public_transport/linear_platform_tram:
-        name: Tram Stop / Platform
-        terms: >-
-          electric,light rail,platform,public transit,public
-          transportation,rail,streetcar,track,tram,trolley,transit,transportation
-      public_transport/linear_platform_trolleybus:
-        name: Trolleybus Stop / Platform
-        terms: >-
-          bus,electric,platform,public transit,public
-          transportation,streetcar,trackless,tram,trolley,transit,transportation
-      public_transport/linear_platform:
-        name: Transit Stop / Platform
-        terms: 'platform,public transit,public transportation,transit,transportation'
       public_transport/platform_aerialway:
         name: Aerialway Stop / Platform
         terms: >-
@@ -5257,6 +6527,24 @@ en:
       route/ferry:
         name: Ferry Route
         terms: ''
+      seamark/beacon_isolated_danger:
+        name: Danger Beacon
+        terms: 'beacon isolated danger,isolated danger beacon,iala'
+      seamark/beacon_lateral:
+        name: Channel Beacon
+        terms: 'lateral beacon,beacon lateral,cevni,channel marker,iala,lateral mark'
+      seamark/buoy_lateral:
+        name: Channel Buoy
+        terms: 'lateral buoy,buoy lateral,cevni,channel marker,iala,lateral mark'
+      seamark/buoy_lateral/green:
+        name: Green Buoy
+        terms: 'lateral buoy,buoy lateral,cevni,channel marker,iala,lateral mark'
+      seamark/buoy_lateral/red:
+        name: Red Buoy
+        terms: 'lateral buoy,buoy lateral,cevni,channel marker,iala,lateral mark'
+      seamark/mooring:
+        name: Mooring
+        terms: 'dolphin,pile,bollard,buoy,post'
       shop:
         name: Shop
         terms: ''
@@ -5300,7 +6588,7 @@ en:
         terms: 'handbag,purse'
       shop/bakery:
         name: Bakery
-        terms: ''
+        terms: 'bread,cakes,rolls'
       shop/bathroom_furnishing:
         name: Bathroom Furnishing Store
         terms: ''
@@ -5318,13 +6606,13 @@ en:
         terms: ''
       shop/beverages:
         name: Beverage Store
-        terms: ''
+        terms: drinks
       shop/bicycle:
         name: Bicycle Shop
-        terms: 'bike,repair'
+        terms: 'bike,repair,tricycle,unicycle'
       shop/bookmaker:
         name: Bookmaker
-        terms: betting
+        terms: 'betting,bookie'
       shop/books:
         name: Book Store
         terms: ''
@@ -5333,22 +6621,28 @@ en:
         terms: ''
       shop/butcher:
         name: Butcher
-        terms: meat
+        terms: 'chicken,beef,lamb,meat,pork'
       shop/candles:
         name: Candle Shop
-        terms: ''
+        terms: wax
       shop/car_parts:
         name: Car Parts Store
-        terms: auto
+        terms: 'automobile,automotive'
       shop/car_repair:
         name: Car Repair Shop
-        terms: 'auto,garage,service'
+        terms: 'automobile,automotive,garage,service'
       shop/car:
         name: Car Dealership
-        terms: auto
+        terms: 'automobile,automotive'
+      shop/caravan:
+        name: RV Dealership
+        terms: 'auto,camper,recreational vehicle'
       shop/carpet:
         name: Carpet Store
         terms: rug
+      shop/catalogue:
+        name: Catalog Shop
+        terms: ''
       shop/charity:
         name: Charity Store
         terms: 'thrift,op shop,nonprofit'
@@ -5357,10 +6651,12 @@ en:
         terms: ''
       shop/chemist:
         name: Drugstore
-        terms: 'med*,drug*,gift'
+        terms: >-
+          apothecary,beauty,drug
+          store,drugstore,gift,hair,med*,pharmacy,prescription,tooth
       shop/chocolate:
         name: Chocolate Store
-        terms: ''
+        terms: cocoa
       shop/clothes:
         name: Clothing Store
         terms: ''
@@ -5369,7 +6665,7 @@ en:
         terms: ''
       shop/computer:
         name: Computer Store
-        terms: ''
+        terms: 'desktop,laptop,hardware,operating system,software'
       shop/confectionery:
         name: Candy Store
         terms: sweet
@@ -5378,9 +6674,12 @@ en:
         terms: ''
       shop/copyshop:
         name: Copy Store
-        terms: ''
+        terms: 'print,scan'
       shop/cosmetics:
         name: Cosmetics Store
+        terms: 'make-up,makeup'
+      shop/country_store:
+        name: Country Store
         terms: ''
       shop/craft:
         name: Arts and Crafts Store
@@ -5405,7 +6704,7 @@ en:
         terms: ''
       shop/e-cigarette:
         name: E-Cigarette Shop
-        terms: 'electronic,vapor'
+        terms: 'electronic,vape,vaping,vapor'
       shop/electronics:
         name: Electronics Store
         terms: >-
@@ -5423,12 +6722,24 @@ en:
       shop/fashion:
         name: Fashion Store
         terms: ''
+      shop/fireplace:
+        name: Fireplace Store
+        terms: 'fireplace,stove,masonry heater'
+      shop/fishing:
+        name: Fishing Shop
+        terms: 'bait,fishing line,flies,fly,lure,reel,rod,tackle'
       shop/florist:
         name: Florist
         terms: flower
       shop/frame:
         name: Framing Shop
         terms: 'art*,paint*,photo*,frame'
+      shop/frozen_food:
+        name: Frozen Food
+        terms: ''
+      shop/fuel:
+        name: Fuel Shop
+        terms: ''
       shop/funeral_directors:
         name: Funeral Home
         terms: 'undertaker,memorial home'
@@ -5446,7 +6757,10 @@ en:
         terms: souvenir
       shop/greengrocer:
         name: Greengrocer
-        terms: 'fruit,vegetable'
+        terms: 'fruit,produce,vegetable'
+      shop/hairdresser_supply:
+        name: Hairdresser Supply Store
+        terms: 'barber,shampoo,conditioner'
       shop/hairdresser:
         name: Hairdresser
         terms: barber
@@ -5464,22 +6778,26 @@ en:
         terms: ''
       shop/hifi:
         name: Hifi Store
-        terms: 'stereo,video'
+        terms: 'audio,hi-fi,high fidelity,stereo,video'
       shop/houseware:
         name: Houseware Store
         terms: 'home,household'
+      shop/hunting:
+        name: Hunting Shop
+        terms: 'arrows,bows,bullets,crossbows,rifles,traps'
       shop/interior_decoration:
         name: Interior Decoration Store
         terms: ''
       shop/jewelry:
-        name: Jeweler
-        terms: 'diamond,gem,ring'
+        name: Jewelry Store
+        terms: >-
+          bracelet,diamond,earrings,gem,gold,jeweler,jewellery,jeweller,necklace,pins,ring,silver
       shop/kiosk:
         name: Kiosk
         terms: ''
       shop/kitchen:
         name: Kitchen Design Store
-        terms: ''
+        terms: 'cabinets,countertops,sinks'
       shop/laundry:
         name: Laundry
         terms: ''
@@ -5507,12 +6825,15 @@ en:
       shop/money_lender:
         name: Money Lender
         terms: ''
+      shop/motorcycle_repair:
+        name: Motorcycle Repair Shop
+        terms: 'auto,bike,garage,motorcycle,repair,service'
       shop/motorcycle:
         name: Motorcycle Dealership
         terms: bike
       shop/music:
         name: Music Store
-        terms: 'CD,vinyl'
+        terms: 'tape casettes,CDs,compact discs,vinyl records'
       shop/musical_instrument:
         name: Musical Instrument Store
         terms: guitar
@@ -5530,10 +6851,13 @@ en:
         terms: ''
       shop/outdoor:
         name: Outdoors Store
-        terms: 'camping,climbing,hiking'
+        terms: 'camping,climbing,hiking,outfitter,outdoor equipment,outdoor supplies'
       shop/paint:
         name: Paint Store
         terms: ''
+      shop/party:
+        name: Party Supply Store
+        terms: 'balloons,costumes,decorations,invitations'
       shop/pastry:
         name: Pastry Shop
         terms: 'patisserie,cake shop,cakery'
@@ -5545,7 +6869,7 @@ en:
         terms: ''
       shop/pet_grooming:
         name: Pet Grooming Store
-        terms: dog
+        terms: 'cat,dog'
       shop/pet:
         name: Pet Store
         terms: 'animal,cat,dog,fish,kitten,puppy,reptile'
@@ -5557,31 +6881,34 @@ en:
         terms: ''
       shop/radiotechnics:
         name: Radio/Electronic Component Store
-        terms: ''
+        terms: 'antenna,transistor'
       shop/religion:
         name: Religious Store
         terms: ''
       shop/scuba_diving:
         name: Scuba Diving Shop
-        terms: ''
+        terms: 'diving,scuba'
       shop/seafood:
         name: Seafood Shop
         terms: fishmonger
       shop/second_hand:
         name: Consignment/Thrift Store
         terms: 'secondhand,second hand,resale,thrift,used'
+      shop/sewing:
+        name: Sewing Supply Shop
+        terms: haberdashery
       shop/shoes:
         name: Shoe Store
-        terms: ''
+        terms: 'boots,cleats,clogs,heels,loafers,oxfords,sneakers'
       shop/sports:
         name: Sporting Goods Store
-        terms: ''
+        terms: athletics
       shop/stationery:
         name: Stationery Store
         terms: 'card,paper'
       shop/storage_rental:
         name: Storage Rental
-        terms: ''
+        terms: garages
       shop/supermarket:
         name: Supermarket
         terms: 'grocery,store,shop'
@@ -5590,22 +6917,22 @@ en:
         terms: 'clothes,suit'
       shop/tattoo:
         name: Tattoo Parlor
-        terms: ''
+        terms: ink
       shop/tea:
         name: Tea Store
         terms: ''
       shop/ticket:
         name: Ticket Seller
-        terms: ''
+        terms: box office
       shop/tiles:
         name: Tile Shop
         terms: ''
       shop/tobacco:
         name: Tobacco Shop
-        terms: ''
+        terms: 'cigarettes,cigars'
       shop/toys:
         name: Toy Store
-        terms: ''
+        terms: games
       shop/trade:
         name: Trade Shop
         terms: ''
@@ -5626,12 +6953,15 @@ en:
         terms: ''
       shop/video:
         name: Video Store
-        terms: DVD
+        terms: 'DVD,VHS,video casette'
       shop/watches:
         name: Watches Shop
         terms: ''
       shop/water_sports:
         name: Watersport/Swim Shop
+        terms: ''
+      shop/water:
+        name: Drinking Water Shop
         terms: ''
       shop/weapons:
         name: Weapon Shop
@@ -5645,9 +6975,6 @@ en:
       shop/wine:
         name: Wine Shop
         terms: ''
-      tourism:
-        name: Tourism
-        terms: ''
       tourism/alpine_hut:
         name: Alpine Hut
         terms: climbing hut
@@ -5660,6 +6987,15 @@ en:
       tourism/artwork:
         name: Artwork
         terms: 'mural,sculpture,statue'
+      tourism/artwork/mural:
+        name: Mural
+        terms: 'fresco,wall painting'
+      tourism/artwork/sculpture:
+        name: Sculpture
+        terms: 'statue,figure,carving'
+      tourism/artwork/statue:
+        name: Statue
+        terms: 'sculpture,figure,carving'
       tourism/attraction:
         name: Tourist Attraction
         terms: ''
@@ -5754,6 +7090,24 @@ en:
       traffic_calming/table:
         name: Speed Table
         terms: 'flat top,hump,speed,slow'
+      traffic_sign_vertex:
+        name: Traffic Sign
+        terms: 'road,highway'
+      traffic_sign:
+        name: Traffic Sign
+        terms: 'road,highway'
+      traffic_sign/city_limit_vertex:
+        name: City Limit Sign
+        terms: 'town,village,hamlet,boundary,edge,border,road,highway'
+      traffic_sign/city_limit:
+        name: City Limit Sign
+        terms: 'town,village,hamlet,boundary,edge,border,road,highway'
+      traffic_sign/maxspeed_vertex:
+        name: Speed Limit Sign
+        terms: 'max speed,maximum speed,road,highway'
+      traffic_sign/maxspeed:
+        name: Speed Limit Sign
+        terms: 'max speed,maximum speed,road,highway'
       type/multipolygon:
         name: Multipolygon
         terms: ''
@@ -5762,6 +7116,9 @@ en:
         terms: ''
       type/boundary/administrative:
         name: Administrative Boundary
+        terms: ''
+      type/enforcement:
+        name: Enforcement
         terms: ''
       type/restriction:
         name: Restriction
@@ -5850,6 +7207,9 @@ en:
       vertex:
         name: Other
         terms: ''
+      waterway/riverbank:
+        name: Riverbank
+        terms: ''
       waterway/boatyard:
         name: Boatyard
         terms: ''
@@ -5871,13 +7231,13 @@ en:
       waterway/fuel:
         name: Marine Fuel Station
         terms: 'petrol,gas,diesel,boat'
+      waterway/milestone:
+        name: Waterway Milestone
+        terms: 'milestone,marker'
       waterway/river:
         name: River
         terms: >-
           beck,branch,brook,course,creek,estuary,rill,rivulet,run,runnel,stream,tributary,watercourse
-      waterway/riverbank:
-        name: Riverbank
-        terms: ''
       waterway/sanitary_dump_station:
         name: Marine Toilet Disposal
         terms: >-
@@ -5901,6 +7261,18 @@ en:
         name: Weir
         terms: ''
   imagery:
+    AGIV:
+      attribution:
+        text: Orthophoto Flanders most recent © AGIV
+      name: AGIV Flanders most recent aerial imagery
+    AGIV10cm:
+      attribution:
+        text: Orthophoto Flanders © AGIV
+      name: AGIV Flanders 2013-2015 aerial imagery 10cm
+    AGIVFlandersGRB:
+      attribution:
+        text: GRB Flanders © AGIV
+      name: AGIV Flanders GRB
     Bing:
       description: Satellite and aerial imagery.
       name: Bing aerial imagery
@@ -5985,8 +7357,10 @@ en:
       attribution:
         text: '© Geofabrik GmbH, OpenStreetMap contributors, CC-BY-SA'
       name: 'OSM Inspector: Tagging'
-    US-TIGER-Roads-2012:
-      name: TIGER Roads 2012
+    SPW_ORTHO_LAST:
+      name: SPW(allonie) most recent aerial imagery
+    SPW_PICC:
+      name: SPW(allonie) PICC numerical imagery
     US-TIGER-Roads-2014:
       description: >-
         At zoom level 16+, public domain map data from the US Census. At lower
@@ -5998,12 +7372,37 @@ en:
         Yellow = Public domain map data from the US Census. Red = Data not found
         in OpenStreetMap
       name: TIGER Roads 2017
+    US-TIGER-Roads-2018:
+      description: >-
+        Yellow = Public domain map data from the US Census. Red = Data not found
+        in OpenStreetMap
+      name: TIGER Roads 2018
     US_Forest_Service_roads_overlay:
-      name: U.S. Forest Roads Overlay
       description: >-
         Highway: Green casing = unclassified. Brown casing = track. Surface:
         gravel = light brown fill, Asphalt = black, paved = gray, ground =white,
         concrete = blue, grass = green. Seasonal = white bars
+      name: U.S. Forest Roads Overlay
+    UrbISOrtho2016:
+      attribution:
+        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
+      name: UrbIS-Ortho 2016
+    UrbISOrtho2017:
+      attribution:
+        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
+      name: UrbIS-Ortho 2017
+    UrbISOrtho2018:
+      attribution:
+        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
+      name: UrbIS-Ortho 2018
+    UrbisAdmFR:
+      attribution:
+        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
+      name: UrbisAdm FR
+    UrbisAdmNL:
+      attribution:
+        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
+      name: UrbisAdm NL
     Waymarked_Trails-Cycling:
       attribution:
         text: '© waymarkedtrails.org, OpenStreetMap contributors, CC by-SA 3.0'
@@ -6036,10 +7435,75 @@ en:
         Orthofoto layer provided by basemap.at. "Successor" of geoimage.at
         imagery.
       name: basemap.at Orthofoto
-    hike_n_bike:
+    eufar-balaton:
       attribution:
-        text: © OpenStreetMap contributors
-      name: Hike & Bike
+        text: EUFAR Balaton ortofotó 2010
+      description: 1940 geo-tagged photography from Balaton Limnological Institute.
+      name: EUFAR Balaton orthophotos
+    finds.jp_KBN_2500:
+      attribution:
+        text: GSI KIBAN 2500
+      description: 'GSI Kiban 2500 via finds.jp. Good for tracing, but a bit older.'
+      name: Japan GSI KIBAN 2500
+    gsi.go.jp:
+      attribution:
+        text: GSI Japan
+      description: 'Japan GSI ortho Imagery. Usually better than bing, but a bit older.'
+      name: Japan GSI ortho Imagery
+    gsi.go.jp_std_map:
+      attribution:
+        text: GSI Japan
+      description: Japan GSI Standard Map. Widely covered.
+      name: Japan GSI Standard Map
+    helsingborg-orto:
+      attribution:
+        text: © Helsingborg municipality
+      description: 'Orthophotos from the municipality of Helsingborg 2016, public domain'
+      name: Helsingborg Orthophoto
+    kalmar-orto-2014:
+      attribution:
+        text: © Kalmar municipality
+      description: Orthophotos for the north coast of the municipality of Kalmar 2014
+      name: Kalmar North Orthophoto 2014
+    kalmar-orto-2016:
+      attribution:
+        text: © Kalmar municipality
+      description: Orthophotos for the south coast of the municipality of Kalmar 2016
+      name: Kalmar South Orthophoto 2016
+    kalmar-orto-2018:
+      attribution:
+        text: © Kalmar municipality
+      description: Orthophotos for urban areas of the municipality of Kalmar 2018
+      name: Kalmar Urban Orthophoto 2018
+    kelkkareitit:
+      attribution:
+        text: © Kelkkareitit.fi
+      description: Kelkkareitit.fi snowmobile trails from OSM (Nordic coverage)
+      name: Nordic snowmobile overlay
+    lantmateriet-orto1960:
+      attribution:
+        text: '© Lantmäteriet, CC0'
+      description: >-
+        Mosaic of Swedish orthophotos from the period 1955–1965. Older and
+        younger pictures may occur.
+      name: Lantmäteriet Historic Orthophoto 1960
+    lantmateriet-orto1975:
+      attribution:
+        text: '© Lantmäteriet, CC0'
+      description: >-
+        Mosaic of Swedish orthophotos from the period 1970–1980. Is under
+        construction.
+      name: Lantmäteriet Historic Orthophoto 1975
+    lantmateriet-topowebb:
+      attribution:
+        text: '© Lantmäteriet, CC0'
+      description: 'Topographic map of Sweden 1:50 000'
+      name: Lantmäteriet Topographic Map
+    linkoping-orto:
+      attribution:
+        text: © Linköping municipality
+      description: 'Orthophotos from the municipality of Linköping 2010, open data'
+      name: Linköping Orthophoto
     mapbox_locator_overlay:
       attribution:
         text: Terms & Feedback
@@ -6062,6 +7526,11 @@ en:
       attribution:
         text: '© OpenStreetMap contributors, CC-BY-SA'
       name: OpenStreetMap (German Style)
+    osmse-ekonomiska:
+      attribution:
+        text: © Lantmäteriet
+      description: Scan of "Economic maps" ca. 1950–1980
+      name: Lantmäteriet Economic Map 1950–1980
     qa_no_address:
       attribution:
         text: 'Simon Poole, Data ©OpenStreetMap contributors'
@@ -6070,12 +7539,22 @@ en:
       attribution:
         text: '© Tiles: skobbler Map data: OpenStreetMap contributors'
       name: skobbler
+    skoterleder:
+      attribution:
+        text: © Skoterleder.org
+      description: Snowmobile trails
+      name: Snowmobile map Sweden
     stamen-terrain-background:
       attribution:
         text: >-
           Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap,
           under ODbL
       name: Stamen Terrain
+    stockholm-orto:
+      attribution:
+        text: '© Stockholm municipality, CC0'
+      description: 'Orthophotos from the municipality of Stockholm 2015, CC0 license'
+      name: Stockholm Orthophoto
     tf-cycle:
       attribution:
         text: 'Maps © Thunderforest, Data © OpenStreetMap contributors'
@@ -6084,67 +7563,6 @@ en:
       attribution:
         text: 'Maps © Thunderforest, Data © OpenStreetMap contributors'
       name: Thunderforest Landscape
-    AGIV:
-      attribution:
-        text: Orthophoto Flanders most recent © AGIV
-      name: AGIV Flanders most recent aerial imagery
-    AGIV10cm:
-      attribution:
-        text: Orthophoto Flanders © AGIV
-      name: AGIV Flanders 2013-2015 aerial imagery 10cm
-    AGIVFlandersGRB:
-      attribution:
-        text: GRB Flanders © AGIV
-      name: AGIV Flanders GRB
-    SPW_ORTHO_LAST:
-      name: SPW(allonie) most recent aerial imagery
-    SPW_PICC:
-      name: SPW(allonie) PICC numerical imagery
-    UrbISOrtho2016:
-      attribution:
-        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
-      name: UrbIS-Ortho 2016
-    UrbISOrtho2017:
-      attribution:
-        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
-      name: UrbIS-Ortho 2017
-    UrbisAdmFR:
-      attribution:
-        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
-      name: UrbisAdm FR
-    UrbisAdmNL:
-      attribution:
-        text: Realized by means of Brussels UrbIS®© - Distribution & Copyright CIRB
-      name: UrbisAdm NL
-    kelkkareitit:
-      attribution:
-        text: © Kelkkareitit.fi
-      description: Kelkkareitit.fi snowmobile trails from OSM (Nordic coverage)
-      name: Nordic snowmobile overlay
-    lantmateriet-orto1960:
-      attribution:
-        text: '© Lantmäteriet, CC0'
-      description: >-
-        Mosaic of Swedish orthophotos from the period 1955–1965. Older and
-        younger pictures may occur.
-      name: Lantmäteriet Historic Orthophoto 1960
-    lantmateriet-orto1975:
-      attribution:
-        text: '© Lantmäteriet, CC0'
-      description: >-
-        Mosaic of Swedish orthophotos from the period 1970–1980. Is under
-        construction.
-      name: Lantmäteriet Historic Orthophoto 1975
-    osmse-ekonomiska:
-      attribution:
-        text: © Lantmäteriet
-      description: Scan of "Economic maps" ca. 1950–1980
-      name: Lantmäteriet Economic Map 1950–1980
-    skoterleder:
-      attribution:
-        text: © Skoterleder.org
-      description: Snowmobile trails
-      name: Snowmobile map Sweden
     trafikverket-baninfo:
       attribution:
         text: '© Trafikverket, CC0'
@@ -6177,7 +7595,60 @@ en:
         text: '© Trafikverket, CC0'
       description: Swedish NVDB road network with several options for map layers
       name: Trafikverket Road Network options
+    gsi.go.jp_airphoto:
+      attribution:
+        text: GSI Japan
+      description: >-
+        Japan GSI airphoto Imagery. Not fully orthorectified, but a bit newer
+        and/or differently covered than GSI ortho Imagery.
+      name: Japan GSI airphoto Imagery
+    gsi.go.jp_seamlessphoto:
+      attribution:
+        text: GSI Japan seamless photo
+      description: >-
+        Japan GSI seamlessphoto Imagery. The collection of latest imageries of
+        GSI ortho, airphoto, post disaster and others.
+      name: Japan GSI seamlessphoto Imagery
   community:
+    bw-facebook:
+      name: Mapping Botswana on Facebook
+      description: Page of OpenStreetMap in Botswana
+    bw-twitter:
+      name: Mapping Botswana on Twitter
+      description: Twitter of OpenStreetMap in Botswana
+    cape-coast-youthmappers:
+      name: University of Cape Coast YouthMappers
+      description: 'Follow us on Twitter: {url}'
+      extendedDescription: >-
+        This is the official handle for the Youth Mappers chapter of the
+        University of Cape Coast, Ghana. we love maps, open data and helping the
+        vulnerable.
+    osm-gh-facebook:
+      name: OpenStreetMap Ghana on Facebook
+      description: Facebook group for people interested in OpenStreetMap.
+      extendedDescription: >-
+        Mappers in Ghana community, promoting OpenStreetMap and Humanitarian
+        OpenStreetMap Team (HOT) projects in Ghana. Join us.
+    osm-gh-twitter:
+      name: OpenStreetMap Ghana on Twitter
+      description: 'Follow us on Twitter: {url}'
+    talk-gh:
+      name: Talk-gh Mailing List
+      description: Talk-gh is the official mailing list for Ghana OSM community.
+    osm-mg-facebook:
+      name: OpenStreetMap Madagascar Facebook Group
+      description: Malagasy Facebook group for people interested in OpenStreetMap.
+    talk-mg:
+      name: Talk-mg Mailing List
+      description: >-
+        Place for OpenStreetMap contributors, communities and users in
+        Madagascar to share and discuss.
+    OSM-BGD-facebook:
+      name: OpenStreetMap Bangladesh
+      description: Improve OpenStreetMap in Bangladesh
+      extendedDescription: >-
+        Mapping in Bangladesh? Have questions, want to connect with the
+        community here? Join us at {url}. All are welcome!
     OSM-India-facebook:
       name: OpenStreetMap India - Participatory neighborhood mapping
       description: Improve OpenStreetMap in India
@@ -6191,6 +7662,78 @@ en:
             Join the 2018 OpenStreetMap region-wide event at State of the Map
             Asia in India
           where: 'Indian Institute of Management, Bangalore, India'
+    osm-india-forum:
+      name: OpenStreetMap India forum
+      description: OpenStreetMap India web forum
+    osm-india-github:
+      name: OpenStreetMap India GitHub
+      description: 'Code with us: {url}'
+    OSM-india-mailinglist:
+      name: OpenStreetMap India Mailinglist
+      description: Talk-in is the official Mailinglist for Indian Community
+    osm-india-telegram:
+      name: OpenStreetMap India Telegram
+      description: 'Join our family: {url}'
+    OSM-india-twitter:
+      name: OpenStreetMap India Twitter
+      description: 'We are just a tweet away: {url}'
+    osm-india-website:
+      name: OpenStreetMap India
+      description: Mappers and OpenStreetMap users in India
+    osm-india-wiki:
+      name: OpenStreetMap Wikiproject India
+      description: 'Everything you need to know about mapping in India: {url}'
+    osm-india-youtube:
+      name: OpenStreetMap India Youtube
+      description: 'Subscribe to our channel: {url}'
+    OSM-India-Puducherry-Facebook:
+      name: Free Software Hardware Movement - Facebook
+      description: 'FSHM Facebook page to know about community events, activities'
+      extendedDescription: >-
+        FSHM organizes events relating to free software/hardware, technology,
+        activism and OpenStreetMap. Its FB page is the best way to keep in
+        contact with its events.
+    OSM-Puducherry-Mailing-List:
+      name: Free Software Hardware Movement - Mailing List
+      description: >-
+        FSHM Puducherry mailing list to discuss mapping in Puducherry and other
+        things.
+      extendedDescription: >-
+        FSHM organizes events relating to free software/hardware, technology,
+        activism and OpenStreetMap.
+    OSM-India-Puducherry-Matrix:
+      name: Free Software Hardware Movement - Matrix
+      description: >-
+        FSHM Riot group to discuss, share and update mapping activities, events
+        in and around Puducherry
+      extendedDescription: >-
+        FSHM community members share their OSM mapping updates / experiences
+        through the Riot.im group, this group is also used to discuss things
+        related to free software / hardware, technology and activism.
+    OSM-IDN-facebook:
+      name: OpenStreetMap Indonesia
+      description: Improve OpenStreetMap in Indonesia
+      extendedDescription: >-
+        Mapping in Indonesia? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
+    osm-iran-aparat:
+      name: OpenStreetMap Iran Aparat
+      description: 'Subscribe to our channel at {url}'
+      extendedDescription: >-
+        A good resource of videos about anything related to OpenStreetMap.
+        Mainly in Persian.
+    osm-iran-forum:
+      name: OpenStreetMap Iran web forum
+      description: OpenStreetMap Iran web forum
+      extendedDescription: >-
+        A web forum for OpenStreetMap users in Iran. Feel free to ask questions
+        and discuss with others!
+    osm-iran-telegram:
+      name: OpenStreetMap Iran Telegram
+      description: >-
+        You're welcome to join our Telegram channel at {url}. We also have a
+        supergroup of many OSMers interested in Iran. Find its link in bio of
+        channel.
     OSM-japan-facebook:
       name: OpenStreetMap Japan Community
       description: Mappers and OpenStreetMap users in Japan
@@ -6200,6 +7743,42 @@ en:
     OSM-japan-twitter:
       name: OpenStreetMap Japan Twitter
       description: 'Hashtag on Twitter: {url}'
+    OSM-japan-website:
+      name: OpenStreetMap Japan
+      description: Mappers and OpenStreetMap users in Japan
+    OSM-MY-facebook:
+      name: OpenStreetMap Malaysia on Facebook
+      description: For chat about anything related to OpenStreetMap!
+    OSM-MY-forum:
+      name: OpenStreetMap Malaysia Forum
+      description: Official OpenStreetMap Malaysia Forum
+    OSM-MY-matrix:
+      name: OpenStreetMap Malaysia Riot channel
+      description: 'All mappers are welcome! Sign up at {signupUrl}'
+    OSM-MNG-facebook:
+      name: OpenStreetMap Mongolia
+      description: Improve OpenStreetMap in Mongolia
+      extendedDescription: >-
+        Mapping in Mongolia? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
+    OSM-MMR-facebook:
+      name: OpenStreetMap Myanmar
+      description: Improve OpenStreetMap in Myanmar
+      extendedDescription: >-
+        Mapping in Myanmar? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
+    OSM-Nepal-facebook:
+      name: OpenStreetMap Nepal
+      description: Improve OpenStreetMap in Nepal
+      extendedDescription: >-
+        Mapping in Nepal? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
+    OSM-Asia-mailinglist:
+      name: OpenStreetMap Asia Mailinglist
+      description: Talk-asia is the official Mailinglist for Asian Community
+    osm-asia-telegram:
+      name: OpenStreetMap Asia Telegram
+      description: 'Join our family: {url}'
     OSM-PH-facebook:
       name: OpenStreetMap PH Facebook
       description: >-
@@ -6222,6 +7801,17 @@ en:
     OSM-RU-telegram:
       name: OpenStreetMap RU telegram
       description: OpenStreetMap Russia telegram chat
+    OSM-south-korea-telegram:
+      name: OSM South Korea Telegram
+      description: >-
+        Unofficial Channnel for OpenStreetMap contributors, communities, and
+        users in South Korea to share and discuss.
+    OSM-sri-lanka-facebook:
+      name: OpenStreetMap Sri Lanka
+      description: Improve OpenStreetMap in Sri Lanka
+      extendedDescription: >-
+        Mapping in Sri Lanka? Have questions, want to connect with the community
+        here? Join us at {Url}. All are welcome!
     OSM-TW-facebook:
       name: OpenStreetMap Taiwan Community
       description: >-
@@ -6232,18 +7822,319 @@ en:
       description: >-
         Talk-tw is an Official Mailinglist for the Communities to dicuss matters
         about Taiwan
+    OSM-TH-CNX-meetup:
+      name: OSM Meetup Chiang Mai
+      description: Irregular meeting of the OpenStreetMap community in Chiang Mai
+      extendedDescription: >-
+        Members of the OpenStreetMap community meet every few months in Chiang
+        Mai. Get in contact and check out {url} to see when the next meetup is
+        scheduled
+    OSM-TH-facebook:
+      name: OpenStreetMap TH Facebook group
+      description: Facebook group for OpenStreetMappers in Thailand
+    OSM-TH-forum:
+      name: OpenStreetMap TH forum
+      description: OpenStreetMap Thailand web forum
+    al-forum:
+      name: OSM Albania Forum
+      description: OpenStreetMap Albania Forum
+    al-maptime-tirana:
+      name: Maptime Tirana
+      description: Social events organized around mapping - beginners most welcome!
+      extendedDescription: >-
+        Maptime is an open learning environment for all levels and degrees of
+        knowledge, offering intentional educational support for the beginner.
+        Maptime is simultaneously flexible and structured, creating space for
+        mapping tutorials, workshops, ongoing projects with a shared goal, and
+        independent/collaborative work time.
+    al-telegram:
+      name: OSM Albania Telegram channel
+      description: OpenStreetMap Albania Telegram channel
+    at-forum:
+      name: OpenStreetMap Austria Forum
+      description: The official forum for OpenStreetMap questions in and around Austria
+    at-mailinglist:
+      name: Talk-at Mailing List
+      description: Talk-at is the official mailing list for the Austrian OSM community
+    at-twitter:
+      name: OpenStreetMap Austria Twitter
+      description: 'OpenStreetMap Austria On Twitter: {url}'
+    osmgraz-meetup:
+      name: OSM community meetup Graz
+      description: Monthly meetup of the OpenStreetMap community in Graz
+    osmgraz-twitter:
+      name: OSM community Graz on twitter
+      description: OpenStreetMap community in Graz on twitter
+    osm-at:
+      name: OpenStreetMap Austria
+      description: The platform for information on OpenStreetMap in Austria
     byosm:
       name: OpenStreetMap Belarus
       description: OpenStreetMap Belarus telegram chat
+    be-facebook:
+      name: OpenStreetMap BE Community
+      description: Mappers and OpenStreetMap on Facebook in Belgium
+    be-forum:
+      name: OpenStreetMap BE forum
+      description: OpenStreetMap Belgium web forum
+    be-irc:
+      name: OpenStreetMap Belgium IRC
+      description: 'Join #osmbe on irc.oftc.net (port 6667)'
+      extendedDescription: >-
+        Join #osmbe on irc.oftc.net (port 6667), it is bridged with the Matrix
+        chat channel
+    be-mailinglist:
+      name: Talk-be Mailing List
+      description: Talk-be is the official mailing list for the Belgian OSM community
+    be-matrix:
+      name: OpenStreetMap BE Matrix channel
+      description: All mappers are welcome!
+      extendedDescription: >-
+        Most talk is happening at the "OpenStreetMap Belgium" channel. You can
+        ask anything there! The other rooms are for specific subjects.
+    be-meetup:
+      name: OpenStreetMap Belgium Meetup
+      description: Real life meetups of everyone who is interested in OpenStreetMap
+      extendedDescription: >-
+        Physical meetups are great to meet other mappers, ask them questions and
+        to learn a lot. Especially new contributors are very welcome!
+    be-twitter:
+      name: OpenStreetMap Belgium Twitter
+      description: 'OSM Belgium on Twitter: @osm_be'
+    hr-facebook:
+      name: OpenStreetMap Croatia Facebook group
+      description: OpenStreetMap Croatia Facebook group
+    hr-irc:
+      name: OpenStreetMap Croatia on IRC
+      description: 'Join #osm-hr on irc.freenode.org (port 6667)'
+    hr-mailinglist:
+      name: Talk-hr Mailing List
+      description: Talk-hr mailing list
+    czech-community:
+      name: Czech OSM community
+      description: 'Map portal, website and contacts on OSM members in Czechia'
+    osmcz-facebook:
+      name: OpenStreetMap CZ on Facebook
+      description: Follow czech community on Facebook - including translated WeeklyOSM!
+    osmcz-twitter:
+      name: Czech twitter @osmcz
+      description: Follow czech community on Twitter - including translated WeeklyOSM!
     talk-cz-mailinglist:
       name: Czech mailing list (talk-cz)
       description: Talk-cz is the official mailing list for Czech community
+    dk-forum:
+      name: OpenStreetMap Denmark Web Forum
+      description: OpenStreetMap Denmark web forum
+    dk-irc:
+      name: OpenStreetMap Denmark IRC
+      description: 'Join #osm-dk on irc.oftc.net (port 6667)'
+    dk-mailinglist:
+      name: Talk-dk Mailing List
+      description: A mailing list to discuss OpenStreetMap in Denmark
+    fi-forum:
+      name: OpenStreetMap FI forum
+      description: OpenStreetMap Finland web forum
+    fi-irc:
+      name: OpenStreetMap Finland IRC
+      description: 'Join #osm-fi on irc.oftc.net (port 6667)'
+    fi-mailinglist:
+      name: Talk-fi Mailing List
+      description: Talk-fi is the official mailing list for the Finnish OSM community
+    fr-facebook:
+      name: OpenStreetMap France Facebook page
+      description: OpenStreetMap France Facebook page
+    fr-forum:
+      name: OpenStreetMap France web forum
+      description: OpenStreetMap France web forum
+    fr-irc:
+      name: OpenStreetMap France on IRC
+      description: 'Join #osm-fr on irc.oftc.net (port 6667)'
+    fr-mailinglist:
+      name: Talk-fr Mailing List
+      description: Talk-fr mailing list
+    fr-twitter:
+      name: OpenStreetMap France on Twitter
+      description: 'OpenStreetMap France on Twitter: {url}'
+    de-berlin-mailinglist:
+      name: Berlin Mailing List
+      description: This is the mailing list for the Berlin OSM community
+    de-berlin-meetup:
+      name: OpenStreetMap Berlin-Brandenburg Meetup
+      description: Mappers and OpenStreetMap users in the Berlin area
+    de-berlin-telegram:
+      name: '@osmberlin on Telegram'
+      description: OpenStreetMap Berlin Telegram chat
+    de-berlin-twitter:
+      name: OpenStreetMap Berlin Twitter
+      description: 'Follow us on Twitter: {url}'
+    de-forum:
+      name: OpenStreetMap DE forum
+      description: OpenStreetMap Germany web forum
+    de-irc:
+      name: OpenStreetMap Germany IRC
+      description: 'Join #osm-de on irc.oftc.net (port 6667)'
+    de-mailinglist:
+      name: Talk-de Mailing List
+      description: Talk-de is the official mailing list for the German OSM community
+    de-ostwestfalen-lippe-mailinglist:
+      name: OWL Mailing List
+      description: This is the mailing list for the Ostwestfalen-Lippe OSM community
+    de-telegram:
+      name: OpenStreetMap Germany Telegram
+      description: 'Join the OpenStreetMap Germany Telegram supergroup at {url}'
+    osm-de:
+      name: OpenStreetMap Germany
+      description: The platform for information on OpenStreetMap in Germany
+    hu-facebook:
+      name: OpenStreetMap HU on Facebook
+      description: Mappers and OpenStreetMap Facebook in Hungary
+    hu-forum:
+      name: OpenStreetMap HU forum
+      description: OpenStreetMap Hungary web forum
+    hu-meetup:
+      name: OpenStreetMap Hungary Meetup
+      description: The platform for organizing meetups in Hungary
+    is-facebook:
+      name: OSM Iceland on Facebook
+      description: Page of OpenStreetMap in Iceland
+    is-mailinglist:
+      name: Talk-is Mailing List
+      description: Talk-is is the official mailing list for the Icelandic OSM community
+    is-twitter:
+      name: OSM Iceland on Twittter
+      description: Twitter of OpenStreetMap in Iceland
+    it-facebook:
+      name: OpenStreetMap Italy Facebook
+      description: Join the OpenStreetMap Italy community on Facebook
+    it-irc:
+      name: OpenStreetMap Italy IRC
+      description: 'Join #osm-it on irc.oftc.net (port 6667)'
+    it-mailinglist:
+      name: Talk-it Mailing List
+      description: Talk-it is the official mailing list for the Italian OSM community
+    it-telegram:
+      name: '@OpenStreetMapItalia on Telegram'
+      description: OpenStreetMap Italy Telegram chat
+    it-twitter:
+      name: OpenStreetMap Italy Twitter
+      description: 'Follow us on Twitter at {url}'
+    OSM-Rome-meetup:
+      name: Incontro Mappatori Romani
+      description: Improve OpenStreetMap in the Rome area
+      extendedDescription: >-
+        We aim to be a resource for people to discuss and share knowledge on
+        utilizing free geographic data sets especially OpenStreetMap, and Open
+        geo-spatial software that manages, edits, and displays geographic data,
+        and advocate for its use in Lazio.
+    South-Tyrol-Mailing-List:
+      name: OpenStreetMap mailing list for South Tyrol
+      description: OpenStreetMap Italy regional talk list for South Tyrol
+    talk-it-lazio:
+      name: OpenStreetMap IT Lazio
+      description: 'All are welcome! Sign up at {signupUrl}'
+      extendedDescription: Mailinglist for Rome and Lazio area.
+    Trentino-Mailing-List:
+      name: OpenStreetMap mailing list for Trentino
+      description: OpenStreetMap Italy regional talk list for Trentino
+    kosovo-telegram:
+      name: OpenStreetMap Kosovo on Telegram
+      description: >-
+        Semi-official all-Kosovo Telegram public group. We welcome all mappers
+        from anywhere in any language.
+    no-forum:
+      name: OpenStreetMap Norway Web Forum
+      description: OpenStreetMap Norway web forum
+    no-irc:
+      name: OpenStreetMap Norway on IRC
+      description: >-
+        Chat room for mappers and OpenStreetMap users, developers and
+        enthusiasts in Norway
+    no-mailinglist:
+      name: OpenStreetMap Norway mailing list
+      description: >-
+        Mailing list for mappers and OpenStreetMap users, developers and
+        enthusiasts in Norway
+    no-telegram:
+      name: '@OSM_no on Telegram'
+      description: OpenStreetMap Norway Telegram chat
+    OSM-PL-facebook-group:
+      name: OpenStreetMap Poland Facebook group
+      description: Group for mappers and users of OpenStreetMap in Poland
+    OSM-PL-forum:
+      name: OpenStreetMap Poland Forum
+      description: Forum of Polish OpenStreetMap community
+    si-forum:
+      name: OpenStreetMap Slovenia Forum
+      description: Forum of OpenStreetMap community in Slovenia
+    si-mailinglist:
+      name: OpenStreetMap Slovenia mailing list
+      description: Mailing list of OpenStreetMap community in Slovenia
+    OSM-ES-mailinglist:
+      name: Talk-es mailing list
+      description: A mailing list to discuss OpenStreetMap in Spain
     OSM-ES-telegram:
       name: '@OSMes on Telegram'
       description: OpenStreetMap Spain Telegram chat
+    osm-se:
+      name: OpenStreetMap.se
+      description: Provide OSM services and information for the local community in Sweden
+    se-facebook:
+      name: OpenStreetMap Sweden Facebook
+      description: OpenStreetMap Sweden on Facebook
+    se-forum:
+      name: OpenStreetMap Sweden Web Forum
+      description: OpenStreetMap Sweden web forum
+    se-irc:
+      name: OpenStreetMap Sweden IRC
+      description: 'Join #osm.se on irc.oftc.net (port 6667)'
+    se-mailinglist:
+      name: Talk-se Mailing List
+      description: A mailing list to discuss OpenStreetMap in Sweden
+    se-twitter:
+      name: OpenStreetMap Sweden on Twitter
+      description: 'Follow us on Twitter: {url}'
+    Nottingham-OSM-pub-meetup:
+      name: East Midlands (Nottingham) Monthly pub meet-up
+      description: Social gathering for East Midlands mappers and users
+      extendedDescription: >-
+        A group have been meeting since March 2011, initially in Nottingham,
+        and, more recently in Derby, and from time to time elsewhere in the East
+        Midlands. These are social gatherings, but are an excellent place to
+        come and ask specific questions about OSM either in the area or in
+        general. In the summer months we usually do some light mapping for an
+        hour in the vicinity of our meeting place. The group as a whole has a
+        special interest in mapping public rights of way and from time to time
+        has mapping meetings for this purpose.
+    gb-mailinglist:
+      name: Talk-gb Mailing List
+      description: >-
+        Talk-gb is the main communication forum list for the British (including
+        Northern Ireland) OSM community
+    mappa-mercia-group:
+      name: Mappa Mercia local group
+      description: A home for OpenStreetMap enthusiasts in the Midlands
+      extendedDescription: >-
+        Mappa Mercia is a project to grow OpenStreetMap in the West Midlands,
+        UK. We run community events, provide training and support local
+        organisations wishing to open up their data.
+    gb-irc:
+      name: OpenStreetMap United Kingdom IRC
+      description: 'Join #osm-gb on irc.oftc.net (port 6667)'
+      extendedDescription: >-
+        Join #osm-gb on irc.oftc.net (port 6667), please be patient and wait for
+        a few minutes if you ask a question
+    OSM-CA-Slack:
+      name: OSM-CA Slack
+      description: 'All are welcome! Sign up at {signupUrl}.'
     OSM-Vancouver-meetup:
       name: OpenStreetMap Vancouver
       description: 'Mappers and OpenStreetMap users in the Vancouver, BC area'
+    OSM-CU-telegram:
+      name: OSM Cuba on Telegram
+      description: OpenStreetMap Cuba Telegram chat
+    OSM-NI-telegram:
+      name: OSM Nicaragua on Telegram
+      description: OpenStreetMap Nicaragua Telegram chat
     Bay-Area-OpenStreetMappers:
       name: Bay Area OpenStreetMappers
       description: Improve OpenStreetMap in the Bay Area
@@ -6277,6 +8168,10 @@ en:
         open, friendly, educational and social and range from happy hours to
         lightning talks or even workshops. Come create a diverse, inspiring
         geospatial community in the Philadelphia with us!
+    MapMinnesota:
+      name: MapMinnesota
+      description: Mappers and OpenStreetMap enthusiasts in the Twin Cities area
+      extendedDescription: Connecting OpenStreetMap enthusiasts in Minnesota and the Twin Cities!
     Mapping-DC-meetup:
       name: Mapping DC
       description: Improve OpenStreetMap in the DC area
@@ -6293,6 +8188,12 @@ en:
         open the doors of cartographic possibility to anyone interested by
         creating a time and space for collaborative learning, exploration, and
         map creation using mapping tools and technologies.
+    MaptimeHRVA-twitter:
+      name: MaptimeHRVA Twitter
+      description: 'Follow us on Twitter at {url}'
+    us-ma-mailinglist:
+      name: Talk-us-massachusetts Mailing List
+      description: Email mailing list for the Massachusetts OSM community
     OpenCleveland-meetup:
       name: Open Cleveland
       description: Improve OpenStreetMap in the Cleveland area
@@ -6336,6 +8237,13 @@ en:
       description: >-
         Mappers and OpenStreetMap users, developers and enthusiasts in the New
         York Metropolitan area
+    OSM-Portland-forum:
+      name: OpenStreetMap PDX Google Group
+      description: Forum and mailing list for OpenStreetMap users in the Portland area
+      extendedDescription: >-
+        This group is to facilitate improvements to OpenStreetMap in the
+        Portland, Oregon area to support applications such as the Open Trip
+        Planner.
     OSM-Portland:
       name: OpenStreetMap Portland
       description: Mappers and OpenStreetMap users in the Portland area
@@ -6439,6 +8347,9 @@ en:
     Maptime-Australia-Slack:
       name: Maptime Australia Slack
       description: 'Sign up at {signupUrl}'
+    talk-au:
+      name: Talk-au Mailing List
+      description: Place for Aussie mappers to chat
     OSM-AR-facebook:
       name: OpenStreetMap Argentina Facebook
       description: Join the OpenStreetMap Argentina community on Facebook
@@ -6464,423 +8375,6 @@ en:
       name: OpenStreetMap Argentina Twitter
       description: 'Follow us on Twitter at {url}'
       extendedDescription: News from the local community and OpenStreetMap in general.
-    OSM-Reddit:
-      name: OpenStreetMap on Reddit
-      description: >-
-        /r/openstreetmap/ is a great place to learn more about OpenStreetMap. 
-        Ask us anything!
-    cape-coast-youthmappers:
-      name: University of Cape Coast YouthMappers
-      description: 'Follow us on Twitter: {url}'
-      extendedDescription: >-
-        This is the official handle for the Youth Mappers chapter of the
-        University of Cape Coast, Ghana. we love maps, open data and helping the
-        vulnerable.
-    osm-gh-facebook:
-      name: OpenStreetMap Ghana on Facebook
-      description: Facebook group for people interested in OpenStreetMap.
-      extendedDescription: >-
-        Mappers in Ghana community, promoting OpenStreetMap and Humanitarian
-        OpenStreetMap Team (HOT) projects in Ghana. Join us.
-    osm-gh-twitter:
-      name: OpenStreetMap Ghana on Twitter
-      description: 'Follow us on Twitter: {url}'
-    talk-gh:
-      name: Talk-gh Mailing List
-      description: Talk-gh is the official mailing list for Ghana OSM community.
-    osm-mg-facebook:
-      name: OpenStreetMap Madagascar Facebook Group
-      description: Malagasy Facebook group for people interested in OpenStreetMap.
-    talk-mg:
-      name: Talk-mg Mailing List
-      description: >-
-        Place for OpenStreetMap contributors, communities and users in
-        Madagascar to share and discuss.
-    OSM-BGD-facebook:
-      name: OpenStreetMap Bangladesh
-      description: Improve OpenStreetMap in Bangladesh
-      extendedDescription: >-
-        Mapping in Bangladesh? Have questions, want to connect with the
-        community here? Join us at {url}. All are welcome!
-    OSM-india-mailinglist:
-      name: OpenStreetMap India Mailinglist
-      description: Talk-in is the official Mailinglist for Indian Community
-    OSM-india-twitter:
-      name: OpenStreetMap India Twitter
-      description: 'We are just a tweet away: {url}'
-    OSM-India-Puducherry-Facebook:
-      name: Free Software Hardware Movement - Facebook
-      description: 'FSHM Facebook page to know about community events, activities'
-      extendedDescription: >-
-        FSHM organizes events relating to free software/hardware, technology,
-        activism and OpenStreetMap. Its FB page is the best way to keep in
-        contact with its events.
-    OSM-India-Puducherry-Matrix:
-      name: Free Software Hardware Movement - Matrix
-      description: >-
-        FSHM Riot group to discuss, share and update mapping activities, events
-        in and around Puducherry
-      extendedDescription: >-
-        FSHM community members share their OSM mapping updates / experiences
-        through the Riot.im group, this group is also used to discuss things
-        related to free software / hardware, technology and activism.
-    OSM-IDN-facebook:
-      name: OpenStreetMap Indonesia
-      description: Improve OpenStreetMap in Indonesia
-      extendedDescription: >-
-        Mapping in Indonesia? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-japan-website:
-      name: OpenStreetMap Japan
-      description: Mappers and OpenStreetMap users in Japan
-    OSM-korea-telegram:
-      name: OSM Korea Telegram Channel
-      description: >-
-        Unofficial Channnel for OpenStreetMap contributors, communities and
-        users in Korea to share and discuss.
-    OSM-MY-facebook:
-      name: OpenStreetMap Malaysia on Facebook
-      description: For chat about anything related to OpenStreetMap!
-    OSM-MY-forum:
-      name: OpenStreetMap Malaysia Forum
-      description: Official OpenStreetMap Malaysia Forum
-    OSM-MY-matrix:
-      name: OpenStreetMap Malaysia Riot channel
-      description: 'All mappers are welcome! Sign up at {signupUrl}'
-    OSM-MNG-facebook:
-      name: OpenStreetMap Mongolia
-      description: Improve OpenStreetMap in Mongolia
-      extendedDescription: >-
-        Mapping in Mongolia? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-MMR-facebook:
-      name: OpenStreetMap Myanmar
-      description: Improve OpenStreetMap in Myanmar
-      extendedDescription: >-
-        Mapping in Myanmar? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-Nepal-facebook:
-      name: OpenStreetMap Nepal
-      description: Improve OpenStreetMap in Nepal
-      extendedDescription: >-
-        Mapping in Nepal? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-LKA-facebook:
-      name: OpenStreetMap Sri Lanka
-      description: Improve OpenStreetMap in Sri Lanka
-      extendedDescription: >-
-        Mapping in Sri Lanka? Have questions, want to connect with the community
-        here? Join us at {Url}. All are welcome!
-    OSM-TH-CNX-meetup:
-      name: OSM Meetup Chiang Mai
-      description: Irregular meeting of the OpenStreetMap community in Chiang Mai
-      extendedDescription: >-
-        Members of the OpenStreetMap community meet every few months in Chiang
-        Mai. Get in contact and check out {url} to see when the next meetup is
-        scheduled
-    OSM-TH-facebook:
-      name: OpenStreetMap TH Facebook group
-      description: Facebook group for OpenStreetMappers in Thailand
-    OSM-TH-forum:
-      name: OpenStreetMap TH forum
-      description: OpenStreetMap Thailand web forum
-    al-forum:
-      name: OSM Albania Forum
-      description: OpenStreetMap Albania Forum
-    al-maptime-tirana:
-      name: Maptime Tirana
-      description: Social events organized around mapping - beginners most welcome!
-      extendedDescription: >-
-        Maptime is an open learning environment for all levels and degrees of
-        knowledge, offering intentional educational support for the beginner.
-        Maptime is simultaneously flexible and structured, creating space for
-        mapping tutorials, workshops, ongoing projects with a shared goal, and
-        independent/collaborative work time.
-    al-telegram:
-      name: OSM Albania Telegram channel
-      description: OpenStreetMap Albania Telegram channel
-    at-forum:
-      name: OpenStreetMap Austria Forum
-      description: The official forum for OpenStreetMap questions in and around Austria
-    at-mailinglist:
-      name: Talk-at Mailing List
-      description: Talk-at is the official mailing list for the Austrian OSM community
-    at-twitter:
-      name: OpenStreetMap Austria Twitter
-      description: 'OpenStreetMap Austria On Twitter: {url}'
-    osmgraz-meetup:
-      name: OSM community meetup Graz
-      description: Monthly meetup of the OpenStreetMap community in Graz
-    osmgraz-twitter:
-      name: OSM community Graz on twitter
-      description: OpenStreetMap community in Graz on twitter
-    osm-at:
-      name: OpenStreetMap Austria
-      description: The platform for information on OpenStreetMap in Austria
-    be-facebook:
-      name: OpenStreetMap BE Community
-      description: Mappers and OpenStreetMap on Facebook in Belgium
-    be-forum:
-      name: OpenStreetMap BE forum
-      description: OpenStreetMap Belgium web forum
-    be-irc:
-      name: OpenStreetMap Belgium IRC
-      description: 'Join #osmbe on irc.oftc.net (port 6667)'
-      extendedDescription: >-
-        Join #osmbe on irc.oftc.net (port 6667), it is bridged with the Matrix
-        chat channel
-    be-mailinglist:
-      name: Talk-be Mailing List
-      description: Talk-be is the official mailing list for the Belgian OSM community
-    be-maptime:
-      name: Maptime Belgium
-      description: Social events organized around mapping - beginners most welcome!
-      extendedDescription: >-
-        Maptime is an open learning environment for all levels and degrees of
-        knowledge, offering intentional educational support for the beginner.
-        Maptime is simultaneously flexible and structured, creating space for
-        mapping tutorials, workshops, ongoing projects with a shared goal, and
-        independent/collaborative work time.
-    be-matrix:
-      name: OpenStreetMap BE Matrix channel
-      description: All mappers are welcome!
-      extendedDescription: >-
-        Most talk is happening at the "OpenStreetMap Belgium" channel. You can
-        ask anything there! The other rooms are for specific subjects.
-    be-meetup:
-      name: OpenStreetMap Belgium Meetup
-      description: Real life meetups of everyone who is interested in OpenStreetMap
-      extendedDescription: >-
-        Physical meetups are great to meet other mappers, ask them questions and
-        to learn a lot. Especially new contributors are very welcome!
-    be-twitter:
-      name: OpenStreetMap Belgium Twitter
-      description: 'OSM Belgium on Twitter: @osm_be'
-    hr-facebook:
-      name: OpenStreetMap Croatia Facebook group
-      description: OpenStreetMap Croatia Facebook group
-    hr-irc:
-      name: OpenStreetMap Croatia on IRC
-      description: 'Join #osm-hr on irc.freenode.org (port 6667)'
-    hr-mailinglist:
-      name: Talk-hr Mailing List
-      description: Talk-hr mailing list
-    czech-community:
-      name: Czech OSM community
-      description: 'Map portal, website and contacts on OSM members in Czechia'
-    osmcz-facebook:
-      name: OpenStreetMap CZ on Facebook
-      description: Follow czech community on Facebook - including translated WeeklyOSM!
-    osmcz-twitter:
-      name: Czech twitter @osmcz
-      description: Follow czech community on Twitter - including translated WeeklyOSM!
-    dk-forum:
-      name: OpenStreetMap Denmark Web Forum
-      description: OpenStreetMap Denmark web forum
-    dk-irc:
-      name: OpenStreetMap Denmark IRC
-      description: 'Join #osm-dk on irc.oftc.net (port 6667)'
-    dk-mailinglist:
-      name: Talk-dk Mailing List
-      description: A mailing list to discuss OpenStreetMap in Denmark
-    fi-forum:
-      name: OpenStreetMap FI forum
-      description: OpenStreetMap Finland web forum
-    fi-irc:
-      name: OpenStreetMap Finland IRC
-      description: 'Join #osm-fi on irc.oftc.net (port 6667)'
-    fi-mailinglist:
-      name: Talk-fi Mailing List
-      description: Talk-fi is the official mailing list for the Finnish OSM community
-    fr-facebook:
-      name: OpenStreetMap France Facebook page
-      description: OpenStreetMap France Facebook page
-    fr-forum:
-      name: OpenStreetMap France web forum
-      description: OpenStreetMap France web forum
-    fr-irc:
-      name: OpenStreetMap France on IRC
-      description: 'Join #osm-fr on irc.oftc.net (port 6667)'
-    fr-mailinglist:
-      name: Talk-fr Mailing List
-      description: Talk-fr mailing list
-    fr-twitter:
-      name: OpenStreetMap France on Twitter
-      description: 'OpenStreetMap France on Twitter: {url}'
-    de-berlin-mailinglist:
-      name: Berlin Mailing List
-      description: This is the mailing list for the Berlin OSM community
-    de-berlin-meetup:
-      name: OpenStreetMap Berlin-Brandenburg Meetup
-      description: Mappers and OpenStreetMap users in the Berlin area
-    de-berlin-telegram:
-      name: '@osmberlin on Telegram'
-      description: OpenStreetMap Berlin Telegram chat
-    de-berlin-twitter:
-      name: OpenStreetMap Berlin Twitter
-      description: 'Follow us on Twitter: {url}'
-    de-forum:
-      name: OpenStreetMap DE forum
-      description: OpenStreetMap Germany web forum
-    de-irc:
-      name: OpenStreetMap Germany IRC
-      description: 'Join #osm-de on irc.oftc.net (port 6667)'
-    de-mailinglist:
-      name: Talk-de Mailing List
-      description: Talk-de is the official mailing list for the German OSM community
-    de-ostwestfalen-lippe-mailinglist:
-      name: OWL Mailing List
-      description: This is the mailing list for the Ostwestfalen-Lippe OSM community
-    de-telegram:
-      name: OpenStreetMap Germany Telegram
-      description: 'Join the OpenStreetMap Germany Telegram supergroup at {url}'
-    osm-de:
-      name: OpenStreetMap Germany
-      description: The platform for information on OpenStreetMap in Germany
-    hu-facebook:
-      name: OpenStreetMap HU on Facebook
-      description: Mappers and OpenStreetMap Facebook in Hungary
-    hu-forum:
-      name: OpenStreetMap HU forum
-      description: OpenStreetMap Hungary web forum
-    hu-meetup:
-      name: OpenStreetMap Hungary Meetup
-      description: The platform for organizing meetups in Hungary
-    it-facebook:
-      name: OpenStreetMap Italy Facebook
-      description: Join the OpenStreetMap Italy community on Facebook
-    it-irc:
-      name: OpenStreetMap Italy IRC
-      description: 'Join #osm-it on irc.oftc.net (port 6667)'
-    it-mailinglist:
-      name: Talk-it Mailing List
-      description: Talk-it is the official mailing list for the Italian OSM community
-    it-telegram:
-      name: '@OpenStreetMapItalia on Telegram'
-      description: OpenStreetMap Italy Telegram chat
-    it-twitter:
-      name: OpenStreetMap Italy Twitter
-      description: 'Follow us on Twitter at {url}'
-    OSM-Rome-meetup:
-      name: Incontro Mappatori Romani
-      description: Improve OpenStreetMap in the Rome area
-      extendedDescription: >-
-        We aim to be a resource for people to discuss and share knowledge on
-        utilizing free geographic data sets especially OpenStreetMap, and Open
-        geo-spatial software that manages, edits, and displays geographic data,
-        and advocate for its use in Lazio.
-    South-Tyrol-Mailing-List:
-      name: OpenStreetMap mailing list for South Tyrol
-      description: OpenStreetMap Italy regional talk list for South Tyrol
-    talk-it-lazio:
-      name: OpenStreetMap IT Lazio
-      description: 'All are welcome! Sign up at {signupUrl}'
-      extendedDescription: Mailinglist for Rome and Lazio area.
-    Trentino-Mailing-List:
-      name: OpenStreetMap mailing list for Trentino
-      description: OpenStreetMap Italy regional talk list for Trentino
-    no-forum:
-      name: OpenStreetMap Norway Web Forum
-      description: OpenStreetMap Norway web forum
-    no-irc:
-      name: OpenStreetMap Norway on IRC
-      description: >-
-        Chat room for mappers and OpenStreetMap users, developers and
-        enthusiasts in Norway
-    no-mailinglist:
-      name: OpenStreetMap Norway mailing list
-      description: >-
-        Mailing list for mappers and OpenStreetMap users, developers and
-        enthusiasts in Norway
-    OSM-PL-facebook-group:
-      name: OpenStreetMap Poland Facebook group
-      description: Group for mappers and users of OpenStreetMap in Poland
-    OSM-PL-forum:
-      name: OpenStreetMap Poland Forum
-      description: Forum of Polish OpenStreetMap community
-    si-forum:
-      name: OpenStreetMap Slovenia Forum
-      description: Forum of OpenStreetMap community in Slovenia
-    si-mailinglist:
-      name: OpenStreetMap Slovenia mailing list
-      description: Mailing list of OpenStreetMap community in Slovenia
-    OSM-ES-mailinglist:
-      name: Talk-es mailing list
-      description: A mailing list to discuss OpenStreetMap in Spain
-    osm-se:
-      name: OpenStreetMap.se
-      description: Provide OSM services and information for the local community in Sweden
-    se-facebook:
-      name: OpenStreetMap Sweden Facebook
-      description: OpenStreetMap Sweden on Facebook
-    se-forum:
-      name: OpenStreetMap Sweden Web Forum
-      description: OpenStreetMap Sweden web forum
-    se-irc:
-      name: OpenStreetMap Sweden IRC
-      description: 'Join #osm.se on irc.oftc.net (port 6667)'
-    se-mailinglist:
-      name: Talk-se Mailing List
-      description: A mailing list to discuss OpenStreetMap in Sweden
-    se-twitter:
-      name: OpenStreetMap Sweden on Twitter
-      description: 'Follow us on Twitter: {url}'
-    Nottingham-OSM-pub-meetup:
-      name: East Midlands (Nottingham) Monthly pub meet-up
-      description: Social gathering for East Midlands mappers and users
-      extendedDescription: >-
-        A group have been meeting since March 2011, initially in Nottingham,
-        and, more recently in Derby, and from time to time elsewhere in the East
-        Midlands. These are social gatherings, but are an excellent place to
-        come and ask specific questions about OSM either in the area or in
-        general. In the summer months we usually do some light mapping for an
-        hour in the vicinity of our meeting place. The group as a whole has a
-        special interest in mapping public rights of way and from time to time
-        has mapping meetings for this purpose.
-    gb-mailinglist:
-      name: Talk-gb Mailing List
-      description: >-
-        Talk-gb is the main communication forum list for the British (including
-        Northern Ireland) OSM community
-    mappa-mercia-group:
-      name: Mappa Mercia local group
-      description: A home for OpenStreetMap enthusiasts in the Midlands
-      extendedDescription: >-
-        Mappa Mercia is a project to grow OpenStreetMap in the West Midlands,
-        UK. We run community events, provide training and support local
-        organisations wishing to open up their data.
-    gb-irc:
-      name: OpenStreetMap United Kingdom IRC
-      description: 'Join #osm-gb on irc.oftc.net (port 6667)'
-      extendedDescription: >-
-        Join #osm-gb on irc.oftc.net (port 6667), please be patient and wait for
-        a few minutes if you ask a question
-    OSM-CA-Slack:
-      name: OSM-CA Slack
-      description: 'All are welcome! Sign up at {signupUrl}.'
-    OSM-CU-telegram:
-      name: OSM Cuba on Telegram
-      description: OpenStreetMap Cuba Telegram chat
-    OSM-NI-telegram:
-      name: OSM Nicaragua on Telegram
-      description: OpenStreetMap Nicaragua Telegram chat
-    MapMinnesota:
-      name: MapMinnesota
-      description: Mappers and OpenStreetMap enthusiasts in the Twin Cities area
-      extendedDescription: Connecting OpenStreetMap enthusiasts in Minnesota and the Twin Cities!
-    us-ma-mailinglist:
-      name: Talk-us-massachusetts Mailing List
-      description: Email mailing list for the Massachusetts OSM community
-    OSM-Portland-forum:
-      name: OpenStreetMap PDX Google Group
-      description: Forum and mailing list for OpenStreetMap users in the Portland area
-      extendedDescription: >-
-        This group is to facilitate improvements to OpenStreetMap in the
-        Portland, Oregon area to support applications such as the Open Trip
-        Planner.
-    talk-au:
-      name: Talk-au Mailing List
-      description: Place for Aussie mappers to chat
     OSM-BO-mailinglist:
       name: Talk-bo Mailing List
       description: >-
@@ -6913,6 +8407,12 @@ en:
     OSM-br-twitter:
       name: OpenStreetMap Brasil Twitter
       description: 'Follow us on Twitter at {url}'
+    RS-telegram:
+      name: OpenStreetMap Rio Grande do Sul Telegram Group
+      description: Join the OpenStreetMap Rio Grande do Sul community on Telegram
+      extendedDescription: >-
+        Join the community to learn more about OpenStreetMap, ask questions or
+        participate in our meetings. Everyone is welcome!
     OSM-CL-facebook:
       name: OpenStreetMap Chile Facebook
       description: Join the OpenStreetMap Chile community on Facebook
@@ -6982,6 +8482,29 @@ en:
     OSM-PE:
       name: OpenStreetMap Peru
       description: News and resources for the OpenStreetMap Peru community
+    LATAM-Facebook:
+      name: OpenStreetMap Latam Facebook
+      description: OpenStreetMap Latam on Facebook
+    LATAM-Telegram:
+      name: OpenStreetMap Latam Telegram
+      description: OpenStreetMap Telegram for Latin America
+    LATAM-Twitter:
+      name: OpenStreetMap Latam Twitter
+      description: 'Follow us on Twitter at {url}'
+    osm-latam:
+      name: OpenStreetMap Latam
+      description: Supporting OpenStreetMap in Latin America
+      events:
+        sotm-latam-2018:
+          name: State of the Map Latam 2018
+          description: >-
+            State of the Map Latam is the annual conference for all mappers and
+            users of OpenStreetMap in Latin America. The program includes talks,
+            panels, workshops, and mapathons related to OpenStreetMap.
+          where: 'Buenos Aires, Argentina'
+    OSM-Discord:
+      name: OpenStreetMap Discord
+      description: Get in touch with other mappers via Discord
     OSM-Facebook:
       name: OpenStreetMap on Facebook
       description: Like us on Facebook for news and updates about OpenStreetMap.
@@ -6993,6 +8516,14 @@ en:
       extendedDescription: >-
         {url} is for everyone who needs help with OpenStreetMap.  Whether you
         are a beginner mapper or have a technical question, we're here to help!
+    OSM-IRC:
+      name: OpenStreetMap IRC
+      description: 'Join #osm on irc.oftc.net (port 6667)'
+    OSM-Reddit:
+      name: OpenStreetMap on Reddit
+      description: >-
+        /r/openstreetmap/ is a great place to learn more about OpenStreetMap. 
+        Ask us anything!
     OSM-Telegram:
       name: OpenStreetMap Telegram
       description: 'Join the OpenStreetMap Telegram global supergroup at {url}'
@@ -7018,3 +8549,8 @@ en:
             OpenStreetMap conference, bringing together everyone in the
             community to socialize, share, and learn.
           where: 'Milan, Italy'
+  validations:
+    many_deletions: >-
+      You're deleting {n} features: {p} nodes, {l} lines, {a} areas, {r}
+      relations. Are you sure you want to do this? This will delete them from
+      the map.

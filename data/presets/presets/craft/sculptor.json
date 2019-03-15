@@ -1,12 +1,5 @@
 {
-    "icon": "art-gallery",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "maki-art-gallery",
     "geometry": [
         "point",
         "area"

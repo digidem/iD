@@ -1,10 +1,17 @@
 {
-    "icon": "farm",
+    "icon": "maki-farm",
     "fields": [
         "name",
         "operator",
         "crop",
         "produce"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "geometry": [
         "area"

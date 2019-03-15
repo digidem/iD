@@ -1,10 +1,9 @@
 {
-    "icon": "roadblock",
+    "icon": "maki-roadblock",
     "fields": [
         "access"
     ],
     "geometry": [
-        "point",
         "vertex"
     ],
     "tags": {

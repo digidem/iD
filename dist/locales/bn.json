@@ -20,6 +20,11 @@
                 "description": "মানচিত্রে রেস্তোরাঁ, স্মৃতিস্তম্ভ, ডাকবাক্স অথবা অন্য কোন স্থান সংযোজন করুন।",
                 "tail": "বিন্দু সংযোজন করার জন্য মানচিত্রে ক্লিক করুন।"
             },
+            "add_note": {
+                "title": "টীকা",
+                "description": "ত্রুটি খুঁজে পেয়েছেন? অন্যান্য ম্যাপারদের জানিয়ে দিন।",
+                "tail": "টীকা যোগ করার জন্য মানচিত্রে ক্লিক করুন।"
+            },
             "browse": {
                 "title": "ঘুরে ফিরে দেখুন",
                 "description": "মানচিত্র প্যান এবং জুম করুন।"
@@ -39,7 +44,8 @@
                 "annotation": {
                     "point": "একটি বিন্দু সংযোজন করা হয়েছে।",
                     "vertex": "একটি গমনপথে একটি নোড সংযোজন করা হয়েছে।",
-                    "relation": "একটি সম্পর্ক সংযোজন করা হয়েছে।"
+                    "relation": "একটি সম্পর্ক সংযোজন করা হয়েছে।",
+                    "note": "টীকা যোগ করুন।"
                 }
             },
             "start": {
@@ -50,7 +56,7 @@
             },
             "continue": {
                 "key": "A",
-                "title": "\t\nচালিয়ে যান",
+                "title": "এগিয়ে যান",
                 "description": "এই রেখাকে প্রলম্বিত করুন.",
                 "not_eligible": "কোন রেখাকে এখানে প্রলম্বিত করা যাবে না.",
                 "annotation": {
@@ -62,7 +68,7 @@
                 "annotation": "অাঁকা বাতিল করা হয়েছে।"
             },
             "change_tags": {
-                "annotation": "কিছু ট্যাগ পরিবর্তন করা হয়েছে।"
+                "annotation": "পরিবর্তিত ট্যাগ।"
             },
             "circularize": {
                 "title": "বৃত্তাকার করুন",
@@ -79,8 +85,8 @@
             "orthogonalize": {
                 "title": "বর্গাকৃতি",
                 "description": {
-                    "line": "এই লাইন এর কোনসমূহ বর্গাকৃতি করুন.",
-                    "area": "এই ক্ষেত্রটির কোনসমূহ বর্গাকৃতি করুন."
+                    "line": "এই রেখার কোণাসমূহ বর্গাকৃতি করুন।",
+                    "area": "এই ক্ষেত্রটির কোণাসমূহ বর্গাকৃতি করুন।"
                 },
                 "key": "S",
                 "annotation": {
@@ -111,28 +117,20 @@
             "delete_member": {
                 "annotation": "একটি সম্পর্ক থেকে একজন সদস্যকে সরানো হয়েছে।"
             },
-            "connect": {
-                "annotation": {
-                    "point": "একটি গমনপথের সাথে একটি বিন্দু সংযোজন করা হয়েছে।",
-                    "vertex": "একটি গমনপথকে অারেকটি গমনপথের সাথে সংযোজন করা হয়েছে।",
-                    "line": "একটি রেখার সাথে একটি গমনপথ সংযোজন করা হয়েছে।",
-                    "area": "একটি এলাকার সাথে একটি গমনপথ সংযোজন করা হয়েছে।"
-                }
-            },
             "disconnect": {
                 "title": "বিচ্ছিন্ন করুন",
                 "description": "এই রেখা/এলাকাগুলিকে একে অপরের থেকে বিচ্ছিন্ন করুন।",
-                "key": "ডি",
+                "key": "D",
                 "annotation": "এই রেখা/এলাকাগুলিকে বিচ্ছিন্ন করা হয়েছে।"
             },
             "merge": {
                 "title": "এদের এক করুন",
-                "key": "সি",
+                "key": "C",
                 "not_eligible": "এই বৈশিষ্ট্যগুলি একত্রীকরণ করা যাবে না"
             },
             "move": {
                 "title": "সরান",
-                "key": "এম",
+                "key": "M",
                 "annotation": {
                     "point": "একটি বিন্দুকে সরানো হয়েছে।",
                     "vertex": "একটি গমনপথে একটি নোডকে সরানো হয়েছে।",
@@ -148,7 +146,7 @@
             },
             "rotate": {
                 "title": "ঘোরান",
-                "key": "আর",
+                "key": "R",
                 "annotation": {
                     "line": "একটি রেখাকে ঘোরানো হয়েছে।",
                     "area": "একটি এলাকাকে ঘোরানো হয়েছে।"
@@ -157,7 +155,7 @@
             "reverse": {
                 "title": "উল্টো করুন",
                 "description": "এই রেখাটিকে উল্টোদিকে পাঠান।",
-                "key": "ভি",
+                "key": "V",
                 "annotation": "একটি রেখাকে উল্টো করা হয়েছে।"
             },
             "split": {
@@ -167,7 +165,7 @@
                     "area": "এই এলাকাটির সীমানাকে দুই ভাগে ভাগ করুন।",
                     "multiple": "রেখাগুলিকে/এলাকার সীমানাকে এই নোড-এ দুইভাগে ভাগ করুন।"
                 },
-                "key": "এক্স",
+                "key": "X",
                 "annotation": {
                     "line": "একটি রেখাকে ভাগ করুন।",
                     "area": "একটি এলাকার সীমানাকে ভাগ করুন।",
@@ -188,12 +186,9 @@
         "tooltip_keyhint": "শর্টকাট:",
         "translate": {
             "translate": "অনুবাদ করুন",
-            "localized_translation_label": "বহুভাষিক নাম",
             "localized_translation_language": "ভাষা বেছে নিন",
             "localized_translation_name": "নাম"
         },
-        "login": "প্রবেশ করুন",
-        "logout": "বেরিয়ে যান",
         "loading_auth": "ওপেনস্ট্রীটম্যাপে সংযোগ করা হচ্ছে ...",
         "report_a_bug": "সমস্যা প্রতিবেদন করুন",
         "help_translate": "অনুবাদ সাহায্য",
@@ -209,7 +204,7 @@
             "save": "আপলোড করুন",
             "cancel": "বাতিল করুন",
             "changes": "{count}টি পরিবর্তন",
-            "warnings": "সতর্ক বার্তাসমুহ",
+            "warnings": "সতর্কতা",
             "modified": "পরিবর্তিত",
             "deleted": "মুছে ফেলা হয়েছে",
             "created": "তৈরী করা হয়েছে"
@@ -223,6 +218,8 @@
             "background": {
                 "key": "B",
                 "zoom": "জুম",
+                "source": "উৎস",
+                "description": "বিবরণ",
                 "unknown": "অজানা"
             },
             "history": {
@@ -243,7 +240,9 @@
                 "key": "M",
                 "selected": "{n}টি নির্বাচিত",
                 "length": "দৈর্ঘ্য",
-                "location": "অবস্থান"
+                "area": "এলাকা",
+                "location": "অবস্থান",
+                "metric": "মেট্রিক"
             }
         },
         "geometry": {
@@ -251,7 +250,7 @@
             "line": "রেখা"
         },
         "geocoder": {
-            "search": "দুনিয়াজুরে খুজুন...",
+            "search": "বিশ্বব্যাপী খুঁজুন...",
             "no_results_visible": "দৃশ্যমান মানচিত্রে কোন ফলাফল নেই",
             "no_results_worldwide": "কোন ফলাফল পাওয়া যায় নি।"
         },
@@ -259,8 +258,6 @@
             "title": "অামার অবস্থানটি দেখান"
         },
         "inspector": {
-            "no_documentation_combination": "এই ট্যাগ সমবায় এর জন্য কোন বিবরন নেই",
-            "no_documentation_key": "এই টীকাটির জন্য কোন বিবরন নেই",
             "show_more": "অারো দেখান",
             "view_on_osm": "openstreetmap.org-এ দেখুন",
             "all_tags": "সমস্ত ট্যাগ",
@@ -268,19 +265,25 @@
             "all_relations": "সকল সম্পর্কসমুহ",
             "new_relation": "নতুন সম্পর্ক...",
             "role": "ভূমিকা",
-            "choose": "বৈশিষ্ট্যএর প্রকার নির্বাচন করুন",
+            "choose": "বৈশিষ্ট্যের প্রকার নির্বাচন করুন",
             "results": "{search}-এর জন্য {n}-টি ফলাফল ",
-            "reference": "openstreetmap.org-এর উইকি-তে দেখুন",
             "back_tooltip": "বৈশিষ্ট্য পরিবর্তন করুন",
             "remove": "অপসারণ",
             "search": "কিছু খুঁজুন",
             "unknown": "অজানা",
-            "incomplete": "<ডাউনলোড করা হয়নি>",
-            "feature_list": "বৈশিষ্ট্যসমূহ খুজুন",
+            "incomplete": "<not downloaded>",
+            "feature_list": "বৈশিষ্ট্যসমূহ খুঁজুন",
             "edit": "বৈশিষ্ট্য সম্পাদনা করুন",
             "check": {
                 "yes": "হ্যাঁ",
-                "no": "না"
+                "no": "না",
+                "reverser": "দিক পাল্টান"
+            },
+            "radio": {
+                "structure": {
+                    "type": "ধরন",
+                    "default": "পূর্বনির্ধারিত"
+                }
             },
             "add": "যোগ করুন",
             "none": "কিছুনা",
@@ -298,7 +301,12 @@
         "map_data": {
             "title": "মানচিত্রের উপাত্ত",
             "description": "মানচিত্রের উপাত্ত",
-            "key": "F"
+            "key": "F",
+            "layers": {
+                "osm": {
+                    "title": "ওপেনস্ট্রীটম্যাপের উপাত্ত"
+                }
+            }
         },
         "restore": {
             "heading": "অাপনার কিছু পরিবর্তন সংরক্ষণ করা বাকি অাছে",
@@ -307,14 +315,32 @@
         "save": {
             "title": "সংরক্ষণ করুন",
             "no_changes": "সংরক্ষণ করার মত কোন পরিবর্তন বাকি নেই।",
-            "unsaved_changes": "অাপনার কিছু পরিবর্তন সংরক্ষণ করা বাকি অাছে"
+            "unsaved_changes": "অাপনার কিছু পরিবর্তন সংরক্ষণ করা বাকি অাছে",
+            "conflict": {
+                "previous": "< পূর্ববর্তী",
+                "next": "পরবর্তী >"
+            }
         },
         "success": {
-            "just_edited": "অাপনি এইমাত্র ওপেনস্ট্রীটম্যাপ সম্পাদন করলেন!"
+            "just_edited": "অাপনি এইমাত্র ওপেনস্ট্রীটম্যাপ সম্পাদন করলেন!",
+            "thank_you": "মানচিত্রের উন্নতি করার জন্য আপনাকে ধন্যবাদ।",
+            "thank_you_location": "{where}-এর চারপাশের মানচিত্রের উন্নয়ন করার জন্য আপনাকে ধন্যবাদ।",
+            "help_html": "আপনার পরিবর্তন কয়েক মিনিটের মধ্যে ওপেনস্ট্রীটম্যাপের মধ্যে প্রদর্শিত হওয়া উচিত। হালনাগাদগুলি পেতে অন্যত্র মানচিত্রগুলির কিছু বেশি সময় লাগতে পারে।",
+            "help_link_text": "বিস্তারিত",
+            "changeset_id": "আপনার পরিবর্তনধার্য #: {changeset_id}",
+            "more": "অারো",
+            "languages": "ভাষাসমূহ: {languages}",
+            "missing": "এই তালিকা থেকে কিছু অনুপস্থিত?",
+            "tell_us": "আমাদের বলুন!"
+        },
+        "confirm": {
+            "okay": "ঠিক আছে",
+            "cancel": "বাতিল"
         },
         "splash": {
             "welcome": "iD ওপেনস্ট্রীটম্যাপ সম্পাদকে অাপনাকে স্বাগতম",
-            "walkthrough": "ওয়াকথ্রু শুরু করুন"
+            "walkthrough": "ওয়াকথ্রু শুরু করুন",
+            "start": "এখুনি সম্পাদনা করুন"
         },
         "source_switch": {
             "live": "সরাসরি",
@@ -326,14 +352,7 @@
             "on_wiki": "wiki.osm.org-এ {tag}",
             "used_with": "{type}-এর সাথে ব্যবহার করা হয়"
         },
-        "validations": {
-            "untagged_point": "ট্যাগবিহীন বিন্দু",
-            "untagged_line": "ট্যাগবিহীন রেখা",
-            "untagged_area": "ট্যাগবিহীন এলাকা",
-            "tag_suggests_area": "{tag} ট্যাগটি অনুসারে রেখাটি এলাকা হবে, কিন্তু নয়।",
-            "deprecated_tags": "পুরোন ও অব্যবহৃত ট্যাগ: {tags}"
-        },
-        "cannot_zoom": "বর্তমান মোডে আরও জুম আউট করা যাবে না.",
+        "cannot_zoom": "বর্তমান মোডে আরও জুম আউট করা যাবে না।",
         "help": {
             "title": "সাহায্য"
         },
@@ -380,27 +399,19 @@
             "fields": {
                 "access": {
                     "options": {
-                        "designated": {
-                            "description": "কোন চিহ্ন বা স্থানীয় অাইন অনুযায়ী প্রবেশ অনুমোদিত"
-                        },
                         "destination": {
-                            "description": "শুধুমাত্র কোন গন্তব্যে পৌছানোর জন্য প্রবেশ অনুমোদিত",
                             "title": "গন্তব্য"
                         },
                         "no": {
-                            "description": "জনসাধারনের প্রবেশ অনুমোদিত নয়",
                             "title": "নিষিদ্ধ"
                         },
                         "permissive": {
-                            "description": "প্রবেশ অনুমোদিত, যতক্ষন অব্দি এর মালিক অনুমতি প্রত্যাহার না করছেন",
                             "title": "অনুমতিসূচক"
                         },
                         "private": {
-                            "description": "প্রত্যেক ব্যক্তির জন্য মালিকের অনুমতি থাকলে প্রবেশ অনুমোদিত",
                             "title": "একান্ত"
                         },
                         "yes": {
-                            "description": "অাইনানুসারে প্রবেশ অনুমোদিত",
                             "title": "অনুমোদিত"
                         }
                     },
@@ -532,9 +543,7 @@
                     "label": "মূল্য"
                 },
                 "fire_hydrant/type": {
-                    "label": "ধরন",
                     "options": {
-                        "pond": "পুকুর",
                         "wall": "দেয়াল"
                     }
                 },
@@ -644,7 +653,6 @@
                     "label": "ধরন"
                 },
                 "phone": {
-                    "label": "ফোন",
                     "placeholder": "+৩১ ৪২ ১২৩ ৪৫৬৭"
                 },
                 "place": {
@@ -701,8 +709,7 @@
                     "label": "ধরন"
                 },
                 "website": {
-                    "label": "ওয়েবসাইট",
-                    "placeholder": "http://example.com/"
+                    "label": "ওয়েবসাইট"
                 },
                 "wetland": {
                     "label": "ধরন"
@@ -781,23 +788,11 @@
                 "amenity/marketplace": {
                     "name": "বাজার"
                 },
-                "amenity/parking": {
-                    "name": "গাড়ি পার্কিং"
-                },
-                "amenity/pharmacy": {
-                    "name": "দাওয়াইখানা"
-                },
                 "amenity/place_of_worship": {
                     "name": "প্রার্থনাস্থল"
                 },
                 "amenity/place_of_worship/buddhist": {
                     "name": "বৌদ্ধ মন্দির"
-                },
-                "amenity/place_of_worship/christian": {
-                    "name": "গির্জা"
-                },
-                "amenity/place_of_worship/muslim": {
-                    "name": "মসজিদ"
                 },
                 "amenity/police": {
                     "name": "পুলিশ"
@@ -849,9 +844,6 @@
                 },
                 "building": {
                     "name": "দালান"
-                },
-                "building/apartments": {
-                    "name": "এপার্টমেন্ট"
                 },
                 "building/commercial": {
                     "name": "বানিজ্যিক ভবন"
@@ -942,9 +934,6 @@
                 },
                 "landuse/farmyard": {
                     "name": "খামার"
-                },
-                "landuse/forest": {
-                    "name": "জঙ্গল"
                 },
                 "landuse/grass": {
                     "name": "ঘাস"
@@ -1282,14 +1271,34 @@
                     "text": "শর্তাবলী ও প্রতিক্রিয়া"
                 }
             },
+            "DigitalGlobe-Premium-vintage": {
+                "attribution": {
+                    "text": "শর্তাবলী ও প্রতিক্রিয়া"
+                }
+            },
             "DigitalGlobe-Standard": {
+                "attribution": {
+                    "text": "শর্তাবলী ও প্রতিক্রিয়া"
+                }
+            },
+            "DigitalGlobe-Standard-vintage": {
+                "attribution": {
+                    "text": "শর্তাবলী ও প্রতিক্রিয়া"
+                }
+            },
+            "EsriWorldImagery": {
+                "attribution": {
+                    "text": "শর্তাবলী ও প্রতিক্রিয়া"
+                }
+            },
+            "EsriWorldImageryClarity": {
                 "attribution": {
                     "text": "শর্তাবলী ও প্রতিক্রিয়া"
                 }
             },
             "MAPNIK": {
                 "attribution": {
-                    "text": "© ওপেনস্ট্রীটম্যাপ অবদানকারীগণ, সিসি-বাই-এসএ"
+                    "text": "© ওপেনস্ট্রীটম্যাপের অবদানকারীগণ, সিসি-বাই-এসএ"
                 },
                 "name": "ওপেনস্ট্রীটম্যাপ (মানক)"
             },
@@ -1302,38 +1311,59 @@
             },
             "OSM_Inspector-Highways": {
                 "attribution": {
-                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপ অবদানকারীগণ, সিসি-বাই-এসএ"
+                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপের অবদানকারীগণ, সিসি-বাই-এসএ"
                 }
             },
             "OSM_Inspector-Multipolygon": {
                 "attribution": {
-                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপ অবদানকারীগণ, সিসি-বাই-এসএ"
+                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপের অবদানকারীগণ, সিসি-বাই-এসএ"
                 }
             },
             "OSM_Inspector-Places": {
                 "attribution": {
-                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপ অবদানকারীগণ, সিসি-বাই-এসএ"
+                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপের অবদানকারীগণ, সিসি-বাই-এসএ"
                 }
             },
             "OSM_Inspector-Routing": {
                 "attribution": {
-                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপ অবদানকারীগণ, সিসি-বাই-এসএ"
+                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপের অবদানকারীগণ, সিসি-বাই-এসএ"
                 }
             },
             "OSM_Inspector-Tagging": {
                 "attribution": {
-                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপ অবদানকারীগণ, সিসি-বাই-এসএ"
-                }
-            },
-            "hike_n_bike": {
-                "attribution": {
-                    "text": "© ওপেনস্ট্রীটম্যাপ অবদানকারীগণ"
+                    "text": "© Geofabrik GmbH, ওপেনস্ট্রীটম্যাপের অবদানকারীগণ, সিসি-বাই-এসএ"
                 }
             },
             "mapbox_locator_overlay": {
                 "attribution": {
                     "text": "শর্তাবলী ও প্রতিক্রিয়া"
                 }
+            },
+            "osm-mapnik-german_style": {
+                "attribution": {
+                    "text": "© ওপেনস্ট্রীটম্যাপের অবদানকারীগণ, সিসি-বাই-এসএ"
+                }
+            },
+            "tf-landscape": {
+                "attribution": {
+                    "text": "মানচিত্র © Thunderforest, উপাত্ত © ওপেনস্ট্রীটম্যাপের অবদানকারীগণ"
+                }
+            }
+        },
+        "community": {
+            "cape-coast-youthmappers": {
+                "description": "টুইটারে আমাদের অনুসরণ করুন: {url}"
+            },
+            "osm-gh-facebook": {
+                "name": "ফেসবুকে ঘানা OpenStreetMap",
+                "description": "OpenStreetMap-এ আগ্রহীদের জন্য ফেসবুক গ্রুপ।"
+            },
+            "osm-gh-twitter": {
+                "name": "টুইটারে ঘানা OpenStreetMap",
+                "description": "টুইটারে আমাদের অনুসরণ করুন: {url}"
+            },
+            "talk-gh": {
+                "name": "Talk-gh মেইলিং লিস্ট"
             }
         }
     }

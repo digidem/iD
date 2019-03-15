@@ -1,12 +1,19 @@
 {
-    "icon": "highway-footway",
+    "icon": "temaki-pedestrian",
     "fields": [
         "name",
         "surface",
-        "lit",
         "width",
         "structure",
-        "access"
+        "access",
+        "incline"
+    ],
+    "moreFields": [
+        "wheelchair",
+        "lit",
+        "smoothness",
+        "covered",
+        "dog"
     ],
     "geometry": [
         "line"

@@ -5,10 +5,8 @@ import {
     select as d3_select
 } from 'd3-selection';
 
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
-import { osmEntity } from '../osm';
-import { utilRebind } from '../util/rebind';
-
+import { osmEntity, osmNote, qaError } from '../osm';
+import { utilKeybinding, utilRebind } from '../util';
 
 /*
    The hover behavior adds the `.hover` class on mouseover to all elements to which
@@ -22,14 +20,16 @@ import { utilRebind } from '../util/rebind';
 export function behaviorHover(context) {
     var dispatch = d3_dispatch('hover');
     var _selection = d3_select(null);
-    var _newId = null;
+    var _newNodeId = null;
+    var _initialNodeID = null;
     var _buttonDown;
     var _altDisables;
+    var _ignoreVertex;
     var _target;
 
 
     function keydown() {
-        if (_altDisables && d3_event.keyCode === d3_keybinding.modifierCodes.alt) {
+        if (_altDisables && d3_event.keyCode === utilKeybinding.modifierCodes.alt) {
             _selection.selectAll('.hover')
                 .classed('hover-suppressed', true)
                 .classed('hover', false);
@@ -43,7 +43,7 @@ export function behaviorHover(context) {
 
 
     function keyup() {
-        if (_altDisables && d3_event.keyCode === d3_keybinding.modifierCodes.alt) {
+        if (_altDisables && d3_event.keyCode === utilKeybinding.modifierCodes.alt) {
             _selection.selectAll('.hover-suppressed')
                 .classed('hover-suppressed', false)
                 .classed('hover', true);
@@ -56,9 +56,15 @@ export function behaviorHover(context) {
     }
 
 
-    var hover = function(selection) {
+    function behavior(selection) {
         _selection = selection;
-        _newId = null;
+
+        if (_initialNodeID) {
+            _newNodeId = _initialNodeID;
+            _initialNodeID = null;
+        } else {
+            _newNodeId = null;
+        }
 
         _selection
             .on('mouseover.hover', mouseover)
@@ -97,6 +103,9 @@ export function behaviorHover(context) {
                 .on('mouseup.hover', null, true);
         }
 
+        function allowsVertex(d) {
+            return d.geometry(context.graph()) === 'vertex' || context.presets().allowsVertex(d, context.graph());
+        }
 
         function enter(datum) {
             if (datum === _target) return;
@@ -107,45 +116,58 @@ export function behaviorHover(context) {
             _selection.selectAll('.hover-suppressed')
                 .classed('hover-suppressed', false);
 
-            var entity;
-            if (datum instanceof osmEntity) {
+            // What are we hovering over?
+            var entity, selector;
+            if (datum && datum.__featurehash__) {
                 entity = datum;
-            } else {
-                entity = datum && datum.properties && datum.properties.entity;
+                selector = '.data' + datum.__featurehash__;
+
+            } else if (datum instanceof qaError) {
+                entity = datum;
+                selector = '.' + datum.service + '.error_id-' + datum.id;
+
+            } else if (datum instanceof osmNote) {
+                entity = datum;
+                selector = '.note-' + datum.id;
+
+            } else if (datum instanceof osmEntity) {
+                entity = datum;
+                selector = '.' + entity.id;
+                if (entity.type === 'relation') {
+                    entity.members.forEach(function(member) { selector += ', .' + member.id; });
+                }
+            } else if (datum && datum.properties && (datum.properties.entity instanceof osmEntity)) {
+                entity = datum.properties.entity;
+                selector = '.' + entity.id;
+                if (entity.type === 'relation') {
+                    entity.members.forEach(function(member) { selector += ', .' + member.id; });
+                }
             }
 
-            if (entity && entity.id !== _newId) {
+            // Update hover state and dispatch event
+            if (entity && entity.id !== _newNodeId) {
                 // If drawing a way, don't hover on a node that was just placed. #3974
                 var mode = context.mode() && context.mode().id;
-                if ((mode === 'draw-line' || mode === 'draw-area') && !_newId && entity.type === 'node') {
-                    _newId = entity.id;
+                if ((mode === 'draw-line' || mode === 'draw-area') && !_newNodeId && entity.type === 'node') {
+                    _newNodeId = entity.id;
                     return;
                 }
 
-                var selector = '.' + entity.id;
-
-                if (entity.type === 'relation') {
-                    entity.members.forEach(function(member) {
-                        selector += ', .' + member.id;
-                    });
-                }
-
-                var suppressed = _altDisables && d3_event && d3_event.altKey;
-
+                var suppressed = (_altDisables && d3_event && d3_event.altKey) ||
+                    (entity.type === 'node' && _ignoreVertex && !allowsVertex(entity));
                 _selection.selectAll(selector)
                     .classed(suppressed ? 'hover-suppressed' : 'hover', true);
 
-                dispatch.call('hover', this, !suppressed && entity.id);
+                dispatch.call('hover', this, !suppressed && entity);
 
             } else {
                 dispatch.call('hover', this, null);
             }
         }
+    }
 
-    };
 
-
-    hover.off = function(selection) {
+    behavior.off = function(selection) {
         selection.selectAll('.hover')
             .classed('hover', false);
         selection.selectAll('.hover-suppressed')
@@ -164,12 +186,22 @@ export function behaviorHover(context) {
     };
 
 
-    hover.altDisables = function(_) {
+    behavior.altDisables = function(val) {
         if (!arguments.length) return _altDisables;
-        _altDisables = _;
-        return hover;
+        _altDisables = val;
+        return behavior;
     };
 
+    behavior.ignoreVertex = function(val) {
+        if (!arguments.length) return _ignoreVertex;
+        _ignoreVertex = val;
+        return behavior;
+    };
 
-    return utilRebind(hover, dispatch, 'on');
+    behavior.initialNodeID = function(nodeId) {
+        _initialNodeID = nodeId;
+        return behavior;
+    };
+
+    return utilRebind(behavior, dispatch, 'on');
 }

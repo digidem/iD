@@ -1,11 +1,5 @@
 {
-    "icon": "residential-community",
-    "fields": [
-        "name",
-        "address",
-        "levels",
-        "height"
-    ],
+    "icon": "maki-residential-community",
     "geometry": [
         "area"
     ],

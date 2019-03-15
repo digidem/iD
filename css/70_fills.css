@@ -7,6 +7,11 @@
     stroke-dasharray: none !important;
     fill: none !important;
 }
+.low-zoom.fill-wireframe .layer-mapdata path.stroke,
+.fill-wireframe .layer-mapdata path.stroke {
+    stroke-width: 2 !important;
+    stroke-opacity: 1 !important;
+}
 
 .low-zoom.fill-wireframe path.shadow,
 .fill-wireframe path.shadow {
@@ -22,7 +27,6 @@
 }
 
 .fill-wireframe .point,
-.fill-wireframe .vertex.active,
 .fill-wireframe .areaicon,
 .fill-wireframe .areaicon-halo,
 .fill-wireframe path.casing,

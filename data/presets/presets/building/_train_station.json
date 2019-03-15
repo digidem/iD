@@ -1,11 +1,5 @@
 {
-    "icon": "building",
-    "fields": [
-        "name",
-        "address",
-        "levels",
-        "height"
-    ],
+    "icon": "maki-building",
     "geometry": [
         "point",
         "vertex",
@@ -15,6 +9,6 @@
         "building": "train_station"
     },
     "matchScore": 0.5,
-    "name": "Train Station",
+    "name": "Train Station Building",
     "searchable": false
 }

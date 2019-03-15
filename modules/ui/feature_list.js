@@ -3,8 +3,6 @@ import {
     select as d3_select
 } from 'd3-selection';
 
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
-
 import * as sexagesimal from '@mapbox/sexagesimal';
 import { t } from '../util/locale';
 import { dmsCoordinatePair } from '../util/units';
@@ -25,7 +23,6 @@ import {
 
 
 export function uiFeatureList(context) {
-    var keybinding = d3_keybinding('uiFeatureList');
     var _geocodeResults;
 
 
@@ -52,7 +49,7 @@ export function uiFeatureList(context) {
             .on('input', inputevent);
 
         searchWrap
-            .call(svgIcon('#icon-search', 'pre-text'));
+            .call(svgIcon('#iD-icon-search', 'pre-text'));
 
         var listWrap = selection
             .append('div')
@@ -67,11 +64,8 @@ export function uiFeatureList(context) {
         context.map()
             .on('drawn.feature-list', mapDrawn);
 
-        keybinding
+        context.keybinding()
             .on(uiCmd('⌘F'), focusSearch);
-
-        d3_select(document)
-            .call(keybinding);
 
 
         function focusSearch() {
@@ -231,7 +225,7 @@ export function uiFeatureList(context) {
                 .append('button')
                 .property('disabled', true)
                 .attr('class', 'no-results-item')
-                .call(svgIcon('#icon-alert', 'pre-text'));
+                .call(svgIcon('#iD-icon-alert', 'pre-text'));
 
             resultsIndicator.append('span')
                 .attr('class', 'entity-name');
@@ -280,7 +274,7 @@ export function uiFeatureList(context) {
             label
                 .each(function(d) {
                     d3_select(this)
-                        .call(svgIcon('#icon-' + d.geometry, 'pre-text'));
+                        .call(svgIcon('#iD-icon-' + d.geometry, 'pre-text'));
                 });
 
             label
@@ -322,7 +316,7 @@ export function uiFeatureList(context) {
         function click(d) {
             d3_event.preventDefault();
             if (d.location) {
-                context.map().centerZoom([d.location[1], d.location[0]], 20);
+                context.map().centerZoomEase([d.location[1], d.location[0]], 19);
             }
             else if (d.entity) {
                 if (d.entity.type === 'node') {

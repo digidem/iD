@@ -1,11 +1,7 @@
-import _filter from 'lodash-es/filter';
 import _find from 'lodash-es/find';
-import _flatten from 'lodash-es/flatten';
 import _forEach from 'lodash-es/forEach';
-import _map from 'lodash-es/map';
 import _union from 'lodash-es/union';
 
-import { range as d3_range } from 'd3-array';
 import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { request as d3_request } from 'd3-request';
 
@@ -22,45 +18,33 @@ import {
 
 import rbush from 'rbush';
 
-import { d3geoTile as d3_geoTile } from '../lib/d3.geo.tile';
-import { geoExtent } from '../geo';
-
+import { geoExtent, geoScaleToZoom } from '../geo';
 import { utilDetect } from '../util/detect';
 
 import {
     utilQsString,
     utilRebind,
-    utilSetTransform
+    utilSetTransform,
+    utilTiler
 } from '../util';
 
 
-var apibase = 'https://openstreetcam.org',
-    maxResults = 1000,
-    tileZoom = 14,
-    dispatch = d3_dispatch('loadedImages'),
-    imgZoom = d3_zoom()
-        .extent([[0, 0], [320, 240]])
-        .translateExtent([[0, 0], [320, 240]])
-        .scaleExtent([1, 15])
-        .on('zoom', zoomPan),
-    _oscCache,
-    _oscSelectedImage;
+var apibase = 'https://openstreetcam.org';
+var maxResults = 1000;
+var tileZoom = 14;
+var tiler = utilTiler().zoomExtent([tileZoom, tileZoom]).skipNullIsland(true);
+var dispatch = d3_dispatch('loadedImages');
+var imgZoom = d3_zoom()
+    .extent([[0, 0], [320, 240]])
+    .translateExtent([[0, 0], [320, 240]])
+    .scaleExtent([1, 15])
+    .on('zoom', zoomPan);
+var _oscCache;
+var _oscSelectedImage;
 
 
 function abortRequest(i) {
     i.abort();
-}
-
-
-function nearNullIsland(x, y, z) {
-    if (z >= 7) {
-        var center = Math.pow(2, z - 1),
-            width = Math.pow(2, z - 6),
-            min = center - (width / 2),
-            max = center + (width / 2) - 1;
-        return x >= min && x <= max && y >= min && y <= max;
-    }
-    return false;
 }
 
 
@@ -74,48 +58,20 @@ function maxPageAtZoom(z) {
 }
 
 
-function getTiles(projection) {
-    var s = projection.scale() * 2 * Math.PI,
-        z = Math.max(Math.log(s) / Math.log(2) - 8, 0),
-        ts = 256 * Math.pow(2, z - tileZoom),
-        origin = [
-            s / 2 - projection.translate()[0],
-            s / 2 - projection.translate()[1]];
-
-    return d3_geoTile()
-        .scaleExtent([tileZoom, tileZoom])
-        .scale(s)
-        .size(projection.clipExtent()[1])
-        .translate(projection.translate())()
-        .map(function(tile) {
-            var x = tile[0] * ts - origin[0],
-                y = tile[1] * ts - origin[1];
-
-            return {
-                id: tile.toString(),
-                xyz: tile,
-                extent: geoExtent(
-                    projection.invert([x, y + ts]),
-                    projection.invert([x + ts, y])
-                )
-            };
-        });
-}
-
-
 function loadTiles(which, url, projection) {
-    var s = projection.scale() * 2 * Math.PI,
-        currZoom = Math.floor(Math.max(Math.log(s) / Math.log(2) - 8, 0));
+    var currZoom = Math.floor(geoScaleToZoom(projection.scale()));
+    var tiles = tiler.getTiles(projection);
 
-    var tiles = getTiles(projection).filter(function(t) {
-            return !nearNullIsland(t.xyz[0], t.xyz[1], t.xyz[2]);
-        });
+    // abort inflight requests that are no longer needed
+    var cache = _oscCache[which];
+    _forEach(cache.inflight, function(v, k) {
+        var wanted = _find(tiles, function(tile) { return k.indexOf(tile.id + ',') === 0; });
 
-    _filter(which.inflight, function(v, k) {
-        var wanted = _find(tiles, function(tile) { return k === (tile.id + ',0'); });
-        if (!wanted) delete which.inflight[k];
-        return !wanted;
-    }).map(abortRequest);
+        if (!wanted) {
+            abortRequest(v);
+            delete cache.inflight[k];
+        }
+    });
 
     tiles.forEach(function(tile) {
         loadNextTilePage(which, currZoom, url, tile);
@@ -129,12 +85,12 @@ function loadNextTilePage(which, currZoom, url, tile) {
     var maxPages = maxPageAtZoom(currZoom);
     var nextPage = cache.nextPage[tile.id] || 1;
     var params = utilQsString({
-            ipp: maxResults,
-            page: nextPage,
-            // client_id: clientId,
-            bbTopLeft: [bbox.maxY, bbox.minX].join(','),
-            bbBottomRight: [bbox.minY, bbox.maxX].join(',')
-        }, true);
+        ipp: maxResults,
+        page: nextPage,
+        // client_id: clientId,
+        bbTopLeft: [bbox.maxY, bbox.minX].join(','),
+        bbBottomRight: [bbox.minY, bbox.maxX].join(',')
+    }, true);
 
     if (nextPage > maxPages) return;
 
@@ -160,8 +116,8 @@ function loadNextTilePage(which, currZoom, url, tile) {
             }
 
             var features = data.currentPageItems.map(function(item) {
-                var loc = [+item.lng, +item.lat],
-                    d;
+                var loc = [+item.lng, +item.lat];
+                var d;
 
                 if (which === 'images') {
                     d = {
@@ -205,40 +161,29 @@ function loadNextTilePage(which, currZoom, url, tile) {
 }
 
 
-// partition viewport into `psize` x `psize` regions
-function partitionViewport(psize, projection) {
-    var dimensions = projection.clipExtent()[1];
-    psize = psize || 16;
-    var cols = d3_range(0, dimensions[0], psize),
-        rows = d3_range(0, dimensions[1], psize),
-        partitions = [];
+// partition viewport into higher zoom tiles
+function partitionViewport(projection) {
+    var z = geoScaleToZoom(projection.scale());
+    var z2 = (Math.ceil(z * 2) / 2) + 2.5;   // round to next 0.5 and add 2.5
+    var tiler = utilTiler().zoomExtent([z2, z2]);
 
-    rows.forEach(function(y) {
-        cols.forEach(function(x) {
-            var min = [x, y + psize],
-                max = [x + psize, y];
-            partitions.push(
-                geoExtent(projection.invert(min), projection.invert(max)));
-        });
-    });
-
-    return partitions;
+    return tiler.getTiles(projection)
+        .map(function(tile) { return tile.extent; });
 }
 
 
 // no more than `limit` results per partition.
-function searchLimited(psize, limit, projection, rtree) {
-    limit = limit || 3;
+function searchLimited(limit, projection, rtree) {
+    limit = limit || 5;
 
-    var partitions = partitionViewport(psize, projection);
-    var results;
+    return partitionViewport(projection)
+        .reduce(function(result, extent) {
+            var found = rtree.search(extent.bbox())
+                .slice(0, limit)
+                .map(function(d) { return d.data; });
 
-    results = _flatten(_map(partitions, function(extent) {
-        return rtree.search(extent.bbox())
-            .slice(0, limit)
-            .map(function(d) { return d.data; });
-    }));
-    return results;
+            return (found.length ? result.concat(found) : result);
+        }, []);
 }
 
 
@@ -278,8 +223,8 @@ export default {
 
 
     images: function(projection) {
-        var psize = 16, limit = 3;
-        return searchLimited(psize, limit, projection, _oscCache.images.rtree);
+        var limit = 5;
+        return searchLimited(limit, projection, _oscCache.images.rtree);
     },
 
 
@@ -338,9 +283,9 @@ export default {
 
         var controlsEnter = wrapEnter
             .append('div')
-            .attr('class', 'osc-controls-wrap')
+            .attr('class', 'photo-controls-wrap')
             .append('div')
-            .attr('class', 'osc-controls');
+            .attr('class', 'photo-controls');
 
         controlsEnter
             .append('button')
@@ -365,6 +310,16 @@ export default {
         wrapEnter
             .append('div')
             .attr('class', 'osc-image-wrap');
+
+
+        // Register viewer resize handler
+        context.ui().photoviewer.on('resize', function(dimensions) {
+            imgZoom = d3_zoom()
+                .extent([[0, 0], dimensions])
+                .translateExtent([[0, 0], dimensions])
+                .scaleExtent([1, 15])
+                .on('zoom', zoomPan);
+        });
 
 
         function rotate(deg) {
@@ -448,7 +403,7 @@ export default {
             .classed('hide', true);
 
         d3_selectAll('.viewfield-group, .sequence, .icon-sign')
-            .classed('selected', false);
+            .classed('currentView', false);
 
         return this.setStyles(null, true);
     },
@@ -504,7 +459,7 @@ export default {
 
             attribution
                 .append('a')
-                .attr('class', 'image_link')
+                .attr('class', 'image-link')
                 .attr('target', '_blank')
                 .attr('href', 'https://openstreetcam.org/details/' + d.sequence_id + '/' + d.sequence_index)
                 .text('openstreetcam.org');
@@ -521,7 +476,7 @@ export default {
         this.setStyles(null, true);
 
         d3_selectAll('.icon-sign')
-            .classed('selected', false);
+            .classed('currentView', false);
 
         return this;
     },
@@ -537,16 +492,19 @@ export default {
     },
 
 
+    // Updates the currently highlighted sequence and selected bubble.
+    // Reset is only necessary when interacting with the viewport because
+    // this implicitly changes the currently selected bubble/sequence
     setStyles: function(hovered, reset) {
         if (reset) {  // reset all layers
             d3_selectAll('.viewfield-group')
                 .classed('highlighted', false)
                 .classed('hovered', false)
-                .classed('selected', false);
+                .classed('currentView', false);
 
             d3_selectAll('.sequence')
                 .classed('highlighted', false)
-                .classed('selected', false);
+                .classed('currentView', false);
         }
 
         var hoveredImageKey = hovered && hovered.key;
@@ -567,11 +525,24 @@ export default {
         d3_selectAll('.layer-openstreetcam-images .viewfield-group')
             .classed('highlighted', function(d) { return highlightedImageKeys.indexOf(d.key) !== -1; })
             .classed('hovered', function(d) { return d.key === hoveredImageKey; })
-            .classed('selected', function(d) { return d.key === selectedImageKey; });
+            .classed('currentView', function(d) { return d.key === selectedImageKey; });
 
         d3_selectAll('.layer-openstreetcam-images .sequence')
             .classed('highlighted', function(d) { return d.properties.key === hoveredSequenceKey; })
-            .classed('selected', function(d) { return d.properties.key === selectedSequenceKey; });
+            .classed('currentView', function(d) { return d.properties.key === selectedSequenceKey; });
+
+        // update viewfields if needed
+        d3_selectAll('.viewfield-group .viewfield')
+            .attr('d', viewfieldPath);
+
+        function viewfieldPath() {
+            var d = this.parentNode.__data__;
+            if (d.pano && d.key !== selectedImageKey) {
+                return 'M 8,13 m -10,0 a 10,10 0 1,0 20,0 a 10,10 0 1,0 -20,0';
+            } else {
+                return 'M 6,9 C 8,8.4 8,8.4 10,9 L 16,-2 C 12,-5 4,-5 0,-2 z';
+            }
+        }
 
         return this;
     },

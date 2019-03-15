@@ -1,10 +1,13 @@
-import { event as d3_event } from 'd3-selection';
+import {
+    event as d3_event,
+    select as d3_select
+} from 'd3-selection';
 
 import { t } from '../util/locale';
 import { modeSelect } from '../modes';
 import { osmEntity } from '../osm';
 import { svgIcon } from '../svg';
-import { utilDisplayName } from '../util';
+import { utilDisplayName, utilHighlightEntities } from '../util';
 
 
 export function uiSelectionList(context, selectedIDs) {
@@ -64,6 +67,16 @@ export function uiSelectionList(context, selectedIDs) {
                 .attr('class', 'feature-list-item')
                 .on('click', selectEntity);
 
+            enter
+                .each(function(d) {
+                    d3_select(this).on('mouseover', function() {
+                        utilHighlightEntities([d.id], true, context);
+                    });
+                    d3_select(this).on('mouseout', function() {
+                        utilHighlightEntities([d.id], false, context);
+                    });
+                });
+
             var label = enter
                 .append('button')
                 .attr('class', 'label');
@@ -72,7 +85,7 @@ export function uiSelectionList(context, selectedIDs) {
                 .append('button')
                 .attr('class', 'close')
                 .on('click', deselectEntity)
-                .call(svgIcon('#icon-close'));
+                .call(svgIcon('#iD-icon-close'));
 
             label
                 .append('span')
@@ -93,7 +106,7 @@ export function uiSelectionList(context, selectedIDs) {
             items.selectAll('.entity-geom-icon use')
                 .attr('href', function() {
                     var entity = this.parentNode.parentNode.__data__;
-                    return '#icon-' + context.geometry(entity.id);
+                    return '#iD-icon-' + context.geometry(entity.id);
                 });
 
             items.selectAll('.entity-type')

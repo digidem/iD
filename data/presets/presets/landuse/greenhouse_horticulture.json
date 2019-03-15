@@ -1,8 +1,15 @@
 {
-    "icon": "garden",
+    "icon": "maki-garden",
     "fields": [
         "name",
         "operator"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "geometry": [
         "area"

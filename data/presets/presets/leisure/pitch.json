@@ -1,10 +1,14 @@
 {
-    "icon": "pitch",
+    "icon": "maki-pitch",
     "fields": [
         "name",
         "sport",
         "surface",
         "lit"
+    ],
+    "moreFields": [
+        "access_simple",
+        "fee"
     ],
     "geometry": [
         "point",

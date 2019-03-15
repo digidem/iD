@@ -1,10 +1,17 @@
 {
-    "icon": "pitch",
+    "icon": "maki-pitch",
     "geometry": [
         "area"
     ],
     "fields": [
         "name"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "tags": {
         "landuse": "recreation_ground"

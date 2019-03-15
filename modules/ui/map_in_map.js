@@ -10,8 +10,6 @@ import {
     zoomIdentity as d3_zoomIdentity
 } from 'd3-zoom';
 
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
-
 import { t } from '../util/locale';
 import {
     geoRawMercator,
@@ -22,7 +20,7 @@ import {
 } from '../geo';
 
 import { rendererTileLayer } from '../renderer';
-import { svgDebug, svgGpx } from '../svg';
+import { svgDebug, svgData } from '../svg';
 import { utilSetTransform } from '../util';
 import { utilGetDimensions } from '../util/dimensions';
 
@@ -33,7 +31,7 @@ export function uiMapInMap(context) {
         var backgroundLayer = rendererTileLayer(context);
         var overlayLayers = {};
         var projection = geoRawMercator();
-        var gpxLayer = svgGpx(projection, context).showLabels(false);
+        var dataLayer = svgData(projection, context).showLabels(false);
         var debugLayer = svgDebug(projection, context);
         var zoom = d3_zoom()
             .scaleExtent([geoZoomToScale(0.5), geoZoomToScale(24)])
@@ -242,7 +240,7 @@ export function uiMapInMap(context) {
                 .append('svg')
                 .attr('class', 'map-in-map-data')
                 .merge(dataLayers)
-                .call(gpxLayer)
+                .call(dataLayer)
                 .call(debugLayer);
 
 
@@ -336,11 +334,8 @@ export function uiMapInMap(context) {
 
         redraw();
 
-        var keybinding = d3_keybinding('map-in-map')
+        context.keybinding()
             .on(t('background.minimap.key'), toggle);
-
-        d3_select(document)
-            .call(keybinding);
     }
 
     return map_in_map;

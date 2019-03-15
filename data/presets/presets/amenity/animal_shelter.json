@@ -1,5 +1,5 @@
 {
-    "icon": "veterinary",
+    "icon": "maki-veterinary",
     "fields": [
         "name",
         "operator",
@@ -7,6 +7,13 @@
         "building_area",
         "opening_hours",
         "animal_shelter"
+    ],
+    "moreFields": [
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

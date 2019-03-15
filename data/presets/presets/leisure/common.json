@@ -1,5 +1,13 @@
 {
-    "icon": "poi-foot",
+    "icon": "temaki-pedestrian",
+    "fields": [
+        "name",
+        "address",
+        "opening_hours"
+    ],
+    "moreFields": [
+        "website"
+    ],
     "geometry": [
         "point",
         "area"

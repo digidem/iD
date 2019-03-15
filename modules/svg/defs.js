@@ -1,3 +1,5 @@
+import _uniq from 'lodash-es/uniq';
+
 import { request as d3_request } from 'd3-request';
 import { select as d3_select } from 'd3-selection';
 
@@ -8,25 +10,10 @@ import { select as d3_select } from 'd3-selection';
 */
 export function svgDefs(context) {
 
-    function SVGSpriteDefinition(id, href) {
-        return function(defs) {
-            d3_request(href)
-                .mimeType('image/svg+xml')
-                .response(function(xhr) { return xhr.responseXML; })
-                .get(function(err, svg) {
-                    if (err) return;
-                    defs.node().appendChild(
-                        d3_select(svg.documentElement).attr('id', id).node()
-                    );
-                });
-        };
-    }
-
-
-    return function drawDefs(selection) {
+    function drawDefs(selection) {
         var defs = selection.append('defs');
 
-        // markers
+        // add markers
         defs
             .append('marker')
             .attr('id', 'oneway-marker')
@@ -43,6 +30,38 @@ export function svgDefs(context) {
             .attr('stroke', 'none')
             .attr('fill', '#000')
             .attr('opacity', '0.75');
+
+        // SVG markers have to be given a colour where they're defined
+        // (they can't inherit it from the line they're attached to),
+        // so we need to manually define markers for each color of tag
+        // (also, it's slightly nicer if we can control the
+        // positioning for different tags)
+        function addSidedMarker(name, color, offset) {
+            defs
+                .append('marker')
+                .attr('id', 'sided-marker-' + name)
+                .attr('viewBox', '0 0 2 2')
+                .attr('refX', 1)
+                .attr('refY', -offset)
+                .attr('markerWidth', 1.5)
+                .attr('markerHeight', 1.5)
+                .attr('markerUnits', 'strokeWidth')
+                .attr('orient', 'auto')
+                .append('path')
+                .attr('class', 'sided-marker-path sided-marker-' + name + '-path')
+                .attr('d', 'M 0,0 L 1,1 L 2,0 z')
+                .attr('stroke', 'none')
+                .attr('fill', color);
+        }
+        addSidedMarker('natural', 'rgb(140, 208, 95)', 0);
+        // for a coastline, the arrows are (somewhat unintuitively) on
+        // the water side, so let's color them blue (with a gap) to
+        // give a stronger indication
+        addSidedMarker('coastline', '#77dede', 1);
+        // barriers have a dashed line, and separating the triangle
+        // from the line visually suits that
+        addSidedMarker('barrier', '#ddd', 1);
+        addSidedMarker('man_made', '#fff', 0);
 
         defs
             .append('marker')
@@ -81,18 +100,38 @@ export function svgDefs(context) {
             .attr('stroke-width', '0.5px')
             .attr('stroke-opacity', '0.75');
 
-        // patterns
+        // add patterns
         var patterns = defs.selectAll('pattern')
             .data([
                 // pattern name, pattern image name
-                ['wetland', 'wetland'],
+                ['beach', 'dots'],
                 ['construction', 'construction'],
                 ['cemetery', 'cemetery'],
-                ['orchard', 'orchard'],
+                ['cemetery_christian', 'cemetery_christian'],
+                ['cemetery_buddhist', 'cemetery_buddhist'],
+                ['cemetery_muslim', 'cemetery_muslim'],
+                ['cemetery_jewish', 'cemetery_jewish'],
                 ['farmland', 'farmland'],
-                ['beach', 'dots'],
-                ['scrub', 'dots'],
-                ['meadow', 'dots']
+                ['farmyard', 'farmyard'],
+                ['forest', 'forest'],
+                ['forest_broadleaved', 'forest_broadleaved'],
+                ['forest_needleleaved', 'forest_needleleaved'],
+                ['forest_leafless', 'forest_leafless'],
+                ['grass', 'grass'],
+                ['landfill', 'landfill'],
+                ['meadow', 'grass'],
+                ['orchard', 'orchard'],
+                ['pond', 'pond'],
+                ['quarry', 'quarry'],
+                ['scrub', 'bushes'],
+                ['vineyard', 'vineyard'],
+                ['water_standing', 'lines'],
+                ['waves', 'waves'],
+                ['wetland', 'wetland'],
+                ['wetland_marsh', 'wetland_marsh'],
+                ['wetland_swamp', 'wetland_swamp'],
+                ['wetland_bog', 'wetland_bog'],
+                ['wetland_reedbed', 'wetland_reedbed']
             ])
             .enter()
             .append('pattern')
@@ -119,7 +158,7 @@ export function svgDefs(context) {
                 return context.imagePath('pattern/' + d[1] + '.png');
             });
 
-        // clip paths
+        // add clip paths
         defs.selectAll('clipPath')
             .data([12, 18, 20, 32, 45])
             .enter()
@@ -131,10 +170,43 @@ export function svgDefs(context) {
             .attr('width', function (d) { return d; })
             .attr('height', function (d) { return d; });
 
-        // symbol spritesheets
+        // add symbol spritesheets
         defs
-            .call(SVGSpriteDefinition('iD-sprite', context.imagePath('iD-sprite.svg')))
-            .call(SVGSpriteDefinition('maki-sprite', context.imagePath('maki-sprite.svg')))
-            .call(SVGSpriteDefinition('community-sprite', context.imagePath('community-sprite.svg')));
+            .call(drawDefs.addSprites, [
+                'iD-sprite', 'maki-sprite', 'temaki-sprite', 'fa-sprite', 'community-sprite'
+            ], true);
+    }
+
+
+    drawDefs.addSprites = function(selection, ids, overrideColors) {
+        var spritesheets = selection.selectAll('.spritesheet');
+        var currData = spritesheets.data();
+        var data = _uniq(currData.concat(ids));
+
+        spritesheets
+            .data(data)
+            .enter()
+            .append('g')
+            .attr('class', function(d) { return 'spritesheet spritesheet-' + d; })
+            .each(function(d) {
+                var url = context.imagePath(d + '.svg');
+                var node = d3_select(this).node();
+                d3_request(url)
+                    .mimeType('image/svg+xml')
+                    .response(function(xhr) { return xhr.responseXML; })
+                    .get(function(err, svg) {
+                        if (err) return;
+                        node.appendChild(
+                            d3_select(svg.documentElement).attr('id', d).node()
+                        );
+                        if (overrideColors && d !== 'iD-sprite') {   // allow icon colors to be overridden..
+                            d3_select(node).selectAll('path')
+                                .attr('fill', 'currentColor');
+                        }
+                    });
+            });
     };
+
+
+    return drawDefs;
 }

@@ -1,11 +1,16 @@
 {
-    "icon": "poi-storage-tank",
+    "icon": "temaki-storage_tank",
     "fields": [
         "name",
         "operator",
         "access_simple",
         "fee",
         "water_point"
+    ],
+    "moreFields": [
+        "opening_hours",
+        "payment_multi",
+        "seamark/type"
     ],
     "geometry": [
         "point",

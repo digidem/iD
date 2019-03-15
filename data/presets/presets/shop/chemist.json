@@ -1,13 +1,5 @@
 {
-    "icon": "grocery",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours",
-        "payment_multi"
-    ],
+    "icon": "maki-grocery",
     "geometry": [
         "point",
         "area"
@@ -16,9 +8,16 @@
         "shop": "chemist"
     },
     "terms": [
+        "apothecary",
+        "beauty",
+        "drug store",
+        "drugstore",
+        "gift",
+        "hair",
         "med*",
-        "drug*",
-        "gift"
+        "pharmacy",
+        "prescription",
+        "tooth"
     ],
     "name": "Drugstore"
 }

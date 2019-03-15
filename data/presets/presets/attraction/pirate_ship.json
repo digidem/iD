@@ -1,10 +1,5 @@
 {
-    "icon": "amusement-park",
-    "fields": [
-        "name",
-        "operator",
-        "opening_hours"
-    ],
+    "icon": "maki-danger",
     "geometry": [
         "point"
     ],

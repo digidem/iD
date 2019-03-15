@@ -1,5 +1,5 @@
 {
-    "icon": "highway-primary",
+    "icon": "iD-highway-primary",
     "fields": [
         "name",
         "oneway",
@@ -7,10 +7,19 @@
         "lanes",
         "surface",
         "structure",
-        "maxheight",
         "ref_road_number",
-        "cycleway",
         "access"
+    ],
+    "moreFields": [
+        "covered",
+        "cycleway",
+        "junction_line",
+        "lit",
+        "maxheight",
+        "maxspeed/advisory",
+        "oneway/bicycle",
+        "smoothness",
+        "toll"
     ],
     "geometry": [
         "line"
@@ -18,6 +27,9 @@
     "tags": {
         "highway": "primary"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Primary Road"
 }

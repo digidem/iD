@@ -1,7 +1,12 @@
 {
-    "icon": "poi-warning",
+    "icon": "temaki-diamond",
+    "fields": [
+        "surface"
+    ],
     "geometry": [
-        "vertex"
+        "vertex",
+        "line",
+        "area"
     ],
     "terms": [
         "circle",

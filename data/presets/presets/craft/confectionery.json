@@ -1,12 +1,5 @@
 {
-    "icon": "bakery",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "maki-confectionery",
     "geometry": [
         "point",
         "area"

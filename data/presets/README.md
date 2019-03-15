@@ -16,10 +16,17 @@ A basic preset is of the form:
 ```javascript
 {
     // The icon in iD which represents this feature.
-    "icon": "park",
-    // An array of field names. See the fields documentation for details of what's valid here.
+    "icon": "maki-park",
+    // The names of fields that will appear by default in the editor sidebar.
+    // See the fields documentation for details of what's valid here.
     "fields": [
         "address"
+    ],
+    // The names of fields that the user can add manually. These will also
+    // appear if the corresponding tags are present.
+    "moreFields": [
+        "phone",
+        "website"
     ],
     // The geometry types for which this preset is valid.
     // options are point, area, line, and vertex.
@@ -51,7 +58,40 @@ The complete JSON schema for presets can be found in [`data/presets/schema/prese
 
 #### Preset Properties
 
-##### searchable
+##### `fields`/`moreFields`
+
+Both these properties are arrays of field paths (e.g. `description` or `generator/type`).
+`fields` are shown by default and `moreFields` are shown if manually added by the
+user or if a matching tag is present. Note that some fields have a `prerequisiteTag`
+property that limits when they will be shown.
+
+A preset can reference the fields of another by using that preset's name contained in
+brackets, like `{preset}`. For example, `shop/books` references and extends the fields
+of `shop`:
+
+```javascript
+"fields": [
+    "{shop}",
+    "internet_access"
+],
+"moreFields": [
+    "{shop}",
+    "internet_access/fee",
+    "internet_access/ssid"
+],
+"tags": {
+    "shop": "books"
+}
+```
+
+If `fields` or `moreFields` are not defined, the values of the preset's "parent"
+preset are used. For example, `shop/convenience` automatically uses the same
+fields as `shop`.
+
+In both explicit and implicit inheritance, fields for keys that define the
+preset are not inherited. E.g. the `shop` field is not inherited by `shop/…` presets.
+
+##### `searchable`
 
 Deprecated or generic presets can include the property `"searchable": false`.
 This means that they will be recognized by iD when editing existing data,
@@ -210,14 +250,54 @@ the user can not type their own value, they must choose one of the given values.
 If a combo field does not specify `options` or `strings`, the field will fetch
 common tag values from the Taginfo service to use as dropdown values.
 
+##### `snake_case`
+
+For combo fields, spaces are replaced with underscores in the tag value if `snake_case` is `true`. The default is `true`.
+
+##### `caseSensitive`
+
+For combo fields, case-sensitve field values are allowed if `caseSensitive` is `true`. The default is `false`.
+
+##### `min_value`
+
+For number fields, the lowest valid value. There is no default.
+
+##### `max_value`
+
+For number fields, the greatest valid value. There is no default.
+
+##### `prerequisiteTag`
+
+An object defining the tags the feature needs before this field will be displayed. It must have this property:
+
+- `key`: The key for the required tag.
+
+And may optionally have one of these properties:
+
+- `value`: The value that the key must have.
+- `valueNot`: The value that the key must not have.
+
+For example, this is how we show the Internet Access Fee field only if the feature has an `internet_access` tag not equal to `no`.
+
+```js
+"prerequisiteTag": {
+    "key": "internet_access",
+    "valueNot": "no"
+}
+```
 
 ## Icons
 
-Preset icons in iD are pulled from the open source map icon set,
-[Maki](http://www.mapbox.com/maki/).
+You can use any of the following open source map icon sets as preset icons.
 
-The icons are identified in iD by the same name as they are on the Maki home.  Use those
-names when identifying the icon to be used for a given preset.
+* [Maki](http://www.mapbox.com/maki/) - prefix: `maki-`
+* [Temaki](http://bhousel.github.io/temaki/docs/) - prefix: `temaki-`
+* [Font Awesome (free, solid)](https://fontawesome.com/icons?d=gallery&s=solid) - prefix: `fas-`
+* [Font Awesome (free, regular)](https://fontawesome.com/icons?d=gallery&s=regular) - prefix: `far-`
+* [Font Awesome (free, brands)](https://fontawesome.com/icons?d=gallery&s=brands) - prefix: `fab-`
+* [iD's spritesheet](https://github.com/openstreetmap/iD/tree/master/svg/iD-sprite/presets) - prefix: `iD-`
+
+When specifying an icon, use the prefixed version of the name, for example `"icon": "maki-park"`.
 
 
 ## Building
@@ -240,7 +320,7 @@ iD supports deployments which use a custom set of presets. You can supply preset
 the `presets` accessor:
 
 ```js
-var id = iD.Context().presets({
+var id = iD.coreContext().presets({
     presets: { ... },
     fields: { ... },
     defaults: { ... },

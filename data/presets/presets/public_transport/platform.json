@@ -1,17 +1,22 @@
 {
-    "icon": "bus",
+    "icon": "temaki-pedestrian",
     "fields": [
         "name",
         "ref_platform",
         "network",
         "operator",
-        "surface",
+        "departures_board",
+        "surface"
+    ],
+    "moreFields": [
         "lit",
         "bench",
-        "shelter"
+        "shelter",
+        "wheelchair"
     ],
     "geometry": [
         "point",
+        "line",
         "area"
     ],
     "tags": {

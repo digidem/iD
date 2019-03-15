@@ -1,10 +1,13 @@
 {
-    "icon": "route-piste",
+    "icon": "iD-route-piste",
     "fields": [
         "name",
+        "piste/type",
+        "colour",
         "ref_route",
         "operator",
-        "network"
+        "to", 
+        "from"
     ],
     "geometry": [
         "relation"

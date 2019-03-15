@@ -1,11 +1,11 @@
 {
-    "icon": "roadblock",
+    "icon": "maki-roadblock",
     "fields": [
         "access"
     ],
     "geometry": [
-        "point",
-        "vertex"
+        "vertex",
+        "line"
     ],
     "tags": {
         "barrier": "lift_gate"

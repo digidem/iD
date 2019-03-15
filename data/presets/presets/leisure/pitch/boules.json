@@ -1,10 +1,9 @@
 {
-    "icon": "pitch",
+    "icon": "maki-pitch",
     "fields": [
         "name",
         "boules",
-        "surface",
-        "lit"
+        "{leisure/pitch}"
     ],
     "geometry": [
         "point",

@@ -1,10 +1,15 @@
 {
-    "icon": "waterway-river",
+    "icon": "iD-waterway-river",
     "fields": [
         "name",
         "structure_waterway",
         "width",
-        "intermittent"
+        "intermittent",
+        "tidal"
+    ],
+    "moreFields": [
+        "covered",
+        "salt"
     ],
     "geometry": [
         "line"

@@ -1,14 +1,10 @@
 {
-    "icon": "highway-road",
+    "icon": "iD-other-line",
     "fields": [
-        "name",
-        "oneway",
-        "maxspeed",
-        "lanes",
-        "surface",
-        "structure",
-        "maxheight",
-        "access"
+        "{highway/residential}"
+    ],
+    "moreFields": [
+        "{highway/residential}"
     ],
     "geometry": [
         "line"
@@ -16,6 +12,9 @@
     "tags": {
         "highway": "road"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Unknown Road"
 }

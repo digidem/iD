@@ -1,7 +1,8 @@
 {
-    "icon": "poi-shintoist",
+    "icon": "temaki-shinto",
     "fields": [
         "name",
+        "religion",
         "denomination",
         "building_area",
         "address",

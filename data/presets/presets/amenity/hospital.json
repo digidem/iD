@@ -1,11 +1,21 @@
 {
-    "icon": "hospital",
+    "icon": "maki-hospital",
     "fields": [
         "name",
         "operator",
         "healthcare/speciality",
         "address",
         "emergency"
+    ],
+    "moreFields": [
+        "internet_access",
+        "internet_access/fee",
+        "internet_access/ssid",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

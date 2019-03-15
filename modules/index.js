@@ -15,16 +15,17 @@ export * from './svg/index';
 export * from './ui/fields/index';
 export * from './ui/intro/index';
 export * from './ui/panels/index';
+export * from './ui/settings/index';
 export * from './ui/index';
 export * from './util/index';
-export * from './lib/index';
 export * from './validations/index';
+export { coreValidator } from './core/validator';
 
 /* export some legacy symbols: */
 import { services } from './services/index';
 var Connection = services.osm;
 export { Connection };
-export { coreContext as Context, setAreaKeys } from './core/context';
+export { coreContext as Context, setAreaKeys, areaKeys } from './core/context';
 export { coreDifference as Difference } from './core/difference';
 export { coreGraph as Graph } from './core/graph';
 export { coreHistory as History } from './core/history';
@@ -47,6 +48,4 @@ export { uiPresetEditor as uiPreset } from './ui/preset_editor';
 
 export var debug = false;
 
-import * as lib from './lib/index';
-
-export { lib, d3 };
+export { d3 };

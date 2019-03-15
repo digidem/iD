@@ -1,4 +1,5 @@
 import _throttle from 'lodash-es/throttle';
+import _isNumber from 'lodash-es/isNumber';
 import { select as d3_select } from 'd3-selection';
 import { svgPath, svgPointTransform } from './index';
 import { services } from '../services';
@@ -11,6 +12,7 @@ export function svgMapillaryImages(projection, context, dispatch) {
     var minViewfieldZoom = 18;
     var layer = d3_select(null);
     var _mapillary;
+    var viewerCompassAngle;
 
 
     function init() {
@@ -24,6 +26,19 @@ export function svgMapillaryImages(projection, context, dispatch) {
         if (services.mapillary && !_mapillary) {
             _mapillary = services.mapillary;
             _mapillary.event.on('loadedImages', throttledRedraw);
+            _mapillary.event.on('bearingChanged', function(e) {
+                viewerCompassAngle = e;
+
+                // avoid updating if the map is currently transformed
+                // e.g. during drags or easing.
+                if (context.map().isTransformed()) return;
+
+                layer.selectAll('.viewfield-group.currentView')
+                    .filter(function(d) {
+                        return d.pano;
+                    })
+                    .attr('transform', transform);
+            });
         } else if (!services.mapillary && _mapillary) {
             _mapillary = null;
         }
@@ -49,11 +64,6 @@ export function svgMapillaryImages(projection, context, dispatch) {
 
 
     function hideLayer() {
-        var service = getService();
-        if (service) {
-            service.hideViewer();
-        }
-
         throttledRedraw.cancel();
 
         layer
@@ -102,7 +112,9 @@ export function svgMapillaryImages(projection, context, dispatch) {
 
     function transform(d) {
         var t = svgPointTransform(projection)(d);
-        if (d.ca) {
+        if (d.pano && _isNumber(viewerCompassAngle)) {
+            t += ' rotate(' + Math.floor(viewerCompassAngle) + ',0,0)';
+        } else if (d.ca) {
             t += ' rotate(' + Math.floor(d.ca) + ',0,0)';
         }
         return t;
@@ -147,8 +159,8 @@ export function svgMapillaryImages(projection, context, dispatch) {
         var groupsEnter = groups.enter()
             .append('g')
             .attr('class', 'viewfield-group')
-            .on('mouseover', mouseover)
-            .on('mouseout', mouseout)
+            .on('mouseenter', mouseover)
+            .on('mouseleave', mouseout)
             .on('click', click);
 
         groupsEnter
@@ -184,6 +196,7 @@ export function svgMapillaryImages(projection, context, dispatch) {
         viewfields.enter()               // viewfields may or may not be drawn...
             .insert('path', 'circle')    // but if they are, draw below the circles
             .attr('class', 'viewfield')
+            .classed('pano', function() { return this.parentNode.__data__.pano; })
             .attr('transform', 'scale(1.5,1.5),translate(-8, -13)')
             .attr('d', viewfieldPath);
 
@@ -199,8 +212,8 @@ export function svgMapillaryImages(projection, context, dispatch) {
 
 
     function drawImages(selection) {
-        var enabled = svgMapillaryImages.enabled,
-            service = getService();
+        var enabled = svgMapillaryImages.enabled;
+        var service = getService();
 
         layer = selection.selectAll('.layer-mapillary-images')
             .data(service ? [0] : []);

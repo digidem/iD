@@ -1,12 +1,5 @@
 {
-    "icon": "poi-power",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "temaki-power",
     "geometry": [
         "point",
         "area"

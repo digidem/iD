@@ -1,12 +1,5 @@
 {
-    "icon": "poi-chimney",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "temaki-chimney",
     "geometry": [
         "point",
         "area"

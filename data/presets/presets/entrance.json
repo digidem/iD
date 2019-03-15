@@ -1,7 +1,12 @@
 {
-    "icon": "entrance-alt1",
+    "icon": "maki-entrance-alt1",
     "geometry": [
         "vertex"
+    ],
+    "terms": [
+        "entrance",
+        "exit",
+        "door"
     ],
     "tags": {
         "entrance": "*"

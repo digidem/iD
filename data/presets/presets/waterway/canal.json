@@ -1,9 +1,12 @@
 {
-    "icon": "waterway-canal",
+    "icon": "iD-waterway-canal",
     "fields": [
         "name",
         "width",
         "intermittent"
+    ],
+    "moreFields": [
+        "salt"
     ],
     "geometry": [
         "line"

@@ -1,5 +1,5 @@
 {
-    "icon": "highway-service",
+    "icon": "iD-highway-service",
     "fields": [
         "name",
         "service",
@@ -7,8 +7,15 @@
         "maxspeed",
         "surface",
         "structure",
-        "maxheight",
         "access"
+    ],
+    "moreFields": [
+        "covered",
+        "lanes",
+        "lit",
+        "maxheight",
+        "maxspeed/advisory",
+        "oneway/bicycle"
     ],
     "geometry": [
         "line"
@@ -16,6 +23,9 @@
     "tags": {
         "highway": "service"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Service Road"
 }

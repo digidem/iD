@@ -1,8 +1,11 @@
 {
-    "icon": "religious-christian",
+    "icon": "maki-religious-christian",
     "fields": [
         "name",
         "inscription"
+    ],
+    "moreFields": [
+        "material"
     ],
     "geometry": [
         "point",

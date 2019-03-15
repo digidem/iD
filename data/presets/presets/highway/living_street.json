@@ -1,5 +1,5 @@
 {
-    "icon": "highway-living-street",
+    "icon": "iD-highway-living-street",
     "fields": [
         "name",
         "oneway",
@@ -7,9 +7,16 @@
         "lanes",
         "surface",
         "structure",
+        "access"
+    ],
+    "moreFields": [
+        "cycleway",
         "maxheight",
-        "access",
-        "cycleway"
+        "covered",
+        "junction_line",
+        "lit",
+        "smoothness",
+        "oneway/bicycle"
     ],
     "geometry": [
         "line"

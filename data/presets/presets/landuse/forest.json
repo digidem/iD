@@ -1,10 +1,17 @@
 {
-    "icon": "park-alt1",
+    "icon": "maki-park-alt1",
     "fields": [
         "name",
         "leaf_type",
         "leaf_cycle",
         "produce"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "geometry": [
         "area"
@@ -13,7 +20,12 @@
         "landuse": "forest"
     },
     "terms": [
+        "cut",
+        "forest",
+        "forestry",
+        "lumber",
+        "silviculture",
         "tree"
     ],
-    "name": "Forest"
+    "name": "Managed Forest"
 }

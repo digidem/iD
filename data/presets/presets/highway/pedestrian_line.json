@@ -1,5 +1,5 @@
 {
-    "icon": "highway-footway",
+    "icon": "temaki-pedestrian",
     "fields": [
         "name",
         "surface",
@@ -8,6 +8,10 @@
         "oneway",
         "structure",
         "access"
+    ],
+    "moreFields": [
+        "covered",
+        "smoothness"
     ],
     "geometry": [
         "line"

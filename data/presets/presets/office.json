@@ -1,12 +1,20 @@
 {
-    "icon": "suitcase",
+    "icon": "maki-suitcase",
     "fields": [
         "name",
         "office",
         "address",
         "building_area",
-        "opening_hours",
-        "smoking"
+        "opening_hours"
+    ],
+    "moreFields": [
+        "operator",
+        "smoking",
+        "website",
+        "phone",
+        "email",
+        "fax",
+        "wheelchair"
     ],
     "geometry": [
         "point",

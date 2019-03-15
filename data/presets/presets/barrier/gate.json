@@ -1,10 +1,9 @@
 {
-    "icon": "barrier",
+    "icon": "maki-barrier",
     "fields": [
         "access"
     ],
     "geometry": [
-        "point",
         "vertex",
         "line"
     ],

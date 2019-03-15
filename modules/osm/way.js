@@ -7,7 +7,7 @@ import { geoArea as d3_geoArea } from 'd3-geo';
 import { geoExtent, geoVecCross } from '../geo';
 import { osmEntity } from './entity';
 import { osmLanes } from './lanes';
-import { osmOneWayTags } from './tags';
+import { osmOneWayTags, osmRightSideIsInsideTags } from './tags';
 import { areaKeys } from '../core/context';
 
 
@@ -31,8 +31,7 @@ _extend(osmWay.prototype, {
 
 
     copy: function(resolver, copies) {
-        if (copies[this.id])
-            return copies[this.id];
+        if (copies[this.id]) return copies[this.id];
 
         var copy = osmEntity.prototype.copy.call(this, resolver, copies);
 
@@ -130,6 +129,34 @@ _extend(osmWay.prototype, {
         return false;
     },
 
+    // Some identifier for tag that implies that this way is "sided",
+    // i.e. the right side is the 'inside' (e.g. the right side of a
+    // natural=cliff is lower).
+    sidednessIdentifier: function() {
+        for (var key in this.tags) {
+            var value = this.tags[key];
+            if (key in osmRightSideIsInsideTags && (value in osmRightSideIsInsideTags[key])) {
+                if (osmRightSideIsInsideTags[key][value] === true) {
+                    return key;
+                } else {
+                    // if the map's value is something other than a
+                    // literal true, we should use it so we can
+                    // special case some keys (e.g. natural=coastline
+                    // is handled differently to other naturals).
+                    return osmRightSideIsInsideTags[key][value];
+                }
+            }
+        }
+
+        return null;
+    },
+    isSided: function() {
+        if (this.tags.two_sided === 'yes') {
+            return false;
+        }
+
+        return this.sidednessIdentifier() != null;
+    },
 
     lanes: function() {
         return osmLanes(this);
@@ -166,8 +193,12 @@ _extend(osmWay.prototype, {
         return true;
     },
 
+    // returns an object with the tag that implies this is an area, if any
+    tagSuggestingArea: function() {
 
-    isArea: function() {
+        if (this.tags.area === 'yes') return { area: 'yes' };
+        if (this.tags.area === 'no') return null;
+
         // `highway` and `railway` are typically linear features, but there
         // are a few exceptions that should be treated as areas, even in the
         // absence of a proper `area=yes` or `areaKeys` tag.. see #4194
@@ -184,20 +215,27 @@ _extend(osmWay.prototype, {
                 wash: true
             }
         };
+        var returnTags = {};
+        for (var key in this.tags) {
+            if (key in areaKeys && !(this.tags[key] in areaKeys[key])) {
+                returnTags[key] = this.tags[key];
+                return returnTags;
+            }
+            if (key in lineKeys && this.tags[key] in lineKeys[key]) {
+                returnTags[key] = this.tags[key];
+                return returnTags;
+            }
+        }
+        return null;
+    },
+
+    isArea: function() {
 
         if (this.tags.area === 'yes')
             return true;
         if (!this.isClosed() || this.tags.area === 'no')
             return false;
-        for (var key in this.tags) {
-            if (key in areaKeys && !(this.tags[key] in areaKeys[key])) {
-                return true;
-            }
-            if (key in lineKeys && this.tags[key] in lineKeys[key]) {
-                return true;
-            }
-        }
-        return false;
+        return this.tagSuggestingArea() !== null;
     },
 
 
@@ -239,9 +277,9 @@ _extend(osmWay.prototype, {
     unclose: function() {
         if (!this.isClosed()) return this;
 
-        var nodes = this.nodes.slice(),
-            connector = this.first(),
-            i = nodes.length - 1;
+        var nodes = this.nodes.slice();
+        var connector = this.first();
+        var i = nodes.length - 1;
 
         // remove trailing connectors..
         while (i > 0 && nodes.length > 1 && nodes[i] === connector) {
@@ -260,9 +298,9 @@ _extend(osmWay.prototype, {
     // Consecutive duplicates are eliminated including existing ones.
     // Circularity is always preserved when adding a node.
     addNode: function(id, index) {
-        var nodes = this.nodes.slice(),
-            isClosed = this.isClosed(),
-            max = isClosed ? nodes.length - 1 : nodes.length;
+        var nodes = this.nodes.slice();
+        var isClosed = this.isClosed();
+        var max = isClosed ? nodes.length - 1 : nodes.length;
 
         if (index === undefined) {
             index = max;
@@ -309,9 +347,9 @@ _extend(osmWay.prototype, {
     // Consecutive duplicates are eliminated including existing ones.
     // Circularity is preserved when updating a node.
     updateNode: function(id, index) {
-        var nodes = this.nodes.slice(),
-            isClosed = this.isClosed(),
-            max = nodes.length - 1;
+        var nodes = this.nodes.slice();
+        var isClosed = this.isClosed();
+        var max = nodes.length - 1;
 
         if (index === undefined || index < 0 || index > max) {
             throw new RangeError('index ' + index + ' out of range 0..' + max);
@@ -353,13 +391,13 @@ _extend(osmWay.prototype, {
     // Replaces each occurrence of node id needle with replacement.
     // Consecutive duplicates are eliminated including existing ones.
     // Circularity is preserved.
-    replaceNode: function(needle, replacement) {
-        var nodes = this.nodes.slice(),
-            isClosed = this.isClosed();
+    replaceNode: function(needleID, replacementID) {
+        var nodes = this.nodes.slice();
+        var isClosed = this.isClosed();
 
         for (var i = 0; i < nodes.length; i++) {
-            if (nodes[i] === needle) {
-                nodes[i] = replacement;
+            if (nodes[i] === needleID) {
+                nodes[i] = replacementID;
             }
         }
 
@@ -374,12 +412,12 @@ _extend(osmWay.prototype, {
     },
 
 
-    // Removes each occurrence of node id needle with replacement.
+    // Removes each occurrence of node id.
     // Consecutive duplicates are eliminated including existing ones.
     // Circularity is preserved.
     removeNode: function(id) {
-        var nodes = this.nodes.slice(),
-            isClosed = this.isClosed();
+        var nodes = this.nodes.slice();
+        var isClosed = this.isClosed();
 
         nodes = nodes
             .filter(function(node) { return node !== id; })

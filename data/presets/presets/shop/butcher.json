@@ -1,19 +1,15 @@
 {
-    "icon": "slaughterhouse",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours",
-        "payment_multi"
-    ],
+    "icon": "fas-bacon",
     "geometry": [
         "point",
         "area"
     ],
     "terms": [
-        "meat"
+        "chicken",
+        "beef",
+        "lamb",
+        "meat",
+        "pork"
     ],
     "tags": {
         "shop": "butcher"

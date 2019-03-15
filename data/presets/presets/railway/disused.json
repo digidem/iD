@@ -1,9 +1,12 @@
 {
-    "icon": "railway-disused",
+    "icon": "iD-railway-disused",
     "fields": [
         "structure",
         "service_rail",
         "usage_rail"
+    ],
+    "moreFields": [
+        "covered"
     ],
     "geometry": [
         "line"

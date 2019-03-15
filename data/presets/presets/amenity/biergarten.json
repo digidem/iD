@@ -1,13 +1,14 @@
 {
-    "icon": "beer",
+    "icon": "maki-beer",
     "fields": [
         "name",
         "address",
-        "building_area",
-        "opening_hours",
-        "smoking",
+        "building",
         "outdoor_seating",
         "brewery"
+    ],
+    "moreFields": [
+        "{amenity/bar}"
     ],
     "geometry": [
         "point",
@@ -21,5 +22,5 @@
         "bier",
         "booze"
     ],
-    "name": "Beer Garden"
+    "name": "Biergarten"
 }

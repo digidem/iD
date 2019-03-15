@@ -1,12 +1,12 @@
 import _debounce from 'lodash-es/debounce';
 
 import { select as d3_select } from 'd3-selection';
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
 
 import {
     modeAddArea,
     modeAddLine,
     modeAddPoint,
+    modeAddNote,
     modeBrowse
 } from '../modes';
 
@@ -14,59 +14,40 @@ import { svgIcon } from '../svg';
 import { tooltip } from '../util/tooltip';
 import { uiTooltipHtml } from './tooltipHtml';
 
-
 export function uiModes(context) {
     var modes = [
         modeAddPoint(context),
         modeAddLine(context),
-        modeAddArea(context)
+        modeAddArea(context),
+        modeAddNote(context)
     ];
 
 
-    function editable() {
+    function enabled(d) {
+        if (d.id === 'add-note') {
+            return notesEnabled() && notesEditable();
+        } else {
+            return osmEditable();
+        }
+    }
+
+    function osmEditable() {
         var mode = context.mode();
         return context.editable() && mode && mode.id !== 'save';
     }
 
+    function notesEnabled() {
+        var noteLayer = context.layers().layer('notes');
+        return noteLayer && noteLayer.enabled();
+    }
+
+    function notesEditable() {
+        var mode = context.mode();
+        return context.map().notesEditable() && mode && mode.id !== 'save';
+    }
+
 
     return function(selection) {
-        var buttons = selection.selectAll('button.add-button')
-            .data(modes);
-
-        buttons = buttons.enter()
-            .append('button')
-            .attr('tabindex', -1)
-            .attr('class', function(mode) { return mode.id + ' add-button col4'; })
-            .on('click.mode-buttons', function(mode) {
-                // When drawing, ignore accidental clicks on mode buttons - #4042
-                var currMode = context.mode().id;
-                if (currMode.match(/^draw/) !== null) return;
-
-                if (mode.id === currMode) {
-                    context.enter(modeBrowse(context));
-                } else {
-                    context.enter(mode);
-                }
-            })
-            .call(tooltip()
-                .placement('bottom')
-                .html(true)
-                .title(function(mode) {
-                    return uiTooltipHtml(mode.description, mode.key);
-                })
-            );
-
-        buttons
-            .each(function(d) {
-                d3_select(this)
-                    .call(svgIcon('#icon-' + d.button, 'pre-text'));
-            });
-
-        buttons
-            .append('span')
-            .attr('class', 'label')
-            .text(function(mode) { return mode.title; });
-
         context
             .on('enter.editor', function(entered) {
                 selection.selectAll('button.add-button')
@@ -81,22 +62,17 @@ export function uiModes(context) {
                     .classed('mode-' + exited.id, false);
             });
 
-        var keybinding = d3_keybinding('mode-buttons');
-
         modes.forEach(function(mode) {
-            keybinding.on(mode.key, function() {
-                if (editable()) {
-                    if (mode.id === context.mode().id) {
-                        context.enter(modeBrowse(context));
-                    } else {
-                        context.enter(mode);
-                    }
+            context.keybinding().on(mode.key, function() {
+                if (!enabled(mode)) return;
+
+                if (mode.id === context.mode().id) {
+                    context.enter(modeBrowse(context));
+                } else {
+                    context.enter(mode);
                 }
             });
         });
-
-        d3_select(document)
-            .call(keybinding);
 
 
         var debouncedUpdate = _debounce(update, 500, { leading: true, trailing: true });
@@ -108,11 +84,64 @@ export function uiModes(context) {
         context
             .on('enter.modes', update);
 
+        update();
 
 
         function update() {
-            selection.selectAll('button.add-button')
-                .property('disabled', !editable());
+            var showNotes = notesEnabled();
+            var data = showNotes ? modes : modes.slice(0, 3);
+
+            var buttons = selection.selectAll('button.add-button')
+                .data(data, function(d) { return d.id; });
+
+            // exit
+            buttons.exit()
+                .remove();
+
+            // enter
+            var buttonsEnter = buttons.enter()
+                .append('button')
+                .attr('tabindex', -1)
+                .attr('class', function(d) { return d.id + ' add-button'; })
+                .on('click.mode-buttons', function(d) {
+                    if (!enabled(d)) return;
+
+                    // When drawing, ignore accidental clicks on mode buttons - #4042
+                    var currMode = context.mode().id;
+                    if (/^draw/.test(currMode)) return;
+
+                    if (d.id === currMode) {
+                        context.enter(modeBrowse(context));
+                    } else {
+                        context.enter(d);
+                    }
+                })
+                .call(tooltip()
+                    .placement('bottom')
+                    .html(true)
+                    .title(function(d) { return uiTooltipHtml(d.description, d.key); })
+                );
+
+            buttonsEnter
+                .each(function(d) {
+                    d3_select(this)
+                        .call(svgIcon('#iD-icon-' + d.button));
+                });
+
+            buttonsEnter
+                .append('span')
+                .attr('class', 'label')
+                .text(function(mode) { return mode.title; });
+
+            // if we are adding/removing the buttons, check if toolbar has overflowed
+            if (buttons.enter().size() || buttons.exit().size()) {
+                context.ui().checkOverflow('#bar', true);
+            }
+
+            // update
+            buttons = buttons
+                .merge(buttonsEnter)
+                .classed('disabled', function(d) { return !enabled(d); });
         }
     };
 }

@@ -1,12 +1,5 @@
 {
-    "icon": "marker-stroked",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "maki-marker-stroked",
     "geometry": [
         "point",
         "area"

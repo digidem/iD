@@ -1,8 +1,17 @@
 {
-    "icon": "roadblock",
+    "icon": "maki-roadblock",
     "fields": [
         "access",
-        "building_area"
+        "building_area",
+        "payment_multi",
+        "currency_multi"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "geometry": [
         "vertex",

@@ -1,5 +1,5 @@
 {
-    "icon": "highway-residential",
+    "icon": "iD-highway-residential",
     "fields": [
         "name",
         "oneway",
@@ -7,9 +7,17 @@
         "lanes",
         "surface",
         "structure",
-        "maxheight",
-        "cycleway",
         "access"
+    ],
+    "moreFields": [
+        "covered",
+        "cycleway",
+        "junction_line",
+        "lit",
+        "oneway/bicycle",
+        "maxheight",
+        "maxspeed/advisory",
+        "smoothness"
     ],
     "geometry": [
         "line"
@@ -17,6 +25,9 @@
     "tags": {
         "highway": "residential"
     },
-    "terms": [],
+    "terms": [
+        "road",
+        "street"
+    ],
     "name": "Residential Road"
 }

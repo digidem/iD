@@ -78,7 +78,7 @@ export function uiFieldCheck(field, context) {
         var first = entity.first();
         var last = entity.isClosed() ? entity.nodes[entity.nodes.length - 2] : entity.last();
         var pseudoDirection = first < last;
-        var icon = pseudoDirection ? '#icon-forward' : '#icon-backward';
+        var icon = pseudoDirection ? '#iD-icon-forward' : '#iD-icon-backward';
 
         selection.selectAll('.reverser-span')
             .text(t('inspector.check.reverser'))
@@ -90,14 +90,13 @@ export function uiFieldCheck(field, context) {
 
     var check = function(selection) {
         checkImpliedYes();
-        selection.classed('checkselect', 'true');
 
-        label = selection.selectAll('.preset-input-wrap')
+        label = selection.selectAll('.form-field-input-wrap')
             .data([0]);
 
         var enter = label.enter()
             .append('label')
-            .attr('class', 'preset-input-wrap');
+            .attr('class', 'form-field-input-wrap form-field-input-check');
 
         enter
             .append('input')

@@ -3,22 +3,26 @@ import {
     select as d3_select
 } from 'd3-selection';
 
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
-
 import marked from 'marked';
-import { t, textDirection } from '../util/locale';
 import { svgIcon } from '../svg';
 import { uiCmd } from './cmd';
 import { uiBackground } from './background';
 import { uiIntro } from './intro';
 import { uiMapData } from './map_data';
+import { uiIssues } from './issues';
 import { uiShortcuts } from './shortcuts';
 import { uiTooltipHtml } from './tooltipHtml';
+
+import { t, textDirection } from '../util/locale';
 import { tooltip } from '../util/tooltip';
 import { icon } from './intro/helper';
 
 export function uiHelp(context) {
     var key = t('help.key');
+
+    var _pane = d3_select(null), _toggleButton = d3_select(null);
+
+    var _shown = false;
 
     var docKeys = [
         ['help', [
@@ -147,6 +151,17 @@ export function uiHelp(context) {
             'boundary',
             'boundary_add'
         ]],
+        ['notes', [
+            'intro',
+            'add_note_h',
+            'add_note',
+            'move_note',
+            'update_note_h',
+            'update_note',
+            'save_note_h',
+            'save_note'
+        ]],
+
         ['imagery', [
             'intro',
             'sources_h',
@@ -170,6 +185,13 @@ export function uiHelp(context) {
             'using',
             'tracing',
             'upload'
+        ]],
+        ['qa', [
+            'intro',
+            'tools_h',
+            'tools',
+            'issues_h',
+            'issues'
         ]]
     ];
 
@@ -210,32 +232,38 @@ export function uiHelp(context) {
         'help.relations.turn_restriction_h': 3,
         'help.relations.route_h': 3,
         'help.relations.boundary_h': 3,
+        'help.notes.add_note_h': 3,
+        'help.notes.update_note_h': 3,
+        'help.notes.save_note_h': 3,
         'help.imagery.sources_h': 3,
         'help.imagery.offsets_h': 3,
         'help.streetlevel.using_h': 3,
         'help.gps.using_h': 3,
+        'help.qa.tools_h': 3,
+        'help.qa.issues_h': 3
     };
 
     var replacements = {
-        point: icon('#icon-point', 'pre-text'),
-        line: icon('#icon-line', 'pre-text'),
-        area: icon('#icon-area', 'pre-text'),
-        plus: icon('#icon-plus', 'pre-text'),
-        minus: icon('#icon-minus', 'pre-text'),
-        orthogonalize: icon('#operation-orthogonalize', 'pre-text'),
-        disconnect: icon('#operation-disconnect', 'pre-text'),
-        layers: icon('#icon-layers', 'pre-text'),
-        data: icon('#icon-data', 'pre-text'),
-        inspect: icon('#icon-inspect', 'pre-text'),
-        move: icon('#operation-move', 'pre-text'),
-        merge: icon('#operation-merge', 'pre-text'),
-        delete: icon('#operation-delete', 'pre-text'),
-        close: icon('#icon-close', 'pre-text'),
-        undo: icon(textDirection === 'rtl' ? '#icon-redo' : '#icon-undo', 'pre-text'),
-        redo: icon(textDirection === 'rtl' ? '#icon-undo' : '#icon-redo', 'pre-text'),
-        save: icon('#icon-save', 'pre-text'),
-        leftclick: icon('#walkthrough-mouse', 'pre-text mouseclick', 'left'),
-        rightclick: icon('#walkthrough-mouse', 'pre-text mouseclick', 'right'),
+        point: icon('#iD-icon-point', 'pre-text'),
+        line: icon('#iD-icon-line', 'pre-text'),
+        area: icon('#iD-icon-area', 'pre-text'),
+        note: icon('#iD-icon-note', 'pre-text add-note'),
+        plus: icon('#iD-icon-plus', 'pre-text'),
+        minus: icon('#iD-icon-minus', 'pre-text'),
+        orthogonalize: icon('#iD-operation-orthogonalize', 'pre-text'),
+        disconnect: icon('#iD-operation-disconnect', 'pre-text'),
+        layers: icon('#iD-icon-layers', 'pre-text'),
+        data: icon('#iD-icon-data', 'pre-text'),
+        inspect: icon('#iD-icon-inspect', 'pre-text'),
+        move: icon('#iD-operation-move', 'pre-text'),
+        merge: icon('#iD-operation-merge', 'pre-text'),
+        delete: icon('#iD-operation-delete', 'pre-text'),
+        close: icon('#iD-icon-close', 'pre-text'),
+        undo: icon(textDirection === 'rtl' ? '#iD-icon-redo' : '#iD-icon-undo', 'pre-text'),
+        redo: icon(textDirection === 'rtl' ? '#iD-icon-undo' : '#iD-icon-redo', 'pre-text'),
+        save: icon('#iD-icon-save', 'pre-text'),
+        leftclick: icon('#iD-walkthrough-mouse', 'pre-text mouseclick', 'left'),
+        rightclick: icon('#iD-walkthrough-mouse', 'pre-text mouseclick', 'right'),
         shift: uiCmd.display('⇧'),
         alt: uiCmd.display('⌥'),
         return: uiCmd.display('↵'),
@@ -258,52 +286,64 @@ export function uiHelp(context) {
         };
     });
 
+    var paneTooltip = tooltip()
+        .placement((textDirection === 'rtl') ? 'right' : 'left')
+        .html(true)
+        .title(uiTooltipHtml(t('help.title'), key));
 
-    function help(selection) {
+    uiHelp.hidePane = function() {
+        uiHelp.setVisible(false);
+    };
 
-        function hidePane() {
-            setVisible(false);
-        }
+    uiHelp.togglePane = function() {
+        if (d3_event) d3_event.preventDefault();
+        paneTooltip.hide(_toggleButton);
+        uiHelp.setVisible(!_toggleButton.classed('active'));
+    };
 
+    uiHelp.setVisible = function(show) {
+        if (show !== _shown) {
+            _toggleButton.classed('active', show);
+            _shown = show;
 
-        function togglePane() {
-            if (d3_event) d3_event.preventDefault();
-            tooltipBehavior.hide(button);
-            setVisible(!button.classed('active'));
-        }
+            if (show) {
+                uiBackground.hidePane();
+                uiIssues.hidePane();
+                uiMapData.hidePane();
 
+                _pane.style('display', 'block')
+                    .style('right', '-500px')
+                    .transition()
+                    .duration(200)
+                    .style('right', '0px');
 
-        function setVisible(show) {
-            if (show !== shown) {
-                button.classed('active', show);
-                shown = show;
-
-                if (show) {
-                    uiBackground.hidePane();
-                    uiMapData.hidePane();
-
-                    pane.style('display', 'block')
-                        .style('right', '-500px')
-                        .transition()
-                        .duration(200)
-                        .style('right', '0px');
-
-                } else {
-                    pane.style('right', '0px')
-                        .transition()
-                        .duration(200)
-                        .style('right', '-500px')
-                        .on('end', function() {
-                            d3_select(this).style('display', 'none');
-                        });
-                }
+            } else {
+                _pane.style('right', '0px')
+                    .transition()
+                    .duration(200)
+                    .style('right', '-500px')
+                    .on('end', function() {
+                        d3_select(this).style('display', 'none');
+                    });
             }
         }
+    };
 
+    uiHelp.renderToggleButton = function(selection) {
+
+        _toggleButton = selection.append('button')
+            .attr('tabindex', -1)
+            .on('click', uiHelp.togglePane)
+            .call(svgIcon('#iD-icon-help', 'light'))
+            .call(paneTooltip);
+    };
+
+
+    uiHelp.renderPane = function(selection) {
 
         function clickHelp(d, i) {
             var rtl = (textDirection === 'rtl');
-            pane.property('scrollTop', 0);
+            content.property('scrollTop', 0);
             doctitle.html(d.title);
 
             body.html(d.html);
@@ -333,7 +373,7 @@ export function uiHelp(context) {
                     nextLink
                         .append('span')
                         .text(docs[i + 1].title)
-                        .call(svgIcon((rtl ? '#icon-backward' : '#icon-forward'), 'inline'));
+                        .call(svgIcon((rtl ? '#iD-icon-backward' : '#iD-icon-forward'), 'inline'));
                 }
             }
 
@@ -348,7 +388,7 @@ export function uiHelp(context) {
                         });
 
                     prevLink
-                        .call(svgIcon((rtl ? '#icon-forward' : '#icon-backward'), 'inline'))
+                        .call(svgIcon((rtl ? '#iD-icon-forward' : '#iD-icon-backward'), 'inline'))
                         .append('span')
                         .text(docs[i - 1].title);
                 }
@@ -359,7 +399,7 @@ export function uiHelp(context) {
         function clickWalkthrough() {
             if (context.inIntro()) return;
             context.container().call(uiIntro(context));
-            setVisible(false);
+            uiHelp.setVisible(false);
         }
 
 
@@ -368,24 +408,10 @@ export function uiHelp(context) {
         }
 
 
-        var pane = selection.append('div')
-            .attr('class', 'help-wrap map-pane fillL col6 hide');
+        _pane = selection.append('div')
+            .attr('class', 'help-wrap map-pane fillL hide');
 
-        var tooltipBehavior = tooltip()
-            .placement((textDirection === 'rtl') ? 'right' : 'left')
-            .html(true)
-            .title(uiTooltipHtml(t('help.title'), key));
-
-        var button = selection.append('button')
-            .attr('tabindex', -1)
-            .on('click', togglePane)
-            .call(svgIcon('#icon-help', 'light'))
-            .call(tooltipBehavior);
-
-        var shown = false;
-
-
-        var heading = pane
+        var heading = _pane
             .append('div')
             .attr('class', 'pane-heading');
 
@@ -395,11 +421,11 @@ export function uiHelp(context) {
 
         heading
             .append('button')
-            .on('click', function() { uiHelp.hidePane(); })
-            .call(svgIcon('#icon-close'));
+            .on('click', uiHelp.hidePane)
+            .call(svgIcon('#iD-icon-close'));
 
 
-        var content = pane
+        var content = _pane
             .append('div')
             .attr('class', 'pane-content');
 
@@ -440,7 +466,7 @@ export function uiHelp(context) {
             .append('svg')
             .attr('class', 'logo logo-walkthrough')
             .append('use')
-            .attr('xlink:href', '#logo-walkthrough');
+            .attr('xlink:href', '#iD-logo-walkthrough');
 
         walkthrough
             .append('div')
@@ -461,17 +487,10 @@ export function uiHelp(context) {
 
         clickHelp(docs[0], 0);
 
-        var keybinding = d3_keybinding('help')
-            .on(key, togglePane)
-            .on([t('background.key'), t('map_data.key')], hidePane);
+        context.keybinding()
+            .on(key, uiHelp.togglePane);
 
-        d3_select(document)
-            .call(keybinding);
+    };
 
-        uiHelp.hidePane = hidePane;
-        uiHelp.togglePane = togglePane;
-        uiHelp.setVisible = setVisible;
-    }
-
-    return help;
+    return uiHelp;
 }

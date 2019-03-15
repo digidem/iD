@@ -1,11 +1,5 @@
 {
-    "icon": "home",
-    "fields": [
-        "name",
-        "address",
-        "levels",
-        "height"
-    ],
+    "icon": "maki-home",
     "geometry": [
         "area"
     ],

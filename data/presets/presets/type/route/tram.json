@@ -1,10 +1,12 @@
 {
-    "icon": "route-tram",
+    "icon": "iD-route-tram",
     "fields": [
         "name",
         "ref_route",
         "operator",
-        "network"
+        "network",
+        "to", 
+        "from"
     ],
     "geometry": [
         "relation"

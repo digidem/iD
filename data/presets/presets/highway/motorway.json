@@ -1,5 +1,5 @@
 {
-    "icon": "highway-motorway",
+    "icon": "iD-highway-motorway",
     "fields": [
         "name",
         "ref_road_number",
@@ -8,9 +8,16 @@
         "lanes",
         "surface",
         "structure",
-        "maxheight",
-        "toll",
         "access"
+    ],
+    "moreFields": [
+        "toll",
+        "maxheight",
+        "covered",
+        "lit",
+        "smoothness",
+        "minspeed",
+        "junction_line"
     ],
     "geometry": [
         "line"
@@ -25,6 +32,8 @@
         "highway",
         "interstate",
         "parkway",
+        "road",
+        "street",
         "thruway",
         "turnpike"
     ],

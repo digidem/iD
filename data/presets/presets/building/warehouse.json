@@ -1,11 +1,5 @@
 {
-    "icon": "warehouse",
-    "fields": [
-        "name",
-        "address",
-        "levels",
-        "height"
-    ],
+    "icon": "maki-warehouse",
     "geometry": [
         "area"
     ],

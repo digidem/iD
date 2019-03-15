@@ -1,11 +1,5 @@
 {
-    "icon": "poi-vending-machine",
-    "fields": [
-        "vending",
-        "operator",
-        "payment_multi",
-        "currency_multi"
-    ],
+    "icon": "maki-fuel",
     "geometry": [
         "point"
     ],
@@ -27,5 +21,6 @@
         "key": "vending",
         "value": "fuel"
     },
-    "name": "Gas Pump"
+    "name": "Gas Pump",
+    "matchScore": 0.5
 }

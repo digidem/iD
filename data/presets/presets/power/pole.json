@@ -1,8 +1,10 @@
 {
     "fields": [
-        "ref"
+        "ref",
+        "material"
     ],
     "geometry": [
+        "point",
         "vertex"
     ],
     "tags": {
