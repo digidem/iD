@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/openstreetmap/iD.svg?branch=master)](https://travis-ci.org/openstreetmap/iD)
 [![Greenkeeper badge](https://badges.greenkeeper.io/openstreetmap/iD.svg)](https://greenkeeper.io/)
 
+**NOTE: CURRENTLY UP TO DATE WITH 2.14.3 of iD**
+
 ## Basics
 
 * iD is a JavaScript [OpenStreetMap](https://www.openstreetmap.org/) editor.
