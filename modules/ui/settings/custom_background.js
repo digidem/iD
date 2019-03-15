@@ -12,10 +12,10 @@ export function uiSettingsCustomBackground(context) {
 
     function render(selection) {
         var _origSettings = {
-            template: context.storage('background-custom-template')
+            template: context.storage('background-custom-template') || 'http://localhost:5005/Offline-Maps/{zoom}/{x}/{y}'
         };
         var _currSettings = _cloneDeep(_origSettings);
-        var example = 'http://localhost:5005/Offline-Maps/{zoom}/{x}/{y}.jpeg';
+        var example = 'http://localhost:5005/Offline-Maps/{zoom}/{x}/{y}';
         var modal = uiConfirm(selection).okButton();
 
         modal
