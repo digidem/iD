@@ -3,13 +3,16 @@ import {
     select as d3_select
 } from 'd3-selection';
 
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
 import { t } from '../util/locale';
 
-import { actionMove } from '../actions';
+import {
+    actionMove,
+    actionNoop
+} from '../actions';
 import { behaviorEdit } from '../behavior';
 import { geoViewportEdge, geoVecSubtract } from '../geo';
 import { modeBrowse, modeSelect } from './index';
+import { utilKeybinding } from '../util';
 
 import {
     operationCircularize,
@@ -27,7 +30,7 @@ export function modeMove(context, entityIDs, baseGraph) {
         button: 'browse'
     };
 
-    var keybinding = d3_keybinding('move');
+    var keybinding = utilKeybinding('move');
     var behaviors = [
         behaviorEdit(context),
         operationCircularize(entityIDs, context).behavior,
@@ -63,7 +66,7 @@ export function modeMove(context, entityIDs, baseGraph) {
         var origMouse = context.projection(_origin);
         var delta = geoVecSubtract(geoVecSubtract(currMouse, origMouse), nudge);
 
-        fn(actionMove(entityIDs, delta, context.projection, _cache), annotation);
+        fn(actionMove(entityIDs, delta, context.projection, _cache));
         _prevGraph = context.graph();
     }
 
@@ -98,6 +101,7 @@ export function modeMove(context, entityIDs, baseGraph) {
 
     function finish() {
         d3_event.stopPropagation();
+        context.replace(actionNoop(), annotation);
         context.enter(modeSelect(context, entityIDs));
         stopNudge();
     }
@@ -125,9 +129,9 @@ export function modeMove(context, entityIDs, baseGraph) {
         _prevGraph = null;
         _cache = {};
 
-        behaviors.forEach(function(behavior) {
-            context.install(behavior);
-        });
+        context.features().forceVisible(entityIDs);
+
+        behaviors.forEach(context.install);
 
         context.surface()
             .on('mousemove.move', move)
@@ -159,7 +163,10 @@ export function modeMove(context, entityIDs, baseGraph) {
         context.history()
             .on('undone.move', null);
 
-        keybinding.off();
+        d3_select(document)
+            .call(keybinding.unbind);
+
+        context.features().forceVisible([]);
     };
 
 

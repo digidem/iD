@@ -1,15 +1,22 @@
 {
-    "icon": "temaki-beach",
+    "icon": "maki-slipway",
     "fields": [
-        "access_simple"
+        "name",
+        "access_simple",
+        "fee"
+    ],
+    "moreFields": [
+        "seamark/type"
     ],
     "geometry": [
         "point",
+        "vertex",
         "line"
     ],
     "terms": [
         "boat launch",
-        "boat ramp"
+        "boat ramp",
+        "boat landing"
     ],
     "tags": {
         "leisure": "slipway"

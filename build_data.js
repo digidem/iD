@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 const requireESM = require('esm')(module);
 const _cloneDeep = requireESM('lodash-es/cloneDeep').default;
-const _extend = requireESM('lodash-es/extend').default;
 const _forEach = requireESM('lodash-es/forEach').default;
 const _isEmpty = requireESM('lodash-es/isEmpty').default;
 const _merge = requireESM('lodash-es/merge').default;
 const _toPairs = requireESM('lodash-es/toPairs').default;
+const _filter = requireESM('lodash-es/filter').default;
 
 const colors = require('colors/safe');
 const fs = require('fs');
@@ -18,13 +18,13 @@ const YAML = require('js-yaml');
 
 const fieldSchema = require('./data/presets/schema/field.json');
 const presetSchema = require('./data/presets/schema/preset.json');
-const suggestions = require('name-suggestion-index/name-suggestions.json');
+const suggestions = require('name-suggestion-index').names;
 
 // fontawesome icons
-const fontawesome = require('@fortawesome/fontawesome');
-const fas = require('@fortawesome/fontawesome-free-solid').default;
-const far = require('@fortawesome/fontawesome-free-regular').default;
-const fab = require('@fortawesome/fontawesome-free-brands').default;
+const fontawesome = require('@fortawesome/fontawesome-svg-core');
+const fas = require('@fortawesome/free-solid-svg-icons').fas;
+const far = require('@fortawesome/free-regular-svg-icons').far;
+const fab = require('@fortawesome/free-brands-svg-icons').fab;
 fontawesome.library.add(fas, far, fab);
 
 
@@ -46,9 +46,7 @@ module.exports = function buildData() {
 
         for (var target of Object.keys(symlinks)) {
             if (!shell.test('-L', target)) {
-                console.log(
-                    `Creating symlink:  ${target} -> ${symlinks[target]}`
-                );
+                console.log(`Creating symlink:  ${target} -> ${symlinks[target]}`);
                 shell.ln('-sf', symlinks[target], target);
             }
         }
@@ -61,7 +59,9 @@ module.exports = function buildData() {
         };
 
         // Font Awesome icons used
-        var faIcons = {};
+        var faIcons = {
+            'fas-long-arrow-alt-right': {}
+        };
 
         // Start clean
         shell.rm('-f', [
@@ -100,8 +100,14 @@ module.exports = function buildData() {
                 'data/presets/presets.json',
                 prettyStringify({ presets: presets }, { maxLength: 9999 })
             ),
-            writeFileProm('data/presets.yaml', translationsToYAML(translations)),
-            writeFileProm('data/taginfo.json', prettyStringify(taginfo), { maxLength: 9999 }),
+            writeFileProm(
+                'data/presets.yaml',
+                translationsToYAML(translations)
+            ),
+            writeFileProm(
+                'data/taginfo.json',
+                prettyStringify(taginfo, { maxLength: 9999 })
+            ),
             writeEnJson(tstrings),
             writeFaIcons(faIcons)
         ];
@@ -191,64 +197,58 @@ function generateFields(tstrings, faIcons) {
 
 
 function suggestionsToPresets(presets) {
-    var existing = {};
 
     for (var key in suggestions) {
         for (var value in suggestions[key]) {
             for (var name in suggestions[key][value]) {
-                var item = key + '/' + value + '/' + name;
-                var tags = {};
-                var count = suggestions[key][value][name].count;
-
-                if (existing[name] && count > existing[name].count) {
-                    delete presets[existing[name].category];
-                    delete existing[name];
-                }
-                if (!existing[name]) {
-                    tags = _extend({name: name.replace(/"/g, '')}, suggestions[key][value][name].tags);
-                    addSuggestion(item, tags, name.replace(/"/g, ''), count);
-                }
+                addSuggestion(key, value, name);
             }
         }
     }
 
 
-    function addSuggestion(category, tags, name, count) {
-        var tag = category.split('/');
-        var parent = presets[tag[0] + '/' + tag[1]];
+    function addSuggestion(key, value, name) {
+        var suggestion = suggestions[key][value][name];
+        var presetID, preset;
 
-        // Hacky code to add healthcare tagging not yet present in name-suggestion-index
-        // This will be fixed by https://github.com/osmlab/name-suggestion-index/issues/57
-        if (tag[0] === 'amenity') {
-            var healthcareTags = {
-                clinic: 'clinic',
-                dentist: 'dentist',
-                doctors: 'doctor',
-                hospital: 'hospital',
-                pharmacy: 'pharmacy'
-            };
-            if (healthcareTags.hasOwnProperty(tag[1])) {
-                tags.healthcare = healthcareTags[tag[1]];
+        // sometimes we can find a more specific preset then key/value..
+        if (suggestion.tags.cuisine) {
+            presetID = key + '/' + value + '/' + suggestion.tags.cuisine;
+            preset = presets[presetID];
+        } else if (suggestion.tags.vending) {
+            if (suggestion.tags.vending === 'parcel_pickup;parcel_mail_in') {
+                presetID = key + '/' + value + '/parcel_pickup_dropoff';
+            } else {
+                presetID = key + '/' + value + '/' + suggestion.tags.vending;
             }
+            preset = presets[presetID];
         }
 
-        if (!parent) {
-            console.log('WARN: no preset for suggestion = ' + tag);
+        // fallback to key/value
+        if (!preset) {
+            presetID = key + '/' + value;
+            preset = presets[presetID];
+        }
+
+        // still no match?
+        if (!preset) {
+            console.log('Warning:  No preset "' + presetID + '" for name-suggestion "' + name + '"');
             return;
         }
 
-        presets[category.replace(/"/g, '')] = {
-            tags: parent.tags ? _merge(tags, parent.tags) : tags,
-            name: name,
-            icon: parent.icon,
-            geometry: parent.geometry,
-            fields: parent.fields,
-            suggestion: true
-        };
+        var wikidataTag = { 'brand:wikidata': suggestion.tags['brand:wikidata'] };
+        var suggestionID = presetID + '/' + name;
 
-        existing[name] = {
-            category: category,
-            count: count
+        presets[suggestionID] = {
+            name: name,
+            icon: preset.icon,
+            geometry: preset.geometry,
+            tags: _merge({}, preset.tags, wikidataTag),
+            addTags: suggestion.tags,
+            removeTags: suggestion.tags,
+            reference: preset.reference,
+            matchScore: 2,
+            suggestion: true
         };
     }
 
@@ -367,7 +367,8 @@ function generateTaginfo(presets, fields) {
             tag.value = preset.tags[last];
         }
         if (preset.name) {
-            tag.description = [ preset.name ];
+            var legacy = (preset.searchable === false) ? ' (unsearchable)' : '';
+            tag.description = [ '🄿 ' + preset.name + legacy ];
         }
         if (preset.geometry) {
             setObjectType(tag, preset);
@@ -393,22 +394,23 @@ function generateTaginfo(presets, fields) {
 
     _forEach(fields, function(field) {
         var keys = field.keys || [ field.key ] || [];
+        var isRadio = (field.type === 'radio' || field.type === 'structureRadio');
 
         keys.forEach(function(key) {
-            if (field.strings && field.strings.options) {
+            if (field.strings && field.strings.options && !isRadio) {
                 var values = Object.keys(field.strings.options);
                 values.forEach(function(value) {
                     if (value === 'undefined' || value === '*' || value === '') return;
                     var tag = { key: key, value: value };
                     if (field.label) {
-                        tag.description = [ field.label ];
+                        tag.description = [ '🄵 ' + field.label ];
                     }
                     coalesceTags(taginfo, tag);
                 });
             } else {
                 var tag = { key: key };
                 if (field.label) {
-                    tag.description = [ field.label ];
+                    tag.description = [ '🄵 ' + field.label ];
                 }
                 coalesceTags(taginfo, tag);
             }
@@ -484,16 +486,59 @@ function validateCategoryPresets(categories, presets) {
 }
 
 function validatePresetFields(presets, fields) {
-    _forEach(presets, function(preset) {
-        if (preset.fields) {
-            preset.fields.forEach(function(field) {
-                if (fields[field] === undefined) {
-                    console.error('Unknown preset field: ' + field + ' in preset ' + preset.name);
-                    process.exit(1);
+    var betweenBracketsRegex = /([^{]*?)(?=\})/;
+    var maxFieldsBeforeError = 12;
+    var maxFieldsBeforeWarning = 8;
+    for (var presetID in presets) {
+        var preset = presets[presetID];
+        // the keys for properties that contain arrays of field ids
+        var fieldKeys = ['fields', 'moreFields'];
+        for (var fieldsKeyIndex in fieldKeys) {
+            var fieldsKey = fieldKeys[fieldsKeyIndex];
+            if (preset[fieldsKey]) {
+                for (var fieldIndex in preset[fieldsKey]) {
+                    var field = preset[fieldsKey][fieldIndex];
+                    if (fields[field] === undefined) {
+                        var regexResult = betweenBracketsRegex.exec(field);
+                        if (regexResult) {
+                            var foreignPresetID = regexResult[0];
+                            if (presets[foreignPresetID] === undefined) {
+                                console.error('Unknown preset "' + foreignPresetID + '" referenced in "' + fieldsKey + '" array of preset ' + preset.name);
+                                process.exit(1);
+                            }
+                        } else {
+                            console.error('Unknown preset field "' + field + '" in "' + fieldsKey + '" array of preset ' + preset.name);
+                            process.exit(1);
+                        }
+                    }
                 }
-            });
+            }
         }
-    });
+
+        if (preset.fields) {
+            // since `moreFields` is available, check that `fields` doesn't get too cluttered
+            var fieldCount = preset.fields.length;
+
+            if (fieldCount > maxFieldsBeforeWarning) {
+                // Fields with `prerequisiteTag` probably won't show up initially,
+                // so don't count them against the limits.
+                var fieldsWithoutPrerequisites = _filter(preset.fields, function(fieldID) {
+                    if (fields[fieldID] && fields[fieldID].prerequisiteTag) {
+                        return false;
+                    }
+                    return true;
+                });
+                fieldCount = fieldsWithoutPrerequisites.length;
+            }
+            if (fieldCount > maxFieldsBeforeError) {
+                console.error(fieldCount + ' values in "fields" of "' + preset.name + '" (' + presetID + '). Limit: ' + maxFieldsBeforeError + '. Please move lower-priority fields to "moreFields".');
+                process.exit(1);
+            }
+            else if (fieldCount > maxFieldsBeforeWarning) {
+                console.log('Warning: ' + fieldCount + ' values in "fields" of "' + preset.name + '" (' + presetID + '). Recommended: ' + maxFieldsBeforeWarning + ' or fewer. Consider moving lower-priority fields to "moreFields".');
+            }
+        }
+    }
 }
 
 function validateDefaults (defaults, categories, presets) {
@@ -545,7 +590,12 @@ function writeFaIcons(faIcons) {
         var prefix = key.substring(0, 3);   // `fas`, `far`, `fab`
         var name = key.substring(4);
         var def = fontawesome.findIconDefinition({ prefix: prefix, iconName: name });
-        writeFileProm('svg/fontawesome/' + key + '.svg', fontawesome.icon(def).html);
+        try {
+            writeFileProm('svg/fontawesome/' + key + '.svg', fontawesome.icon(def).html);
+        } catch (error) {
+            console.error('Error: No FontAwesome icon for ' + key);
+            throw (error);
+        }
     }
 }
 

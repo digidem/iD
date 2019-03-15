@@ -19,46 +19,24 @@ import {
 } from 'd3-zoom';
 
 import { t } from '../util/locale';
-
-import {
-    geoExtent,
-    geoScaleToZoom,
-    geoZoomToScale
-} from '../geo';
-
-import {
-    modeBrowse,
-    modeSelect
-} from '../modes';
-
-import {
-    svgAreas,
-    svgLabels,
-    svgLayers,
-    svgLines,
-    svgMidpoints,
-    svgPoints,
-    svgVertices
-} from '../svg';
-
+import { geoExtent, geoRawMercator, geoScaleToZoom, geoZoomToScale } from '../geo';
+import { modeBrowse, modeSelect } from '../modes';
+import { svgAreas, svgLabels, svgLayers, svgLines, svgMidpoints, svgPoints, svgVertices } from '../svg';
 import { uiFlash } from '../ui';
-
-import {
-    utilFastMouse,
-    utilFunctor,
-    utilRebind,
-    utilSetTransform
-} from '../util';
-
+import { utilFastMouse, utilFunctor, utilRebind, utilSetTransform } from '../util';
 import { utilBindOnce } from '../util/bind_once';
+import { utilDetect } from '../util/detect';
 import { utilGetDimensions } from '../util/dimensions';
 
 
 // constants
-var TAU = 2 * Math.PI;
 var TILESIZE = 256;
 var kMin = geoZoomToScale(2, TILESIZE);
 var kMax = geoZoomToScale(24, TILESIZE);
+
+function clamp(num, min, max) {
+    return Math.max(min, Math.min(num, max));
+}
 
 
 export function rendererMap(context) {
@@ -78,15 +56,16 @@ export function rendererMap(context) {
     var wrapper = d3_select(null);
     var surface = d3_select(null);
 
-    var dimensions = [1, 1];
+    var _dimensions = [1, 1];
     var _dblClickEnabled = true;
     var _redrawEnabled = true;
+    var _gestureTransformStart;
     var _transformStart = projection.transform();
     var _transformLast;
-    var _transformed = false;
-    var minzoom = 0;
-    var mouse;
-    var mousemove;
+    var _isTransformed = false;
+    var _minzoom = 0;
+    var _getMouseCoords;
+    var _mouseEvent;
 
     var zoom = d3_zoom()
         .scaleExtent([kMin, kMax])
@@ -180,30 +159,34 @@ export function rendererMap(context) {
 
         surface
             .call(drawLabels.observe)
+            .on('gesturestart.surface', function() {
+                _gestureTransformStart = projection.transform();
+            })
+            .on('gesturechange.surface', gestureChange)
             .on('mousedown.zoom', function() {
                 if (d3_event.button === 2) {
                     d3_event.stopPropagation();
                 }
             }, true)
             .on('mouseup.zoom', function() {
-                if (resetTransform()) immediateRedraw();
+                if (resetTransform()) {
+                    immediateRedraw();
+                }
             })
             .on('mousemove.map', function() {
-                mousemove = d3_event;
+                _mouseEvent = d3_event;
             })
             .on('mouseover.vertices', function() {
-                if (map.editable() && !_transformed) {
+                if (map.editable() && !_isTransformed) {
                     var hover = d3_event.target.__data__;
-                    surface.selectAll('.data-layer-osm')
-                        .call(drawVertices.drawHover, context.graph(), hover, map.extent());
+                    surface.call(drawVertices.drawHover, context.graph(), hover, map.extent());
                     dispatch.call('drawn', this, { full: false });
                 }
             })
             .on('mouseout.vertices', function() {
-                if (map.editable() && !_transformed) {
+                if (map.editable() && !_isTransformed) {
                     var hover = d3_event.relatedTarget && d3_event.relatedTarget.__data__;
-                    surface.selectAll('.data-layer-osm')
-                        .call(drawVertices.drawHover, context.graph(), hover, map.extent());
+                    surface.call(drawVertices.drawHover, context.graph(), hover, map.extent());
                     dispatch.call('drawn', this, { full: false });
                 }
             });
@@ -212,7 +195,7 @@ export function rendererMap(context) {
             .call(context.background());
 
         context.on('enter.map',  function() {
-            if (map.editable() && !_transformed) {
+            if (map.editable() && !_isTransformed) {
                 // redraw immediately any objects affected by a change in selectedIDs.
                 var graph = context.graph();
                 var selectedAndParents = {};
@@ -232,7 +215,7 @@ export function rendererMap(context) {
 
                 data = context.features().filter(data, graph);
 
-                surface.selectAll('.data-layer-osm')
+                surface
                     .call(drawVertices.drawSelected, graph, map.extent())
                     .call(drawLines, graph, data, filter)
                     .call(drawAreas, graph, data, filter)
@@ -284,7 +267,7 @@ export function rendererMap(context) {
 
 
     function pxCenter() {
-        return [dimensions[0] / 2, dimensions[1] / 2];
+        return [_dimensions[0] / 2, _dimensions[1] / 2];
     }
 
 
@@ -306,7 +289,7 @@ export function rendererMap(context) {
         } else {
             // force a full redraw if gatherStats detects that a feature
             // should be auto-hidden (e.g. points or buildings)..
-            if (features.gatherStats(all, graph, dimensions)) {
+            if (features.gatherStats(all, graph, _dimensions)) {
                 extent = undefined;
             }
 
@@ -327,16 +310,15 @@ export function rendererMap(context) {
         if (mode && mode.id === 'select') {
             // update selected vertices - the user might have just double-clicked a way,
             // creating a new vertex, triggering a partial redraw without a mode change
-            surface.selectAll('.data-layer-osm')
-                .call(drawVertices.drawSelected, graph, map.extent());
+            surface.call(drawVertices.drawSelected, graph, map.extent());
         }
 
-        surface.selectAll('.data-layer-osm')
+        surface
             .call(drawVertices, graph, data, filter, map.extent(), fullRedraw)
             .call(drawLines, graph, data, filter)
             .call(drawAreas, graph, data, filter)
             .call(drawMidpoints, graph, data, filter, map.trimmedExtent())
-            .call(drawLabels, graph, data, filter, dimensions, fullRedraw)
+            .call(drawLabels, graph, data, filter, _dimensions, fullRedraw)
             .call(drawPoints, graph, data, filter);
 
         dispatch.call('drawn', this, {full: true});
@@ -346,9 +328,18 @@ export function rendererMap(context) {
     function editOff() {
         context.features().resetStats();
         surface.selectAll('.layer-osm *').remove();
+        surface.selectAll('.layer-touch:not(.markers) *').remove();
+
+        var allowed = {
+            'browse': true,
+            'save': true,
+            'select-note': true,
+            'select-data': true,
+            'select-error': true
+        };
 
         var mode = context.mode();
-        if (mode && mode.id !== 'save' && mode.id !== 'select-note' && mode.id !== 'select-data') {
+        if (mode && !allowed[mode.id]) {
             context.enter(modeBrowse(context));
         }
 
@@ -364,43 +355,153 @@ export function rendererMap(context) {
     }
 
 
+    function gestureChange() {
+        // Remap Safari gesture events to wheel events - #5492
+        // We want these disabled most places, but enabled for zoom/unzoom on map surface
+        // https://developer.mozilla.org/en-US/docs/Web/API/GestureEvent
+        var e = d3_event;
+        e.preventDefault();
+
+        var props = {
+            deltaMode: 0,    // dummy values to ignore in zoomPan
+            deltaY: 1,       // dummy values to ignore in zoomPan
+            clientX: e.clientX,
+            clientY: e.clientY,
+            screenX: e.screenX,
+            screenY: e.screenY,
+            x: e.x,
+            y: e.y
+        };
+
+        var e2 = new WheelEvent('wheel', props);
+        e2._scale = e.scale;         // preserve the original scale
+        e2._rotation = e.rotation;   // preserve the original rotation
+
+        _selection.node().dispatchEvent(e2);
+    }
+
+
     function zoomPan(manualEvent) {
         var event = (manualEvent || d3_event);
         var source = event.sourceEvent;
         var eventTransform = event.transform;
+        var x = eventTransform.x;
+        var y = eventTransform.y;
+        var k = eventTransform.k;
 
-        if (_transformStart.x === eventTransform.x &&
-            _transformStart.y === eventTransform.y &&
-            _transformStart.k === eventTransform.k) {
+        if (_transformStart.x === x &&
+            _transformStart.y === y &&
+            _transformStart.k === k) {
             return;  // no change
         }
 
-        // Normalize mousewheel - #3029
-        // If wheel delta is provided in LINE units, recalculate it in PIXEL units
-        // We are essentially redoing the calculations that occur here:
-        //   https://github.com/d3/d3-zoom/blob/78563a8348aa4133b07cac92e2595c2227ca7cd7/src/zoom.js#L203
-        // See this for more info:
-        //   https://github.com/basilfx/normalize-wheel/blob/master/src/normalizeWheel.js
-        if (source && source.type === 'wheel' && source.deltaMode === 1 /* LINE */) {
-            // pick sensible scroll amount if user scrolling fast or slow..
-            var lines = Math.abs(source.deltaY);
-            var scroll = lines > 2 ? 40 : lines * 10;
+        // Special handling of 'wheel' events:
+        // They might be triggered by the user scrolling the mouse wheel,
+        // or 2-finger pinch/zoom gestures, the transform may need adjustment.
+        if (source && source.type === 'wheel') {
+            var detected = utilDetect();
+            var dX = source.deltaX;
+            var dY = source.deltaY;
+            var x2 = x;
+            var y2 = y;
+            var k2 = k;
+            var t0, p0, p1;
 
-            var t0 = _transformed ? _transformLast : _transformStart;
-            var p0 = mouse(source);
-            var p1 = t0.invert(p0);
-            var k2 = t0.k * Math.pow(2, -source.deltaY * scroll / 500);
-            var x2 = p0[0] - p1[0] * k2;
-            var y2 = p0[1] - p1[1] * k2;
+            // Normalize mousewheel scroll speed (Firefox) - #3029
+            // If wheel delta is provided in LINE units, recalculate it in PIXEL units
+            // We are essentially redoing the calculations that occur here:
+            //   https://github.com/d3/d3-zoom/blob/78563a8348aa4133b07cac92e2595c2227ca7cd7/src/zoom.js#L203
+            // See this for more info:
+            //   https://github.com/basilfx/normalize-wheel/blob/master/src/normalizeWheel.js
+            if (source.deltaMode === 1 /* LINE */) {
+                // Convert from lines to pixels, more if the user is scrolling fast.
+                // (I made up the exp function to roughly match Firefox to what Chrome does)
+                // These numbers should be floats, because integers are treated as pan gesture below.
+                var lines = Math.abs(source.deltaY);
+                var sign = (source.deltaY > 0) ? 1 : -1;
+                dY = sign * clamp(
+                    Math.exp((lines - 1) * 0.75) * 4.000244140625,
+                    4.000244140625,    // min
+                    350.000244140625   // max
+                );
 
-            eventTransform = d3_zoomIdentity.translate(x2,y2).scale(k2);
-            _selection.node().__zoom = eventTransform;
+                // On Firefox Windows and Linux we always get +/- the scroll line amount (default 3)
+                // There doesn't seem to be any scroll accelleration.
+                // This multiplier increases the speed a little bit - #5512
+                if (detected.os !== 'mac') {
+                    dY *= 5;
+                }
+
+                // recalculate x2,y2,k2
+                t0 = _isTransformed ? _transformLast : _transformStart;
+                p0 = _getMouseCoords(source);
+                p1 = t0.invert(p0);
+                k2 = t0.k * Math.pow(2, -dY / 500);
+                x2 = p0[0] - p1[0] * k2;
+                y2 = p0[1] - p1[1] * k2;
+
+            // 2 finger map pinch zooming (Safari) - #5492
+            // These are fake `wheel` events we made from Safari `gesturechange` events..
+            } else if (source._scale) {
+                // recalculate x2,y2,k2
+                t0 = _gestureTransformStart;
+                p0 = _getMouseCoords(source);
+                p1 = t0.invert(p0);
+                k2 = t0.k * source._scale;
+                x2 = p0[0] - p1[0] * k2;
+                y2 = p0[1] - p1[1] * k2;
+
+            // 2 finger map pinch zooming (all browsers except Safari) - #5492
+            // Pinch zooming via the `wheel` event will always have:
+            // - `ctrlKey = true`
+            // - `deltaY` is not round integer pixels (ignore `deltaX`)
+            } else if (source.ctrlKey && !isInteger(dY)) {
+                dY *= 6;   // slightly scale up whatever the browser gave us
+
+                // recalculate x2,y2,k2
+                t0 = _isTransformed ? _transformLast : _transformStart;
+                p0 = _getMouseCoords(source);
+                p1 = t0.invert(p0);
+                k2 = t0.k * Math.pow(2, -dY / 500);
+                x2 = p0[0] - p1[0] * k2;
+                y2 = p0[1] - p1[1] * k2;
+
+            // Trackpad scroll zooming with shift or alt/option key down
+            } else if ((source.altKey || source.shiftKey) && isInteger(dY)) {
+                // recalculate x2,y2,k2
+                t0 = _isTransformed ? _transformLast : _transformStart;
+                p0 = _getMouseCoords(source);
+                p1 = t0.invert(p0);
+                k2 = t0.k * Math.pow(2, -dY / 500);
+                x2 = p0[0] - p1[0] * k2;
+                y2 = p0[1] - p1[1] * k2;
+
+            // 2 finger map panning (Mac only, all browsers) - #5492, #5512
+            // Panning via the `wheel` event will always have:
+            // - `ctrlKey = false`
+            // - `deltaX`,`deltaY` are round integer pixels
+            } else if (detected.os === 'mac' && !source.ctrlKey && isInteger(dX) && isInteger(dY)) {
+                p1 = projection.translate();
+                x2 = p1[0] - dX;
+                y2 = p1[1] - dY;
+                k2 = projection.scale();
+            }
+
+            // something changed - replace the event transform
+            if (x2 !== x || y2 !== y || k2 !== k) {
+                x = x2;
+                y = y2;
+                k = k2;
+                eventTransform = d3_zoomIdentity.translate(x2, y2).scale(k2);
+                _selection.node().__zoom = eventTransform;
+            }
+
         }
 
-        if (geoScaleToZoom(eventTransform.k, TILESIZE) < minzoom) {
+        if (geoScaleToZoom(k, TILESIZE) < _minzoom) {
             surface.interrupt();
             uiFlash().text(t('cannot_zoom'))();
-            setZoom(context.minEditableZoom(), true);
+            setCenterZoom(map.center(), context.minEditableZoom(), 0, true);
             scheduleRedraw();
             dispatch.call('move', this, map);
             return;
@@ -408,35 +509,42 @@ export function rendererMap(context) {
 
         projection.transform(eventTransform);
 
-        var scale = eventTransform.k / _transformStart.k;
-        var tX = (eventTransform.x / scale - _transformStart.x) * scale;
-        var tY = (eventTransform.y / scale - _transformStart.y) * scale;
+        var scale = k / _transformStart.k;
+        var tX = (x / scale - _transformStart.x) * scale;
+        var tY = (y / scale - _transformStart.y) * scale;
 
         if (context.inIntro()) {
             curtainProjection.transform({
-                x: eventTransform.x - tX,
-                y: eventTransform.y - tY,
-                k: eventTransform.k
+                x: x - tX,
+                y: y - tY,
+                k: k
             });
         }
 
-        if (source) mousemove = event;
-        _transformed = true;
+        if (source) {
+            _mouseEvent = event;
+        }
+        _isTransformed = true;
         _transformLast = eventTransform;
         utilSetTransform(supersurface, tX, tY, scale);
         scheduleRedraw();
 
         dispatch.call('move', this, map);
+
+
+        function isInteger(val) {
+            return typeof val === 'number' && isFinite(val) && Math.floor(val) === val;
+        }
     }
 
 
     function resetTransform() {
-        if (!_transformed) return false;
+        if (!_isTransformed) return false;
 
         // deprecation warning - Radial Menu to be removed in iD v3
         surface.selectAll('.edit-menu, .radial-menu').interrupt().remove();
         utilSetTransform(supersurface, 0, 0);
-        _transformed = false;
+        _isTransformed = false;
         if (context.inIntro()) {
             curtainProjection.transform(projection.transform());
         }
@@ -501,11 +609,11 @@ export function rendererMap(context) {
 
 
     map.mouse = function() {
-        var event = mousemove || d3_event;
+        var event = _mouseEvent || d3_event;
         if (event) {
             var s;
             while ((s = event.sourceEvent)) { event = s; }
-            return mouse(event);
+            return _getMouseCoords(event);
         }
         return null;
     };
@@ -518,30 +626,28 @@ export function rendererMap(context) {
     };
 
 
-    map.dblclickEnable = function(_) {
+    map.dblclickEnable = function(val) {
         if (!arguments.length) return _dblClickEnabled;
-        _dblClickEnabled = _;
+        _dblClickEnabled = val;
         return map;
     };
 
 
-    map.redrawEnable = function(_) {
+    map.redrawEnable = function(val) {
         if (!arguments.length) return _redrawEnabled;
-        _redrawEnabled = _;
+        _redrawEnabled = val;
         return map;
     };
 
 
     map.isTransformed = function() {
-        return _transformed;
+        return _isTransformed;
     };
 
 
     function setTransform(t2, duration, force) {
         var t = projection.transform();
-        if (!force && t2.k === t.k && t2.x === t.x && t2.y === t.y) {
-            return false;
-        }
+        if (!force && t2.k === t.k && t2.x === t.x && t2.y === t.y) return false;
 
         if (duration) {
             _selection
@@ -554,84 +660,29 @@ export function rendererMap(context) {
             _transformStart = t2;
             _selection.call(zoom.transform, _transformStart);
         }
-    }
-
-
-    function setZoom(z2, force, duration) {
-        if (z2 === map.zoom() && !force) {
-            return false;
-        }
-
-        var k = projection.scale();
-        var k2 = Math.max(kMin, Math.min(kMax, geoZoomToScale(z2, TILESIZE)));
-        var center = pxCenter();
-        var l = pointLocation(center);
-
-        projection.scale(k2);
-
-        var t = projection.translate();
-        l = locationPoint(l);
-
-        t[0] += center[0] - l[0];
-        t[1] += center[1] - l[1];
-
-        if (duration) {
-            projection.scale(k);  // reset scale
-            _selection
-                .transition()
-                .duration(duration)
-                .on('start', function() { map.startEase(); })
-                .call(zoom.transform, d3_zoomIdentity.translate(t[0], t[1]).scale(k2));
-        } else {
-            projection.translate(t);
-            _transformStart = projection.transform();
-            _selection.call(zoom.transform, _transformStart);
-        }
 
         return true;
-
-
-        function locationPoint(l) {
-            var translate = projection.translate();
-            var scale = projection.scale() * TAU;
-            return [l[0] * scale + translate[0], l[1] * scale + translate[1]];
-        }
-
-        function pointLocation(p) {
-            var translate = projection.translate();
-            var scale = projection.scale() * TAU;
-            return [(p[0] - translate[0]) / scale, (p[1] - translate[1]) / scale];
-        }
     }
 
 
-    function setCenter(loc2, duration) {
+    function setCenterZoom(loc2, z2, duration, force) {
         var c = map.center();
-        if (loc2[0] === c[0] && loc2[1] === c[1]) {
-            return false;
-        }
+        var z = map.zoom();
+        if (loc2[0] === c[0] && loc2[1] === c[1] && z2 === z && !force) return false;
 
-        var t = projection.translate();
-        var k = projection.scale();
-        var pxC = pxCenter();
-        var ll = projection(loc2);
+        var proj = geoRawMercator().transform(projection.transform());  // copy projection
 
-        t[0] = t[0] - ll[0] + pxC[0];
-        t[1] = t[1] - ll[1] + pxC[1];
+        var k2 = clamp(geoZoomToScale(z2, TILESIZE), kMin, kMax);
+        proj.scale(k2);
 
-        if (duration) {
-            _selection
-                .transition()
-                .duration(duration)
-                .on('start', function() { map.startEase(); })
-                .call(zoom.transform, d3_zoomIdentity.translate(t[0], t[1]).scale(k));
-        } else {
-            projection.translate(t);
-            _transformStart = projection.transform();
-            _selection.call(zoom.transform, _transformStart);
-        }
+        var t = proj.translate();
+        var point = proj(loc2);
 
-        return true;
+        var center = pxCenter();
+        t[0] += center[0] - point[0];
+        t[1] += center[1] - point[1];
+
+        return setTransform(d3_zoomIdentity.translate(t[0], t[1]).scale(k2), duration, force);
     }
 
 
@@ -660,15 +711,14 @@ export function rendererMap(context) {
     };
 
 
-    map.dimensions = function(_) {
-        if (!arguments.length) return dimensions;
-        var center = map.center();
-        dimensions = _;
-        drawLayers.dimensions(dimensions);
-        context.background().dimensions(dimensions);
-        projection.clipExtent([[0, 0], dimensions]);
-        mouse = utilFastMouse(supersurface.node());
-        setCenter(center);
+    map.dimensions = function(val) {
+        if (!arguments.length) return _dimensions;
+
+        _dimensions = val;
+        drawLayers.dimensions(_dimensions);
+        context.background().dimensions(_dimensions);
+        projection.clipExtent([[0, 0], _dimensions]);
+        _getMouseCoords = utilFastMouse(supersurface.node());
 
         scheduleRedraw();
         return map;
@@ -676,11 +726,11 @@ export function rendererMap(context) {
 
 
     function zoomIn(delta) {
-        setZoom(~~map.zoom() + delta, true, 250);
+        setCenterZoom(map.center(), ~~map.zoom() + delta, 250, true);
     }
 
     function zoomOut(delta) {
-        setZoom(~~map.zoom() - delta, true, 250);
+        setCenterZoom(map.center(), ~~map.zoom() - delta, 250, true);
     }
 
     map.zoomIn = function() { zoomIn(1); };
@@ -695,7 +745,7 @@ export function rendererMap(context) {
             return projection.invert(pxCenter());
         }
 
-        if (setCenter(loc2)) {
+        if (setCenterZoom(loc2, map.zoom())) {
             dispatch.call('move', this, map);
         }
 
@@ -709,54 +759,57 @@ export function rendererMap(context) {
             return Math.max(geoScaleToZoom(projection.scale(), TILESIZE), 0);
         }
 
-        if (z2 < minzoom) {
+        if (z2 < _minzoom) {
             surface.interrupt();
             uiFlash().text(t('cannot_zoom'))();
             z2 = context.minEditableZoom();
         }
 
-        if (setZoom(z2)) {
+        if (setCenterZoom(map.center(), z2)) {
             dispatch.call('move', this, map);
         }
 
         scheduleRedraw();
         return map;
-    };
-
-
-    map.zoomTo = function(entity, zoomLimits) {
-        var extent = entity.extent(context.graph());
-        if (!isFinite(extent.area())) return;
-
-        var z2 = map.trimmedExtentZoom(extent);
-        zoomLimits = zoomLimits || [context.minEditableZoom(), 19];
-        map.centerZoom(extent.center(), Math.min(Math.max(z2, zoomLimits[0]), zoomLimits[1]));
     };
 
 
     map.centerZoom = function(loc2, z2) {
-        var centered = setCenter(loc2);
-        var zoomed   = setZoom(z2);
-
-        if (centered || zoomed) {
+        if (setCenterZoom(loc2, z2)) {
             dispatch.call('move', this, map);
         }
 
         scheduleRedraw();
         return map;
+    };
+
+
+    map.zoomTo = function(entity) {
+        var extent = entity.extent(context.graph());
+        if (!isFinite(extent.area())) return map;
+
+        var z2 = clamp(map.trimmedExtentZoom(extent), context.minEditableZoom(), 20);
+        return map.centerZoom(extent.center(), z2);
     };
 
 
     map.centerEase = function(loc2, duration) {
         duration = duration || 250;
-        setCenter(loc2, duration);
+        setCenterZoom(loc2, map.zoom(), duration);
         return map;
     };
 
 
     map.zoomEase = function(z2, duration) {
         duration = duration || 250;
-        setZoom(z2, false, duration);
+        setCenterZoom(map.center(), z2, duration, false);
+        return map;
+    };
+
+
+    map.centerZoomEase = function(loc2, z2, duration) {
+        duration = duration || 250;
+        setCenterZoom(loc2, z2, duration, false);
         return map;
     };
 
@@ -765,6 +818,15 @@ export function rendererMap(context) {
         duration = duration || 250;
         setTransform(t2, duration, false);
         return map;
+    };
+
+
+    map.zoomToEase = function(entity, duration) {
+        var extent = entity.extent(context.graph());
+        if (!isFinite(extent.area())) return map;
+
+        var z2 = clamp(map.trimmedExtentZoom(extent), context.minEditableZoom(), 20);
+        return map.centerZoomEase(extent.center(), z2, duration);
     };
 
 
@@ -782,36 +844,36 @@ export function rendererMap(context) {
     };
 
 
-    map.extent = function(_) {
+    map.extent = function(val) {
         if (!arguments.length) {
             return new geoExtent(
-                projection.invert([0, dimensions[1]]),
-                projection.invert([dimensions[0], 0])
+                projection.invert([0, _dimensions[1]]),
+                projection.invert([_dimensions[0], 0])
             );
         } else {
-            var extent = geoExtent(_);
+            var extent = geoExtent(val);
             map.centerZoom(extent.center(), map.extentZoom(extent));
         }
     };
 
 
-    map.trimmedExtent = function(_) {
+    map.trimmedExtent = function(val) {
         if (!arguments.length) {
             var headerY = 60;
             var footerY = 30;
             var pad = 10;
             return new geoExtent(
-                projection.invert([pad, dimensions[1] - footerY - pad]),
-                projection.invert([dimensions[0] - pad, headerY + pad])
+                projection.invert([pad, _dimensions[1] - footerY - pad]),
+                projection.invert([_dimensions[0] - pad, headerY + pad])
             );
         } else {
-            var extent = geoExtent(_);
+            var extent = geoExtent(val);
             map.centerZoom(extent.center(), map.trimmedExtentZoom(extent));
         }
     };
 
 
-    function calcZoom(extent, dim) {
+    function calcExtentZoom(extent, dim) {
         var tl = projection([extent[0][0], extent[1][1]]);
         var br = projection([extent[1][0], extent[0][1]]);
 
@@ -826,21 +888,21 @@ export function rendererMap(context) {
     }
 
 
-    map.extentZoom = function(_) {
-        return calcZoom(geoExtent(_), dimensions);
+    map.extentZoom = function(val) {
+        return calcExtentZoom(geoExtent(val), _dimensions);
     };
 
 
-    map.trimmedExtentZoom = function(_) {
+    map.trimmedExtentZoom = function(val) {
         var trimY = 120;
         var trimX = 40;
-        var trimmed = [dimensions[0] - trimX, dimensions[1] - trimY];
-        return calcZoom(geoExtent(_), trimmed);
+        var trimmed = [_dimensions[0] - trimX, _dimensions[1] - trimY];
+        return calcExtentZoom(geoExtent(val), trimmed);
     };
 
 
     map.editable = function() {
-        var osmLayer = surface.selectAll('.data-layer-osm');
+        var osmLayer = surface.selectAll('.data-layer.osm');
         if (!osmLayer.empty() && osmLayer.classed('disabled')) return false;
 
         return map.zoom() >= context.minEditableZoom();
@@ -848,16 +910,16 @@ export function rendererMap(context) {
 
 
     map.notesEditable = function() {
-        var noteLayer = surface.selectAll('.data-layer-notes');
+        var noteLayer = surface.selectAll('.data-layer.notes');
         if (!noteLayer.empty() && noteLayer.classed('disabled')) return false;
 
         return map.zoom() >= context.minEditableZoom();
     };
 
 
-    map.minzoom = function(_) {
-        if (!arguments.length) return minzoom;
-        minzoom = _;
+    map.minzoom = function(val) {
+        if (!arguments.length) return _minzoom;
+        _minzoom = val;
         return map;
     };
 

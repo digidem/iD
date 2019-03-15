@@ -1,11 +1,10 @@
 import _find from 'lodash-es/find';
+import _intersection from 'lodash-es/intersection';
 
 import {
     event as d3_event,
     select as d3_select
 } from 'd3-selection';
-
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
 
 import { t } from '../util/locale';
 
@@ -33,6 +32,8 @@ import {
 import { modeBrowse, modeSelect } from './index';
 import { osmJoinWays, osmNode } from '../osm';
 import { uiFlash } from '../ui';
+import { utilKeybinding } from '../util';
+
 
 
 export function modeDragNode(context) {
@@ -75,8 +76,29 @@ export function modeDragNode(context) {
     }
 
 
-    function connectAnnotation(entity) {
-        return t('operations.connect.annotation.' + entity.geometry(context.graph()));
+    function connectAnnotation(nodeEntity, targetEntity) {
+        var nodeGeometry = nodeEntity.geometry(context.graph());
+        var targetGeometry = targetEntity.geometry(context.graph());
+        if (nodeGeometry === 'vertex' && targetGeometry === 'vertex') {
+            var nodeParentWayIDs = context.graph().parentWays(nodeEntity);
+            var targetParentWayIDs = context.graph().parentWays(targetEntity);
+            var sharedParentWays = _intersection(nodeParentWayIDs, targetParentWayIDs);
+            // if both vertices are part of the same way
+            if (sharedParentWays.length !== 0) {
+                // if the nodes are next to each other, they are merged
+                if (sharedParentWays[0].areAdjacent(nodeEntity.id, targetEntity.id)) {
+                    return t('operations.connect.annotation.from_vertex.to_adjacent_vertex');
+                }
+                return t('operations.connect.annotation.from_vertex.to_sibling_vertex');
+            }
+        }
+        return t('operations.connect.annotation.from_' + nodeGeometry + '.to_' + targetGeometry);
+    }
+
+
+    function shouldSnapToNode(target) {
+        return _activeEntity.geometry(context.graph()) !== 'vertex' ||
+            (target.geometry(context.graph()) === 'vertex' || context.presets().allowsVertex(target, context.graph()));
     }
 
 
@@ -86,7 +108,7 @@ export function modeDragNode(context) {
 
 
     function keydown() {
-        if (d3_event.keyCode === d3_keybinding.modifierCodes.alt) {
+        if (d3_event.keyCode === utilKeybinding.modifierCodes.alt) {
             if (context.surface().classed('nope')) {
                 context.surface()
                     .classed('nope-suppressed', true);
@@ -99,7 +121,7 @@ export function modeDragNode(context) {
 
 
     function keyup() {
-        if (d3_event.keyCode === d3_keybinding.modifierCodes.alt) {
+        if (d3_event.keyCode === utilKeybinding.modifierCodes.alt) {
             if (context.surface().classed('nope-suppressed')) {
                 context.surface()
                     .classed('nope', true);
@@ -142,6 +164,8 @@ export function modeDragNode(context) {
         _activeEntity = entity;
         _startLoc = entity.loc;
 
+        hover.ignoreVertex(entity.geometry(context.graph()) === 'vertex');
+
         context.surface().selectAll('.' + _activeEntity.id)
             .classed('active', true);
 
@@ -183,7 +207,9 @@ export function modeDragNode(context) {
             var edge;
 
             if (targetLoc) {   // snap to node/vertex - a point target with `.loc`
-                loc = targetLoc;
+                if (shouldSnapToNode(target)) {
+                    loc = targetLoc;
+                }
 
             } else if (targetNodes) {   // snap to way - a line target with `.nodes`
                 edge = geoChooseEdge(targetNodes, context.mouse(), context.projection, end.id);
@@ -194,8 +220,7 @@ export function modeDragNode(context) {
         }
 
         context.replace(
-            actionMoveNode(entity.id, loc),
-            moveAnnotation(entity)
+            actionMoveNode(entity.id, loc)
         );
 
         // Below here: validations
@@ -339,7 +364,6 @@ export function modeDragNode(context) {
         }
     }
 
-
     function end(entity) {
         if (_isCancelled) return;
 
@@ -359,13 +383,13 @@ export function modeDragNode(context) {
                     loc: choice.loc,
                     edge: [target.nodes[choice.index - 1], target.nodes[choice.index]]
                 }, entity),
-                connectAnnotation(target)
+                connectAnnotation(entity, target)
             );
 
-        } else if (target && target.type === 'node') {
+        } else if (target && target.type === 'node' && shouldSnapToNode(target)) {
             context.replace(
                 actionConnect([target.id, entity.id]),
-                connectAnnotation(target)
+                connectAnnotation(entity, target)
             );
 
         } else if (_wasMidpoint) {
@@ -413,7 +437,7 @@ export function modeDragNode(context) {
 
 
     var drag = behaviorDrag()
-        .selector('.layer-points-targets .target')
+        .selector('.layer-touch.points .target')
         .surface(d3_select('#map').node())
         .origin(origin)
         .on('start', start)

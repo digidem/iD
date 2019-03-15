@@ -1,18 +1,13 @@
 {
     "icon": "maki-shop",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours",
-        "payment_multi"
-    ],
     "geometry": [
         "point",
         "area"
     ],
     "terms": [
+        "audio",
+        "hi-fi",
+        "high fidelity",
         "stereo",
         "video"
     ],

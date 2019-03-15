@@ -7,29 +7,44 @@ import { uiLoading } from './loading';
 
 
 export function uiGeolocate(context) {
-    var geoOptions = { enableHighAccuracy: false, timeout: 6000 /* 6sec */ },
-        locating = uiLoading(context).message(t('geolocate.locating')).blocking(true),
-        timeoutId;
+    var geoOptions = { enableHighAccuracy: false, timeout: 6000 /* 6sec */ };
+    var locating = uiLoading(context).message(t('geolocate.locating')).blocking(true);
+    var layer = context.layers().layer('geolocate');
+    var _position;
+    var _extent;
+    var _timeoutID;
 
 
     function click() {
         if (context.inIntro()) return;
         context.enter(modeBrowse(context));
-        context.container().call(locating);
-        navigator.geolocation.getCurrentPosition(success, error, geoOptions);
-
+        if (!layer.enabled()) {
+            if (!_position) {
+                context.container().call(locating);
+                navigator.geolocation.getCurrentPosition(success, error, geoOptions);
+            } else {
+                zoomTo();
+            }
+        } else {
+            layer.enabled(null, false);
+        }
         // This timeout ensures that we still call finish() even if
         // the user declines to share their location in Firefox
-        timeoutId = setTimeout(finish, 10000 /* 10sec */ );
+        _timeoutID = setTimeout(finish, 10000 /* 10sec */ );
+    }
+
+    function zoomTo() {
+        var map = context.map();
+        layer.enabled(_position, true);
+        map.centerZoomEase(_extent.center(), Math.min(20, map.extentZoom(_extent)));
     }
 
 
-    function success(position) {
-        var map = context.map(),
-            extent = geoExtent([position.coords.longitude, position.coords.latitude])
-                .padByMeters(position.coords.accuracy);
-
-        map.centerZoom(extent.center(), Math.min(20, map.extentZoom(extent)));
+    function success(geolocation) {
+        _position = geolocation;
+        var coords = _position.coords;
+        _extent = geoExtent([coords.longitude, coords.latitude]).padByMeters(coords.accuracy);
+        zoomTo();
         finish();
     }
 
@@ -41,8 +56,8 @@ export function uiGeolocate(context) {
 
     function finish() {
         locating.close();  // unblock ui
-        if (timeoutId) { clearTimeout(timeoutId); }
-        timeoutId = undefined;
+        if (_timeoutID) { clearTimeout(_timeoutID); }
+        _timeoutID = undefined;
     }
 
 

@@ -5,7 +5,8 @@ describe('iD.uiRawTagEditor', function() {
         taglist = iD.uiRawTagEditor(context)
             .entityID(entity.id)
             .preset({isFallback: function() { return false; }})
-            .tags(tags);
+            .tags(tags)
+            .expanded(true);
 
         element = d3.select('body')
             .append('div')
@@ -14,8 +15,8 @@ describe('iD.uiRawTagEditor', function() {
     }
 
     beforeEach(function () {
-        entity = iD.Node({id: 'n12345'});
-        context = iD.Context();
+        entity = iD.osmNode({id: 'n12345'});
+        context = iD.coreContext();
         context.history().merge([entity]);
         render({highway: 'residential'});
     });
@@ -52,7 +53,7 @@ describe('iD.uiRawTagEditor', function() {
             expect(tags).to.eql({highway: undefined});
             done();
         });
-        iD.utilTriggerEvent(element.selectAll('button.remove'), 'click');
+        iD.utilTriggerEvent(element.selectAll('button.remove'), 'mousedown');
     });
 
     it('adds tags when pressing the TAB key on last input.value', function (done) {

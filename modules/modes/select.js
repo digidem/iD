@@ -9,7 +9,6 @@ import {
     select as d3_select
 } from 'd3-selection';
 
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
 import { t } from '../util/locale';
 
 import { actionAddMidpoint } from '../actions';
@@ -23,30 +22,21 @@ import {
     behaviorSelect
 } from '../behavior';
 
-import {
-    geoExtent,
-    geoChooseEdge,
-    geoPointInPolygon
-} from '../geo';
-
-import {
-    osmNode,
-    osmWay
-} from '../osm';
-
+import { geoExtent, geoChooseEdge, geoPointInPolygon } from '../geo';
 import { modeBrowse } from './browse';
 import { modeDragNode } from './drag_node';
 import { modeDragNote } from './drag_note';
+import { osmNode, osmWay } from '../osm';
 import * as Operations from '../operations/index';
 import { uiEditMenu, uiSelectionList } from '../ui';
 import { uiCmd } from '../ui/cmd';
-import { utilEntityOrMemberSelector, utilEntitySelector } from '../util';
+import { utilEntityOrMemberSelector, utilEntitySelector, utilKeybinding } from '../util';
 
 // deprecation warning - Radial Menu to be removed in iD v3
 import { uiRadialMenu } from '../ui';
 
 
-var relatedParent;
+var _relatedParent;
 
 
 export function modeSelect(context, selectedIDs) {
@@ -55,7 +45,7 @@ export function modeSelect(context, selectedIDs) {
         button: 'browse'
     };
 
-    var keybinding = d3_keybinding('select');
+    var keybinding = utilKeybinding('select');
     var timeout = null;
     var behaviors = [
         behaviorCopy(context),
@@ -132,7 +122,7 @@ export function modeSelect(context, selectedIDs) {
     function singularParent() {
         var parents = commonParents();
         if (!parents || parents.length === 0) {
-            relatedParent = null;
+            _relatedParent = null;
             return null;
         }
 
@@ -140,12 +130,12 @@ export function modeSelect(context, selectedIDs) {
         // parents, and we want to remember which parent line we started on.
 
         if (parents.length === 1) {
-            relatedParent = parents[0];  // remember this parent for later
-            return relatedParent;
+            _relatedParent = parents[0];  // remember this parent for later
+            return _relatedParent;
         }
 
-        if (parents.indexOf(relatedParent) !== -1) {
-            return relatedParent;   // prefer the previously seen parent
+        if (parents.indexOf(_relatedParent) !== -1) {
+            return _relatedParent;   // prefer the previously seen parent
         }
 
         return parents[0];
@@ -202,6 +192,14 @@ export function modeSelect(context, selectedIDs) {
     };
 
 
+    mode.zoomToSelected = function() {
+        var entity = singular();
+        if (entity) {
+            context.map().zoomToEase(entity);
+        }
+    };
+
+
     mode.reselect = function() {
         if (!checkSelectedIDs()) return;
 
@@ -239,6 +237,93 @@ export function modeSelect(context, selectedIDs) {
 
 
     mode.enter = function() {
+        if (!checkSelectedIDs()) return;
+
+        context.features().forceVisible(selectedIDs);
+
+        var operations = _without(_values(Operations), Operations.operationDelete)
+            .map(function(o) { return o(selectedIDs, context); })
+            .filter(function(o) { return o.available(); });
+
+        // deprecation warning - Radial Menu to be removed in iD v3
+        var isRadialMenu = context.storage('edit-menu-style') === 'radial';
+        if (isRadialMenu) {
+            operations = operations.slice(0,7);
+            operations.unshift(Operations.operationDelete(selectedIDs, context));
+        } else {
+            operations.push(Operations.operationDelete(selectedIDs, context));
+        }
+
+        operations.forEach(function(operation) {
+            if (operation.behavior) {
+                behaviors.push(operation.behavior);
+            }
+        });
+
+        behaviors.forEach(context.install);
+
+        keybinding
+            .on(t('inspector.zoom_to.key'), mode.zoomToSelected)
+            .on(['[', 'pgup'], previousVertex)
+            .on([']', 'pgdown'], nextVertex)
+            .on(['{', uiCmd('⌘['), 'home'], firstVertex)
+            .on(['}', uiCmd('⌘]'), 'end'], lastVertex)
+            .on(['\\', 'pause'], nextParent)
+            .on('⎋', esc, true)
+            .on('space', toggleMenu);
+
+        d3_select(document)
+            .call(keybinding);
+
+
+        // deprecation warning - Radial Menu to be removed in iD v3
+        editMenu = isRadialMenu
+            ? uiRadialMenu(context, operations)
+            : uiEditMenu(context, operations);
+
+        context.ui().sidebar
+            .select(singular() ? singular().id : null, newFeature);
+
+        context.history()
+            .on('undone.select', update)
+            .on('redone.select', update);
+
+        context.map()
+            .on('move.select', closeMenu)
+            .on('drawn.select', selectElements);
+
+        context.surface()
+            .on('dblclick.select', dblclick);
+
+
+        selectElements();
+
+        if (selectedIDs.length > 1) {
+            var entities = uiSelectionList(context, selectedIDs);
+            context.ui().sidebar.show(entities);
+        }
+
+        if (follow) {
+            var extent = geoExtent();
+            var graph = context.graph();
+            selectedIDs.forEach(function(id) {
+                var entity = context.entity(id);
+                extent._extend(entity.extent(graph));
+            });
+
+            var loc = extent.center();
+            context.map().centerEase(loc);
+        } else if (singular() && singular().type === 'way') {
+            context.map().pan([0,0]);  // full redraw, to adjust z-sorting #2914
+        }
+
+        timeout = window.setTimeout(function() {
+            positionMenu();
+            if (!suppressMenu) {
+                showMenu();
+            }
+        }, 270);  /* after any centerEase completes */
+
 
         function update() {
             closeMenu();
@@ -292,8 +377,8 @@ export function modeSelect(context, selectedIDs) {
                 .classed('related', false);
 
             singularParent();
-            if (relatedParent) {
-                surface.selectAll(utilEntitySelector([relatedParent]))
+            if (_relatedParent) {
+                surface.selectAll(utilEntitySelector([_relatedParent]))
                     .classed('related', true);
             }
 
@@ -315,6 +400,7 @@ export function modeSelect(context, selectedIDs) {
 
 
         function esc() {
+            if (d3_select('.combobox').size()) return;
             context.enter(modeBrowse(context));
         }
 
@@ -412,107 +498,22 @@ export function modeSelect(context, selectedIDs) {
             var parents = _uniq(commonParents());
             if (!parents || parents.length < 2) return;
 
-            var index = parents.indexOf(relatedParent);
+            var index = parents.indexOf(_relatedParent);
             if (index < 0 || index > parents.length - 2) {
-                relatedParent = parents[0];
+                _relatedParent = parents[0];
             } else {
-                relatedParent = parents[index + 1];
+                _relatedParent = parents[index + 1];
             }
 
             var surface = context.surface();
             surface.selectAll('.related')
                 .classed('related', false);
 
-            if (relatedParent) {
-                surface.selectAll(utilEntitySelector([relatedParent]))
+            if (_relatedParent) {
+                surface.selectAll(utilEntitySelector([_relatedParent]))
                     .classed('related', true);
             }
         }
-
-
-        if (!checkSelectedIDs()) return;
-
-        var operations = _without(_values(Operations), Operations.operationDelete)
-            .map(function(o) { return o(selectedIDs, context); })
-            .filter(function(o) { return o.available(); });
-
-        // deprecation warning - Radial Menu to be removed in iD v3
-        var isRadialMenu = context.storage('edit-menu-style') === 'radial';
-        if (isRadialMenu) {
-            operations = operations.slice(0,7);
-            operations.unshift(Operations.operationDelete(selectedIDs, context));
-        } else {
-            operations.push(Operations.operationDelete(selectedIDs, context));
-        }
-
-        operations.forEach(function(operation) {
-            if (operation.behavior) {
-                behaviors.push(operation.behavior);
-            }
-        });
-
-        behaviors.forEach(context.install);
-
-        keybinding
-            .on(['[', 'pgup'], previousVertex)
-            .on([']', 'pgdown'], nextVertex)
-            .on(['{', uiCmd('⌘['), 'home'], firstVertex)
-            .on(['}', uiCmd('⌘]'), 'end'], lastVertex)
-            .on(['\\', 'pause'], nextParent)
-            .on('⎋', esc, true)
-            .on('space', toggleMenu);
-
-        d3_select(document)
-            .call(keybinding);
-
-
-        // deprecation warning - Radial Menu to be removed in iD v3
-        editMenu = isRadialMenu
-            ? uiRadialMenu(context, operations)
-            : uiEditMenu(context, operations);
-
-        context.ui().sidebar
-            .select(singular() ? singular().id : null, newFeature);
-
-        context.history()
-            .on('undone.select', update)
-            .on('redone.select', update);
-
-        context.map()
-            .on('move.select', closeMenu)
-            .on('drawn.select', selectElements);
-
-        context.surface()
-            .on('dblclick.select', dblclick);
-
-
-        selectElements();
-
-        if (selectedIDs.length > 1) {
-            var entities = uiSelectionList(context, selectedIDs);
-            context.ui().sidebar.show(entities);
-        }
-
-        if (follow) {
-            var extent = geoExtent();
-            var graph = context.graph();
-            selectedIDs.forEach(function(id) {
-                var entity = context.entity(id);
-                extent._extend(entity.extent(graph));
-            });
-
-            var loc = extent.center();
-            context.map().centerEase(loc);
-        } else if (singular() && singular().type === 'way') {
-            context.map().pan([0,0]);  // full redraw, to adjust z-sorting #2914
-        }
-
-        timeout = window.setTimeout(function() {
-            positionMenu();
-            if (!suppressMenu) {
-                showMenu();
-            }
-        }, 270);  /* after any centerEase completes */
     };
 
 
@@ -521,7 +522,10 @@ export function modeSelect(context, selectedIDs) {
         if (inspector) wrap.call(inspector.close);
 
         behaviors.forEach(context.uninstall);
-        keybinding.off();
+
+        d3_select(document)
+            .call(keybinding.unbind);
+
         closeMenu();
         editMenu = undefined;
 
@@ -544,6 +548,7 @@ export function modeSelect(context, selectedIDs) {
 
         context.map().on('drawn.select', null);
         context.ui().sidebar.hide();
+        context.features().forceVisible([]);
     };
 
 

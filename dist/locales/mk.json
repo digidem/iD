@@ -115,14 +115,6 @@
             "delete_member": {
                 "annotation": "Отстранет член од однос."
             },
-            "connect": {
-                "annotation": {
-                    "point": "Поврзан пат со точка.",
-                    "vertex": "Поврзан еден пат со друг",
-                    "line": "Поврзан пат со линија.",
-                    "area": "Поврзан пат со подрачје."
-                }
-            },
             "disconnect": {
                 "title": "Оддели",
                 "description": "Одделете ги линииве/подрачјава.",
@@ -207,7 +199,6 @@
         "browser_notice": "Уредников е поддржан во Firefox, Chrome, Safari, Opera и Internet Explorer 11 или понова верзија. Надградете го прелистувачот или користете го Potlatch 2 за уредување на картата.",
         "translate": {
             "translate": "Преведи",
-            "localized_translation_label": "Повеќејазично име",
             "localized_translation_language": "Изберете јазик",
             "localized_translation_name": "Име"
         },
@@ -258,9 +249,6 @@
             "locating": "Ве пронаоѓам. Почекајте..."
         },
         "inspector": {
-            "no_documentation_combination": "Нема документација за овој сплет на ознаки",
-            "no_documentation_key": "Нема документација за овој клуч",
-            "documentation_redirect": "Документацијата е пренасочена кон нова страница",
             "show_more": "Повеќе",
             "view_on_osm": "Погл. на openstreetmap.org",
             "all_fields": "Сите полиња",
@@ -271,7 +259,6 @@
             "role": "Улога",
             "choose": "Изберете вид елемент",
             "results": "{n} ставки од пребарувањето на {search}",
-            "reference": "Погл. на викито на OpenStreetMap ",
             "back_tooltip": "Измени елемент",
             "remove": "Отстрани",
             "search": "Пребарај",
@@ -355,11 +342,9 @@
                 "tooltip": "Електрични водови, електрани, трафостаници и тн."
             },
             "past_future": {
-                "description": "Минато/иднина",
                 "tooltip": "Предложено, во изградба, напуштено, урнато и тн."
             },
             "others": {
-                "description": "Други",
                 "tooltip": "Сето останато"
             }
         },
@@ -430,16 +415,6 @@
             "on_wiki": "{tag} на wiki.osm.org",
             "used_with": "се користи со {type}"
         },
-        "validations": {
-            "untagged_point": "Неозначена точка",
-            "untagged_point_tooltip": "Изберете вид на елемент што опишува каква точка е ова.",
-            "untagged_line": "Неозначена линија",
-            "untagged_line_tooltip": "Изберете вид на елемент што опишува каква линија е ова.",
-            "untagged_area": "Неозначено подрачје",
-            "untagged_area_tooltip": "Изберете вид на елемент што опишува какво подрачје е ова.",
-            "tag_suggests_area": "Ознаката {tag} укажува дека линијата треба да е подрачје, но не е.",
-            "deprecated_tags": "Застарени ознаки: {tags}"
-        },
         "cannot_zoom": "Не можам повеќе да приближувам во тековниот режим.",
         "full_screen": "Полн екран",
         "mapillary_images": {
@@ -498,9 +473,6 @@
                 },
                 "category-building": {
                     "name": "Елементи за градби"
-                },
-                "category-golf": {
-                    "name": "Елементи за голф"
                 },
                 "category-landuse": {
                     "name": "Елементи за видови земјиште"
@@ -662,9 +634,6 @@
                         "hot_spring": "Топол извор",
                         "onsen": "Јапонска бања"
                     }
-                },
-                "beauty": {
-                    "label": "Вид дуќан"
                 },
                 "bench": {
                     "label": "Клупа"
@@ -847,10 +816,8 @@
                     "label": "Вид"
                 },
                 "fire_hydrant/type": {
-                    "label": "Вид",
                     "options": {
                         "pillar": "Столб/надземен",
-                        "pond": "Езерце",
                         "underground": "Подземен",
                         "wall": "Ѕиден"
                     }
@@ -1168,15 +1135,6 @@
                 },
                 "piste/difficulty": {
                     "label": "Тешкотија",
-                    "options": {
-                        "advanced": "Напредно (црна баклава)",
-                        "easy": "Лесно (зелен круг)",
-                        "expert": "Експертско (двојна црна баклава)",
-                        "extreme": "Екстремно (потребна искачувачка опрема)",
-                        "freeride": "Слободно (вон патека)",
-                        "intermediate": "Средно (син круг)",
-                        "novice": "Почетнички (за обука)"
-                    },
                     "placeholder": "Лесно, средно, напредно..."
                 },
                 "piste/grooming": {
@@ -1460,8 +1418,7 @@
                     "label": "Вид"
                 },
                 "website": {
-                    "label": "Мрежно место",
-                    "placeholder": "http://example.com/"
+                    "label": "Мрежно место"
                 },
                 "wetland": {
                     "label": "Вид"
@@ -1678,32 +1635,17 @@
                 "amenity/nightclub": {
                     "name": "Ноќен клуб"
                 },
-                "amenity/parking": {
-                    "name": "Паркиралиште"
-                },
                 "amenity/parking_entrance": {
                     "name": "Влез/излез на покриено паркиралиште"
                 },
                 "amenity/parking_space": {
                     "name": "Паркинг-место"
                 },
-                "amenity/pharmacy": {
-                    "name": "Аптека"
-                },
                 "amenity/place_of_worship": {
                     "name": "Верски објект"
                 },
                 "amenity/place_of_worship/buddhist": {
                     "name": "Будистички храм"
-                },
-                "amenity/place_of_worship/christian": {
-                    "name": "Црква"
-                },
-                "amenity/place_of_worship/jewish": {
-                    "name": "Синагога"
-                },
-                "amenity/place_of_worship/muslim": {
-                    "name": "Џамија"
                 },
                 "amenity/planetarium": {
                     "name": "Планетариум"
@@ -1795,14 +1737,8 @@
                 "amenity/vending_machine/drinks": {
                     "name": "Автопат за пијалаци"
                 },
-                "amenity/vending_machine/excrement_bags": {
-                    "name": "Автомат за изметни кеси"
-                },
                 "amenity/vending_machine/news_papers": {
                     "name": "<преведете со истозначници или сродни поими на „Автомат за весници“, одделени со запирки>"
-                },
-                "amenity/vending_machine/parcel_pickup_dropoff": {
-                    "name": "Автомат за оставање/подигање пратки"
                 },
                 "amenity/vending_machine/parking_tickets": {
                     "name": "Паркинг-автомат"
@@ -1890,9 +1826,6 @@
                 },
                 "building": {
                     "name": "Градба"
-                },
-                "building/apartments": {
-                    "name": "Станбена зграда"
                 },
                 "building/barn": {
                     "name": "Амбар"
@@ -1986,9 +1919,6 @@
                 },
                 "building/terrace": {
                     "name": "Нанижани куќи"
-                },
-                "building/train_station": {
-                    "name": "Железничка станица"
                 },
                 "building/university": {
                     "name": "Универзитет"
@@ -2167,15 +2097,6 @@
                 "entrance": {
                     "name": "Влез/излез"
                 },
-                "footway/crossing": {
-                    "name": "Уличен премин"
-                },
-                "footway/crosswalk": {
-                    "name": "Пешачки премин"
-                },
-                "footway/sidewalk": {
-                    "name": "Тротоар"
-                },
                 "ford": {
                     "name": "Брод"
                 },
@@ -2191,23 +2112,11 @@
                 "golf/hole": {
                     "name": "Дупка за голф"
                 },
-                "golf/lateral_water_hazard_area": {
-                    "name": "Странична водена препрека"
-                },
-                "golf/lateral_water_hazard_line": {
-                    "name": "Странична водена препрека"
-                },
                 "golf/rough": {
                     "name": "Нерамно поле"
                 },
                 "golf/tee": {
                     "name": "Почетна рамнинка"
-                },
-                "golf/water_hazard_area": {
-                    "name": "Водена препрека"
-                },
-                "golf/water_hazard_line": {
-                    "name": "Водена препрека"
                 },
                 "healthcare/blood_donation": {
                     "name": "Крводарителски центар"
@@ -2220,12 +2129,6 @@
                 },
                 "highway/corridor": {
                     "name": "Покриен премин"
-                },
-                "highway/crossing": {
-                    "name": "Уличен премин"
-                },
-                "highway/crosswalk": {
-                    "name": "Пешачки премин"
                 },
                 "highway/cycleway": {
                     "name": "Велосипедска патека"
@@ -2395,9 +2298,6 @@
                 "landuse/farmyard": {
                     "name": "Селски двор"
                 },
-                "landuse/forest": {
-                    "name": "Шума"
-                },
                 "landuse/grass": {
                     "name": "Трева"
                 },
@@ -2530,9 +2430,6 @@
                 "leisure/pitch/american_football": {
                     "name": "Игралиште за американски фудбал"
                 },
-                "leisure/pitch/baseball": {
-                    "name": "Игралиште за бејзбол"
-                },
                 "leisure/pitch/basketball": {
                     "name": "Кошаркарско игралиште"
                 },
@@ -2617,9 +2514,6 @@
                 "man_made/lighthouse": {
                     "name": "Светилник"
                 },
-                "man_made/observation": {
-                    "name": "Набљудувачница"
-                },
                 "man_made/petroleum_well": {
                     "name": "Нафтен извор"
                 },
@@ -2640,9 +2534,6 @@
                 },
                 "man_made/surveillance": {
                     "name": "Надзор"
-                },
-                "man_made/surveillance_camera": {
-                    "name": "Видеонадзор"
                 },
                 "man_made/survey_point": {
                     "name": "Надзорно место"
@@ -2722,9 +2613,6 @@
                 "natural/tree": {
                     "name": "Дрво"
                 },
-                "natural/tree_row": {
-                    "name": "Дрворед"
-                },
                 "natural/volcano": {
                     "name": "Вулкан"
                 },
@@ -2793,9 +2681,6 @@
                 },
                 "office/travel_agent": {
                     "name": "Туристичка агенција"
-                },
-                "piste": {
-                    "name": "Скијачка патека"
                 },
                 "place": {
                     "name": "Место"
@@ -3096,9 +2981,6 @@
                 },
                 "shop/interior_decoration": {
                     "name": "Продавница за внатрешно уредување"
-                },
-                "shop/jewelry": {
-                    "name": "Златарница"
                 },
                 "shop/kitchen": {
                     "name": "Кујни и елементи"

@@ -144,14 +144,6 @@
             "delete_member": {
                 "annotation": "Fjernet et medlem fra en relasjon"
             },
-            "connect": {
-                "annotation": {
-                    "point": "Koblet en linje til et punkt.",
-                    "vertex": "Koblet en linje til en annen.",
-                    "line": "Koblet en linje til en annen linje.",
-                    "area": "Koblet en linje til et område."
-                }
-            },
             "disconnect": {
                 "title": "Koble fra",
                 "description": "Koble disse linjene/areane fra hverandre",
@@ -321,7 +313,6 @@
         "browser_notice": "Denne editor er støttet i Firefox, Chrome, Safari, Opera og Internet Explorer 11 og høyere. Vennligst oppgrader din nettleser eller bruk Potlatch 2 for å redigere kartet.",
         "translate": {
             "translate": "Oversett",
-            "localized_translation_label": "Flerspråklig navn",
             "localized_translation_language": "Velg språk",
             "localized_translation_name": "Navn"
         },
@@ -421,9 +412,6 @@
             "locating": "Finner sted, vennligst vent..."
         },
         "inspector": {
-            "no_documentation_combination": "Det finnes ingen dokumentasjon for denne tag-kombinasjonen",
-            "no_documentation_key": "Det finnes ingen dokumentasjon tilgjengelig for denne nøkkelen",
-            "documentation_redirect": "Denne dokumentasjonen peker nå til en ny side.",
             "show_more": "Vis mer",
             "view_on_osm": "Se på openstreetmap.org",
             "all_fields": "Alle felter",
@@ -434,7 +422,6 @@
             "role": "Rolle",
             "choose": "Velg egenskapstype",
             "results": "{n} resultater for {search}",
-            "reference": "Les mer på OpenStreetMap Wiki",
             "back_tooltip": "Endre kartegenskap",
             "remove": "Fjern",
             "search": "Søk",
@@ -538,7 +525,6 @@
                 "tooltip": "Kraftlinjer, kraftverk osv."
             },
             "others": {
-                "description": "Andre",
                 "tooltip": "Alt annet"
             }
         },
@@ -619,20 +605,6 @@
             "on_wiki": "{tag} på wiki.osm.org",
             "used_with": "brukes med {type}"
         },
-        "validations": {
-            "disconnected_highway": "Koblet fra vei",
-            "disconnected_highway_tooltip": "Veier burde være koblet til andre veier eller til inngangen til bygninger.",
-            "untagged_point": "Utagget punkt",
-            "untagged_point_tooltip": "Velg en kartegenskaptype som beskriver hva dette punktet er.",
-            "untagged_line": "Utagget linje",
-            "untagged_line_tooltip": "Velg en kartegenskaptype som beskriver hva denne linjen er.",
-            "untagged_area": "Utagget område",
-            "untagged_area_tooltip": "Velg en kartegenskaptype som beskriver hva dette område er.",
-            "untagged_relation": "Utagget relasjon",
-            "untagged_relation_tooltip": "Velg en kartegenskaptype som beskriver hva denne relasjonen er.",
-            "tag_suggests_area": "Taggen {tag} anbefaler at linje bør være et areal, men dette er ikke et areal",
-            "deprecated_tags": "Utgående tagger: {tags}"
-        },
         "zoom": {
             "in": "Zoom inn",
             "out": "Zoom ut"
@@ -658,8 +630,7 @@
             },
             "overview": {
                 "title": "Oversikt",
-                "navigation_h": "Navigasjon",
-                "nodes_ways": "I OpenStreetMap kaller vi av og til punkter for *noder*, og linjer og områder for *veier*."
+                "navigation_h": "Navigasjon"
             },
             "editing": {
                 "save_h": "Lagre",
@@ -971,9 +942,6 @@
                 "category-building": {
                     "name": "Bygingsrelatert"
                 },
-                "category-golf": {
-                    "name": "Golfrelatert"
-                },
                 "category-landuse": {
                     "name": "Arealbrukrelaterte egenskaper"
                 },
@@ -1147,9 +1115,6 @@
                     "options": {
                         "foot_bath": "Fotbad"
                     }
-                },
-                "beauty": {
-                    "label": "Butikktype"
                 },
                 "bench": {
                     "label": "Benk"
@@ -1334,10 +1299,8 @@
                     "label": "Avgift"
                 },
                 "fire_hydrant/type": {
-                    "label": "Type",
                     "options": {
                         "pillar": "Over bakken",
-                        "pond": "Vanndam",
                         "underground": "Under overflaten",
                         "wall": "Vegg"
                     }
@@ -1637,11 +1600,7 @@
                     "placeholder": "+47 22 12 34 56"
                 },
                 "piste/difficulty": {
-                    "label": "Vanskelighet",
-                    "options": {
-                        "advanced": "Avansert (svart diamant)",
-                        "easy": "Enkel (grønn sirkel)"
-                    }
+                    "label": "Vanskelighet"
                 },
                 "piste/type": {
                     "label": "Type"
@@ -1731,8 +1690,7 @@
                     "label": "Type"
                 },
                 "website": {
-                    "label": "Nettside",
-                    "placeholder": "http://example.com/"
+                    "label": "Nettside"
                 },
                 "wetland": {
                     "label": "Type"
@@ -1854,32 +1812,17 @@
                 "amenity/nightclub": {
                     "name": "Nattklubb"
                 },
-                "amenity/parking": {
-                    "name": "Bilparkering"
-                },
                 "amenity/parking_entrance": {
                     "name": "Innkjøring/utkjøring parkeringsgarasje"
                 },
                 "amenity/parking_space": {
                     "name": "Parkeringsplass"
                 },
-                "amenity/pharmacy": {
-                    "name": "Apotek"
-                },
                 "amenity/place_of_worship": {
                     "name": "Bedested"
                 },
                 "amenity/place_of_worship/buddhist": {
                     "name": "Buddhisttempel"
-                },
-                "amenity/place_of_worship/christian": {
-                    "name": "Kirke"
-                },
-                "amenity/place_of_worship/jewish": {
-                    "name": "Synagoge"
-                },
-                "amenity/place_of_worship/muslim": {
-                    "name": "Moské"
                 },
                 "amenity/police": {
                     "name": "Politi"
@@ -1971,9 +1914,6 @@
                 "building": {
                     "name": "Bygning"
                 },
-                "building/apartments": {
-                    "name": "Leiligheter"
-                },
                 "building/barn": {
                     "name": "Låve"
                 },
@@ -2048,9 +1988,6 @@
                 },
                 "building/stable": {
                     "name": "Stall"
-                },
-                "building/train_station": {
-                    "name": "Togstasjon"
                 },
                 "building/university": {
                     "name": "Universitetsbygning"
@@ -2202,15 +2139,6 @@
                 "entrance": {
                     "name": "Inngang/utgang"
                 },
-                "footway/crossing": {
-                    "name": "Fotgjengerovergang"
-                },
-                "footway/crosswalk": {
-                    "name": "Fotgjengerovergang"
-                },
-                "footway/sidewalk": {
-                    "name": "Fortau"
-                },
                 "ford": {
                     "name": "Vadested"
                 },
@@ -2237,12 +2165,6 @@
                 },
                 "highway/bridleway": {
                     "name": "Ridevei"
-                },
-                "highway/crossing": {
-                    "name": "Fotgjengerovergang"
-                },
-                "highway/crosswalk": {
-                    "name": "Fotgjengerovergang"
                 },
                 "highway/cycleway": {
                     "name": "Sykkelvei"
@@ -2346,9 +2268,6 @@
                 "landuse/farmyard": {
                     "name": "Gårdsplass"
                 },
-                "landuse/forest": {
-                    "name": "Skog"
-                },
                 "landuse/grass": {
                     "name": "Gress"
                 },
@@ -2427,9 +2346,6 @@
                 "leisure/pitch/american_football": {
                     "name": "Amerikansk fotballbane"
                 },
-                "leisure/pitch/baseball": {
-                    "name": "Baseballbane"
-                },
                 "leisure/pitch/basketball": {
                     "name": "Basketballbane"
                 },
@@ -2501,9 +2417,6 @@
                 },
                 "man_made/lighthouse": {
                     "name": "Fyrtårn"
-                },
-                "man_made/observation": {
-                    "name": "Observasjonstårn"
                 },
                 "man_made/petroleum_well": {
                     "name": "Oljebrønn"
@@ -2588,9 +2501,6 @@
                 },
                 "natural/tree": {
                     "name": "Tre"
-                },
-                "natural/tree_row": {
-                    "name": "Trerekke"
                 },
                 "natural/volcano": {
                     "name": "Vulkan"
@@ -2876,9 +2786,6 @@
                 },
                 "shop/interior_decoration": {
                     "name": "Interiørbutikk"
-                },
-                "shop/jewelry": {
-                    "name": "Smykkeforhandler"
                 },
                 "shop/kitchen": {
                     "name": "Kjøkkenbutikk"
@@ -3200,9 +3107,6 @@
             },
             "OSM-Nepal-facebook": {
                 "description": "Forbedre OpenStreetMap i Nepal"
-            },
-            "OSM-LKA-facebook": {
-                "description": "Forbedre OpenStreetMap i Sri Lanka"
             },
             "at-twitter": {
                 "name": "OpenStreetMap Østerrike Twitter",

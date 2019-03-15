@@ -1,10 +1,17 @@
 {
-    "icon": "maki-garden-center",
+    "icon": "maki-garden-centre",
     "geometry": [
         "area"
     ],
     "fields": [
         "name"
+    ],
+    "moreFields": [
+        "address",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "tags": {
         "landuse": "allotments"

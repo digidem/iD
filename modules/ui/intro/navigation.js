@@ -12,15 +12,15 @@ import { icon, pointBox, transitionTime } from './helper';
 
 
 export function uiIntroNavigation(context, reveal) {
-    var dispatch = d3_dispatch('done'),
-        timeouts = [],
-        hallId = 'n2061',
-        townHall = [-85.63591, 41.94285],
-        springStreetId = 'w397',
-        springStreetEndId = 'n1834',
-        springStreet = [-85.63582, 41.94255],
-        onewayField = context.presets().field('oneway'),
-        maxspeedField = context.presets().field('maxspeed');
+    var dispatch = d3_dispatch('done');
+    var timeouts = [];
+    var hallId = 'n2061';
+    var townHall = [-85.63591, 41.94285];
+    var springStreetId = 'w397';
+    var springStreetEndId = 'n1834';
+    var springStreet = [-85.63582, 41.94255];
+    var onewayField = context.presets().field('oneway');
+    var maxspeedField = context.presets().field('maxspeed');
 
 
     var chapter = {
@@ -51,7 +51,7 @@ export function uiIntroNavigation(context, reveal) {
 
         var msec = transitionTime(townHall, context.map().center());
         if (msec) { reveal(null, null, { duration: 0 }); }
-        context.map().zoom(19).centerEase(townHall, msec);
+        context.map().centerZoomEase(townHall, 19, msec);
 
         timeout(function() {
             var centerStart = context.map().center();
@@ -172,34 +172,29 @@ export function uiIntroNavigation(context, reveal) {
         context.enter(modeBrowse(context));
         context.history().reset('initial');
 
+        var entity = context.hasEntity(hallId);
+        if (!entity) return;
         reveal(null, null, { duration: 0 });
-        context.map().zoomEase(19, 500);
+        context.map().centerZoomEase(entity.loc, 19, 500);
 
         timeout(function() {
             var entity = context.hasEntity(hallId);
             if (!entity) return;
-            context.map().centerEase(entity.loc, 500);
+            var box = pointBox(entity.loc, context);
+            reveal(box, t('intro.navigation.click_townhall'));
 
-            timeout(function() {
+            context.map().on('move.intro drawn.intro', function() {
                 var entity = context.hasEntity(hallId);
                 if (!entity) return;
                 var box = pointBox(entity.loc, context);
-                reveal(box, t('intro.navigation.click_townhall'));
+                reveal(box, t('intro.navigation.click_townhall'), { duration: 0 });
+            });
 
-                context.map().on('move.intro drawn.intro', function() {
-                    var entity = context.hasEntity(hallId);
-                    if (!entity) return;
-                    var box = pointBox(entity.loc, context);
-                    reveal(box, t('intro.navigation.click_townhall'), { duration: 0 });
-                });
+            context.on('enter.intro', function() {
+                if (isTownHallSelected()) continueTo(selectedTownHall);
+            });
 
-                context.on('enter.intro', function() {
-                    if (isTownHallSelected()) continueTo(selectedTownHall);
-                });
-
-            }, 550);  // after centerEase
-
-        }, 550); // after zoomEase
+        }, 550);  // after centerZoomEase
 
         context.history().on('change.intro', function() {
             if (!context.hasEntity(hallId)) {
@@ -395,7 +390,7 @@ export function uiIntroNavigation(context, reveal) {
 
         var msec = transitionTime(springStreet, context.map().center());
         if (msec) { reveal(null, null, { duration: 0 }); }
-        context.map().zoom(19).centerEase(springStreet, msec);  // ..and user can see it
+        context.map().centerZoomEase(springStreet, 19, msec);  // ..and user can see it
 
         timeout(function() {
             reveal('.search-header input',
@@ -409,9 +404,9 @@ export function uiIntroNavigation(context, reveal) {
 
 
     function checkSearchResult() {
-        var first = d3_select('.feature-list-item:nth-child(0n+2)'),  // skip "No Results" item
-            firstName = first.select('.entity-name'),
-            name = t('intro.graph.name.spring-street');
+        var first = d3_select('.feature-list-item:nth-child(0n+2)');  // skip "No Results" item
+        var firstName = first.select('.entity-name');
+        var name = t('intro.graph.name.spring-street');
 
         if (!firstName.empty() && firstName.text() === name) {
             reveal(first.node(),

@@ -14,15 +14,15 @@ import { icon, pad, isMostlySquare, selectMenuItem, transitionTime } from './hel
 
 
 export function uiIntroBuilding(context, reveal) {
-    var dispatch = d3_dispatch('done'),
-        house = [-85.62815, 41.95638],
-        tank = [-85.62732, 41.95347],
-        buildingCatetory = context.presets().item('category-building'),
-        housePreset = context.presets().item('building/house'),
-        tankPreset = context.presets().item('man_made/storage_tank'),
-        timeouts = [],
-        houseId = null,
-        tankId = null;
+    var dispatch = d3_dispatch('done');
+    var house = [-85.62815, 41.95638];
+    var tank = [-85.62732, 41.95347];
+    var buildingCatetory = context.presets().item('category-building');
+    var housePreset = context.presets().item('building/house');
+    var tankPreset = context.presets().item('man_made/storage_tank');
+    var timeouts = [];
+    var _houseID = null;
+    var _tankID = null;
 
 
     var chapter = {
@@ -76,11 +76,11 @@ export function uiIntroBuilding(context, reveal) {
     function addHouse() {
         context.enter(modeBrowse(context));
         context.history().reset('initial');
-        houseId = null;
+        _houseID = null;
 
         var msec = transitionTime(house, context.map().center());
         if (msec) { reveal(null, null, { duration: 0 }); }
-        context.map().zoom(19).centerEase(house, msec);
+        context.map().centerZoomEase(house, 19, msec);
 
         timeout(function() {
             var tooltip = reveal('button.add-area',
@@ -110,7 +110,7 @@ export function uiIntroBuilding(context, reveal) {
             return continueTo(addHouse);
         }
 
-        houseId = null;
+        _houseID = null;
         context.map().zoomEase(20, 500);
 
         timeout(function() {
@@ -140,7 +140,7 @@ export function uiIntroBuilding(context, reveal) {
             return continueTo(addHouse);
         }
 
-        houseId = null;
+        _houseID = null;
 
         revealHouse(house, t('intro.buildings.continue_building'));
 
@@ -152,13 +152,13 @@ export function uiIntroBuilding(context, reveal) {
             if (mode.id === 'draw-area') {
                 return;
             } else if (mode.id === 'select') {
-                var graph = context.graph(),
-                    way = context.entity(context.selectedIDs()[0]),
-                    nodes = graph.childNodes(way),
-                    points = _uniq(nodes).map(function(n) { return context.projection(n.loc); });
+                var graph = context.graph();
+                var way = context.entity(context.selectedIDs()[0]);
+                var nodes = graph.childNodes(way);
+                var points = _uniq(nodes).map(function(n) { return context.projection(n.loc); });
 
                 if (isMostlySquare(points)) {
-                    houseId = way.id;
+                    _houseID = way.id;
                     return continueTo(chooseCategoryBuilding);
                 } else {
                     return continueTo(retryHouse);
@@ -198,12 +198,12 @@ export function uiIntroBuilding(context, reveal) {
 
 
     function chooseCategoryBuilding() {
-        if (!houseId || !context.hasEntity(houseId)) {
+        if (!_houseID || !context.hasEntity(_houseID)) {
             return addHouse();
         }
         var ids = context.selectedIDs();
-        if (context.mode().id !== 'select' || !ids.length || ids[0] !== houseId) {
-            context.enter(modeSelect(context, [houseId]));
+        if (context.mode().id !== 'select' || !ids.length || ids[0] !== _houseID) {
+            context.enter(modeSelect(context, [_houseID]));
         }
 
         // disallow scrolling
@@ -228,11 +228,11 @@ export function uiIntroBuilding(context, reveal) {
 
 
         context.on('enter.intro', function(mode) {
-            if (!houseId || !context.hasEntity(houseId)) {
+            if (!_houseID || !context.hasEntity(_houseID)) {
                 return continueTo(addHouse);
             }
             var ids = context.selectedIDs();
-            if (mode.id !== 'select' || !ids.length || ids[0] !== houseId) {
+            if (mode.id !== 'select' || !ids.length || ids[0] !== _houseID) {
                 return continueTo(chooseCategoryBuilding);
             }
         });
@@ -247,12 +247,12 @@ export function uiIntroBuilding(context, reveal) {
 
 
     function choosePresetHouse() {
-        if (!houseId || !context.hasEntity(houseId)) {
+        if (!_houseID || !context.hasEntity(_houseID)) {
             return addHouse();
         }
         var ids = context.selectedIDs();
-        if (context.mode().id !== 'select' || !ids.length || ids[0] !== houseId) {
-            context.enter(modeSelect(context, [houseId]));
+        if (context.mode().id !== 'select' || !ids.length || ids[0] !== _houseID) {
+            context.enter(modeSelect(context, [_houseID]));
         }
 
         // disallow scrolling
@@ -274,15 +274,14 @@ export function uiIntroBuilding(context, reveal) {
                 continueTo(closeEditorHouse);
             });
 
-
         }, 400);  // after preset list pane visible..
 
         context.on('enter.intro', function(mode) {
-            if (!houseId || !context.hasEntity(houseId)) {
+            if (!_houseID || !context.hasEntity(_houseID)) {
                 return continueTo(addHouse);
             }
             var ids = context.selectedIDs();
-            if (mode.id !== 'select' || !ids.length || ids[0] !== houseId) {
+            if (mode.id !== 'select' || !ids.length || ids[0] !== _houseID) {
                 return continueTo(chooseCategoryBuilding);
             }
         });
@@ -297,12 +296,12 @@ export function uiIntroBuilding(context, reveal) {
 
 
     function closeEditorHouse() {
-        if (!houseId || !context.hasEntity(houseId)) {
+        if (!_houseID || !context.hasEntity(_houseID)) {
             return addHouse();
         }
         var ids = context.selectedIDs();
-        if (context.mode().id !== 'select' || !ids.length || ids[0] !== houseId) {
-            context.enter(modeSelect(context, [houseId]));
+        if (context.mode().id !== 'select' || !ids.length || ids[0] !== _houseID) {
+            context.enter(modeSelect(context, [_houseID]));
         }
 
         context.history().checkpoint('hasHouse');
@@ -325,22 +324,20 @@ export function uiIntroBuilding(context, reveal) {
 
 
     function rightClickHouse() {
-        if (!houseId) return chapter.restart();
+        if (!_houseID) return chapter.restart();
 
         context.enter(modeBrowse(context));
         context.history().reset('hasHouse');
-        context.map().centerEase(house, 500);
-
-        timeout(function() {
-            if (context.map().zoom() < 20) {
-                context.map().zoomEase(20, 500);
-            }
-        }, 520);
+        var zoom = context.map().zoom();
+        if (zoom < 20) {
+            zoom = 20;
+        }
+        context.map().centerZoomEase(house, zoom, 500);
 
         context.on('enter.intro', function(mode) {
             if (mode.id !== 'select') return;
             var ids = context.selectedIDs();
-            if (ids.length !== 1 || ids[0] !== houseId) return;
+            if (ids.length !== 1 || ids[0] !== _houseID) return;
 
             timeout(function() {
                 var node = selectMenuItem('orthogonalize').node();
@@ -367,8 +364,8 @@ export function uiIntroBuilding(context, reveal) {
 
 
     function clickSquare() {
-        if (!houseId) return chapter.restart();
-        var entity = context.hasEntity(houseId);
+        if (!_houseID) return chapter.restart();
+        var entity = context.hasEntity(_houseID);
         if (!entity) return continueTo(rightClickHouse);
 
         var node = selectMenuItem('orthogonalize').node();
@@ -453,11 +450,11 @@ export function uiIntroBuilding(context, reveal) {
     function addTank() {
         context.enter(modeBrowse(context));
         context.history().reset('doneSquare');
-        tankId = null;
+        _tankID = null;
 
         var msec = transitionTime(tank, context.map().center());
         if (msec) { reveal(null, null, { duration: 0 }); }
-        context.map().zoom(19.5).centerEase(tank, msec);
+        context.map().centerZoomEase(tank, 19.5, msec);
 
         timeout(function() {
             reveal('button.add-area',
@@ -482,7 +479,7 @@ export function uiIntroBuilding(context, reveal) {
             return continueTo(addTank);
         }
 
-        tankId = null;
+        _tankID = null;
 
         timeout(function() {
             revealTank(tank, t('intro.buildings.start_tank'));
@@ -511,7 +508,7 @@ export function uiIntroBuilding(context, reveal) {
             return continueTo(addTank);
         }
 
-        tankId = null;
+        _tankID = null;
 
         revealTank(tank, t('intro.buildings.continue_tank'));
 
@@ -523,7 +520,7 @@ export function uiIntroBuilding(context, reveal) {
             if (mode.id === 'draw-area') {
                 return;
             } else if (mode.id === 'select') {
-                tankId = context.selectedIDs()[0];
+                _tankID = context.selectedIDs()[0];
                 return continueTo(searchPresetTank);
             } else {
                 return continueTo(addTank);
@@ -539,12 +536,12 @@ export function uiIntroBuilding(context, reveal) {
 
 
     function searchPresetTank() {
-        if (!tankId || !context.hasEntity(tankId)) {
+        if (!_tankID || !context.hasEntity(_tankID)) {
             return addTank();
         }
         var ids = context.selectedIDs();
-        if (context.mode().id !== 'select' || !ids.length || ids[0] !== tankId) {
-            context.enter(modeSelect(context, [tankId]));
+        if (context.mode().id !== 'select' || !ids.length || ids[0] !== _tankID) {
+            context.enter(modeSelect(context, [_tankID]));
         }
 
         // disallow scrolling
@@ -564,14 +561,14 @@ export function uiIntroBuilding(context, reveal) {
         }, 400);  // after preset list pane visible..
 
         context.on('enter.intro', function(mode) {
-            if (!tankId || !context.hasEntity(tankId)) {
+            if (!_tankID || !context.hasEntity(_tankID)) {
                 return continueTo(addTank);
             }
 
             var ids = context.selectedIDs();
-            if (mode.id !== 'select' || !ids.length || ids[0] !== tankId) {
+            if (mode.id !== 'select' || !ids.length || ids[0] !== _tankID) {
                 // keep the user's area selected..
-                context.enter(modeSelect(context, [tankId]));
+                context.enter(modeSelect(context, [_tankID]));
 
                 // reset pane, in case user somehow happened to change it..
                 d3_select('.inspector-wrap .panewrap').style('right', '-100%');
@@ -620,12 +617,12 @@ export function uiIntroBuilding(context, reveal) {
 
 
     function closeEditorTank() {
-        if (!tankId || !context.hasEntity(tankId)) {
+        if (!_tankID || !context.hasEntity(_tankID)) {
             return addTank();
         }
         var ids = context.selectedIDs();
-        if (context.mode().id !== 'select' || !ids.length || ids[0] !== tankId) {
-            context.enter(modeSelect(context, [tankId]));
+        if (context.mode().id !== 'select' || !ids.length || ids[0] !== _tankID) {
+            context.enter(modeSelect(context, [_tankID]));
         }
 
         context.history().checkpoint('hasTank');
@@ -648,7 +645,7 @@ export function uiIntroBuilding(context, reveal) {
 
 
     function rightClickTank() {
-        if (!tankId) return continueTo(addTank);
+        if (!_tankID) return continueTo(addTank);
 
         context.enter(modeBrowse(context));
         context.history().reset('hasTank');
@@ -658,7 +655,7 @@ export function uiIntroBuilding(context, reveal) {
             context.on('enter.intro', function(mode) {
                 if (mode.id !== 'select') return;
                 var ids = context.selectedIDs();
-                if (ids.length !== 1 || ids[0] !== tankId) return;
+                if (ids.length !== 1 || ids[0] !== _tankID) return;
 
                 timeout(function() {
                     var node = selectMenuItem('circularize').node();
@@ -689,8 +686,8 @@ export function uiIntroBuilding(context, reveal) {
 
 
     function clickCircle() {
-        if (!tankId) return chapter.restart();
-        var entity = context.hasEntity(tankId);
+        if (!_tankID) return chapter.restart();
+        var entity = context.hasEntity(_tankID);
         if (!entity) return continueTo(rightClickTank);
 
         var node = selectMenuItem('circularize').node();

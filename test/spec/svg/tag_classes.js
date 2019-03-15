@@ -137,6 +137,18 @@ describe('iD.svgTagClasses', function () {
         expect(selection.classed('tag-unpaved')).to.be.false;
     });
 
+    it('does not add tag-unpaved for other aeroway types with explicit paved surface tagging', function() {
+        selection
+            .datum(iD.osmEntity({tags: {aeroway: 'taxiway', surface: 'asphalt'}}))
+            .call(iD.svgTagClasses());
+        expect(selection.classed('tag-unpaved')).to.be.false;
+
+        selection
+            .datum(iD.osmEntity({tags: {aeroway: 'runway', surface: 'paved'}}))
+            .call(iD.svgTagClasses());
+        expect(selection.classed('tag-unpaved')).to.be.false;
+    });
+
     it('adds tag-unpaved for other highway types with explicit unpaved surface tagging', function() {
         selection
             .datum(iD.osmEntity({tags: {highway: 'tertiary', surface: 'dirt'}}))
@@ -149,7 +161,19 @@ describe('iD.svgTagClasses', function () {
         expect(selection.classed('tag-unpaved')).to.be.true;
     });
 
-    it('does not add tag-unpaved for non-highways', function() {
+    it('adds tag-unpaved for other aeroway types with explicit unpaved surface tagging', function() {
+        selection
+            .datum(iD.osmEntity({tags: {aeroway: 'taxiway', surface: 'dirt'}}))
+            .call(iD.svgTagClasses());
+        expect(selection.classed('tag-unpaved')).to.be.true;
+
+        selection
+            .datum(iD.osmEntity({tags: {aeroway: 'runway', surface: 'unpaved'}}))
+            .call(iD.svgTagClasses());
+        expect(selection.classed('tag-unpaved')).to.be.true;
+    });
+
+    it('does not add tag-unpaved for non-highways/aeroways', function() {
         selection
             .datum(iD.osmEntity({tags: {railway: 'abandoned', surface: 'gravel'}}))
             .call(iD.svgTagClasses());
@@ -183,6 +207,25 @@ describe('iD.svgTagClasses', function () {
             .datum(iD.osmEntity())
             .call(iD.svgTagClasses());
         expect(selection.attr('class')).to.equal('selected');
+    });
+
+    it('stroke overrides: renders areas with barriers as lines', function() {
+        selection
+            .attr('class', 'way area stroke')
+            .datum(iD.osmEntity({tags: {landuse: 'residential', barrier: 'hedge'}}))
+            .call(iD.svgTagClasses());
+        expect(selection.classed('area')).to.be.false;
+        expect(selection.classed('line')).to.be.true;
+    });
+
+    it('stroke overrides: renders simple multipolygon lines as areas', function() {
+        var multipolygon = function () { return { type: 'multipolygon' }; };
+        selection
+            .attr('class', 'way line stroke')
+            .datum(iD.osmEntity({tags: {}}))
+            .call(iD.svgTagClasses().tags(multipolygon));
+        expect(selection.classed('area')).to.be.true;
+        expect(selection.classed('line')).to.be.false;
     });
 
     it('works on SVG elements', function() {

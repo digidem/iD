@@ -1,7 +1,6 @@
 import _debounce from 'lodash-es/debounce';
 
 import { select as d3_select } from 'd3-selection';
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
 
 import {
     modeAddArea,
@@ -15,7 +14,6 @@ import { svgIcon } from '../svg';
 import { tooltip } from '../util/tooltip';
 import { uiTooltipHtml } from './tooltipHtml';
 
-
 export function uiModes(context) {
     var modes = [
         modeAddPoint(context),
@@ -25,7 +23,15 @@ export function uiModes(context) {
     ];
 
 
-    function editable() {
+    function enabled(d) {
+        if (d.id === 'add-note') {
+            return notesEnabled() && notesEditable();
+        } else {
+            return osmEditable();
+        }
+    }
+
+    function osmEditable() {
         var mode = context.mode();
         return context.editable() && mode && mode.id !== 'save';
     }
@@ -56,12 +62,9 @@ export function uiModes(context) {
                     .classed('mode-' + exited.id, false);
             });
 
-        var keybinding = d3_keybinding('mode-buttons');
-
         modes.forEach(function(mode) {
-            keybinding.on(mode.key, function() {
-                if (mode.id === 'add-note' && !(notesEnabled() && notesEditable())) return;
-                if (mode.id !== 'add-note' && !editable()) return;
+            context.keybinding().on(mode.key, function() {
+                if (!enabled(mode)) return;
 
                 if (mode.id === context.mode().id) {
                     context.enter(modeBrowse(context));
@@ -70,9 +73,6 @@ export function uiModes(context) {
                 }
             });
         });
-
-        d3_select(document)
-            .call(keybinding);
 
 
         var debouncedUpdate = _debounce(update, 500, { leading: true, trailing: true });
@@ -91,10 +91,6 @@ export function uiModes(context) {
             var showNotes = notesEnabled();
             var data = showNotes ? modes : modes.slice(0, 3);
 
-            selection
-                .classed('col3', !showNotes)  // 25%
-                .classed('col4', showNotes);  // 33%
-
             var buttons = selection.selectAll('button.add-button')
                 .data(data, function(d) { return d.id; });
 
@@ -107,29 +103,29 @@ export function uiModes(context) {
                 .append('button')
                 .attr('tabindex', -1)
                 .attr('class', function(d) { return d.id + ' add-button'; })
-                .on('click.mode-buttons', function(mode) {
+                .on('click.mode-buttons', function(d) {
+                    if (!enabled(d)) return;
+
                     // When drawing, ignore accidental clicks on mode buttons - #4042
                     var currMode = context.mode().id;
-                    if (currMode.match(/^draw/) !== null) return;
+                    if (/^draw/.test(currMode)) return;
 
-                    if (mode.id === currMode) {
+                    if (d.id === currMode) {
                         context.enter(modeBrowse(context));
                     } else {
-                        context.enter(mode);
+                        context.enter(d);
                     }
                 })
                 .call(tooltip()
                     .placement('bottom')
                     .html(true)
-                    .title(function(mode) {
-                        return uiTooltipHtml(mode.description, mode.key);
-                    })
+                    .title(function(d) { return uiTooltipHtml(d.description, d.key); })
                 );
 
             buttonsEnter
                 .each(function(d) {
                     d3_select(this)
-                        .call(svgIcon('#iD-icon-' + d.button, 'pre-text'));
+                        .call(svgIcon('#iD-icon-' + d.button));
                 });
 
             buttonsEnter
@@ -137,14 +133,15 @@ export function uiModes(context) {
                 .attr('class', 'label')
                 .text(function(mode) { return mode.title; });
 
+            // if we are adding/removing the buttons, check if toolbar has overflowed
+            if (buttons.enter().size() || buttons.exit().size()) {
+                context.ui().checkOverflow('#bar', true);
+            }
+
             // update
             buttons = buttons
                 .merge(buttonsEnter)
-                .classed('col3', showNotes)    // 25%
-                .classed('col4', !showNotes)   // 33%
-                .property('disabled', function(d) {
-                    return d.id === 'add-note' ? !notesEditable() : !editable();
-                });
+                .classed('disabled', function(d) { return !enabled(d); });
         }
     };
 }

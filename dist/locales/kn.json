@@ -139,14 +139,6 @@
             "delete_member": {
                 "annotation": "ಒಂದು ಅಂಶವನ್ನು ಸಂಬಂಧದಿಂದ ತೆಗೆಯಲಾಗಿದೆ. "
             },
-            "connect": {
-                "annotation": {
-                    "point": "ದಾರಿಯನ್ನು ಒಂದು ಚುಕ್ಕೆಗೆ ಸೇರಿಸಲಾಗಿದೆ.",
-                    "vertex": "ಒಂದು ದಾರಿಯನ್ನು ಇನೊಂದಕ್ಕೆ ಸೇರಿಸಲಾಗಿದೆ.",
-                    "line": "ದಾರಿಯನ್ನು ಒಂದು ಗೆರೆಗೆ ಸೇರಿಸಲಾಗಿದೆ.",
-                    "area": "ದಾರಿಯನ್ನು ಒಂದು ಕ್ಷೇತ್ರಕ್ಕೆ ಸೇರಿಸಲಾಗಿದೆ."
-                }
-            },
             "disconnect": {
                 "title": "ಸಂಪರ್ಕ ಕಡಿತಗೊಳಿಸು",
                 "description": "ಈ ದಾರಿಗಳನ್ನು ಅಥವಾ ಕ್ಷೇತ್ರಗಳನ್ನು, ಒಂದರಿಂದ ಇನ್ನೊಂದನ್ನು ಬೇರ್ಪಡಿಸಿ. ",
@@ -302,7 +294,6 @@
         "browser_notice": "ಸಫಾರಿ, ಗೂಗಲ್, ಫಯರ್ಫಾಕ್ಸ್ ಮತ್ತು ಇಂಟರ್‌ನೆಟ್ ಎಕ್ಸ್‌ಪ್ಲೋರರ್ 11 ಈ ಎಡಿಟರನ್ನು ಬೆಂಬಲಿಸುತ್ತವೆ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಬ್ರೌಸೆರನ್ನು ಉನ್ನತೀಕರಿಸಿ ಅಥವಾ ಈ ನಕ್ಷೆ ಬಡಸಿಲರು ಪೊಟ್ಲಾಚ್ 2 ಅನ್ನು ಉಪಯೋಗಿಸಿ. ",
         "translate": {
             "translate": "ಭಾಷಾಂತರಿಸು",
-            "localized_translation_label": "ಬಹುಭಾಷಿಕ ಹೆಸರು.",
             "localized_translation_language": "ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
             "localized_translation_name": "ಹೆಸರು"
         },
@@ -381,9 +372,6 @@
             "locating": "ಪತ್ತೆ ಹಚ್ಚುತ್ತಿದೆ. ದವವಿತ್ತು ಸ್ವಲ್ಪ ಸಮಯ ಕಾಯಿರಿ. "
         },
         "inspector": {
-            "no_documentation_combination": "ಈ ಗುರುತುಪಟ್ಟಿ ಸಂಯೋಜನೆ ಬಗ್ಗೆ ಯಾವುದೇ ಮಾಹಿತಿ ಅಥವಾ ದಾಖಲೆ ಇಲ್ಲ.  ",
-            "no_documentation_key": "ಈ ಕೀ ಬಗ್ಗೆ ಯಾವುದೇ ಮಾಹಿತಿ ಅಥವಾ ದಾಖಲೆ ಇಲ್ಲ.  ",
-            "documentation_redirect": "ಈ ದಾಖಲೆ ಪಟ್ಟಿಯನ್ನು ಹೊಸ ಪುಟಕ್ಕೆ ಮರುನಿರ್ದೇಶಿಸಲಾಗಿದೆ ",
             "show_more": "‍ಇನ್ನೂ ತೋರಿಸು",
             "view_on_osm": "ಓಪನ್ ಸ್ಟ್ರೀಟ್ ಮ್ಯಾಪ್.ಆರ್ಗ್ ನಲ್ಲಿ ನೋಡಿ. ",
             "all_fields": "ಎಲ್ಲ ವರ್ಗಗಳು. ",
@@ -394,7 +382,6 @@
             "role": "ಪಾತ್ರ",
             "choose": "ವಸ್ತು ಪ್ರಕಾರವನ್ನ ಆಯ್ಕೆಮಾಡಿ  ",
             "results": "{n} ಫಲಿತಾಂಶಗಳು {search} ",
-            "reference": "ಓಪನ್ಸ್ಟ್ರೀಟ್ಮ್ಯಾಪ್ ವಿಕಿ ನಲ್ಲಿ ನೋಡಿ.",
             "back_tooltip": "ಲಕ್ಷಣವನ್ನು ಬದಲಿಸು",
             "remove": "ತೆಗೆದುಹಾಕು",
             "search": "ಹುಡುಕು",
@@ -487,11 +474,9 @@
                 "tooltip": "ವಿದ್ಯುತ್ ಸಂಪರ್ಕಗಳು, ವಿದ್ಯುತ್ ಉತ್ಪಾದನಾ ಘಟಕಗಳು, ಉಪಕೇಂದ್ರಗಳು ಇತ್ಯಾದಿ"
             },
             "past_future": {
-                "description": "ಭೌತ / ಭವಿಷ್ಯ",
                 "tooltip": "ಪ್ರ‍ಸ್ತಾವಿಸಿದ, ನಿರ್ಮಾ‍ಣ ಹಂತದ, ಕೈಬಿಟ್ಟ, ಕೆಡವ‍ಲಾದ ಇತ್ಯಾದಿ"
             },
             "others": {
-                "description": "ಇತರೆ",
                 "tooltip": "ಇನ್ನಿತರೆ"
             }
         },
@@ -553,14 +538,6 @@
             "description": "ವಿವರಣೆ",
             "on_wiki": "{tag} wiki.osm.org ನಲ್ಲಿ",
             "used_with": "{ಮಾದರಿ} ಜೊತೆಗೆ ಬಳಸಿ. "
-        },
-        "validations": {
-            "disconnected_highway": "ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿರುವ ಹೆದ್ದಾರಿ  ",
-            "untagged_point": "ಹೆಸರುಪಟ್ಟಿಯಿಲ್ಲದ ಚುಕ್ಕೆ. ",
-            "untagged_line": "ಹೆಸರುಪಟ್ಟಿಯಿಲ್ಲದ ಗೆರೆ. ",
-            "untagged_area": "ಹೆಸರುಪಟ್ಟಿಯಿಲ್ಲದ ಕ್ಷೇತ್ರ.",
-            "untagged_relation": "ಟ್ಯಾಗ್ ಮಾಡಲಾಗದ ಸಂಬಂಧ",
-            "deprecated_tags": "‍ಉಪಯೋಗಿಸದ ಗುರುತುಪಟ್ಟಿಗಳು: {tags}"
         },
         "full_screen": "‍ಪೂರ್ಣ ಪರದೆಗೆ ಹಿಂದಿರುಗು",
         "mapillary_images": {
@@ -718,9 +695,6 @@
                 },
                 "category-building": {
                     "name": "‍ಕಟ್ಟಡ ‍ವೈಶಿಷ್ಟ್ಯಗಳು"
-                },
-                "category-golf": {
-                    "name": "ಗಾಲ್ಫ್ ವೈಶಿಷ್ಟ್ಯಗಳು‍‍‍"
                 },
                 "category-landuse": {
                     "name": "ಭೂಮಿಯ  ವೈಶಿಷ್ಟ್ಯಗಳು‍‍"
@@ -1014,15 +988,8 @@
                 "fee": {
                     "label": "ಶುಲ್ಕ"
                 },
-                "fire_hydrant/position": {
-                    "options": {
-                        "green": "ಹಸಿರು"
-                    }
-                },
                 "fire_hydrant/type": {
-                    "label": "ವಿಧ",
                     "options": {
-                        "pond": "ಕೊಳ",
                         "underground": "ನೆಲದಡಿಯಲ್ಲಿ",
                         "wall": "ಗೋಡೆ"
                     }
@@ -1277,12 +1244,6 @@
                 },
                 "piste/difficulty": {
                     "label": "ಕಷ್ಟ",
-                    "options": {
-                        "advanced": "ಮುಂದುವರೆದ (ಕಪ್ಪು ವಜ್ರ)",
-                        "easy": "ಸುಲಭ (ಹಸಿರು ವರ್ತುಲ)",
-                        "intermediate": "ಮಧ್ಯಂತರ (ನೀಲಿ ವರ್ತುಲ)",
-                        "novice": "ಅನನುಭವಿ (ಸೂಚನಾ)"
-                    },
                     "placeholder": "ಸುಲಭ, ಮಧ್ಯಂತರ, ಮುಂದುವರೆದ ....."
                 },
                 "piste/grooming": {
@@ -1416,8 +1377,7 @@
                     "label": "ವಿಧ"
                 },
                 "website": {
-                    "label": "ಜಾಲತಾಣ",
-                    "placeholder": "http://example.com/"
+                    "label": "ಜಾಲತಾಣ"
                 },
                 "wetland": {
                     "label": "ವಿಧ"
@@ -1483,18 +1443,6 @@
                 },
                 "amenity/library": {
                     "name": "ಗ್ರಂಥಾಲಯ"
-                },
-                "amenity/parking": {
-                    "name": "ಬಂಡಿ ನಿಲ್ದಾಣ"
-                },
-                "amenity/pharmacy": {
-                    "name": "ಔಷಧಾಲಯ"
-                },
-                "amenity/place_of_worship/christian": {
-                    "name": "ಕ್ರೈಸ್ತ ದೇವಾಲಯ"
-                },
-                "amenity/place_of_worship/muslim": {
-                    "name": "ಮಸೀದಿ"
                 },
                 "amenity/planetarium": {
                     "name": "ತಾರಾಲಯ"
@@ -1592,9 +1540,6 @@
                 "building/terrace": {
                     "name": "ಸಾಲು ಮನೆಗಳು"
                 },
-                "building/train_station": {
-                    "name": "ರೈಲ್ವೆ ನಿಲ್ದಾಣ"
-                },
                 "building/university": {
                     "name": "ವಿಶ್ವವಿದ್ಯಾಲಯ ಕಟ್ಟಡ"
                 },
@@ -1644,9 +1589,6 @@
                 "landuse/cemetery": {
                     "name": " ಸ್ಮಶಾನ"
                 },
-                "landuse/forest": {
-                    "name": "ಅರಣ್ಯ"
-                },
                 "landuse/grass": {
                     "name": "ಹುಲ್ಲು"
                 },
@@ -1674,9 +1616,6 @@
                 "leisure/swimming_pool": {
                     "name": "ಈಜುಕೊಳ"
                 },
-                "man_made/observation": {
-                    "name": "ವೀಕ್ಷಣಾ ಗೋಪುರ"
-                },
                 "man_made/petroleum_well": {
                     "name": "ತೈಲ ಬಾವಿ"
                 },
@@ -1694,9 +1633,6 @@
                 },
                 "natural/tree": {
                     "name": "ಮರ"
-                },
-                "natural/tree_row": {
-                    "name": "ಸಾಲು ಮರ"
                 },
                 "natural/volcano": {
                     "name": "ಜ್ವಾಲಾಮುಖಿ"

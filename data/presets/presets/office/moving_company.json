@@ -1,11 +1,5 @@
 {
-    "icon": "maki-warehouse",
-    "fields": [
-        "name",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "fas-people-carry",
     "geometry": [
         "point",
         "area"

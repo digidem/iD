@@ -15,7 +15,7 @@ export function uiSettingsCustomBackground(context) {
             template: context.storage('background-custom-template')
         };
         var _currSettings = _cloneDeep(_origSettings);
-        var example = 'https://{switch:a,b,c}.tile.openstreetmap.org/{zoom}/{x}/{y}.png';
+        var example = 'http://localhost:5005/Offline-Maps/{zoom}/{x}/{y}.jpeg';
         var modal = uiConfirm(selection).okButton();
 
         modal
@@ -41,12 +41,12 @@ export function uiSettingsCustomBackground(context) {
             .property('value', _currSettings.template);
 
 
-        // insert a cancel button, and adjust the button widths
+        // insert a cancel button
         var buttonSection = modal.select('.modal-section.buttons');
 
         buttonSection
             .insert('button', '.ok-button')
-            .attr('class', 'button col3 cancel-button secondary-action')
+            .attr('class', 'button cancel-button secondary-action')
             .text(t('confirm.cancel'));
 
 
@@ -54,8 +54,6 @@ export function uiSettingsCustomBackground(context) {
             .on('click.cancel', clickCancel);
 
         buttonSection.select('.ok-button')
-            .classed('col3', true)
-            .classed('col4', false)
             .attr('disabled', isSaveDisabled)
             .on('click.save', clickSave);
 

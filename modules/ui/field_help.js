@@ -4,7 +4,7 @@ import {
 } from 'd3-selection';
 
 import marked from 'marked';
-import { t } from '../util/locale';
+import { t, textDirection } from '../util/locale';
 import { svgIcon } from '../svg';
 import { icon } from './intro/helper';
 
@@ -176,8 +176,8 @@ export function uiFieldHelp(context, fieldName) {
 
 
     fieldHelp.body = function(selection) {
-        // This control expects the field to have a preset-input-wrap div
-        _wrap = selection.selectAll('.preset-input-wrap');
+        // This control expects the field to have a form-field-input-wrap div
+        _wrap = selection.selectAll('.form-field-input-wrap');
         if (_wrap.empty()) return;
 
         // absolute position relative to the inspector, so it "floats" above the fields
@@ -197,7 +197,7 @@ export function uiFieldHelp(context, fieldName) {
 
         titleEnter
             .append('h2')
-            .attr('class', 'fl')
+            .attr('class', ((textDirection === 'rtl') ? 'fr' : 'fl'))
             .text(t('help.field.' + fieldName + '.title'));
 
         titleEnter

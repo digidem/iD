@@ -1,17 +1,14 @@
 {
-    "icon": "temaki-light_rail",
+    "icon": "temaki-pedestrian",
     "fields": [
-        "name",
-        "ref_platform",
-        "network",
-        "operator",
-        "surface",
-        "lit",
-        "bench",
-        "shelter"
+        "{public_transport/platform}"
+    ],
+    "moreFields": [
+        "{public_transport/platform}"
     ],
     "geometry": [
         "point",
+        "line",
         "area"
     ],
     "tags": {

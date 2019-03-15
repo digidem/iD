@@ -1,8 +1,10 @@
 {
-    "icon": "maki-wheelchair",
     "fields": [
         "kerb",
         "tactile_paving"
+    ],
+    "moreFields": [
+        "material"
     ],
     "geometry": [
         "vertex",
@@ -11,5 +13,5 @@
     "tags": {
         "barrier": "kerb"
     },
-    "name": "Kerb"
+    "name": "Curb"
 }

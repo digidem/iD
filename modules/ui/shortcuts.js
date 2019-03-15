@@ -1,9 +1,9 @@
+import _uniq from 'lodash-es/uniq';
+
 import {
     select as d3_select,
     selectAll as d3_selectAll
 } from 'd3-selection';
-
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
 
 import { t } from '../util/locale';
 import { dataShortcuts } from '../../data';
@@ -13,36 +13,32 @@ import { uiModal } from './modal';
 import { utilDetect } from '../util/detect';
 
 
-export function uiShortcuts() {
+export function uiShortcuts(context) {
     var detected = utilDetect();
-    var activeTab = 0;
-    var modalSelection;
-    var savedSelection;
+    var _activeTab = 0;
+    var _modalSelection;
+    var _selection = d3_select(null);
 
 
-    var keybinding = d3_keybinding('shortcuts')
-        .on(t('shortcuts.toggle.key'), function () {
+    context.keybinding()
+        .on([t('shortcuts.toggle.key'), '?'], function () {
             if (d3_selectAll('.modal-shortcuts').size()) {  // already showing
-                if (modalSelection) {
-                    modalSelection.close();
-                    modalSelection = null;
+                if (_modalSelection) {
+                    _modalSelection.close();
+                    _modalSelection = null;
                 }
             } else {
-                modalSelection = uiModal(savedSelection);
-                shortcutsModal(modalSelection);
+                _modalSelection = uiModal(_selection);
+                shortcutsModal(_modalSelection);
             }
         });
 
-    d3_select(document)
-        .call(keybinding);
 
-
-
-    function shortcutsModal(modalSelection) {
-        modalSelection.select('.modal')
+    function shortcutsModal(_modalSelection) {
+        _modalSelection.select('.modal')
             .classed('modal-shortcuts', true);
 
-        var shortcutsModal = modalSelection.select('.content');
+        var shortcutsModal = _modalSelection.select('.content');
 
         shortcutsModal
             .append('div')
@@ -84,7 +80,7 @@ export function uiShortcuts() {
             .append('div')
             .attr('class', 'tab')
             .on('click', function (d, i) {
-                activeTab = i;
+                _activeTab = i;
                 render(selection);
             });
 
@@ -98,7 +94,7 @@ export function uiShortcuts() {
         // Update
         wrapper.selectAll('.tab')
             .classed('active', function (d, i) {
-                return i === activeTab;
+                return i === _activeTab;
             });
 
 
@@ -185,7 +181,12 @@ export function uiShortcuts() {
                     arr = ['F11'];
                 }
 
-                return arr.map(function(s) {
+                // replace translations
+                arr = arr.map(function(s) {
+                    return uiCmd.display(s.indexOf('.') !== -1 ? t(s) : s);
+                });
+
+                return _uniq(arr).map(function(s) {
                     return {
                         shortcut: s,
                         separator: d.separator
@@ -197,17 +198,14 @@ export function uiShortcuts() {
                 var selection = d3_select(this);
                 var click = d.shortcut.toLowerCase().match(/(.*).click/);
 
-                if (click && click[1]) {
+                if (click && click[1]) {   // replace "left_click", "right_click" with mouse icon
                     selection
                         .call(svgIcon('#iD-walkthrough-mouse', 'mouseclick', click[1]));
                 } else {
                     selection
                         .append('kbd')
                         .attr('class', 'shortcut')
-                        .text(function (d) {
-                            var key = d.shortcut;
-                            return key.indexOf('.') !== -1 ? uiCmd.display(t(key)) : uiCmd.display(key);
-                        });
+                        .text(function (d) { return d.shortcut; });
                 }
 
                 if (i < nodes.length - 1) {
@@ -246,16 +244,16 @@ export function uiShortcuts() {
         // Update
         wrapper.selectAll('.shortcut-tab')
             .style('display', function (d, i) {
-                return i === activeTab ? 'flex' : 'none';
+                return i === _activeTab ? 'flex' : 'none';
             });
     }
 
 
     return function(selection, show) {
-        savedSelection = selection;
+        _selection = selection;
         if (show) {
-            modalSelection = uiModal(selection);
-            shortcutsModal(modalSelection);
+            _modalSelection = uiModal(selection);
+            shortcutsModal(_modalSelection);
         }
     };
 }

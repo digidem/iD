@@ -1,12 +1,5 @@
 {
-    "icon": "maki-garden-center",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours"
-    ],
+    "icon": "maki-garden-centre",
     "geometry": [
         "point",
         "area"

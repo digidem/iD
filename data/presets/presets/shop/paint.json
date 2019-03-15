@@ -1,13 +1,5 @@
 {
-    "icon": "maki-water",
-    "fields": [
-        "name",
-        "operator",
-        "address",
-        "building_area",
-        "opening_hours",
-        "payment_multi"
-    ],
+    "icon": "fas-paint-roller",
     "geometry": [
         "point",
         "area"

@@ -8,17 +8,14 @@ import {
     polygonCentroid as d3_polygonCentroid
 } from 'd3-polygon';
 
-import { d3keybinding as d3_keybinding } from '../lib/d3.keybinding.js';
-
 import { t } from '../util/locale';
-import { actionRotate } from '../actions';
+import {
+    actionRotate,
+    actionNoop
+} from '../actions';
 import { behaviorEdit } from '../behavior';
 import { geoVecInterp } from '../geo';
-
-import {
-    modeBrowse,
-    modeSelect
-} from './index';
+import { modeBrowse, modeSelect } from './index';
 
 import {
     operationCircularize,
@@ -29,7 +26,7 @@ import {
     operationReflectShort
 } from '../operations';
 
-import { utilGetAllNodes } from '../util';
+import { utilGetAllNodes, utilKeybinding } from '../util';
 
 
 export function modeRotate(context, entityIDs) {
@@ -38,7 +35,7 @@ export function modeRotate(context, entityIDs) {
         button: 'browse'
     };
 
-    var keybinding = d3_keybinding('rotate');
+    var keybinding = utilKeybinding('rotate');
     var behaviors = [
         behaviorEdit(context),
         operationCircularize(entityIDs, context).behavior,
@@ -94,7 +91,7 @@ export function modeRotate(context, entityIDs) {
         if (typeof _prevAngle === 'undefined') _prevAngle = currAngle;
         var delta = currAngle - _prevAngle;
 
-        fn(actionRotate(entityIDs, _pivot, delta, projection), annotation);
+        fn(actionRotate(entityIDs, _pivot, delta, projection));
 
         _prevTransform = currTransform;
         _prevAngle = currAngle;
@@ -104,6 +101,7 @@ export function modeRotate(context, entityIDs) {
 
     function finish() {
         d3_event.stopPropagation();
+        context.replace(actionNoop(), annotation);
         context.enter(modeSelect(context, entityIDs));
     }
 
@@ -120,6 +118,8 @@ export function modeRotate(context, entityIDs) {
 
 
     mode.enter = function() {
+        context.features().forceVisible(entityIDs);
+
         behaviors.forEach(context.install);
 
         context.surface()
@@ -148,7 +148,10 @@ export function modeRotate(context, entityIDs) {
         context.history()
             .on('undone.rotate', null);
 
-        keybinding.off();
+        d3_select(document)
+            .call(keybinding.unbind);
+
+        context.features().forceVisible([]);
     };
 
 

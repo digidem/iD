@@ -10,38 +10,20 @@ import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { json as d3_json } from 'd3-request';
 import { select as d3_select } from 'd3-selection';
 
-import {
-    t,
-    currentLocale,
-    addTranslation,
-    setLocale
-} from '../util/locale';
+import { t, currentLocale, addTranslation, setLocale } from '../util/locale';
 
 import { coreHistory } from './history';
-
-import {
-    dataLocales,
-    dataEn
-} from '../../data';
-
+import { coreValidator } from './validator';
+import { dataLocales, dataEn } from '../../data';
 import { geoRawMercator } from '../geo/raw_mercator';
 import { modeSelect } from '../modes/select';
 import { presetIndex } from '../presets';
-
-import {
-    rendererBackground,
-    rendererFeatures,
-    rendererMap
-} from '../renderer';
-
+import { rendererBackground, rendererFeatures, rendererMap } from '../renderer';
 import { services } from '../services';
 import { uiInit } from '../ui/init';
 import { utilDetect } from '../util/detect';
+import { utilCallWhenIdle, utilKeybinding, utilRebind, utilStringQs } from '../util';
 
-import {
-    utilCallWhenIdle,
-    utilRebind
-} from '../util';
 
 
 export var areaKeys = {};
@@ -53,7 +35,7 @@ export function setAreaKeys(value) {
 
 export function coreContext() {
     var context = {};
-    context.version = '2.11.1';
+    context.version = '2.14.3';
 
     // create a special translation that contains the keys in place of the strings
     var tkeys = _cloneDeep(dataEn);
@@ -104,12 +86,20 @@ export function coreContext() {
     };
 
 
-    /* Straight accessors. Avoid using these if you can. */
-    var ui, connection, history;
+    /* User interface and keybinding */
+    var ui;
     context.ui = function() { return ui; };
+
+    var keybinding = utilKeybinding('context');
+    context.keybinding = function() { return keybinding; };
+    d3_select(document).call(keybinding);
+
+
+    /* Straight accessors. Avoid using these if you can. */
+    var connection, history, validator;
     context.connection = function() { return connection; };
     context.history = function() { return history; };
-
+    context.validator = function() { return validator; };
 
     /* Connection */
     context.preauth = function(options) {
@@ -156,7 +146,9 @@ export function coreContext() {
             this.loadEntity(entityID, function(err, result) {
                 if (err) return;
                 var entity = _find(result.data, function(e) { return e.id === entityID; });
-                if (entity) { map.zoomTo(entity); }
+                if (entity) {
+                    map.zoomTo(entity);
+                }
             });
         }
 
@@ -271,6 +263,13 @@ export function coreContext() {
     context.selectedNoteID = function(noteID) {
         if (!arguments.length) return _selectedNoteID;
         _selectedNoteID = noteID;
+        return context;
+    };
+
+    var _selectedErrorID;
+    context.selectedErrorID = function(errorID) {
+        if (!arguments.length) return _selectedErrorID;
+        _selectedErrorID = errorID;
         return context;
     };
 
@@ -453,9 +452,29 @@ export function coreContext() {
     }
 
     history = coreHistory(context);
+
     context.graph = history.graph;
     context.changes = history.changes;
     context.intersects = history.intersects;
+
+    validator = coreValidator(context);
+
+    // run validation upon restoring from page reload
+    history.on('restore', function() {
+        validator.validate();
+    });
+    // re-run validation upon a significant graph change
+    history.on('annotatedChange', function(difference) {
+        if (difference) {
+            validator.validate();
+        }
+    });
+    // re-run validation upon merging fetched data
+    history.on('merge', function(entities) {
+        if (entities && entities.length > 0) {
+            validator.validate();
+        }
+    });
 
     // Debounce save, since it's a synchronous localStorage write,
     // and history changes can happen frequently (e.g. when dragging).
@@ -482,6 +501,17 @@ export function coreContext() {
     features = rendererFeatures(context);
     presets = presetIndex();
 
+    if (services.maprules && utilStringQs(window.location.hash).maprules) {
+        var maprules = utilStringQs(window.location.hash).maprules;
+        d3_json(maprules, function (err, mapcss) {
+            if (err) return;
+            services.maprules.init();
+            _each(mapcss, function(mapcssSelector) {
+                return services.maprules.addRule(mapcssSelector);
+            });
+        });
+    }
+
     map = rendererMap(context);
     context.mouse = map.mouse;
     context.extent = map.extent;
@@ -500,9 +530,16 @@ export function coreContext() {
 
     background.init();
     features.init();
-    presets.init();
-    areaKeys = presets.areaKeys();
-
+    if (utilStringQs(window.location.hash).presets) {
+        var external = utilStringQs(window.location.hash).presets;
+        presets.fromExternal(external, function(externalPresets) {
+            context.presets = function() { return externalPresets; }; // default + external presets...
+            areaKeys = presets.areaKeys();
+        });
+    } else {
+        presets.init();
+        areaKeys = presets.areaKeys();
+    }
 
     return utilRebind(context, dispatch, 'on');
 }

@@ -4,20 +4,20 @@ export function osmIsInterestingTag(key) {
         key !== 'source' &&
         key !== 'odbl' &&
         key.indexOf('tiger:') !== 0;
-
 }
 
 
 export var osmOneWayTags = {
     'aerialway': {
         'chair_lift': true,
-        'mixed_lift': true,
-        't-bar': true,
+        'drag_lift': true,
         'j-bar': true,
+        'magic_carpet': true,
+        'mixed_lift': true,
         'platter': true,
         'rope_tow': true,
-        'magic_carpet': true,
-        'yes': true
+        't-bar': true,
+        'zipline': true
     },
     'highway': {
         'motorway': true
@@ -54,5 +54,21 @@ export var osmPavedTags = {
     },
     'tracktype': {
         'grade1': true
+    }
+};
+
+export var osmRightSideIsInsideTags = {
+    'natural': {
+        'cliff': true,
+        'coastline': 'coastline',
+    },
+    'barrier': {
+        'retaining_wall': true,
+        'kerb': true,
+        'guard_rail': true,
+        'city_wall': true,
+    },
+    'man_made': {
+        'embankment': true
     }
 };

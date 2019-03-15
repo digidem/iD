@@ -1,29 +1,28 @@
 import { select as d3_select } from 'd3-selection';
-import { d3combobox as d3_combobox } from '../lib/d3.combobox.js';
 
 import { t } from '../util/locale';
+import { uiCombobox } from './index';
 import { utilGetSetValue, utilNoAuto } from '../util';
 
 
 export function uiFormFields(context) {
-    var _fieldsArr;
+    var moreCombo = uiCombobox(context, 'more-fields').minItems(1);
+    var _fieldsArr = [];
+    var _state = '';
+    var _klass = '';
 
 
-    function formFields(selection, klass) {
-        render(selection, klass);
-    }
-
-
-    function render(selection, klass) {
-        var shown = _fieldsArr.filter(function(field) { return field.isShown(); });
-        var notShown = _fieldsArr.filter(function(field) { return !field.isShown(); });
+    function formFields(selection) {
+        var allowedFields = _fieldsArr.filter(function(field) { return field.isAllowed(); });
+        var shown = allowedFields.filter(function(field) { return field.isShown(); });
+        var notShown = allowedFields.filter(function(field) { return !field.isShown(); });
 
         var container = selection.selectAll('.form-fields-container')
             .data([0]);
 
         container = container.enter()
             .append('div')
-            .attr('class', 'form-fields-container ' + (klass || ''))
+            .attr('class', 'form-fields-container ' + (_klass || ''))
             .merge(container);
 
 
@@ -60,7 +59,7 @@ export function uiFormFields(context) {
 
 
         var more = selection.selectAll('.more-fields')
-            .data((notShown.length > 0) ? [0] : []);
+            .data((_state === 'hover' || notShown.length === 0) ? [] : [0]);
 
         more.exit()
             .remove();
@@ -95,14 +94,13 @@ export function uiFormFields(context) {
                 }
                 return placeholder.slice(0,3).join(', ') + ((placeholder.length > 3) ? '…' : '');
             })
-            .call(d3_combobox()
-                .container(context.container())
+            .call(moreCombo
                 .data(notShown)
-                .minItems(1)
                 .on('accept', function (d) {
+                    if (!d) return;  // user entered something that was not matched
                     var field = d.field;
                     field.show();
-                    render(selection);
+                    selection.call(formFields);  // rerender
                     if (field.type !== 'semiCombo' && field.type !== 'multiCombo') {
                         field.focus();
                     }
@@ -113,7 +111,19 @@ export function uiFormFields(context) {
 
     formFields.fieldsArr = function(val) {
         if (!arguments.length) return _fieldsArr;
-        _fieldsArr = val;
+        _fieldsArr = val || [];
+        return formFields;
+    };
+
+    formFields.state = function(val) {
+        if (!arguments.length) return _state;
+        _state = val;
+        return formFields;
+    };
+
+    formFields.klass = function(val) {
+        if (!arguments.length) return _klass;
+        _klass = val;
         return formFields;
     };
 

@@ -1,6 +1,6 @@
 describe('iD.serviceOpenstreetcam', function() {
-    var dimensions = [64, 64],
-        context, server, openstreetcam;
+    var dimensions = [64, 64];
+    var context, server, openstreetcam;
 
     before(function() {
         iD.services.openstreetcam = iD.serviceOpenstreetcam;
@@ -11,9 +11,9 @@ describe('iD.serviceOpenstreetcam', function() {
     });
 
     beforeEach(function() {
-        context = iD.Context().assetPath('../dist/');
+        context = iD.coreContext().assetPath('../dist/');
         context.projection
-            .scale(667544.214430109)  // z14
+            .scale(iD.geoZoomToScale(14))
             .translate([-116508, 0])  // 10,0
             .clipExtent([[0,0], dimensions]);
 
@@ -244,18 +244,19 @@ describe('iD.serviceOpenstreetcam', function() {
             ]);
         });
 
-        it('limits results no more than 3 stacked images in one spot', function() {
+        it('limits results no more than 5 stacked images in one spot', function() {
             var features = [
                 { minX: 10, minY: 0, maxX: 10, maxY: 0, data: { key: '0', loc: [10,0], ca: 90, sequence_id: '100', sequence_index: 0 } },
                 { minX: 10, minY: 0, maxX: 10, maxY: 0, data: { key: '1', loc: [10,0], ca: 90, sequence_id: '100', sequence_index: 1 } },
                 { minX: 10, minY: 0, maxX: 10, maxY: 0, data: { key: '2', loc: [10,0], ca: 90, sequence_id: '100', sequence_index: 2 } },
                 { minX: 10, minY: 0, maxX: 10, maxY: 0, data: { key: '3', loc: [10,0], ca: 90, sequence_id: '100', sequence_index: 3 } },
-                { minX: 10, minY: 0, maxX: 10, maxY: 0, data: { key: '4', loc: [10,0], ca: 90, sequence_id: '100', sequence_index: 4 } }
+                { minX: 10, minY: 0, maxX: 10, maxY: 0, data: { key: '4', loc: [10,0], ca: 90, sequence_id: '100', sequence_index: 4 } },
+                { minX: 10, minY: 0, maxX: 10, maxY: 0, data: { key: '5', loc: [10,0], ca: 90, sequence_id: '100', sequence_index: 5 } }
             ];
 
             openstreetcam.cache().images.rtree.load(features);
             var res = openstreetcam.images(context.projection);
-            expect(res).to.have.length.of.at.most(3);
+            expect(res).to.have.length.of.at.most(5);
         });
     });
 

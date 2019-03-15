@@ -149,12 +149,6 @@
                 "annotation": "Heu eliminat un membre d'una relació"
             },
             "connect": {
-                "annotation": {
-                    "point": "Heu connectat una via a un punt.",
-                    "vertex": "Heu connectat una via a una altra.",
-                    "line": "Heu connectat una via a una línia.",
-                    "area": "Heu connectat una via a una àrea."
-                },
                 "relation": "Aquestes característiques no es poden connectar perquè tenen rols de relació amb conflicte.",
                 "restriction": "Aquestes característiques no es poden connectar perquè podria malmetre la relació «{relation}»-"
             },
@@ -471,9 +465,6 @@
             "locating": "Localitzant, espereu si us plau..."
         },
         "inspector": {
-            "no_documentation_combination": "No hi ha documentació per a aquesta combinació d'etiquetes",
-            "no_documentation_key": "No hi ha documentació per a aquesta clau",
-            "documentation_redirect": "Aquesta documentació ha estat redirigida a una nova pàgina",
             "show_more": "Mostra'n més",
             "view_on_osm": "Mostra-ho a openstreetmap.org",
             "all_fields": "Tots els camps",
@@ -484,7 +475,6 @@
             "role": "Rol",
             "choose": "Seleccioneu el tipus d'objecte",
             "results": "{n} resultats per {search}",
-            "reference": "Mostra-ho al wiki de l'OpenStreetMap",
             "back_tooltip": "Modifica l'objecte",
             "remove": "Eliminar",
             "search": "Cercar",
@@ -596,11 +586,9 @@
                 "tooltip": "Línies elèctriques, centrals, subestacions, etc."
             },
             "past_future": {
-                "description": "Passat/futur",
                 "tooltip": "Proposat, en construcció, abandonat, enderrocat, etc."
             },
             "others": {
-                "description": "Altres",
                 "tooltip": "Tota la resta"
             }
         },
@@ -697,23 +685,6 @@
             "on_wiki": "{tag} a wiki.osm.org",
             "used_with": "utilitzat amb {type}"
         },
-        "validations": {
-            "disconnected_highway": "Via desconnectada",
-            "disconnected_highway_tooltip": "Les vies haurien de connectar altres vies o entrades d'edificis.",
-            "old_multipolygon": "Etiqueta Multipoligon en ",
-            "old_multipolygon_tooltip": "Aquest estil de polígon és en desús. Assigneu les etiquetes al multipolígon pare en comptes d'a la via exterior.",
-            "untagged_point": "Punt sense etiquetar",
-            "untagged_point_tooltip": "Seleccioneu un tipus d'objecte que descrigui el que és aquest punt.",
-            "untagged_line": "Línia sense etiquetar",
-            "untagged_line_tooltip": "Seleccioneu un tipus d'objecte que descrigui el que és aquesta línia.",
-            "untagged_area": "Àrea sense etiquetar",
-            "untagged_area_tooltip": "Seleccioneu un tipus d'objecte que descrigui el que és aquesta àrea.",
-            "untagged_relation": "Relació sense etiquetar",
-            "untagged_relation_tooltip": "Seleccioneu un tipus d'objecte que descrigui com és aquesta relació.",
-            "many_deletions": "Estàs eliminant  {n} característiques:{n} funcions, {l} línies, {a} àrees, {r} relacions. Segur que ho vols fer? Això les eliminarà del mapa que tothom veu a openstreetmap.org",
-            "tag_suggests_area": "L'etiqueta {tag} suggereix que la línia hauria de ser una àrea, però no és una àrea",
-            "deprecated_tags": "Etiquetes obsoletes : {tags}"
-        },
         "zoom": {
             "in": "Apropa't",
             "out": "Allunya't"
@@ -769,8 +740,7 @@
                 "navigation_h": "Navegació",
                 "navigation_zoom": "Us podeu acostar o allunyar movent la rodeta del ratolí o del ratolí tàctil o clicant els botons {plus} / {minus} al llarg del costat del mapa. També podeu fer servir les tecles  `+`, `-`  del teclat.",
                 "features_h": "Característiques del mapa",
-                "features": "Utilitzem la paraula *objectes* per descriure les coses que es mostren al mapa, com vies, edificis o punts d'interès. Qualsevol cosa del món real es pot representar al mapa com un objecte a OpenStreetmap. Els objectes del mapa s´hi representen utilitzant *punts*, *línies*, o *àrees*.",
-                "nodes_ways": "A l'OpenStreetMap, els punts de vegades s'anomenen *nodes*, i les línies i àrees de vegades s'anomenen *vies*."
+                "features": "Utilitzem la paraula *objectes* per descriure les coses que es mostren al mapa, com vies, edificis o punts d'interès. Qualsevol cosa del món real es pot representar al mapa com un objecte a OpenStreetmap. Els objectes del mapa s´hi representen utilitzant *punts*, *línies*, o *àrees*."
             },
             "editing": {
                 "title": "Editant i Salvant",
@@ -1122,9 +1092,6 @@
                 "category-building": {
                     "name": "Tipus d'edificis"
                 },
-                "category-golf": {
-                    "name": "Elements de golf"
-                },
                 "category-landuse": {
                     "name": "Ús del terreny"
                 },
@@ -1164,24 +1131,33 @@
                     "label": "Accés permès",
                     "options": {
                         "designated": {
+                            "description": "Accés garantit seguint les normes de les senyals o les normes locals específiques.",
                             "title": "Específic"
                         },
                         "destination": {
+                            "description": "Accés permès només per arribar a un destí",
                             "title": "Destinació"
                         },
                         "dismount": {
+                            "description": "Accés garantit però el genet ha de desmuntar",
                             "title": "Baixar del mitjà de transport"
                         },
                         "no": {
+                            "description": "No es permet l'accés al públic en general",
                             "title": "Prohibit"
                         },
                         "permissive": {
+                            "description": "Accés permès provisionalment fins que el propietari el prohibeixi.",
                             "title": "Permissiu"
+                        },
+                        "permit": {
+                            "description": "Accés garantit exclusivament amb una autorització o llicència vàlides"
                         },
                         "private": {
                             "title": "Privat"
                         },
                         "yes": {
+                            "description": "Accés permès per llei: dret de pas",
                             "title": "Permès"
                         }
                     },
@@ -1291,6 +1267,9 @@
                 "animal_shelter": {
                     "label": "Per a animals"
                 },
+                "architect": {
+                    "label": "Arquitecte"
+                },
                 "area/highway": {
                     "label": "Tipus"
                 },
@@ -1303,10 +1282,16 @@
                 "atm": {
                     "label": "Caixer automàtic"
                 },
+                "attraction": {
+                    "label": "Tipus"
+                },
                 "backrest": {
                     "label": "Banc públic"
                 },
                 "barrier": {
+                    "label": "Tipus"
+                },
+                "basin": {
                     "label": "Tipus"
                 },
                 "bath/open_air": {
@@ -1322,9 +1307,6 @@
                         "hot_spring": "Font Càlida",
                         "onsen": "Onsen japonès"
                     }
-                },
-                "beauty": {
-                    "label": "Tipus de botiga"
                 },
                 "bench": {
                     "label": "Banc per a asseure's"
@@ -1360,8 +1342,14 @@
                     "label": "Tipus",
                     "placeholder": "Predeterminat"
                 },
+                "bridge/support": {
+                    "label": "Tipus"
+                },
                 "building": {
                     "label": "Edifici"
+                },
+                "building/material": {
+                    "label": "Material"
                 },
                 "building_area": {
                     "label": "Edifici"
@@ -1559,9 +1547,6 @@
                 "display": {
                     "label": "Pantalla"
                 },
-                "distance": {
-                    "label": "Distància total"
-                },
                 "dock": {
                     "label": "Tipus"
                 },
@@ -1615,20 +1600,9 @@
                 "fence_type": {
                     "label": "Tipus"
                 },
-                "fire_hydrant/position": {
-                    "label": "Posició",
-                    "options": {
-                        "green": "Verd",
-                        "lane": "Carril",
-                        "parking_lot": "Aparcament",
-                        "sidewalk": "Vorera"
-                    }
-                },
                 "fire_hydrant/type": {
-                    "label": "Tipus",
                     "options": {
                         "pillar": "Pilona/visible",
-                        "pond": "Bassa",
                         "underground": "Subterrani",
                         "wall": "Mur"
                     }
@@ -2037,15 +2011,6 @@
                 },
                 "piste/difficulty": {
                     "label": "Dificultat",
-                    "options": {
-                        "advanced": "Avançat (Pista negra nivell I )",
-                        "easy": "Fàcil (pista verda)",
-                        "expert": "Expert (Pista negra nivell II)",
-                        "extreme": "Extrem (es necessita equipament d'escalada)",
-                        "freeride": "Pista no oficial (fora pistes)",
-                        "intermediate": "Intermedi (Pista blava)",
-                        "novice": "Debutants (instrucció)"
-                    },
                     "placeholder": "Fàcil, Intermedi, avançat..."
                 },
                 "piste/grooming": {
@@ -2275,6 +2240,9 @@
                 "social_facility": {
                     "label": "Tipus"
                 },
+                "social_facility_for": {
+                    "label": "Persones ateses"
+                },
                 "source": {
                     "label": "Fonts"
                 },
@@ -2394,9 +2362,6 @@
                 },
                 "tourism": {
                     "label": "Tipus"
-                },
-                "tourism_attraction": {
-                    "label": "Turisme"
                 },
                 "tower/construction": {
                     "label": "Construcció"
@@ -2527,8 +2492,7 @@
                     "label": "Tipus"
                 },
                 "website": {
-                    "label": "Lloc web",
-                    "placeholder": "http://exemple.com/"
+                    "label": "Lloc web"
                 },
                 "wetland": {
                     "label": "Tipus"
@@ -2846,22 +2810,11 @@
                 "amenity/nursing_home": {
                     "name": "Llar d'avis"
                 },
-                "amenity/parking": {
-                    "name": "Aparcament",
-                    "terms": "Aparcament, Pàrquing, Garatge, Parking, parking"
-                },
                 "amenity/parking_entrance": {
                     "name": "Entrada de Garatge/Sortida"
                 },
                 "amenity/parking_space": {
                     "name": "Espai d'aparcament"
-                },
-                "amenity/pavilion": {
-                    "name": "Pabelló"
-                },
-                "amenity/pharmacy": {
-                    "name": "Farmàcia",
-                    "terms": "Farmàcia, establiment de venda de medicaments,"
                 },
                 "amenity/place_of_worship": {
                     "name": "Lloc de culte",
@@ -2872,19 +2825,16 @@
                     "terms": "Temple Budista, Lloc per al culte budista, església budista"
                 },
                 "amenity/place_of_worship/christian": {
-                    "name": "Església",
-                    "terms": "Temple, església"
+                    "name": "Capella cristiana"
                 },
                 "amenity/place_of_worship/hindu": {
                     "name": "Temple Hindú"
                 },
                 "amenity/place_of_worship/jewish": {
-                    "name": "Sinagoga",
-                    "terms": "Sinagoga, temple jueu, església jueva, culte jueu, jueu"
+                    "name": "Sinagoga jueva"
                 },
                 "amenity/place_of_worship/muslim": {
-                    "name": "Mesquita",
-                    "terms": "Mesquita, temple musulmà, espai musulmà, musulmà"
+                    "name": "Mesquita musulmana"
                 },
                 "amenity/place_of_worship/shinto": {
                     "name": "Santuari sintoísta"
@@ -2928,7 +2878,7 @@
                     "name": "Base d'Agents Rurals"
                 },
                 "amenity/recycling": {
-                    "name": "Contenidor de reciclatge"
+                    "name": "Reciclatge"
                 },
                 "amenity/recycling_centre": {
                     "name": "Centre de Reciclatge"
@@ -3019,9 +2969,6 @@
                 "amenity/vending_machine/drinks": {
                     "name": "Màquina de vènding de begudes"
                 },
-                "amenity/vending_machine/excrement_bags": {
-                    "name": "Equipament de residus canins"
-                },
                 "amenity/vending_machine/feminine_hygiene": {
                     "name": "Màquina de vènding d'articles d'higiene femenina"
                 },
@@ -3036,9 +2983,6 @@
                 },
                 "amenity/vending_machine/newspapers": {
                     "name": "Màquina expenedora de diaris"
-                },
-                "amenity/vending_machine/parcel_pickup_dropoff": {
-                    "name": "Màquina de recollida/enviament de paqueteria"
                 },
                 "amenity/vending_machine/parking_tickets": {
                     "name": "Màquina de cobrament de tiquet d'aparcament"
@@ -3178,8 +3122,7 @@
                     "terms": "Edifici, Bloc de pisos, Nau industrial, Centre comercial, Oficines, Bloc, Casa, Barraca"
                 },
                 "building/apartments": {
-                    "name": "Apartaments",
-                    "terms": "Apartaments, Pisos, Bloc de pisos, Bloc"
+                    "name": "Edifici d'apartaments"
                 },
                 "building/barn": {
                     "name": "Graner"
@@ -3302,9 +3245,6 @@
                 },
                 "building/terrace": {
                     "name": "Cases unifamiliars"
-                },
-                "building/train_station": {
-                    "name": "Estació de ferrocarril"
                 },
                 "building/transportation": {
                     "name": "Edifici per a transports"
@@ -3516,21 +3456,6 @@
                     "name": "Entrada/Sortida",
                     "terms": "Entrada/Sortida"
                 },
-                "footway/crossing": {
-                    "name": "Creuament de carrer"
-                },
-                "footway/crossing-raised": {
-                    "name": "Pas de carrer sobre-elevat"
-                },
-                "footway/crosswalk": {
-                    "name": "Pas de vianants"
-                },
-                "footway/crosswalk-raised": {
-                    "name": "Pas de vianants sobre-elevat"
-                },
-                "footway/sidewalk": {
-                    "name": "Vorera"
-                },
                 "ford": {
                     "name": "Ford"
                 },
@@ -3546,23 +3471,11 @@
                 "golf/hole": {
                     "name": "Forat"
                 },
-                "golf/lateral_water_hazard_area": {
-                    "name": "Obstacle d'aigua lateral"
-                },
-                "golf/lateral_water_hazard_line": {
-                    "name": "Obstacle d'aigua lateral"
-                },
                 "golf/rough": {
                     "name": "Rough"
                 },
                 "golf/tee": {
                     "name": "Àrea inicial"
-                },
-                "golf/water_hazard_area": {
-                    "name": "Obstacle d'aigua"
-                },
-                "golf/water_hazard_line": {
-                    "name": "Obstacle d'aigua"
                 },
                 "healthcare/alternative/chiropractic": {
                     "name": "Quiropràctic"
@@ -3579,12 +3492,6 @@
                 },
                 "highway/corridor": {
                     "name": "Corredor interior"
-                },
-                "highway/crossing": {
-                    "name": "Creuament de carrer"
-                },
-                "highway/crosswalk": {
-                    "name": "Pas de vianants"
                 },
                 "highway/cycleway": {
                     "name": "Carril Bici",
@@ -3763,8 +3670,7 @@
                     "name": "Jardí comunitari"
                 },
                 "landuse/basin": {
-                    "name": "Bassa",
-                    "terms": "Conca"
+                    "name": "Bassa"
                 },
                 "landuse/cemetery": {
                     "name": "Cementiri",
@@ -3789,10 +3695,6 @@
                 "landuse/farmyard": {
                     "name": "Edificis de Granja",
                     "terms": "Granja, Granges, Galliner, Estable, Mas, Masia, Masoveria, Ranxo, Nau, Naus,  Dipòsit, Femta, Fems, Fem, Porc, Porcs, Purí, Purins, Gallina, Gallines, Conill, Conills, Pinso, Tancat, Tanca, Valles, Valla"
-                },
-                "landuse/forest": {
-                    "name": "Bosc",
-                    "terms": "Massa forestal,Bosc,Arbreda"
                 },
                 "landuse/grass": {
                     "name": "Herba",
@@ -3872,8 +3774,7 @@
                     "terms": "Vinyar, Vinyal, Vinyet, Vinya"
                 },
                 "leisure": {
-                    "name": "Esbarjo",
-                    "terms": "Lleure,Temps lliure"
+                    "name": "Esbarjo"
                 },
                 "leisure/adult_gaming_centre": {
                     "name": "Centre d'oci adult"
@@ -3944,8 +3845,7 @@
                     "terms": "Estadi de futbol americà,Camp de futbol americà"
                 },
                 "leisure/pitch/baseball": {
-                    "name": "Camp de beisbol",
-                    "terms": "Camp de beisbol,Pista de beisbol"
+                    "name": "Camp de beisbol"
                 },
                 "leisure/pitch/basketball": {
                     "name": "Pista de bàsquet",
@@ -4008,8 +3908,7 @@
                     "terms": "Línia"
                 },
                 "man_made": {
-                    "name": "Fet per l'home",
-                    "terms": "Fet per la mà de l'home"
+                    "name": "Fet per l'home"
                 },
                 "man_made/adit": {
                     "name": "Entrada"
@@ -4044,9 +3943,6 @@
                     "name": "Far",
                     "terms": "Far"
                 },
-                "man_made/observation": {
-                    "name": "Torre de vigilància"
-                },
                 "man_made/petroleum_well": {
                     "name": "Pou petrolífer"
                 },
@@ -4069,9 +3965,6 @@
                 },
                 "man_made/surveillance": {
                     "name": "Vigilància"
-                },
-                "man_made/surveillance_camera": {
-                    "name": "Càmera de vigilància"
                 },
                 "man_made/survey_point": {
                     "name": "Punt referencial",
@@ -4153,9 +4046,6 @@
                 "natural/tree": {
                     "name": "Arbre",
                     "terms": "Arbre"
-                },
-                "natural/tree_row": {
-                    "name": "Fila d'arbres"
                 },
                 "natural/volcano": {
                     "name": "Volcà"
@@ -4265,9 +4155,6 @@
                 "office/travel_agent": {
                     "name": "Agència de viatges"
                 },
-                "piste": {
-                    "name": "Pista d'esquí"
-                },
                 "place": {
                     "name": "Lloc"
                 },
@@ -4316,9 +4203,6 @@
                 "power/generator": {
                     "name": "Generador elèctric"
                 },
-                "power/generator/source_nuclear": {
-                    "name": "Reactor nuclear"
-                },
                 "power/line": {
                     "name": "Línia elèctrica"
                 },
@@ -4342,9 +4226,6 @@
                 "power/transformer": {
                     "name": "Transformador",
                     "terms": "Transformador"
-                },
-                "public_transport/linear_platform_bus": {
-                    "name": "Plataforma de parada bus"
                 },
                 "public_transport/station_bus": {
                     "name": "Estació d'autobusos"
@@ -4620,8 +4501,8 @@
                 "shop/interior_decoration": {
                     "name": "Botiga d'Interiorisme"
                 },
-                "shop/jewelry": {
-                    "name": "Joieria"
+                "shop/kiosk": {
+                    "name": "Quiosc"
                 },
                 "shop/kitchen": {
                     "name": "Botiga de disseny de cuines"
@@ -4792,8 +4673,7 @@
                     "terms": "Celler, Licoreria"
                 },
                 "tourism": {
-                    "name": "Turisme",
-                    "terms": "Turisme, Visita"
+                    "name": "Turisme"
                 },
                 "tourism/alpine_hut": {
                     "name": "Refugi de muntanya"
@@ -5011,8 +4891,7 @@
                     "terms": "Riu"
                 },
                 "waterway/riverbank": {
-                    "name": "Banc fluvial",
-                    "terms": "Riba del riu, Ribera"
+                    "name": "Banc fluvial"
                 },
                 "waterway/sanitary_dump_station": {
                     "name": "Lavabo per a vaixells"
@@ -5160,9 +5039,6 @@
             "SPW_PICC": {
                 "name": "imatgeria numèrica PICC de SPW (Valònia)"
             },
-            "US-TIGER-Roads-2012": {
-                "name": "Carreteres TIGER 2012"
-            },
             "US-TIGER-Roads-2014": {
                 "description": "Al nivell de zoom 16+, les dades del mapa són del domini públic del US Census. A zooms més baixos, només canvis d'ençà de 2006, els canvis menors incorporats a OpenStreetMap",
                 "name": "Carreteres TIGER 2014"
@@ -5170,6 +5046,10 @@
             "US-TIGER-Roads-2017": {
                 "description": "Groc = Dades de mapa del domini públic del US Census. Vermell = No es troben dades a OpenStreetMap",
                 "name": "Carreteres TIGER 2017"
+            },
+            "US-TIGER-Roads-2018": {
+                "description": "Groc = Dades de mapa de domini públic del Cens dels EUA. Vermell = No es troben dades a OpenStreetMap",
+                "name": "Carreteres TIGER 2018"
             },
             "US_Forest_Service_roads_overlay": {
                 "description": "Carretera: Contorn verd = sense classificar. Contorn marró = pista. Superfície: grava = emplenat marró clar, Asfalt = negre, pavimentat = gris, terra = blanc, ciment = blau, gespa = verd. Estacional = franges blanques",
@@ -5242,12 +5122,6 @@
                 },
                 "description": "Capa d'ortofoto proveïda per basemap.at. \"Successora\" de la imatgeria de geoimage.at.",
                 "name": "Ortofoto basemap.at "
-            },
-            "hike_n_bike": {
-                "attribution": {
-                    "text": "© col·laboradors d'OpenStreetMap"
-                },
-                "name": "Excursió i bicicleta"
             },
             "kelkkareitit": {
                 "attribution": {
@@ -5406,6 +5280,12 @@
             "talk-gh": {
                 "name": "Llista de correu Talk-gh"
             },
+            "osm-mg-facebook": {
+                "name": "Grup de Facebook de OpenStreetMap a Madagascar"
+            },
+            "OSM-BGD-facebook": {
+                "name": "OpenStreetMap Bangladesh"
+            },
             "OSM-India-facebook": {
                 "description": "Millora OpenStreetMap a l'Índia"
             },
@@ -5420,13 +5300,33 @@
                 "name": "Twitter de Japó d'OpenStreetMap",
                 "description": "Etiqueta a Twitter: {url}"
             },
+            "OSM-japan-website": {
+                "name": "OpenStreetMap Japó"
+            },
             "OSM-TW-facebook": {
                 "name": "Comunitat de Taiwan d'OpenStreetMap",
                 "description": "Grup de Facebook per mapadors i usuaris d'OpenStreetMap per discutir assumptes sobre Taiwan."
             },
+            "at-twitter": {
+                "name": "Twitter d'Àustria d'OpenStreetMap"
+            },
+            "osm-at": {
+                "name": "OpenStreetMap Àustria"
+            },
+            "be-twitter": {
+                "name": "Twitter de Bèlgica d'OpenStreetMap",
+                "description": "OSM Bèlgica a Twitter: @osm_be"
+            },
+            "OSM-ES-mailinglist": {
+                "name": "Llista de correu Talk-es",
+                "description": "Una llista de correu per comentar OpenStreetMap d'Espanya"
+            },
             "OSM-SoCal": {
                 "name": "OpenStreetMap Califòrnia del Sud",
                 "extendedDescription": "OpenStreetMap (OSM) Califòrnia del Sud és per a tothom interessat en el mapatge que s'uneixi a treballar amb OpenStreetMap. OpenStreetMap, la Viquipèdia dels mapes, és un mapa de codi obert gratuït del món sent creat per més de 1000000 de voluntaris al voltant del món. Tothom és benvingut. Si no coneixes OpenStreetMap, t'ensenyarem. Si tens una idea d'un projecte de mapatge o fins i tot una excursió de camp que el grup pot fer, genial!"
+            },
+            "PHXGeo-twitter": {
+                "description": "Segueix-nos a Twitter a {url}"
             },
             "OSM-AR-telegram": {
                 "name": "Telegram d'OpenStreetMap Argentina",
@@ -5436,9 +5336,59 @@
                 "name": "Twitter d'Argentina d'OpenStreetMap",
                 "description": "Segueix-nos a Twitter a {url}"
             },
+            "OSM-br-twitter": {
+                "description": "Segueix-nos a Twitter a {url}"
+            },
+            "OSM-CL-twitter": {
+                "description": "Segueix-nos a Twitter a {url}"
+            },
+            "OSM-CO-facebook": {
+                "name": "Facebook de Colòmbia d'OpenStreetMap"
+            },
+            "OSM-CO-mailinglist": {
+                "name": "Llista de correu Talk-co",
+                "description": "Una llista de correu per comentar OpenStreetMap de Colòmbia"
+            },
+            "OSM-CO-twitter": {
+                "name": "Twitter de Colòmbia d'OpenStreetMap",
+                "description": "Seguiu-nos a Twitter a [url]"
+            },
+            "OSM-CO": {
+                "name": "OpenStreetMap Colòmbia"
+            },
+            "OSM-PE": {
+                "name": "OpenStreetMap Perú"
+            },
+            "LATAM-Twitter": {
+                "description": "Segueix-nos a Twitter a {url}"
+            },
+            "osm-latam": {
+                "events": {
+                    "sotm-latam-2018": {
+                        "where": "Buenos Aires, Argentina"
+                    }
+                }
+            },
+            "OSM-Discord": {
+                "name": "Discord d'OpenStreetMap"
+            },
+            "OSM-Facebook": {
+                "name": "OpenStreetMap al Facebook"
+            },
+            "OSM-help": {
+                "name": "Ajuda d'OpenStreetMap"
+            },
             "OSM-Reddit": {
                 "name": "OpenStreetMap a Reddit",
                 "description": "/r/openstreetmap/ és un bon lloc per aprendre més sobre OpenStreetMap. Pregunta'ns qualsevol cosa!"
+            },
+            "OSMF": {
+                "name": "Fundació OpenStreetMap",
+                "events": {
+                    "sotm2018": {
+                        "where": "Milà, Itàlia"
+                    }
+                }
             }
         }
     }

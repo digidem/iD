@@ -4,8 +4,16 @@
         "name",
         "operator",
         "address",
-        "opening_hours",
+        "building_area",
         "dance/style"
+    ],
+    "moreFields": [
+        "opening_hours",
+        "payment_multi",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "geometry": [
         "point",

@@ -1,9 +1,18 @@
 {
-    "icon": "temaki-beach",
+    "icon": "maki-beach",
     "fields": [
         "name",
         "address",
         "fee"
+    ],
+    "moreFields": [
+        "opening_hours",
+        "payment_multi",
+        "smoking",
+        "website",
+        "phone",
+        "email",
+        "fax"
     ],
     "geometry": [
         "point",

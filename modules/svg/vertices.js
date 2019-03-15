@@ -46,6 +46,7 @@ export function svgVertices(projection, context) {
         var wireframe = context.surface().classed('fill-wireframe');
         var zoom = geoScaleToZoom(projection.scale());
         var z = (zoom < 17 ? 0 : zoom < 18 ? 1 : 2);
+        var activeID = context.activeID();
 
 
         function getIcon(d) {
@@ -56,6 +57,7 @@ export function svgVertices(projection, context) {
             icons[entity.id] =
                 entity.hasInterestingTags() &&
                 context.presets().match(entity, graph).icon;
+
             return icons[entity.id];
         }
 
@@ -79,7 +81,7 @@ export function svgVertices(projection, context) {
                         var r = rads[i ? 3 : z];
 
                         // slightly increase the size of unconnected endpoints #3775
-                        if (entity.isEndpoint(graph) && !entity.isConnected(graph)) {
+                        if (entity.id !== activeID && entity.isEndpoint(graph) && !entity.isConnected(graph)) {
                             r += 1.5;
                         }
 
@@ -326,6 +328,9 @@ export function svgVertices(projection, context) {
         var mode = context.mode();
         var isMoving = mode && /^(add|draw|drag|move|rotate)/.test(mode.id);
 
+        var drawLayer = selection.selectAll('.layer-osm.points .points-group.vertices');
+        var touchLayer = selection.selectAll('.layer-touch.points');
+
         if (fullRedraw) {
             _currPersistent = {};
             _radii = {};
@@ -371,7 +376,7 @@ export function svgVertices(projection, context) {
         var filterRendered = function(d) {
             return d.id in _currPersistent || d.id in _currSelected || d.id in _currHover || filter(d);
         };
-        selection.selectAll('.layer-points .layer-points-vertices')
+        drawLayer
             .call(draw, graph, currentVisible(all), sets, filterRendered);
 
         // Draw touch targets..
@@ -379,7 +384,7 @@ export function svgVertices(projection, context) {
         var filterTouch = function(d) {
             return isMoving ? true : filterRendered(d);
         };
-        selection.selectAll('.layer-points .layer-points-targets')
+        touchLayer
             .call(drawTargets, graph, currentVisible(all), filterTouch);
 
 
