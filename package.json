@@ -1,6 +1,6 @@
 {
   "name": "id-mapeo",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "iD Editor for osm-p2p & mapeo-desktop",
   "main": "dist/iD.js",
   "repository": {
