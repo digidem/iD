@@ -11,7 +11,7 @@ export function uiSettingsCustomBackground(context) {
     var dispatch = d3_dispatch('change');
 
     function render(selection) {
-        var example = 'http://localhost:5000/styles/Offline-Maps/tiles/{zoom}/{x}/{y}.png';
+        var example = 'http://localhost:5000/styles/default/tiles/{zoom}/{x}/{y}';
         var _origSettings = {
             template: context.storage('background-custom-template') || example
         };
