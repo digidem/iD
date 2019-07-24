@@ -5,6 +5,14 @@
 
 **NOTE: CURRENTLY UP TO DATE WITH 2.14.3 of iD**
 
+## Fork-specific Details
+
+- We don't use iD's translation mechanism: you can instead apply "monkey
+  patches" on top of the existing set of translations by creating a file
+  `monkey_patches/LANG.json`, where `LANG` is the locale you wish to make
+  modifications to. Be sure to run `npm run build` before publishing a new
+  version of this module to have the modifications be included.
+
 ## Basics
 
 * iD is a JavaScript [OpenStreetMap](https://www.openstreetmap.org/) editor.
