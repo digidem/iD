@@ -3,7 +3,7 @@ import _throttle from 'lodash-es/throttle';
 import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { xml as d3_xml } from 'd3-fetch';
 
-import osmAuth from 'osm-auth';
+import { osmAuth } from '../osm/auth';
 import rbush from 'rbush';
 
 import { JXON } from '../util/jxon';
@@ -615,7 +615,7 @@ export default {
 
             // Upload was successful, safe to call the callback.
             // Add delay to allow for postgres replication #1646 #2678
-            window.setTimeout(function() { callback(null, changeset); }, 2500);
+            window.setTimeout(function() { callback(null, changeset); }, 50);
             _changeset.open = null;
 
             // At this point, we don't really care if the connection was switched..
@@ -636,98 +636,27 @@ export default {
     // (note: callback may be called multiple times)
     // GET /api/0.6/users?users=#id1,#id2,...,#idn
     loadUsers: function(uids, callback) {
-        var toLoad = [];
-        var cached = [];
-
-        utilArrayUniq(uids).forEach(function(uid) {
-            if (_userCache.user[uid]) {
-                delete _userCache.toLoad[uid];
-                cached.push(_userCache.user[uid]);
-            } else {
-                toLoad.push(uid);
-            }
+        callback(undefined, {
+            id: 'anonymous'
         });
-
-        if (cached.length || !this.authenticated()) {
-            callback(undefined, cached);
-            if (!this.authenticated()) return;  // require auth
-        }
-
-        utilArrayChunk(toLoad, 150).forEach(function(arr) {
-            oauth.xhr(
-                { method: 'GET', path: '/api/0.6/users?users=' + arr.join() },
-                wrapcb(this, done, _connectionID)
-            );
-        }.bind(this));
-
-        function done(err, xml) {
-            if (err) { return callback(err); }
-
-            var options = { skipSeen: true };
-            return parseXML(xml, function(err, results) {
-                if (err) {
-                    return callback(err);
-                } else {
-                    return callback(undefined, results);
-                }
-            }, options);
-        }
     },
 
 
     // Load a given user by id
     // GET /api/0.6/user/#id
     loadUser: function(uid, callback) {
-        if (_userCache.user[uid] || !this.authenticated()) {   // require auth
-            delete _userCache.toLoad[uid];
-            return callback(undefined, _userCache.user[uid]);
-        }
-
-        oauth.xhr(
-            { method: 'GET', path: '/api/0.6/user/' + uid },
-            wrapcb(this, done, _connectionID)
-        );
-
-        function done(err, xml) {
-            if (err) { return callback(err); }
-
-            var options = { skipSeen: true };
-            return parseXML(xml, function(err, results) {
-                if (err) {
-                    return callback(err);
-                } else {
-                    return callback(undefined, results[0]);
-                }
-            }, options);
-        }
+        callback(undefined, {
+            id: 'anonymous'
+        });
     },
 
 
     // Load the details of the logged-in user
     // GET /api/0.6/user/details
     userDetails: function(callback) {
-        if (_userDetails) {    // retrieve cached
-            return callback(undefined, _userDetails);
-        }
-
-        oauth.xhr(
-            { method: 'GET', path: '/api/0.6/user/details' },
-            wrapcb(this, done, _connectionID)
-        );
-
-        function done(err, xml) {
-            if (err) { return callback(err); }
-
-            var options = { skipSeen: false };
-            return parseXML(xml, function(err, results) {
-                if (err) {
-                    return callback(err);
-                } else {
-                    _userDetails = results[0];
-                    return callback(undefined, _userDetails);
-                }
-            }, options);
-        }
+        callback(undefined, {
+            id: 'anonymous'
+        });
     },
 
 
@@ -1032,7 +961,7 @@ export default {
 
 
     switch: function(options) {
-        urlroot = options.urlroot;
+        urlroot = options.url;
 
         oauth.options(Object.assign({
             url: urlroot,
