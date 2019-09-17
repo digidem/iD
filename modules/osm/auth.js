@@ -19,6 +19,7 @@ import { request } from 'd3-request';
         else if (xhr.responseXML) return cb(null, xhr.responseXML);
         else return cb(null, xhr.response);
       });
+      return xhr;
     },
     preauth: function (c) {},
     options: function (_) {

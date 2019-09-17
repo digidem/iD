@@ -53,10 +53,11 @@ module.exports = function buildSrc() {
             })
             .then(function (bundle) {
                 return bundle.write({
-                    format: 'cjs',
+                    format: 'umd',
                     file: 'dist/iD.js',
                     sourcemap: true,
-                    strict: false
+                    strict: false,
+                    name: 'iD'
                 });
             })
             .then(function () {

@@ -22,7 +22,6 @@ import { uiGeolocate } from './geolocate';
 import { uiHelp } from './help';
 import { uiInfo } from './info';
 import { uiIntro } from './intro';
-import { uiIssues } from './issues';
 import { uiLoading } from './loading';
 import { uiMapData } from './map_data';
 import { uiMapInMap } from './map_in_map';
@@ -113,12 +112,6 @@ export function uiInit(context) {
             .append('div')
             .attr('class', 'map-control map-data-control')
             .call(mapData.renderToggleButton);
-
-        var issues = uiIssues(context);
-        controls
-            .append('div')
-            .attr('class', 'map-control map-issues-control')
-            .call(issues.renderToggleButton);
 
         var help = uiHelp(context);
         controls
@@ -232,7 +225,6 @@ export function uiInit(context) {
         panes
             .call(background.renderPane)
             .call(mapData.renderPane)
-            .call(issues.renderPane)
             .call(help.renderPane);
 
         // Add absolutely-positioned elements that sit on top of the map

@@ -26,13 +26,13 @@ export function coreValidator(context) {
     // initialize the validator rulesets
     //
     validator.init = function() {
-        Object.values(Validations).forEach(function(validation) {
-            if (typeof validation !== 'function') return;
+        // Object.values(Validations).forEach(function(validation) {
+        //     if (typeof validation !== 'function') return;
 
-            var fn = validation(context);
-            var key = fn.type;
-            _rules[key] = fn;
-        });
+        //     var fn = validation(context);
+        //     var key = fn.type;
+        //     _rules[key] = fn;
+        // });
 
         var disabledRules = context.storage('validate-disabledRules');
         if (disabledRules) {
@@ -290,6 +290,7 @@ export function coreValidator(context) {
     function validateEntity(entity, graph) {
         var entityIssues = [];
         var ran = {};
+        return entityIssues;
 
         // runs validation and appends resulting issues,
         // returning true if validation passed without issue
