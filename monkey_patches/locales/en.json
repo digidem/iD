@@ -20,6 +20,7 @@
 			}
 		},
 		"success": {
+			"title": "Saved to Mapeo",
 			"edited_osm": "Edited!",
 			"just_edited": "You just edited the map!",
       "view_on_osm": "View XML source of the element",

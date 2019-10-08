@@ -13,6 +13,7 @@
       "upload_h": "Guardar"
     },
     "success": {
+      "title": "Guardado a Mapeo",
       "edited_osm": "¡Mapeo editado!",
       "just_edited": "¡Acaba de editar Mapeo!",
       "view_on_osm": "Ver fuente XML del elemento",
