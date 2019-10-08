@@ -1,33 +1,43 @@
-# What's New
+# Changelog
 
-Thanks to all our contributors, users, and the many people that make iD possible! :heart:
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-The iD map editor is an open source project. You can submit bug reports, help out,
-or learn more by visiting our project page on GitHub:  :octocat: https://github.com/openstreetmap/iD
+## 3.1.0 (2019-10-08)
 
-If you love iD, please star our project on GitHub to show your support! :star:
 
-_Breaking changes, which may affect downstream projects or sites that embed iD, are marked with a_ :warning:
+### Bug Fixes
 
-<!--
-# A.B.C
-##### YYYY-MMM-DD
+* **package:** update marked to version 0.3.19 ([35f0671](https://github.com/digidem/iD-mapeo/commit/35f0671))
+* build.js tests wrong fields in validatePresetFields() ([a540637](https://github.com/digidem/iD-mapeo/commit/a540637))
+* Ctrl+Shift+B also swaps between the background like Ctrl+B ([dca1cdc](https://github.com/digidem/iD-mapeo/commit/dca1cdc)), closes [#4153](https://github.com/digidem/iD-mapeo/issues/4153)
+* **package:** update marked to version 0.3.18 ([1069473](https://github.com/digidem/iD-mapeo/commit/1069473))
+* pin sinon to 7.2.7 ([e585090](https://github.com/digidem/iD-mapeo/commit/e585090))
+* properties exported are redefined ([8beb943](https://github.com/digidem/iD-mapeo/commit/8beb943))
+* **package:** update lodash-es to version 4.17.6 ([ecc645a](https://github.com/digidem/iD-mapeo/commit/ecc645a))
+* Remove OpenStreetMap language from save dialog ([2f3e58e](https://github.com/digidem/iD-mapeo/commit/2f3e58e))
+* **package:** update @mapbox/sexagesimal to version 1.1.0 ([0830d04](https://github.com/digidem/iD-mapeo/commit/0830d04))
+* **package:** update lodash-es to version 4.17.10 ([a3d7878](https://github.com/digidem/iD-mapeo/commit/a3d7878))
+* **package:** update lodash-es to version 4.17.11 ([73e70ef](https://github.com/digidem/iD-mapeo/commit/73e70ef))
+* **package:** update lodash-es to version 4.17.5 ([4e16d43](https://github.com/digidem/iD-mapeo/commit/4e16d43))
+* **package:** update lodash-es to version 4.17.8 ([07c406a](https://github.com/digidem/iD-mapeo/commit/07c406a))
+* **package:** update marked to version 0.3.12 ([fcb2a0a](https://github.com/digidem/iD-mapeo/commit/fcb2a0a))
+* **package:** update marked to version 0.3.7 ([cce27c9](https://github.com/digidem/iD-mapeo/commit/cce27c9))
+* **package:** update marked to version 0.3.9 ([052d2a3](https://github.com/digidem/iD-mapeo/commit/052d2a3))
+* **package:** update marked to version 0.4.0 ([a14aa5f](https://github.com/digidem/iD-mapeo/commit/a14aa5f))
+* **package:** update marked to version 0.5.0 ([52c3858](https://github.com/digidem/iD-mapeo/commit/52c3858))
+* **package:** update marked to version 0.5.1 ([f3f0aa1](https://github.com/digidem/iD-mapeo/commit/f3f0aa1))
+* **package:** update marked to version 0.5.2 ([94ce9d2](https://github.com/digidem/iD-mapeo/commit/94ce9d2))
+* **package:** update marked to version 0.6.0 ([5567b2b](https://github.com/digidem/iD-mapeo/commit/5567b2b))
+* **package:** update marked to version 0.6.1 ([62c2d19](https://github.com/digidem/iD-mapeo/commit/62c2d19))
+* **package:** update marked to version 0.6.2 ([19f6685](https://github.com/digidem/iD-mapeo/commit/19f6685))
+* **package:** update osm-auth to version 1.0.2 ([e8549c5](https://github.com/digidem/iD-mapeo/commit/e8549c5))
+* **package:** update rbush to version 2.0.2 ([4622b1d](https://github.com/digidem/iD-mapeo/commit/4622b1d))
+* traffic signs to new endpoint ([7ad55b5](https://github.com/digidem/iD-mapeo/commit/7ad55b5))
 
-#### :newspaper: News
-#### :mega: Release Highlights
-#### :boom: Breaking Changes
-#### :tada: New Features
-#### :sparkles: Usability
-#### :white_check_mark: Validation
-#### :bug: Bugfixes
-#### :earth_asia: Localization
-#### :hourglass: Performance
-#### :mortar_board: Walkthrough / Help
-#### :rocket: Presets
 
-[#xxxx]: https://github.com/openstreetmap/iD/issues/xxxx
-[@xxxx]: https://github.com/xxxx
--->
+### Features
+
+* **preset:** add substance field to pipeline preset ([5e26d9a](https://github.com/digidem/iD-mapeo/commit/5e26d9a))
 
 # 2.15.5
 ##### 2019-Aug-26
@@ -4997,4 +5007,3 @@ _Map traffic signals, stop signs, benches, crossings, street lamps, fountains, t
 * Update `osm-auth` to 0.2.1
 * Fix the `note` functionality and textarea UI in presets
 * Fix walkthrough translation issues
-
