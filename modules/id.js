@@ -23,4 +23,4 @@ window.cancelIdleCallback = window.cancelIdleCallback ||
 
 import * as iD from './index';
 window.iD = iD;
-export default iD
+export default iD;
