@@ -1,5 +1,5 @@
 import { osmAreaKeys as areaKeys } from '../osm/tags';
-import { utilArrayIntersection } from '../util';
+import { isNode, utilArrayIntersection } from '../util';
 import { validationIssue } from '../core/validation';
 
 
@@ -206,7 +206,7 @@ export default {
             // borrowed from Way#isArea()
             inferredGeometry: this.inferGeometry(this.buildTagMap(selector), this._areaKeys),
             geometryMatches: function(entity, graph) {
-                if (entity.type === 'node' || entity.type === 'relation') {
+                if (isNode(entity) || entity.type === 'relation') {
                     return selector.geometry === entity.type;
                 } else if (entity.type === 'way') {
                     return this.inferredGeometry === entity.geometry(graph);

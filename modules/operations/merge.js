@@ -9,6 +9,7 @@ import { actionMergePolygon } from '../actions/merge_polygon';
 import { behaviorOperation } from '../behavior/operation';
 import { modeSelect } from '../modes/select';
 
+import { isNode } from 'util';
 
 export function operationMerge(selectedIDs, context) {
 
@@ -50,7 +51,7 @@ export function operationMerge(selectedIDs, context) {
 
         var ids = selectedIDs.filter(function(id) {
             var entity = context.hasEntity(id);
-            return entity && entity.type !== 'node';
+            return entity && !isNode(entity);
         });
 
         // if we merged tags, rematch preset to update tags if necessary (#3851)

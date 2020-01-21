@@ -1,5 +1,5 @@
 import { actionDeleteNode } from './delete_node';
-import { utilArrayUniq } from '../util';
+import { isNode, utilArrayUniq } from '../util';
 
 
 // Connect the ways at the given nodes.
@@ -230,7 +230,7 @@ export function actionConnect(nodeIDs) {
                 collection[role] = [];
             }
 
-            if (member.type === 'node') {
+            if (isNode(member)) {
                 collection[role].push(member.id);
                 if (role === 'via') {
                     collection.keyfrom.push(member.id);

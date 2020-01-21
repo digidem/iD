@@ -3,7 +3,7 @@ import { geoSphericalDistance } from '../geo';
 import { osmIsOldMultipolygonOuterMember } from '../osm/multipolygon';
 import { osmRelation } from '../osm/relation';
 import { osmWay } from '../osm/way';
-import { utilArrayIntersection, utilWrap } from '../util';
+import { isNode, utilArrayIntersection, utilWrap } from '../util';
 
 
 // Split a way at the given node.
@@ -127,7 +127,7 @@ export function actionSplit(nodeId, newWayIds) {
                 // 1. split a FROM/TO
                 if (f.id === wayA.id || t.id === wayA.id) {
                     var keepB = false;
-                    if (v.length === 1 && v[0].type === 'node') {   // check via node
+                    if (v.length === 1 && isNode(v[0])) {   // check via node
                         keepB = wayB.contains(v[0].id);
                     } else {                                        // check via way(s)
                         for (i = 0; i < v.length; i++) {

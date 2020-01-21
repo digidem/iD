@@ -5,6 +5,7 @@ import { t, textDirection } from './locale';
 import { utilArrayUnion } from './array';
 import { utilDetect } from './detect';
 
+import { isNode } from '../util';
 
 export function utilTagText(entity) {
     var obj = (entity && entity.tags) || {};
@@ -116,7 +117,7 @@ export function utilGetAllNodes(ids, graph) {
         var entity = graph.hasEntity(id);
         if (!entity) return;
 
-        if (entity.type === 'node') {
+        if (isNode(entity)) {
             nodes.add(entity);
         } else if (entity.type === 'way') {
             entity.nodes.forEach(collectNodes);
@@ -189,6 +190,7 @@ export function utilPreset(entity, context) {
 
 export function utilEntityRoot(entityType) {
     return {
+        observation: 'n',
         node: 'n',
         way: 'w',
         relation: 'r'

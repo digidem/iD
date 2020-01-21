@@ -1,6 +1,6 @@
 import { actionDeleteNode } from './delete_node';
 import { geoVecDot, geoVecInterp, geoVecLength } from '../geo';
-import { utilArrayDifference } from '../util';
+import { isNode, utilArrayDifference } from '../util';
 
 
 /*
@@ -22,7 +22,7 @@ export function actionStraightenWay(selectedIDs, projection) {
             return graph.entity(w).type === 'way';
         });
         var selectedNodes = selectedIDs.filter(function(n) {
-            return graph.entity(n).type === 'node';
+            return isNode(graph.entity(n));
         });
 
         for (var i = 0; i < selectedWays.length; i++) {

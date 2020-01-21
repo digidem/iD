@@ -35,7 +35,7 @@ export function operationDowngrade(selectedIDs, context) {
 
         if (preset.isFallback()) return null;
 
-        if (entity.type === 'node' &&
+        if (isNode(entity) &&
             preset.id !== 'address' &&
             Object.keys(entity.tags).some(function(key) {
                 return key.match(/^addr:.{1,}/);

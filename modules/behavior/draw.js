@@ -11,7 +11,7 @@ import { behaviorEdit } from './edit';
 import { behaviorHover } from './hover';
 import { behaviorTail } from './tail';
 import { geoChooseEdge, geoVecLength } from '../geo';
-import { utilKeybinding, utilRebind } from '../util';
+import { isNode, utilKeybinding, utilRebind } from '../util';
 
 var _usedTails = {};
 var _disableSpace = false;
@@ -129,7 +129,7 @@ export function behaviorDraw(context) {
 
         var mode = context.mode();
 
-        if (target && target.type === 'node' && allowsVertex(target)) {   // Snap to a node
+        if (target && isNode(target) && allowsVertex(target)) {   // Snap to a node
             dispatch.call('clickNode', this, target, d);
             return;
 

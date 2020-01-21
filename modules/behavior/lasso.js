@@ -3,6 +3,7 @@ import { event as d3_event, select as d3_select } from 'd3-selection';
 import { geoExtent, geoPointInPolygon } from '../geo';
 import { modeSelect } from '../modes/select';
 import { uiLasso } from '../ui/lasso';
+import { isNode } from '../util';
 
 
 export function behaviorLasso(context) {
@@ -51,7 +52,7 @@ export function behaviorLasso(context) {
             var extent = geoExtent(normalize(bounds[0], bounds[1]));
 
             var intersects = context.intersects(extent).filter(function(entity) {
-                return entity.type === 'node' &&
+                return isNode(entity) &&
                     geoPointInPolygon(context.projection(entity.loc), lasso.coordinates) &&
                     !context.features().isHidden(entity, graph, entity.geometry(graph));
             });

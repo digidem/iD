@@ -1,5 +1,6 @@
 import { actionDeleteRelation } from './delete_relation';
 import { actionDeleteWay } from './delete_way';
+import { isNode } from '../util';
 
 
 export function actionRevert(id) {
@@ -8,7 +9,7 @@ export function actionRevert(id) {
             base = graph.base().entities[id];
 
         if (entity && !base) {    // entity will be removed..
-            if (entity.type === 'node') {
+            if (isNode(entity)) {
                 graph.parentWays(entity)
                     .forEach(function(parent) {
                         parent = parent.removeNode(id);

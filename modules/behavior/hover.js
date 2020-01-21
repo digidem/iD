@@ -6,7 +6,7 @@ import {
 } from 'd3-selection';
 
 import { osmEntity, osmNote, qaError } from '../osm';
-import { utilKeybinding, utilRebind } from '../util';
+import { isNode, utilKeybinding, utilRebind } from '../util';
 
 /*
    The hover behavior adds the `.hover` class on mouseover to all elements to which
@@ -159,13 +159,13 @@ export function behaviorHover(context) {
             if (entity && entity.id !== _newNodeId) {
                 // If drawing a way, don't hover on a node that was just placed. #3974
 
-                if ((mode.id === 'draw-line' || mode.id === 'draw-area') && !_newNodeId && entity.type === 'node') {
+                if ((mode.id === 'draw-line' || mode.id === 'draw-area') && !_newNodeId && isNode(entity)) {
                     _newNodeId = entity.id;
                     return;
                 }
 
                 var suppressed = (_altDisables && d3_event && d3_event.altKey) ||
-                    (entity.type === 'node' && _ignoreVertex && !allowsVertex(entity)) ||
+                    (isNode(entity) && _ignoreVertex && !allowsVertex(entity)) ||
                     !modeAllowsHover(entity);
                 _selection.selectAll(selector)
                     .classed(suppressed ? 'hover-suppressed' : 'hover', true);

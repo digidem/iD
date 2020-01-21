@@ -2,7 +2,7 @@ import { t } from '../util/locale';
 import { behaviorOperation } from '../behavior/operation';
 import { geoExtent } from '../geo';
 import { modeMove } from '../modes/move';
-import { utilGetAllNodes } from '../util';
+import { isNode, utilGetAllNodes } from '../util';
 
 
 export function operationMove(selectedIDs, context) {
@@ -21,7 +21,7 @@ export function operationMove(selectedIDs, context) {
 
     operation.available = function() {
         return selectedIDs.length > 1 ||
-            context.entity(selectedIDs[0]).type !== 'node';
+            !isNode(context.entity(selectedIDs[0]));
     };
 
 

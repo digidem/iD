@@ -4,6 +4,7 @@ import { geoScaleToZoom } from '../geo';
 import { osmEntity } from '../osm';
 import { svgPassiveVertex, svgPointTransform } from './helpers';
 
+import { isNode } from '../util';
 
 export function svgVertices(projection, context) {
     var radiuses = {
@@ -303,7 +304,7 @@ export function svgVertices(projection, context) {
             var entity = graph.hasEntity(id);
             if (!entity) return;
 
-            if (entity.type === 'node') {
+            if (isNode(entity)) {
                 if (renderAsVertex(entity, graph, wireframe, zoom)) {
                     results[entity.id] = entity;
                     graph.parentWays(entity).forEach(function(entity) {

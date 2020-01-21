@@ -11,7 +11,7 @@ import { geoExtent, geoRawMercator, geoScaleToZoom, geoZoomToScale } from '../ge
 import { modeBrowse } from '../modes/browse';
 import { svgAreas, svgLabels, svgLayers, svgLines, svgMidpoints, svgPoints, svgVertices } from '../svg';
 import { uiFlash } from '../ui/flash';
-import { utilFastMouse, utilFunctor, utilRebind, utilSetTransform } from '../util';
+import { isNode, utilFastMouse, utilFunctor, utilRebind, utilSetTransform } from '../util';
 import { utilBindOnce } from '../util/bind_once';
 import { utilDetect } from '../util/detect';
 import { utilGetDimensions } from '../util/dimensions';
@@ -188,7 +188,7 @@ export function rendererMap(context) {
                     var entity = graph.hasEntity(id);
                     if (entity) {
                         selectedAndParents[entity.id] = entity;
-                        if (entity.type === 'node') {
+                        if (isNode(entity)) {
                             graph.parentWays(entity).forEach(function(parent) {
                                 selectedAndParents[parent.id] = parent;
                             });

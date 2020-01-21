@@ -4,7 +4,7 @@ import {
 } from '../geo';
 
 import { osmNode } from '../osm/node';
-import { utilArrayIntersection } from '../util';
+import { isNode, utilArrayIntersection } from '../util';
 
 
 // https://github.com/openstreetmap/josm/blob/mirror/src/org/openstreetmap/josm/command/MoveCommand.java
@@ -37,7 +37,7 @@ export function actionMove(moveIDs, tryDelta, projection, cache) {
                 var entity = graph.hasEntity(id);
                 if (!entity) continue;
 
-                if (entity.type === 'node') {
+                if (isNode(entity)) {
                     cache.nodes.push(id);
                     cache.startLoc[id] = entity.loc;
                 } else if (entity.type === 'way') {

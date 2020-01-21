@@ -1,5 +1,6 @@
 import { actionConnect } from './connect';
 import { geoVecAdd, geoVecScale } from '../geo';
+import { isNode } from '../util';
 
 
 // `actionMergeNodes` is just a combination of:
@@ -52,7 +53,7 @@ export function actionMergeNodes(nodeIDs, loc) {
 
         for (var i = 0; i < nodeIDs.length; i++) {
             var entity = graph.entity(nodeIDs[i]);
-            if (entity.type !== 'node') return 'not_eligible';
+            if (isNode(entity)) return 'not_eligible';
         }
 
         return actionConnect(nodeIDs).disabled(graph);

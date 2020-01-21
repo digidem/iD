@@ -7,7 +7,7 @@ import { presetCategory } from './category';
 import { presetCollection } from './collection';
 import { presetField } from './field';
 import { presetPreset } from './preset';
-import { utilArrayUniq, utilRebind } from '../util';
+import { isNode, utilArrayUniq, utilRebind } from '../util';
 
 export { presetCategory };
 export { presetCollection };
@@ -85,7 +85,7 @@ export function presetIndex(context) {
     };
 
     all.allowsVertex = function(entity, resolver) {
-        if (entity.type !== 'node') return false;
+        if (!isNode(entity)) return false;
         if (Object.keys(entity.tags).length === 0) return true;
 
         return resolver.transient(entity, 'vertexMatch', function() {

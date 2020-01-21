@@ -5,7 +5,7 @@ import { t } from '../util/locale';
 import { actionDeleteMultiple } from './delete_multiple';
 import { osmEntity } from '../osm';
 import { dataDiscarded } from '../../data';
-import { utilArrayUnion, utilArrayUniq } from '../util';
+import { isNode, utilArrayUnion, utilArrayUniq } from '../util';
 
 
 export function actionMergeRemoteChanges(id, localGraph, remoteGraph, formatUser) {
@@ -230,7 +230,7 @@ export function actionMergeRemoteChanges(id, localGraph, remoteGraph, formatUser
         }
 
         // merge
-        if (target.type === 'node') {
+        if (isNode(target)) {
             target = mergeLocation(remote, target);
 
         } else if (target.type === 'way') {

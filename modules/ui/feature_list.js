@@ -14,6 +14,8 @@ import { services } from '../services';
 import { svgIcon } from '../svg/icon';
 import { uiCmd } from './cmd';
 
+import { isNode } from '../util';
+
 import {
     utilDisplayName,
     utilDisplayType,
@@ -319,7 +321,7 @@ export function uiFeatureList(context) {
                 context.map().centerZoomEase([d.location[1], d.location[0]], 19);
             }
             else if (d.entity) {
-                if (d.entity.type === 'node') {
+                if (isNode(d.entity)) {
                     context.map().center(d.entity.loc);
                 } else if (d.entity.type === 'way') {
                     var center = context.projection(context.map().center());

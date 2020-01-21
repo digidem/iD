@@ -26,7 +26,7 @@ import { modeBrowse } from './browse';
 import { modeSelect } from './select';
 import { osmJoinWays, osmNode } from '../osm';
 import { uiFlash } from '../ui/flash';
-import { utilArrayIntersection, utilKeybinding } from '../util';
+import { isNode, utilArrayIntersection, utilKeybinding } from '../util';
 
 
 
@@ -383,7 +383,7 @@ export function modeDragNode(context) {
                 connectAnnotation(entity, target)
             );
 
-        } else if (target && target.type === 'node' && shouldSnapToNode(target)) {
+        } else if (target && isNode(target) && shouldSnapToNode(target)) {
             context.replace(
                 actionConnect([target.id, entity.id]),
                 connectAnnotation(entity, target)

@@ -11,7 +11,7 @@ import {
 
 import { osmEntity } from '../osm';
 import { utilDetect } from '../util/detect';
-import { utilDisplayName, utilDisplayNameForPath, utilEntitySelector } from '../util';
+import { isNode, utilDisplayName, utilDisplayNameForPath, utilEntitySelector } from '../util';
 
 
 
@@ -718,7 +718,7 @@ export function svgLabels(projection, context) {
         // hide labels on selected nodes (they look weird when dragging / haloed)
         for (var i = 0; i < selectedIDs.length; i++) {
             var entity = graph.hasEntity(selectedIDs[i]);
-            if (entity && entity.type === 'node') {
+            if (entity && isNode(entity)) {
                 ids.push(selectedIDs[i]);
             }
         }

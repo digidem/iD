@@ -4,7 +4,7 @@ import { actionSplit } from '../actions/split';
 import { coreGraph } from '../core/graph';
 import { geoAngle, geoSphericalDistance } from '../geo';
 import { osmEntity } from './entity';
-import { utilArrayDifference, utilArrayUniq } from '../util';
+import { isNode, utilArrayDifference, utilArrayUniq } from '../util';
 
 
 export function osmTurn(turn) {
@@ -365,7 +365,7 @@ export function osmIntersection(graph, startVertexId, maxDistance) {
             currRestrictions = (currRestrictions || []).slice();  // shallow copy
             var i, j;
 
-            if (entity.type === 'node') {
+            if (isNode(entity)) {
                 var parents = vgraph.parentWays(entity);
                 var nextWays = [];
 
@@ -395,7 +395,7 @@ export function osmIntersection(graph, startVertexId, maxDistance) {
 
                         if (t.id === way.id) {     // match TO
 
-                            if (v.length === 1 && v[0].type === 'node') {    // match VIA node
+                            if (v.length === 1 && isNode(v[0])) {
                                 matchesViaTo = (v[0].id === entity.id && (
                                     (matchesFrom && currPath.length === 2) ||
                                     (!matchesFrom && currPath.length > 2)
@@ -518,7 +518,7 @@ export function osmIntersection(graph, startVertexId, maxDistance) {
                         // `only_` restrictions only matter along the direction of the VIA - #4849
                         var isOnlyVia = false;
                         var v = r.membersByRole('via');
-                        if (v.length === 1 && v[0].type === 'node') {   // via node
+                        if (v.length === 1 && isNode(v[0])) {   // via node
                             isOnlyVia = (v[0].id === nextNode.id);
                         } else {                                        // via way(s)
                             for (var i = 0; i < v.length; i++) {

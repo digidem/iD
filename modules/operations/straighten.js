@@ -2,7 +2,7 @@ import { t } from '../util/locale';
 import { actionStraightenNodes } from '../actions/straighten_nodes';
 import { actionStraightenWay } from '../actions/straighten_way';
 import { behaviorOperation } from '../behavior/operation';
-import { utilArrayDifference, utilGetAllNodes } from '../util/index';
+import { isNode, utilArrayDifference, utilGetAllNodes } from '../util/index';
 
 
 export function operationStraighten(selectedIDs, context) {
@@ -28,7 +28,7 @@ export function operationStraighten(selectedIDs, context) {
 
             for (var i = 0; i < selectedIDs.length; i++) {
                 var entity = context.entity(selectedIDs[i]);
-                if (entity.type === 'node') {
+                if (isNode(entity)) {
                     continue;
                 } else if (entity.type !== 'way' || entity.isClosed()) {
                     return false;  // exit early, can't straighten these

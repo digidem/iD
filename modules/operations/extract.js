@@ -56,7 +56,7 @@ export function operationExtract(selectedIDs, context) {
             return preset.geometry.indexOf('point') !== -1;
         }
 
-        return entity.type === 'node' && graph.parentWays(entity).length > 0;
+        return isNode(entity) && graph.parentWays(entity).length > 0;
     };
 
 

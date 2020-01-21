@@ -41,3 +41,5 @@ export { utilTagText } from './util';
 export { utilTiler } from './tiler';
 export { utilTriggerEvent } from './trigger_event';
 export { utilWrap } from './util';
+
+export { isNode } from './equality';

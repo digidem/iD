@@ -11,6 +11,7 @@ import { geoExtent } from '../../geo';
 import { utilDetect } from '../../util/detect';
 import { services } from '../../services';
 
+import { isNode } from '../../util';
 
 export function uiPanelMeasurement(context) {
     var locale = utilDetect().locale;
@@ -166,7 +167,7 @@ export function uiPanelMeasurement(context) {
 
         } else {
             var centerLabel = t('info_panels.measurement.' +
-                (note || entity.type === 'node' ? 'location' : 'center'));
+                (note || isNode(entity) ? 'location' : 'center'));
 
             list
                 .append('li')

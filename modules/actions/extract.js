@@ -1,6 +1,7 @@
 
 import { geoPath as d3_geoPath } from 'd3-geo';
 import { osmNode } from '../osm/node';
+import { isNode } from '../util';
 
 export function actionExtract(entityID, projection) {
 
@@ -9,7 +10,7 @@ export function actionExtract(entityID, projection) {
     var action = function(graph) {
         var entity = graph.entity(entityID);
 
-        if (entity.type === 'node') {
+        if (isNode(entity)) {
             return extractFromNode(entity, graph);
         }
 
@@ -94,7 +95,7 @@ export function actionExtract(entityID, projection) {
     action.disabled = function(graph) {
         var entity = graph.entity(entityID);
 
-        if (entity.type === 'node') {
+        if (isNode(entity)) {
             var parentRels = graph.parentRelations(entity);
             for (var i = 0; i < parentRels.length; i++) {
                 var relation = parentRels[i];

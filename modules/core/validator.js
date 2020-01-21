@@ -3,7 +3,7 @@ import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { coreDifference } from './difference';
 import { geoExtent } from '../geo/extent';
 import { modeSelect } from '../modes/select';
-import { utilArrayGroupBy, utilRebind } from '../util';
+import { isNode, utilArrayGroupBy, utilRebind } from '../util';
 import { t } from '../util/locale';
 import { validationIssueFix } from './validation/models';
 import * as Validations from '../validations/index';
@@ -372,7 +372,7 @@ export function coreValidator(context) {
 
             var checkParentRels = [entity];
 
-            if (entity.type === 'node') {   // include parent ways
+            if (isNode(entity)) {   // include parent ways
                 graph.parentWays(entity).forEach(function(parentWay) {
                     acc.add(parentWay.id);
                     checkParentRels.push(parentWay);

@@ -1,5 +1,5 @@
 import { actionMergeNodes } from '../actions/merge_nodes';
-import { utilDisplayLabel } from '../util';
+import { isNode, utilDisplayLabel } from '../util';
 import { t } from '../util/locale';
 import { validationIssue, validationIssueFix } from '../core/validation';
 import { osmPathHighwayTagValues } from '../osm/tags';
@@ -18,7 +18,7 @@ export function validationCloseNodes(context) {
     var pathThresholdMeters = 0.1;
 
     var validation = function(entity, graph) {
-        if (entity.type === 'node') {
+        if (isNode(entity)) {
             return getIssuesForNode(entity);
         } else if (entity.type === 'way') {
             return getIssuesForWay(entity);
@@ -129,7 +129,7 @@ export function validationCloseNodes(context) {
                 var nearby = intersected[j];
 
                 if (nearby.id === node.id) continue;
-                if (nearby.type !== 'node' || nearby.geometry(graph) !== 'point') continue;
+                if (!isNode(nearby) || nearby.geometry(graph) !== 'point') continue;
 
                 if (nearby.loc === node.loc ||
                     geoSphericalDistance(node.loc, nearby.loc) < pointThresholdMeters) {

@@ -4,7 +4,7 @@ import { select as d3_select } from 'd3-selection';
 import { dataMPH } from '../../../data';
 import { geoPointInPolygon } from '../../geo';
 import { uiCombobox } from '../combobox';
-import { utilGetSetValue, utilNoAuto, utilRebind } from '../../util';
+import { isNode, utilGetSetValue, utilNoAuto, utilRebind } from '../../util';
 
 
 export function uiFieldMaxspeed(field, context) {
@@ -50,7 +50,7 @@ export function uiFieldMaxspeed(field, context) {
             .on('blur', change);
 
         var loc;
-        if (_entity.type === 'node') {
+        if (isNode(_entity)) {
             loc = _entity.loc;
         } else {
             var childNodes = context.graph().childNodes(context.entity(_entity.id));
