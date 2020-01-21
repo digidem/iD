@@ -505,7 +505,6 @@ export default {
     // GET /api/0.6/node/#id
     // GET /api/0.6/[way|relation]/#id/full
     loadEntity: function(id, callback) {
-        console.log(id)
         var type = osmEntity.id.type(id);
         var osmID = osmEntity.id.toOSM(id);
         var options = { skipSeen: false };
