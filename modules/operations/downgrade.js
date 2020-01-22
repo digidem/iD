@@ -3,7 +3,7 @@ import { behaviorOperation } from '../behavior/operation';
 import { modeSelect } from '../modes/select';
 import { t } from '../util/locale';
 import { uiCmd } from '../ui/cmd';
-
+import { isNode } from '../util';
 
 export function operationDowngrade(selectedIDs, context) {
     var affectedFeatureCount = 0;
