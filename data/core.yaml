@@ -522,8 +522,8 @@ en:
       The changes you save will only be visible on maps that you syncronize
       with.
     upload_explanation_with_user: >-
-      The changes you save as {user} will be visible on all maps that you
-      syncronize with.
+      The changes you save will only be visible on maps that you syncronize
+      with.
     request_review: I would like someone to review my edits.
     save: Save
     cancel: Cancel

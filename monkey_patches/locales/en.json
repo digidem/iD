@@ -62,7 +62,7 @@
 			"save": "Save",
 			"title": "Save your Edits",
 			"upload_explanation": "The changes you save will only be visible on maps that you syncronize with.",
-			"upload_explanation_with_user": "The changes you save as {user} will be visible on all maps that you syncronize with."
+			"upload_explanation_with_user": "The changes you save will only be visible on maps that you syncronize with."
 		},
 		"validations": {
 			"many_deletions": "You're deleting {n} features: {p} nodes, {l} lines, {a} areas, {r} relations. Are you sure you want to do this? This will delete them from the map."
