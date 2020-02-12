@@ -925,7 +925,8 @@
             "languages": "Idiomas: {languages}",
             "missing": "¿Falta algo en esta lista?",
             "tell_us": "¡Cuéntenos!",
-            "edited_osm": "¡Mapeo editado!"
+            "edited_osm": "¡Mapeo editado!",
+            "title": "Guardado a Mapeo"
         },
         "confirm": {
             "okay": "Aceptar",
