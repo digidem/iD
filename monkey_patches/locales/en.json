@@ -8,6 +8,11 @@
 			"help": "Review your changes and save them.",
 			"uploading": "Saving changes..."
 		},
+
+    "note": {
+      "upload_explanation": "Once saved, you can syncronize changes with others.",
+      "upload_explanation_with_user": "Once saved, you can syncronize changes with others."
+    },
 		"modes": {
 			"add_line": {
 				"description": "Add paths, rivers, canals or other lines to the map."

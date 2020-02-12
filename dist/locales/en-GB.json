@@ -1356,8 +1356,8 @@
             "newDescription": "Describe the issue.",
             "save": "Save Note",
             "login": "You must log in to change or comment on this note.",
-            "upload_explanation": "Your comments will be publicly visible to all OpenStreetMap users.",
-            "upload_explanation_with_user": "Your comments as {user} will be publicly visible to all OpenStreetMap users."
+            "upload_explanation": "Once saved, you can syncronize changes with others.",
+            "upload_explanation_with_user": "Once saved, you can syncronize changes with others."
         },
         "help": {
             "title": "Help",
