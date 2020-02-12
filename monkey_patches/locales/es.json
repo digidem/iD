@@ -1,13 +1,45 @@
 {
   "es": {
-		"inspector": {
+    "inspector": {
       "search_features": "Editar el Mapa",
       "view_on_osm": "Ver fuente XML del elemento"
-		},
+    },
+    "save": {
+      "help": "Revise tus cambios.",
+      "uploading": "Guardando cambios…"
+    },
+    "note": {
+      "upload_explanation": "Una vez guardado, puedes sincronizar tus cambios con otros.",
+      "upload_explanation_with_user": "Una vez guardado, puedes sincronizar tus cambios con otros."
+    },
+    "help": {
+      "help": {
+        "title": "Mapeo",
+        "welcome": "This is an offline editor for [OpenStreetMap](http://www.openstreetmap.org/), the\nfree and editable map of the world. You can use it to add and update\ndata in your area, making an open-source and open-data map of the world\nbetter for everyone.\n\nEdits that you make on this map will be visible only to people you share with. \n\nThe [iD editor](http://ideditor.com/) is a collaborative project with [source\ncode available on GitHub](https://github.com/openstreetmap/iD). Mapeo is also open source and [available on GitHub](https://github.com/digidem/mapeo-desktop)\n"
+      },
+      "welcome": {
+        "welcome": "Welcome! This walkthrough will teach you the basics of editing on Mapeo."
+      },
+      "editing": {
+        "save": "Click {save} **Save** to finish your edits and save them to your computer. You should remember to save your work frequently! No one else can see what you save until you syncronize with them.",
+        "upload_h": "Save",
+        "upload": "Before saving your changes you must enter a [changeset comment](https://wiki.openstreetmap.org/wiki/Good_changeset_comments). Then click **Save** so your changes will be merged into the map."
+      },
+      "feature_editor": {
+        "type": "You can click on the feature type to change the feature to a different type. Everything that exists in the real world can be added, so there are thousands of feature types to choose from.",
+        "fields_all_fields": "The \"All fields\" section contains all of the feature's details that you may edit. All of the fields are optional, and it's OK to leave a field blank if you are unsure.",
+        "tags_all_tags": "Below the fields section, you can expand the \"All tags\" section to edit any of the *tags* for the selected feature. Each tag consists of a *key* and *value*, data elements that define all of the features.",
+        "tags_resources": ""
+      },
+      "points": {
+        "delete_point": "It's OK to delete features that don't exist in the real world. Deleting a feature removes it from the map, so you should make sure a feature is really gone before you delete it."
+      }
+    },
     "commit": {
+      "title": "Guarda tus cambios",
       "upload_explanation": "Una vez guardado, puedes sincronizar tus cambios con otros.",
       "upload_explanation_with_user": "Una vez guardado, puedes sincronizar tus cambios con otros.",
-    	"save": "Guardar"
+      "save": "Guardar"
     },
     "editing": {
       "upload_h": "Guardar"
@@ -17,7 +49,11 @@
       "edited_osm": "¡Mapeo editado!",
       "just_edited": "¡Acaba de editar Mapeo!",
       "view_on_osm": "Ver fuente XML del elemento",
+      "like_osm": "",
       "help_html": "Felicidades, tus editos han sido guardado. Puedes sincronizar tus cambios con otros ahora con el botón Sincronizar."
+    },
+    "splash": {
+      "welcome": "Bienvenido a Mapeo"
     }
   }
 }
