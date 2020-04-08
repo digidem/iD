@@ -6,6 +6,7 @@ export { utilArrayIntersection } from './array';
 export { utilArrayUnion } from './array';
 export { utilArrayUniq } from './array';
 export { utilArrayUniqBy } from './array';
+export { addTranslation } from './locale';
 
 export { utilAsyncMap } from './util';
 export { utilCleanTags } from './clean_tags';
