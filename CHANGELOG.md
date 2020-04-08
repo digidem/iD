@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/digidem/iD-mapeo/compare/v3.1.6...v3.2.0) (2020-04-08)
+
+
+### Features
+
+* Export `addTranslation` function ([1fd60f1](https://github.com/digidem/iD-mapeo/commit/1fd60f10297c6854abaee6a061c68caf1d334b67))
+
 ## 3.1.0 (2019-10-08)
 
 
