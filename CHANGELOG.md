@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/digidem/iD-mapeo/compare/v3.2.0...v3.2.1) (2020-04-08)
+
+
+### Bug Fixes
+
+* Add prepublish script to avoid publish without build ([a1bc825](https://github.com/digidem/iD-mapeo/commit/a1bc8250dc76c9c7f5b5ee4d0aa3b431d57ad07a))
+* Export translations object instead of addTranslation function ([d41df41](https://github.com/digidem/iD-mapeo/commit/d41df4149607ea7ee74eed9ca5105dc86b8842d3))
+
 ## [3.2.0](https://github.com/digidem/iD-mapeo/compare/v3.1.6...v3.2.0) (2020-04-08)
 
 
