@@ -1,6 +1,6 @@
 import { dataLanguages } from '../../../data';
 
-var translations = Object.create(null);
+export var translations = Object.create(null);
 
 export var currentLocale = 'en';
 export var textDirection = 'ltr';
