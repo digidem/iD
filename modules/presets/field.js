@@ -30,6 +30,12 @@ export function presetField(id, field) {
     };
 
 
+    var helperText = field.helperText;
+    field.helperText = function() {
+        return field.t('helperText', {'default': helperText});
+    };
+
+
     field.originalTerms = (field.terms || []).join();
 
     field.terms = function() {

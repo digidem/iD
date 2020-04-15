@@ -186,7 +186,7 @@ export function uiField(context, presetField, entity, options) {
 
                 // instantiate tag reference
                 if (options.wrap && options.info) {
-                    reference = uiTagReference(d.placeholder(), context);
+                    reference = uiTagReference(d.helperText(), context);
                 }
 
                 selection
@@ -203,7 +203,7 @@ export function uiField(context, presetField, entity, options) {
                 // add tag reference components
                 if (reference) {
                     selection
-                        .call(reference.body)
+                        .call(reference.body);
                 }
 
                 d.impl.tags(_tags);
