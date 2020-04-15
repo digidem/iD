@@ -459,7 +459,6 @@ export function uiToolSearchAdd(context) {
                 var reference = uiTagReference(d.preset.reference(d.geometry || d.geometries[0]), context);
 
                 var thisItem = d3_select(this);
-                thisItem.selectAll('.row').call(reference.button, 'accessory', 'info');
 
                 var subsection = thisItem
                     .append('div')

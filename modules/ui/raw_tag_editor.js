@@ -6,7 +6,6 @@ import { services } from '../services';
 import { svgIcon } from '../svg/icon';
 import { uiCombobox } from './combobox';
 import { uiDisclosure } from './disclosure';
-import { uiTagReference } from './tag_reference';
 import { utilArrayDifference, utilGetSetValue, utilNoAuto, utilRebind, utilTagDiff } from '../util';
 
 
@@ -233,7 +232,7 @@ export function uiRawTagEditor(context) {
             .sort(function(a, b) { return a.index - b.index; });
 
         items
-            .each(function(d) {
+            .each(function() {
                 var row = d3_select(this);
                 var key = row.select('input.key');      // propagate bound data
                 var value = row.select('input.value');  // propagate bound data
@@ -241,24 +240,6 @@ export function uiRawTagEditor(context) {
                 if (_entityID && taginfo && _state !== 'hover') {
                     bindTypeahead(key, value);
                 }
-
-                var isRelation = (_entityID && context.entity(_entityID).type === 'relation');
-                var reference;
-
-                if (isRelation && d.key === 'type') {
-                    reference = uiTagReference({ rtype: d.value }, context);
-                } else {
-                    reference = uiTagReference({ key: d.key, value: d.value }, context);
-                }
-
-                if (_state === 'hover') {
-                    reference.showing(false);
-                }
-
-                row.select('.inner-wrap')      // propagate bound data
-                    .call(reference.button);
-
-                row.call(reference.body);
 
                 row.select('button.remove');   // propagate bound data
             });

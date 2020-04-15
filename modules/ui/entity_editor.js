@@ -13,7 +13,6 @@ import { uiQuickLinks } from './quick_links';
 import { uiRawMemberEditor } from './raw_member_editor';
 import { uiRawMembershipEditor } from './raw_membership_editor';
 import { uiRawTagEditor } from './raw_tag_editor';
-import { uiTagReference } from './tag_reference';
 import { uiPresetEditor } from './preset_editor';
 import { uiEntityIssues } from './entity_issues';
 import { uiTooltipHtml } from './tooltipHtml';
@@ -29,7 +28,6 @@ export function uiEntityEditor(context) {
     var _base;
     var _entityID;
     var _activePreset;
-    var _tagReference;
     var _presetFavorite;
 
     var entityIssues = uiEntityIssues(context);
@@ -137,15 +135,6 @@ export function uiEntityEditor(context) {
         if (_presetFavorite) {
             body.selectAll('.preset-list-button-wrap')
                 .call(_presetFavorite.button);
-        }
-
-        // update header
-        if (_tagReference) {
-            body.selectAll('.preset-list-button-wrap')
-                .call(_tagReference.button);
-
-            body.selectAll('.preset-list-item')
-                .call(_tagReference.body);
         }
 
         body.selectAll('.preset-reset')
@@ -351,8 +340,6 @@ export function uiEntityEditor(context) {
         if (!arguments.length) return _activePreset;
         if (val !== _activePreset) {
             _activePreset = val;
-            _tagReference = uiTagReference(_activePreset.reference(context.geometry(_entityID)), context)
-                .showing(false);
         }
         _presetFavorite = uiPresetFavoriteButton(_activePreset, context.geometry(_entityID), context);
         return entityEditor;

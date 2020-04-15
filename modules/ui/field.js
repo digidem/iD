@@ -186,15 +186,7 @@ export function uiField(context, presetField, entity, options) {
 
                 // instantiate tag reference
                 if (options.wrap && options.info) {
-                    var referenceKey = d.key;
-                    if (d.type === 'multiCombo') {   // lookup key without the trailing ':'
-                        referenceKey = referenceKey.replace(/:$/, '');
-                    }
-
-                    reference = uiTagReference(d.reference || { key: referenceKey }, context);
-                    if (_state === 'hover') {
-                        reference.showing(false);
-                    }
+                    reference = uiTagReference(d.placeholder(), context);
                 }
 
                 selection
@@ -212,8 +204,6 @@ export function uiField(context, presetField, entity, options) {
                 if (reference) {
                     selection
                         .call(reference.body)
-                        .select('.field-label')
-                        .call(reference.button);
                 }
 
                 d.impl.tags(_tags);
