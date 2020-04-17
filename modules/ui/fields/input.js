@@ -43,7 +43,7 @@ export function uiFieldText(field, context) {
             .append('input')
             .attr('type', field.type)
             .attr('id', fieldID)
-            .attr('placeholder', field.placeholder() || t('inspector.unknown'))
+            .attr('placeholder', field.placeholder() || '')
             .classed(field.type, true)
             .call(utilNoAuto)
             .merge(input);

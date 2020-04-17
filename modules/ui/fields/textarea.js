@@ -29,7 +29,7 @@ export function uiFieldTextarea(field) {
         input = input.enter()
             .append('textarea')
             .attr('id', 'preset-input-' + field.safeid)
-            .attr('placeholder', field.placeholder() || t('inspector.unknown'))
+            .attr('placeholder', field.placeholder() || '')
             .call(utilNoAuto)
             .on('input', change(true))
             .on('blur', change())
