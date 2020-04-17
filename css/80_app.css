@@ -2589,7 +2589,7 @@ button.raw-tag-option svg.icon {
     width: 100%;
     overflow: hidden;
     display: none;
-    padding: 5px;
+    padding: 3px 5px 5px;
 }
 .tag-reference-body.expanded {
     padding-bottom: 5px;
