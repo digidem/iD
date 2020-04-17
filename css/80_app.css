@@ -5691,3 +5691,8 @@ li.hide + li.version .badge .tooltip .tooltip-arrow {
     width: 100px;
     color: #7092ff;
 }
+
+/* Custom overrides */
+.preset-editor a.hide-toggle-preset_fields {
+    display: none;
+}
