@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/digidem/iD-mapeo/compare/v3.2.1...v3.3.0) (2020-05-07)
+
+
+### Features
+
+* **Preset Editor:** Add helper text and support long labels in preset editor ([#12](https://github.com/digidem/iD-mapeo/issues/12)) ([f74c733](https://github.com/digidem/iD-mapeo/commit/f74c7331cf5925a60bf3e4845cde33667d4be61c))
+
 ### [3.2.1](https://github.com/digidem/iD-mapeo/compare/v3.2.0...v3.2.1) (2020-04-08)
 
 
