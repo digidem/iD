@@ -19,14 +19,21 @@ export function presetField(id, field) {
     };
 
 
+    var label = field.label;
     field.label = function() {
-        return field.overrideLabel || field.t('label', {'default': id});
+        return field.overrideLabel || field.t('label', {'default': label || id});
     };
 
 
     var placeholder = field.placeholder;
     field.placeholder = function() {
         return field.t('placeholder', {'default': placeholder});
+    };
+
+
+    var helperText = field.helperText;
+    field.helperText = function() {
+        return field.t('helperText', {'default': helperText});
     };
 
 

@@ -403,9 +403,6 @@ export function uiPresetList(context) {
                 .append('div')
                 .attr('class', 'namepart')
                 .text(function(d) { return d; });
-
-            wrap.call(item.reference.button);
-            selection.call(item.reference.body);
         }
 
         item.choose = function() {
@@ -423,11 +420,9 @@ export function uiPresetList(context) {
 
         item.help = function() {
             d3_event.stopPropagation();
-            item.reference.toggle();
         };
 
         item.preset = preset;
-        item.reference = uiTagReference(preset.reference(context.geometry(_entityID)), context);
 
         return item;
     }

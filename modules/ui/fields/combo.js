@@ -348,7 +348,7 @@ export function uiFieldCombo(field, context) {
             .attr('type', 'text')
             .attr('id', 'preset-input-' + field.safeid)
             .call(utilNoAuto)
-            .call(initCombo, selection)
+            .call(initCombo, container)
             .merge(input);
 
         if (isNetwork && nominatim && _entity) {

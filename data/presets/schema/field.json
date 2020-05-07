@@ -108,6 +108,10 @@
             "description": "Placeholder text for this field",
             "type": "string"
         },
+        "helperText": {
+            "description": "Helper text for this field",
+            "type": "string"
+        },
         "strings": {
             "description": "Translatable strings options (combo fields)",
             "type": "object"
