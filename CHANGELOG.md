@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.1](https://github.com/digidem/iD-mapeo/compare/v3.3.0...v3.3.1) (2020-09-28)
+
+
+### Bug Fixes
+
+* Multislect view does not need to be so smart about commas. ([d584368](https://github.com/digidem/iD-mapeo/commit/d5843684ed3573733fb44a58764d3975f03f24c4))
+* Update territories and translations from OSM upstream ([3bd0fe7](https://github.com/digidem/iD-mapeo/commit/3bd0fe7c7fb45ad9af2237ee3ed4c4ada8a9cf17))
+
 ## [3.3.0](https://github.com/digidem/iD-mapeo/compare/v3.2.1...v3.3.0) (2020-05-07)
 
 
