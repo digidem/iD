@@ -243,7 +243,7 @@ export function uiFieldCombo(field, context) {
         var val;
 
         if (isMulti || isSemi) {
-            val = tagValue(utilGetSetValue(input).replace(/,/g, ';')) || '';
+            val = utilGetSetValue(input);
             container.classed('active', false);
             utilGetSetValue(input, '');
 
