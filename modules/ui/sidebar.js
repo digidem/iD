@@ -330,6 +330,7 @@ export function uiSidebar(context) {
                 })
                 .on('end', function() {
                     selection.classed('collapsed', isCollapsing);
+                    container.classed('collapsed-sidebar', isCollapsing);
 
                     // switch back from px to %
                     if (!isCollapsing) {
