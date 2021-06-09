@@ -76,6 +76,7 @@ export function uiSidebar(context) {
                 var shouldCollapse = sidebarWidth < minWidth;
 
                 selection.classed('collapsed', shouldCollapse);
+                container.classed('collapsed-sidebar', shouldCollapse);
 
                 if (shouldCollapse) {
                     if (!isCollapsed) {
