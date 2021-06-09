@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.1](https://github.com/digidem/iD-mapeo/compare/v3.4.0...v3.4.1) (2021-06-09)
+
+
+### Bug Fixes
+
+* Remove .collapsed-sidebar class from container when expanded ([9c39134](https://github.com/digidem/iD-mapeo/commit/9c391348b844d1c4c491962a80e0be2493484865))
+
 ## [3.4.0](https://github.com/digidem/iD-mapeo/compare/v3.3.1...v3.4.0) (2021-06-09)
 
 
