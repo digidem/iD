@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/digidem/iD-mapeo/compare/v3.3.1...v3.4.0) (2021-06-09)
+
+
+### Features
+
+* Add class to container when sidebar is collapsed ([705a0ca](https://github.com/digidem/iD-mapeo/commit/705a0ca7d3ec418cbbc109be1fe396aa51ee492c))
+* Update imagery (fix expired mapbox token and add new imagery) ([1728342](https://github.com/digidem/iD-mapeo/commit/17283420a4cdbd4c65f0482c22680081d1c18dc5))
+* Update translations ([53c9f6e](https://github.com/digidem/iD-mapeo/commit/53c9f6e672366f1f1a660a1d90cd0bba1099175f))
+
+
+### Bug Fixes
+
+* update icons (not sure why these changed after npm run all) ([856f938](https://github.com/digidem/iD-mapeo/commit/856f93840ee64e5d72b75115ad152527b317c465))
+
 ### [3.3.1](https://github.com/digidem/iD-mapeo/compare/v3.3.0...v3.3.1) (2020-09-28)
 
 
